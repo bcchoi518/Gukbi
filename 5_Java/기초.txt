@@ -1,0 +1,11 @@
+클래스 단위
+main(): 함수 x 메소드 o
+
+변수: 변하는 수 : 메모리 내 value를 저장하는 공간
+상수: 안변하는 수
+
+데이터 타입:
+ - 숫자 : 정수형(int, short, byte, long), 실수형(float, double)
+ - 글자 : char
+ - 참/거짓 : true, false (불리언, boolean)
+
