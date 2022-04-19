@@ -1,0 +1,35 @@
+오라클 접속하기
+계정연결
+conn system/1234
+SQLPLUS 사용자계정/암호 가능
+
+관리자 계정(system)에서 연습용계정 언락
+alter user hr account unlock;
+
+hr 계정 언락 후 비밀번호 설정해줘야함
+alter user hr identified by 1234;
+ 
+현재 접속 계정 확인
+show user
+
+tip: SQLPLUS명령어뒤에 ; 안붙임
+     SQL명령어뒤에 ; 붙임
+
+@sql파일경로 엔터 하면 작성됨
+
+desc 테이블이름 - 테이블정보표시
+
+column : 변수와 비슷하다
+
+형식의 순서대로 쿼리문 작성해야함
+
+{ column[Alias], ... } : 중괄호는 반드시 있어야 함
+[Alias] : 별칭
+
+원래는 존재하지 않지만 개발자가 column을 만들어줄 수 있고 이를 가상칼럼이라고 한다.
+
+
+desc 테이블 이름 -> 테이블에 있는 칼럼이름 나옴
+select 칼럼이름 from 테이블이름; -> 칼럼의 값이 나옴
+
+sysdate : 키워드

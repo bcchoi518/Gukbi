@@ -15,9 +15,9 @@ public class Quiz04 {
 
 		Scanner sc = new Scanner(System.in);
 
-		System.out.print("직급을 입력하세요 : ");
+		System.out.print("직급 : ");
 		rank = sc.nextLine();
-		System.out.print("본봉을 입력하세요 : ");
+		System.out.print("본봉 : ");
 		salary = Integer.parseInt(sc.nextLine());
 
 		if (rank.equals("7급") || rank.equals("8급")) {
