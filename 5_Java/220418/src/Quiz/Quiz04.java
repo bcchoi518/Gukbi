@@ -26,13 +26,13 @@ public class Quiz04 {
 			tax = 12;
 		} else {
 			System.out.println("잘못 입력하셨습니다.");
-		}
+		} // end if
 
 		salary -= (salary / 100 * tax);
 
 		System.out.println("실수령액(세금" + tax + "%적용): " + salary);
 
 		sc.close();
-	}
+	}// end main
 
-}
+}// end Quiz04

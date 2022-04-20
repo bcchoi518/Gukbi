@@ -24,18 +24,18 @@ public class Quiz05 {
 		purchasePrice = Integer.parseInt(sc.nextLine());
 
 		tmp = Integer.parseInt(purchaseTime.replace("시", ""));
-		
+
 		if (tmp < 12) {
 			discountRate = 5.0;
 		} else {
 			discountRate = 2.5;
-		}
+		} // end if
 
 		purchasePrice -= (purchasePrice / 100 * discountRate);
 
 		System.out.println("실제 지불 금액 : " + purchasePrice);
 
 		sc.close();
-	}
+	}// end main
 
-}
+}// end Quiz05

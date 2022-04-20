@@ -10,23 +10,25 @@ public class Quiz02 {
 //		"두 숫자는 같은 짝수 또는 홀수입니다"를 출력하는 프로그램을 작성하시오.
 
 		int num1 = 0, num2 = 0;
+		String result = "";
 
 		Scanner sc = new Scanner(System.in);
 
-		System.out.print("숫자를 입력하세요 : ");
+		System.out.print("첫 번째 숫자를 입력하세요 : ");
 		num1 = Integer.parseInt(sc.nextLine());
-		System.out.print("숫자를 입력하세요 : ");
+		System.out.print("두 번째 숫자를 입력하세요 : ");
 		num2 = Integer.parseInt(sc.nextLine());
 
 		if (num1 % 2 == 0 && num2 % 2 == 0) {
-			System.out.println("두 숫자는 같은 짝수입니다.");
+			result = "두 숫자는 같은 짝수입니다.";
 		} else if (num1 % 2 == 1 && num2 % 2 == 1) {
-			System.out.println("두 숫자는 같은 홀수입니다.");
+			result = "두 숫자는 같은 홀수입니다.";
 		} else {
-			System.out.println("두 숫자는 각각 짝수, 홀수입니다.");
-		}
+			result = "두 숫자는 각각 짝수, 홀수입니다.";
+		} // end if
 
+		System.out.println(result);
 		sc.close();
-	}
+	}// end main
 
-}
+}// end Quiz02

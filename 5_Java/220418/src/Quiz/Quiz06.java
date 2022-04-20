@@ -15,7 +15,7 @@ public class Quiz06 {
 
 		final int WORKING_WEEK = 40;
 		String rank = "";
-		int overTime = 0, workingTotal = 0, salary = 0;
+		int overTime = 0, workingTotal = 0, salary = 0, hourlyWage = 0;
 		double payRate = 0.0;
 
 		Scanner sc = new Scanner(System.in);
@@ -28,17 +28,19 @@ public class Quiz06 {
 		if (workingTotal > WORKING_WEEK) {
 			overTime = workingTotal - WORKING_WEEK;
 			payRate = 1.5;
-		} 
+		} // end if
 
 		if (rank.equals("5급") || rank.equals("6급")) {
-			salary = (WORKING_WEEK * 20000) + (int) (overTime * (payRate * 20000));
+			hourlyWage = 20000;
 		} else if (rank.equals("7급") || rank.equals("8급")) {
-			salary = (WORKING_WEEK * 15000) + (int) (overTime * (payRate * 15000));
-		}
-		
-		System.out.println("주 급여 : " + salary);
-		
-		sc.close();
-	}
+			hourlyWage = 15000;
+		} // end if
 
-}
+		salary = (WORKING_WEEK * hourlyWage) + (int) (overTime * (payRate * hourlyWage));
+
+		System.out.println("주 급여 : " + salary);
+
+		sc.close();
+	}// end main
+
+}// end Quiz06
