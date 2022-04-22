@@ -56,6 +56,7 @@ public class Quiz08 {
 				break;
 			default:
 				System.out.println("잘못 입력하셨습니다.");
+				System.out.println();
 			}// end switch
 		} // end for
 
@@ -105,6 +106,7 @@ public class Quiz08 {
 				break;
 			default:
 				System.out.println("잘못 입력하셨습니다.");
+				System.out.println();
 			}// end switch
 		} // end while
 
@@ -154,6 +156,7 @@ public class Quiz08 {
 				break;
 			default:
 				System.out.println("잘못 입력하셨습니다.");
+				System.out.println();
 			}// end switch
 		} while (month != 0); // end do~while
 

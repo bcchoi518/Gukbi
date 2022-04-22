@@ -22,34 +22,34 @@ public class Quiz05 {
 
 		System.out.println();
 		System.out.println("────────── for 반복문 ──────────");
-		for (i = 0; i <= num; i += 3) {
+		for (i = 3; sum <= num; i += 3) {
 			sum += i;
 			idx++;
 		} // end for
 
-		System.out.println(num + "을 넘었을 때의 값 : " + i);
+		System.out.println(num + "을 넘었을 때의 값 : " + (i - 3));
 		System.out.println(num + "을 넘었을 때까지의 총합계 : " + sum);
 		System.out.println(num + "을 넘었을 때까지 몇 번째 3의 배수인가 : " + idx);
 
 		System.out.println();
 		System.out.println("────────── while 반복문 ──────────");
-		i = 0;
+		i = 3;
 		sum = 0;
 		idx = 0;
 
-		while (i <= num) {
+		while (sum <= num) {
 			sum += i;
 			idx++;
 			i += 3;
 		} // end while
 
-		System.out.println(num + "을 넘었을 때의 값 : " + i);
+		System.out.println(num + "을 넘었을 때의 값 : " + (i - 3));
 		System.out.println(num + "을 넘었을 때까지의 총합계 : " + sum);
 		System.out.println(num + "을 넘었을 때까지 몇 번째 3의 배수인가 : " + idx);
 
 		System.out.println();
 		System.out.println("────────── do~while 반복문 ──────────");
-		i = 0;
+		i = 3;
 		sum = 0;
 		idx = 0;
 
@@ -57,9 +57,9 @@ public class Quiz05 {
 			sum += i;
 			idx++;
 			i += 3;
-		} while (i <= num); // end do~while
+		} while (sum <= num); // end do~while
 
-		System.out.println(num + "을 넘었을 때의 값 : " + i);
+		System.out.println(num + "을 넘었을 때의 값 : " + (i - 3));
 		System.out.println(num + "을 넘었을 때까지의 총합계 : " + sum);
 		System.out.println(num + "을 넘었을 때까지 몇 번째 3의 배수인가 : " + idx);
 
