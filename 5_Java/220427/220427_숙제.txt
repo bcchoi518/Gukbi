@@ -1,0 +1,2 @@
+1. 책 예제 7-3 코딩해보기
+2. 220425 homework를 phonebook 처럼 CRUD 적용해보기
