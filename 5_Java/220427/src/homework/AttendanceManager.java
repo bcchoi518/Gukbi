@@ -3,8 +3,8 @@ package homework;
 import java.util.Scanner;
 
 public class AttendanceManager {
-	final int MAX_PEOPLE = 10;
 	Scanner sc = new Scanner(System.in);
+	final int MAX_PEOPLE = 10;
 	Attendance[] userArr = new Attendance[MAX_PEOPLE];
 	int curCnt;
 	int idx = -1;

@@ -23,8 +23,10 @@ public class Person {
 		System.out.println("*** 신상정보 ***");
 		System.out.println("이름 : " + name);
 		System.out.println("전번 : " + phoneNumber);
-		if (!birth.equals("")) {
+		if (birth != "") {
 			System.out.println("생일 : " + birth);
 		} // end if
+		
+		
 	}
 }// end Person

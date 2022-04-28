@@ -1,4 +1,4 @@
-package homework;
+package version1;
 
 public class BlackjackMenuViewer {
 	static void showMenu() {

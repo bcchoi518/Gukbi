@@ -1,4 +1,4 @@
-package homework;
+package version1;
 
 public class BlackjackDeck {
 	final int CARD_NUM = 52; // 카드의 개수
@@ -7,8 +7,8 @@ public class BlackjackDeck {
 	BlackjackDeck() {
 		int i = 0;
 
-		for (int k = Card.KIND_MAX; k > 0; k--) {
-			for (int n = 0; n < Card.NUM_MAX; n++) {
+		for (int k = BlackjackCard.KIND_MAX; k > 0; k--) {
+			for (int n = 0; n < BlackjackCard.NUM_MAX; n++) {
 				cardArr[i++] = new BlackjackCard(k, n + 1);
 			} // end for
 		} // end for

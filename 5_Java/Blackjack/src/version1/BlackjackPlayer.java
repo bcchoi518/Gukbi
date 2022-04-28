@@ -1,4 +1,4 @@
-package homework;
+package version1;
 
 public class BlackjackPlayer {
 	final int SUM_BUST_MAX = 12; // 가장 작은 수로 21을 넘어서 bust되는 카드 갯수 12장

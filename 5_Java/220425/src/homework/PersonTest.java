@@ -3,11 +3,8 @@ package homework;
 import java.util.Scanner;
 
 public class PersonTest {
-
 	public static void main(String[] args) {
-
 		Scanner sc = new Scanner(System.in);
-
 		Person p = new Person();
 
 		System.out.print("이름을 입력하세요: ");
@@ -19,7 +16,7 @@ public class PersonTest {
 		System.out.println();
 
 		p.showPerson();
+
 		sc.close();
 	}// end main
-
 }// end PersonTest
