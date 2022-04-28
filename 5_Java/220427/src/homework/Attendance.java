@@ -5,7 +5,7 @@ public class Attendance {
 	private String name;
 	private int checkInTime;
 	private int checkOutTime;
-
+	
 	Attendance() {
 	}
 
@@ -14,7 +14,7 @@ public class Attendance {
 		this.checkInTime = checkInTime;
 	}
 
-	public String getName() {
+	public String getName() { 
 		return name;
 	}// end getName
 
@@ -46,14 +46,22 @@ public class Attendance {
 
 	void printInfo() {
 		System.out.println("이름: " + name);
-		System.out.println("입실: " + checkInTime);
-		System.out.println("퇴실: " + checkOutTime);
-		if (getCheckOutTime() == 0) {
+		System.out.println("입실: " + checkInTime + "시");
+		if (checkInOut() == 0) {
 			System.out.println("현재 입실 중");
 		} else {
-			System.out.println("총 이용시간: " + (getCheckOutTime() - getCheckInTime()));
+			System.out.println("퇴실: " + checkOutTime + "시");
+			System.out.println("총 이용시간: " + checkInOut() + "시간");
 		}
 		System.out.println();
 	}// end printInfo
+
+	int checkInOut() {
+		if (getCheckOutTime() == 0) {
+			return 0;
+		} else {
+			return getCheckOutTime() - getCheckInTime();
+		} // end if
+	}// end checkInOut
 
 }// end Attendance

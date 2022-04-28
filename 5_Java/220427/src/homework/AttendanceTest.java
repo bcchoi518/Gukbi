@@ -1,42 +1,43 @@
 package homework;
 
-import java.util.Scanner;
-
 public class AttendanceTest {
-	
-	static int idx = 0;
-	static int foundIdx = 0;
 
 	public static void main(String[] args) {
+		AttendanceManager am = new AttendanceManager();
 		int input = 0;
 
 		do {
-			showMenu();
-			input = Integer.parseInt(sc.nextLine());
+			AttendanceMenuViewer.showMenu();
+			input = Integer.parseInt(am.sc.nextLine());
 			System.out.println();
 
 			switch (input) {
 			case 1:
-				userCheckIn();
+				am.userCheckIn();
 				break;
 			case 2:
-				userCheckOut();
+				am.userCheckOut();
 				break;
 			case 3:
-				printAll();
+				am.userSearch();
 				break;
 			case 4:
+				am.userUpdate();
+				break;
+			case 5:
+				am.userDelete();
+				break;
+			case 6:
+				am.printAll();
+				break;
+			case 7:
 				System.out.println("프로그램을 종료합니다.");
 				break;
 			default:
 				System.out.println("잘못 누르셨습니다.");
 			} // end switch
-		} while (input != 4); // end while
+		} while (input != 7); // end while
 
 	} // end main
-
-	
-
-	
 
 } // end AttendanceTest
