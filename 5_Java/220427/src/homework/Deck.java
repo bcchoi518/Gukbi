@@ -12,16 +12,16 @@ public class Deck {
 				cardArr[i++] = new Card(k, n + 1);
 			} // end for
 		} // end for
-	}// end Deck()
+	}
 
 	Card pick(int index) { // 지정된 위치(index)에 있는 카드 하나를 꺼내서 반환
 		return cardArr[index];
-	}
+	}//end pick
 
 	Card pick() { // Deck에서 카드 하나를 선택한다.
 		int index = (int) (Math.random() * CARD_NUM);
 		return pick(index);
-	}
+	}//end pick
 
 	void shuffle() {
 		for (int i = 0; i < cardArr.length; i++) {

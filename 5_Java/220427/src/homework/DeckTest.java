@@ -1,5 +1,7 @@
 package homework;
 
+import java.util.Objects;
+
 public class DeckTest {
 
 	public static void main(String[] args) {
@@ -14,6 +16,21 @@ public class DeckTest {
 
 		d.shuffle();
 		d.shuffle();
+		c = d.pick();
+		System.out.println(c);
+		
+		c = d.pick();
+		System.out.println(c);
+		
+		c = d.pick();
+		System.out.println(c);
+		
+		c = d.pick();
+		System.out.println(c);
+		
+		c = d.pick();
+		System.out.println(c); 
+		
 		c = d.pick();
 		System.out.println(c);
 		
