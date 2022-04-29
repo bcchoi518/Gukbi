@@ -1,6 +1,6 @@
-package step4;
+package step5;
 
-public class PhoneBookVer04 {
+public class PhoneBookVer05 {
 
 	public static void main(String[] args) {
 		PhoneBookManager pm = PhoneBookManager.getInstance();
@@ -34,4 +34,4 @@ public class PhoneBookVer04 {
 			}// end switch
 		} // end while
 	}// end main
-}// end PhoneBookVer04
+}// end PhoneBookVer05
