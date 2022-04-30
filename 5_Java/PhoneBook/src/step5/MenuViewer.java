@@ -15,4 +15,26 @@ public class MenuViewer {
 		System.out.println("7. 프로그램 종료");
 		System.out.print("선택: ==> ");
 	}// end showMenu
+
+	static void showInputSubMenu() {
+		System.out.println("선택하세요...");
+		System.out.println("1. 일반");
+		System.out.println("2. 대학");
+		System.out.println("3. 직장");
+		System.out.print("선택: ==> ");
+	}// end showSubMenu
+
+	static void showUpdateSubMenu(Person p) {
+		System.out.println("선택하세요...");
+		System.out.println("0. 나가기");
+		System.out.println("1. 전번");
+		System.out.println("2. 생일");
+		if (p instanceof UnivPerson) {
+			System.out.println("3. 전공");
+			System.out.println("4. 학년");
+		} else if (p instanceof CompanyPerson) {
+			System.out.println("3. 회사");
+		} // end if
+		System.out.print("선택: ==> ");
+	}// end showUpdateSubMenu
 }// end MenuViewer

@@ -17,6 +17,10 @@ public class PhoneBookManager {
 	}// end getInstance
 
 	void inputData() {
+		int choice = 0;
+		MenuViewer.showInputSubMenu();
+		choice = Integer.parseInt(MenuViewer.scanner.nextLine());
+
 		System.out.print("이름==> ");
 		String name = MenuViewer.scanner.nextLine();
 		System.out.print("전번==> ");
@@ -24,7 +28,25 @@ public class PhoneBookManager {
 		System.out.print("생일==> ");
 		String birth = MenuViewer.scanner.nextLine();
 
-		infoStorage[curCnt++] = new Person(name, phoneNumber, birth);
+		switch (choice) {
+		case 1:
+			infoStorage[curCnt++] = new Person(name, phoneNumber, birth);
+			break;
+		case 2:
+			System.out.print("전공==> ");
+			String major = MenuViewer.scanner.nextLine();
+			System.out.print("학년==> ");
+			String grade = MenuViewer.scanner.nextLine();
+			infoStorage[curCnt++] = new UnivPerson(name, phoneNumber, birth, major, grade);
+			break;
+		case 3:
+			System.out.print("회사==> ");
+			String companyName = MenuViewer.scanner.nextLine();
+			infoStorage[curCnt++] = new CompanyPerson(name, phoneNumber, birth, companyName);
+			break;
+		default:
+			System.out.println("잘못 누르셨습니다.");
+		}// end switch
 		System.out.println("입력완료");
 		System.out.println();
 	}// end inputData
@@ -37,8 +59,7 @@ public class PhoneBookManager {
 		} // end if
 
 		for (int i = 0; i < curCnt; i++) {
-			System.out.print((i + 1) + ". ");
-			infoStorage[i].showPhoneInfo();
+			System.out.print((i + 1) + ". " + infoStorage[i].showPhoneInfo());
 		} // end for
 		System.out.println();
 	}// end allDisplay
@@ -46,17 +67,12 @@ public class PhoneBookManager {
 	void searchData() {
 		System.out.print("검색할 이름은?==> ");
 		String name = MenuViewer.scanner.nextLine();
-		Person tmp = null; // Person 클래스의 인스턴스를 저장할 임시변수
+		int index = -1; // 배열의 인덱스 처음 시작값이 0이므로 -1로 초기화
 
-		for (int i = 0; i < curCnt; i++) {
-			if (name.equals(infoStorage[i].name)) {
-				tmp = infoStorage[i]; // 검색한 인스턴스를 Person 클래스의 인스턴스를 저장할 임시변수에 저장
-				break;
-			} // end if
-		} // end for
+		index = search(name);
 
-		if (tmp != null) { // Person 클래스의 인스턴스를 저장한 임시변수를 가지고 판단
-			tmp.showPhoneInfo();
+		if (index > -1) {
+			System.out.println(infoStorage[index].showPhoneInfo());
 			System.out.println();
 		} else {
 			System.out.println("해당하는 정보가 존재하지 않음");
@@ -67,24 +83,62 @@ public class PhoneBookManager {
 	void updateData() {
 		System.out.print("수정할 이름은?==> ");
 		String name = MenuViewer.scanner.nextLine();
-		// searchData에서 Person 클래스의 인스턴스를 저장할 임시변수를 이용하였으니
-		// updateData에서는 배열의 index를 이용하여 검색하는 기능으로 구현해봄
 		int index = -1; // 배열의 인덱스 처음 시작값이 0이므로 -1로 초기화
+		int choice = 0;
 
-		for (int i = 0; i < curCnt; i++) {
-			if (name.equals(infoStorage[i].name)) {
-				index = i;
-				break;
-			} // end if
-		} // end for
+		index = search(name);
 
 		if (index > -1) { // Person 클래스의 인스턴스를 저장한 임시변수를 가지고 판단
-			System.out.print("수정할 전번==> ");
-			infoStorage[index].phoneNumber = MenuViewer.scanner.nextLine();
-			System.out.print("수정할 생일==> ");
-			infoStorage[index].birth = MenuViewer.scanner.nextLine();
-			System.out.println("수정 완료");
-			System.out.println();
+			do {
+				MenuViewer.showUpdateSubMenu(infoStorage[index]);
+				choice = Integer.parseInt(MenuViewer.scanner.nextLine());
+
+				switch (choice) {
+				case 0:
+					System.out.println();
+					break;
+				case 1:
+					System.out.print("수정할 전번==> ");
+					infoStorage[index].phoneNumber = MenuViewer.scanner.nextLine();
+					break;
+				case 2:
+					System.out.print("수정할 생일==> ");
+					infoStorage[index].birth = MenuViewer.scanner.nextLine();
+					break;
+				case 3:
+					if (infoStorage[index] instanceof UnivPerson) {
+						UnivPerson tmp = (UnivPerson) infoStorage[index];
+						System.out.print("수정할 전공==> ");
+						tmp.major = MenuViewer.scanner.nextLine();
+					} else if (infoStorage[index] instanceof CompanyPerson) {
+						CompanyPerson tmp = (CompanyPerson) infoStorage[index];
+						System.out.print("수정할 회사==> ");
+						tmp.CompanyName = MenuViewer.scanner.nextLine();
+					} else {
+						choice = -1;
+					} // end if
+					break;
+				case 4:
+					if (infoStorage[index] instanceof UnivPerson) {
+						UnivPerson tmp = (UnivPerson) infoStorage[index];
+						System.out.print("수정할 학년==> ");
+						tmp.grade = MenuViewer.scanner.nextLine();
+					} else {
+						choice = -1;
+					} // end if
+					break;
+				default:
+					choice = -1;
+					break;
+				}// end switch
+				if (choice > 0) {
+					System.out.println("수정 완료");
+					System.out.println();
+				} else if (choice == -1) {
+					System.out.println("잘못 누르셨습니다.");
+					System.out.println();
+				} // end if
+			} while (choice != 0);
 		} else {
 			System.out.println("수정할 정보가 존재하지 않음");
 			System.out.println();

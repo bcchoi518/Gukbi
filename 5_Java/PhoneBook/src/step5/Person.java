@@ -20,11 +20,11 @@ public class Person {
 		this(name, phoneNumber, null);
 	}
 
-	void showPhoneInfo() {
+	String showPhoneInfo() {
 		if (birth != null && !birth.equals("")) {
-			System.out.printf("%s : %s : %s%n", name, phoneNumber, birth);
+			return "이름: " + name + "\t전번: " + phoneNumber + "\t생일: " + birth;
 		} else {
-			System.out.printf("%s : %s%n", name, phoneNumber);
+			return "이름: " + name + "\t전번: " + phoneNumber;
 		} // end if
 	}// end showPhoneInfo
 }// end Person
