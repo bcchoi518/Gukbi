@@ -150,7 +150,7 @@ public class PhoneBookManager {
 					} else if (infoStorage[index] instanceof CompanyPerson) {
 						CompanyPerson tmp = (CompanyPerson) infoStorage[index];
 						System.out.print("수정할 회사==> ");
-						tmp.CompanyName = MenuViewer.scanner.nextLine();
+						tmp.companyName = MenuViewer.scanner.nextLine();
 					} else {
 						choice = -1;
 					} // end if
