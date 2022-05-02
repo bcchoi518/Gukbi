@@ -1,4 +1,4 @@
-package step5;
+package step4_1;
 
 public class PhoneBookManager {
 	private static PhoneBookManager pbm;
@@ -61,13 +61,13 @@ public class PhoneBookManager {
 		Person tmp = null;
 
 		switch (choice) {
-		case SubInputMenu.NOMAL:
+		case 1:
 			tmp = readNomalPerson();
 			break;
-		case SubInputMenu.UNIV:
+		case 2:
 			tmp = readUnivPerson();
 			break;
-		case SubInputMenu.COMPANY:
+		case 3:
 			tmp = readCompanyPerson();
 			break;
 		default:

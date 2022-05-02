@@ -1,4 +1,4 @@
-package step5;
+package homework;
 
 public class PhoneBookVer05 {
 
@@ -13,22 +13,22 @@ public class PhoneBookVer05 {
 			System.out.println();
 
 			switch (choice) {
-			case MainMenu.INPUT:
+			case 1:
 				pm.inputData();
 				break;
-			case MainMenu.SEARCH:
+			case 2:
 				pm.searchData();
 				break;
-			case MainMenu.UPDATE:
+			case 3:
 				pm.updateData();
 				break;
-			case MainMenu.DELETE:
+			case 4:
 				pm.deleteData();
 				break;
-			case MainMenu.DISPLAY:
+			case 6:
 				pm.allDisplay();
 				break;
-			case MainMenu.EXIT:
+			case 7:
 				System.out.println("프로그램 종료");
 				return;
 			}// end switch

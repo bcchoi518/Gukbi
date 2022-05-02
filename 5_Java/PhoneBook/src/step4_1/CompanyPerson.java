@@ -1,4 +1,4 @@
-package step5;
+package step4_1;
 
 public class CompanyPerson extends Person {
 	String CompanyName;

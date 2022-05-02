@@ -1,4 +1,4 @@
-package step5;
+package step6;
 
 public class UnivPerson extends Person {
 	String major;

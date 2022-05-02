@@ -1,4 +1,4 @@
-package step5;
+package homework;
 
 public class PhoneBookManager {
 	private static PhoneBookManager pbm;
@@ -16,66 +16,37 @@ public class PhoneBookManager {
 		return pbm;
 	}// end getInstance
 
-	private Person readNomalPerson() {
-		System.out.print("이름==> ");
-		String name = MenuViewer.scanner.nextLine();
-		System.out.print("전번==> ");
-		String phoneNumber = MenuViewer.scanner.nextLine();
-		System.out.print("생일==> ");
-		String birth = MenuViewer.scanner.nextLine();
-
-		return new Person(name, phoneNumber, birth);
-	}// end readNomalPerson
-
-	private Person readUnivPerson() { // 부모타입 반환으로 통일감을 주고 유지보수할때도 유리
-		System.out.print("이름==> ");
-		String name = MenuViewer.scanner.nextLine();
-		System.out.print("전번==> ");
-		String phoneNumber = MenuViewer.scanner.nextLine();
-		System.out.print("생일==> ");
-		String birth = MenuViewer.scanner.nextLine();
-		System.out.print("전공==> ");
-		String major = MenuViewer.scanner.nextLine();
-		System.out.print("학년==> ");
-		int grade = Integer.parseInt(MenuViewer.scanner.nextLine());
-
-		return new UnivPerson(name, phoneNumber, birth, major, grade);
-	}// end readUnivPerson
-
-	private Person readCompanyPerson() {
-		System.out.print("이름==> ");
-		String name = MenuViewer.scanner.nextLine();
-		System.out.print("전번==> ");
-		String phoneNumber = MenuViewer.scanner.nextLine();
-		System.out.print("생일==> ");
-		String birth = MenuViewer.scanner.nextLine();
-		System.out.print("회사==> ");
-		String companyName = MenuViewer.scanner.nextLine();
-
-		return new CompanyPerson(name, phoneNumber, birth, companyName);
-	}// end readCompanyPerson
-
 	void inputData() {
+		int choice = 0;
 		MenuViewer.showInputSubMenu();
-		int choice = Integer.parseInt(MenuViewer.scanner.nextLine());
-		Person tmp = null;
+		choice = Integer.parseInt(MenuViewer.scanner.nextLine());
+
+		System.out.print("이름==> ");
+		String name = MenuViewer.scanner.nextLine();
+		System.out.print("전번==> ");
+		String phoneNumber = MenuViewer.scanner.nextLine();
+		System.out.print("생일==> ");
+		String birth = MenuViewer.scanner.nextLine();
 
 		switch (choice) {
-		case SubInputMenu.NOMAL:
-			tmp = readNomalPerson();
+		case 1:
+			infoStorage[curCnt++] = new Person(name, phoneNumber, birth);
 			break;
-		case SubInputMenu.UNIV:
-			tmp = readUnivPerson();
+		case 2:
+			System.out.print("전공==> ");
+			String major = MenuViewer.scanner.nextLine();
+			System.out.print("학년==> ");
+			String grade = MenuViewer.scanner.nextLine();
+			infoStorage[curCnt++] = new UnivPerson(name, phoneNumber, birth, major, grade);
 			break;
-		case SubInputMenu.COMPANY:
-			tmp = readCompanyPerson();
+		case 3:
+			System.out.print("회사==> ");
+			String companyName = MenuViewer.scanner.nextLine();
+			infoStorage[curCnt++] = new CompanyPerson(name, phoneNumber, birth, companyName);
 			break;
 		default:
-			System.out.println("잘못 입력하셨습니다.");
-			System.out.println();
-			return; // nullPointerException 방지
+			System.out.println("잘못 누르셨습니다.");
 		}// end switch
-		infoStorage[curCnt++] = tmp;
 		System.out.println("입력완료");
 		System.out.println();
 	}// end inputData
@@ -151,7 +122,7 @@ public class PhoneBookManager {
 					if (infoStorage[index] instanceof UnivPerson) {
 						UnivPerson tmp = (UnivPerson) infoStorage[index];
 						System.out.print("수정할 학년==> ");
-						tmp.grade = Integer.parseInt(MenuViewer.scanner.nextLine());
+						tmp.grade = MenuViewer.scanner.nextLine();
 					} else {
 						choice = -1;
 					} // end if
@@ -160,7 +131,6 @@ public class PhoneBookManager {
 					choice = -1;
 					break;
 				}// end switch
-
 				if (choice > 0) {
 					System.out.println("수정 완료");
 					System.out.println();

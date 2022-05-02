@@ -1,4 +1,4 @@
-package step5;
+package step6;
 
 public class PhoneBookManager {
 	private static PhoneBookManager pbm;
@@ -55,10 +55,14 @@ public class PhoneBookManager {
 		return new CompanyPerson(name, phoneNumber, birth, companyName);
 	}// end readCompanyPerson
 
-	void inputData() {
+	void inputData() throws MenuChoiceException {
 		MenuViewer.showInputSubMenu();
 		int choice = Integer.parseInt(MenuViewer.scanner.nextLine());
 		Person tmp = null;
+
+		if (choice < SubInputMenu.NOMAL || choice > SubInputMenu.COMPANY) {
+			throw new MenuChoiceException(choice);
+		} // end if
 
 		switch (choice) {
 		case SubInputMenu.NOMAL:
@@ -109,7 +113,7 @@ public class PhoneBookManager {
 		} // end if
 	}// end searchData
 
-	void updateData() {
+	void updateData() throws MenuChoiceException {
 		System.out.print("수정할 이름은?==> ");
 		String name = MenuViewer.scanner.nextLine();
 		int index = -1; // 배열의 인덱스 처음 시작값이 0이므로 -1로 초기화
@@ -121,6 +125,10 @@ public class PhoneBookManager {
 			do {
 				MenuViewer.showUpdateSubMenu(infoStorage[index]);
 				choice = Integer.parseInt(MenuViewer.scanner.nextLine());
+
+				if (choice < SubInputMenu.NOMAL || choice > SubInputMenu.COMPANY) {
+					throw new MenuChoiceException(choice);
+				} // end if
 
 				switch (choice) {
 				case 0:

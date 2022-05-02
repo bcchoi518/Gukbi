@@ -1,4 +1,4 @@
-package step5;
+package homework;
 
 public class CompanyPerson extends Person {
 	String CompanyName;
@@ -13,7 +13,7 @@ public class CompanyPerson extends Person {
 	}
 
 	CompanyPerson(String name, String phoneNumber, String CompanyName) {
-		super(name, phoneNumber);
+		super(name, phoneNumber, null);
 		this.CompanyName = CompanyName;
 	}
 
