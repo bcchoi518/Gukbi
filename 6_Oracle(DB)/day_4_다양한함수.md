@@ -209,3 +209,4 @@
 ---
 
 응용) decode, case 함수 사용하여 직급에 따라 급여인상(ex> salesman 이면 salary+300)
+![DECODE](./imgs/DECODE.PNG)

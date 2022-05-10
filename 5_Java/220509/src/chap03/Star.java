@@ -26,16 +26,14 @@ public class Star {
 
 		System.out.println();
 
-		for (int i = 0; i < 10; i++) {
-			if (i % 2 == 1) {
-				for (int j = (5 - i); j > 0; j--) {
-					System.out.print(" ");
-				} // end for
-				for (int k = 0; k < i; k++) {
-					System.out.print("*");
-				} // end for
-				System.out.println();
-			} // end if
+		for (int i = -10; i < 11; i++) {
+			for (int k = 0; k <= Math.abs(i) - 1; k++) {
+				System.out.print(" ");
+			} // end for
+			for (int k = 0; k <= (10 - Math.abs(i)) * 2; k++) {
+				System.out.print("*");
+			} // end for
+			System.out.println();
 		} // end for
 	}// end main
 }// Stars
