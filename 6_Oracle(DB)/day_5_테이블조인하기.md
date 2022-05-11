@@ -94,3 +94,11 @@ table1.column = table2.column(+);
 ANSI 표준으로 바꾸면 아래와 같음
 
 ![OUTERJOIN(ANSI)](<./imgs/OUTERJOIN(ANSI).PNG>)
+
+QUIZ) WARD 보다 먼저 입사한 사원을 구하시오.
+
+![WARDBEFOREHIRE](./imgs/WARDBEFOREHIRE.PNG)
+
+QuIZ) SCOTT이랑 동일한 부서에서 일하는 직원을 구하시오.
+
+![SCOTTSAMEDNO](./imgs/SCOTTSAMEDNO.PNG)

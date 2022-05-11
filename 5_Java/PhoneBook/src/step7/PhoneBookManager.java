@@ -1,10 +1,12 @@
-package step6;
+package step7;
+
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Iterator;
 
 public class PhoneBookManager {
 	private static PhoneBookManager pbm;
-	final int MAX_CNT = 100;
-	Person[] infoStorage = new Person[MAX_CNT];
-	int curCnt = 0;
+	Collection infoStorage = new HashSet();
 
 	private PhoneBookManager() { // Singleton
 	}
@@ -58,7 +60,7 @@ public class PhoneBookManager {
 	void inputData() throws MenuChoiceException {
 		MenuViewer.showInputSubMenu();
 		int choice = Integer.parseInt(MenuViewer.scanner.nextLine());
-		Person tmp = null;
+		Person pTemp = null;
 
 		if (choice < SubInputMenu.NOMAL || choice > SubInputMenu.COMPANY) {
 			throw new MenuChoiceException(choice);
@@ -66,46 +68,53 @@ public class PhoneBookManager {
 
 		switch (choice) {
 		case SubInputMenu.NOMAL:
-			tmp = readNomalPerson();
+			pTemp = readNomalPerson();
 			break;
 		case SubInputMenu.UNIV:
-			tmp = readUnivPerson();
+			pTemp = readUnivPerson();
 			break;
 		case SubInputMenu.COMPANY:
-			tmp = readCompanyPerson();
+			pTemp = readCompanyPerson();
 			break;
 		default:
 			System.out.println("잘못 입력하셨습니다.");
 			System.out.println();
 			return; // nullPointerException 방지
 		}// end switch
-		infoStorage[curCnt++] = tmp;
-		System.out.println("입력완료");
-		System.out.println();
+
+		if (infoStorage.add(pTemp)) {
+			System.out.println("입력완료");
+			System.out.println();
+		} else {
+			System.out.println("입력실패: 중복자료");
+			System.out.println();
+		} // end if
 	}// end inputData
 
 	void allDisplay() {
-		if (infoStorage[0] == null) {
+		Iterator it = infoStorage.iterator();
+
+		if (!it.hasNext()) {
 			System.out.println("저장된 정보가 없습니다.");
 			System.out.println();
 			return;
 		} // end if
 
-		for (int i = 0; i < curCnt; i++) {
-			System.out.println((i + 1) + ". " + infoStorage[i].showPhoneInfo());
-		} // end for
+		while (it.hasNext()) {
+			Person pTemp = (Person) it.next();
+			System.out.println(pTemp.showPhoneInfo());
+		} // end while
 		System.out.println();
 	}// end allDisplay
 
 	void searchData() {
 		System.out.print("검색할 이름은?==> ");
 		String name = MenuViewer.scanner.nextLine();
-		int index = -1; // 배열의 인덱스 처음 시작값이 0이므로 -1로 초기화
 
-		index = search(name);
+		Person pTemp = search(name);
 
-		if (index > -1) {
-			System.out.println(infoStorage[index].showPhoneInfo());
+		if (pTemp != null) {
+			System.out.println(pTemp.showPhoneInfo());
 			System.out.println();
 		} else {
 			System.out.println("해당하는 정보가 존재하지 않음");
@@ -116,14 +125,14 @@ public class PhoneBookManager {
 	void updateData() throws MenuChoiceException {
 		System.out.print("수정할 이름은?==> ");
 		String name = MenuViewer.scanner.nextLine();
-		int index = -1; // 배열의 인덱스 처음 시작값이 0이므로 -1로 초기화
+		Iterator it = infoStorage.iterator();
 		int choice = 0;
 
-		index = search(name);
+		Person pTemp = search(name);
 
-		if (index > -1) { // Person 클래스의 인스턴스를 저장한 임시변수를 가지고 판단
+		if (pTemp != null) { // Person 클래스의 인스턴스를 저장한 임시변수를 가지고 판단
 			do {
-				MenuViewer.showUpdateSubMenu(infoStorage[index]);
+				MenuViewer.showUpdateSubMenu(pTemp);
 				choice = Integer.parseInt(MenuViewer.scanner.nextLine());
 
 				if (choice < SubInputMenu.EXIT || choice > SubInputMenu.COMPANY) {
@@ -136,30 +145,30 @@ public class PhoneBookManager {
 					break;
 				case 1:
 					System.out.print("수정할 전번==> ");
-					infoStorage[index].phoneNumber = MenuViewer.scanner.nextLine();
+					pTemp.phoneNumber = MenuViewer.scanner.nextLine();
 					break;
 				case 2:
 					System.out.print("수정할 생일==> ");
-					infoStorage[index].birth = MenuViewer.scanner.nextLine();
+					pTemp.birth = MenuViewer.scanner.nextLine();
 					break;
 				case 3:
-					if (infoStorage[index] instanceof UnivPerson) {
-						UnivPerson tmp = (UnivPerson) infoStorage[index];
+					if (pTemp instanceof UnivPerson) {
+						UnivPerson univTemp = (UnivPerson) pTemp;
 						System.out.print("수정할 전공==> ");
-						tmp.major = MenuViewer.scanner.nextLine();
-					} else if (infoStorage[index] instanceof CompanyPerson) {
-						CompanyPerson tmp = (CompanyPerson) infoStorage[index];
+						univTemp.major = MenuViewer.scanner.nextLine();
+					} else if (pTemp instanceof CompanyPerson) {
+						CompanyPerson comTemp = (CompanyPerson) pTemp;
 						System.out.print("수정할 회사==> ");
-						tmp.companyName = MenuViewer.scanner.nextLine();
+						comTemp.companyName = MenuViewer.scanner.nextLine();
 					} else {
 						choice = -1;
 					} // end if
 					break;
 				case 4:
-					if (infoStorage[index] instanceof UnivPerson) {
-						UnivPerson tmp = (UnivPerson) infoStorage[index];
+					if (pTemp instanceof UnivPerson) {
+						UnivPerson univtmp = (UnivPerson) pTemp;
 						System.out.print("수정할 학년==> ");
-						tmp.grade = Integer.parseInt(MenuViewer.scanner.nextLine());
+						univtmp.grade = Integer.parseInt(MenuViewer.scanner.nextLine());
 					} else {
 						choice = -1;
 					} // end if
@@ -186,33 +195,34 @@ public class PhoneBookManager {
 	void deleteData() {
 		System.out.print("삭제할 이름은?==> ");
 		String name = MenuViewer.scanner.nextLine();
-		int index = -1; // 배열의 인덱스 처음 시작값이 0이므로 -1로 초기화
+		Iterator it = infoStorage.iterator();
+		Person pTemp = null;
 
-		index = search(name); // searchData, updateData, deleteData에 중복되는 코드를 메서드로 정의해서 사용
+		while (it.hasNext()) {
+			pTemp = (Person) it.next();
+			if (pTemp.name.equals(name)) {
+				it.remove();
+				System.out.println("삭제 완료");
+				System.out.println();
+				return;
+			} // end if
+		} // end while
 
-		if (index > -1) { // 찾은 index로 판단
-			for (int i = index; i < curCnt; i++) {
-				if (i == MAX_CNT - 1) {
-					infoStorage[i] = null;
-				} else {
-					infoStorage[i] = infoStorage[i + 1];
-				} // end if
-			} // end for
-			curCnt--;
-			System.out.println("삭제 완료");
-			System.out.println();
-		} else {
-			System.out.println("삭제할 정보가 존재하지 않음");
-			System.out.println();
-		} // end if
+		System.out.println("삭제할 정보가 존재하지 않음");
+		System.out.println();
 	}// end deleteData
 
-	private int search(String name) {
-		for (int i = 0; i < curCnt; i++) {
-			if (name.equals(infoStorage[i].name)) {
-				return i; // 찾은 위치를 index에 저장
+	private Person search(String name) {
+		Iterator it = infoStorage.iterator();
+		Person pTemp = null;
+
+		while (it.hasNext()) {
+			pTemp = (Person) it.next();
+			if (pTemp.name.equals(name)) {
+				return pTemp;
 			} // end if
-		} // end for
-		return -1;
+		} // end while
+
+		return null;
 	}// end search
 }// end PhoneBookManager
