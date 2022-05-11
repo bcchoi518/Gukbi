@@ -94,7 +94,7 @@ public class PhoneBookManager {
 	void allDisplay() {
 		Iterator it = infoStorage.iterator();
 
-		if (!it.hasNext()) {
+		if (infoStorage.isEmpty()) {
 			System.out.println("저장된 정보가 없습니다.");
 			System.out.println();
 			return;
@@ -108,6 +108,12 @@ public class PhoneBookManager {
 	}// end allDisplay
 
 	void searchData() {
+		if (infoStorage.isEmpty()) {
+			System.out.println("저장된 정보가 없습니다.");
+			System.out.println();
+			return;
+		} // end if
+
 		System.out.print("검색할 이름은?==> ");
 		String name = MenuViewer.scanner.nextLine();
 
@@ -123,9 +129,14 @@ public class PhoneBookManager {
 	}// end searchData
 
 	void updateData() throws MenuChoiceException {
+		if (infoStorage.isEmpty()) {
+			System.out.println("저장된 정보가 없습니다.");
+			System.out.println();
+			return;
+		} // end if
+
 		System.out.print("수정할 이름은?==> ");
 		String name = MenuViewer.scanner.nextLine();
-		Iterator it = infoStorage.iterator();
 		int choice = 0;
 
 		Person pTemp = search(name);
@@ -193,23 +204,25 @@ public class PhoneBookManager {
 	}// end updateData
 
 	void deleteData() {
+		if (infoStorage.isEmpty()) {
+			System.out.println("저장된 정보가 없습니다.");
+			System.out.println();
+			return;
+		} // end if
+
 		System.out.print("삭제할 이름은?==> ");
 		String name = MenuViewer.scanner.nextLine();
-		Iterator it = infoStorage.iterator();
-		Person pTemp = null;
 
-		while (it.hasNext()) {
-			pTemp = (Person) it.next();
-			if (pTemp.name.equals(name)) {
-				it.remove();
-				System.out.println("삭제 완료");
-				System.out.println();
-				return;
-			} // end if
-		} // end while
+		Person pTemp = search(name);
 
-		System.out.println("삭제할 정보가 존재하지 않음");
-		System.out.println();
+		if (pTemp != null) {
+			infoStorage.remove(pTemp);
+			System.out.println("삭제 완료");
+			System.out.println();
+		} else {
+			System.out.println("삭제할 정보가 존재하지 않음");
+			System.out.println();
+		} // end if
 	}// end deleteData
 
 	private Person search(String name) {
