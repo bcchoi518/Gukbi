@@ -38,9 +38,9 @@ public class Person {
 
 	String showPhoneInfo() {
 		if (birth != null && !birth.equals("")) {
-			return "이름: " + name + "\t전번: " + phoneNumber + "\t생일: " + birth;
+			return "이름: " + name + "   전번: " + phoneNumber + "   생일: " + birth;
 		} else {
-			return "이름: " + name + "\t전번: " + phoneNumber;
+			return "이름: " + name + "   전번: " + phoneNumber;
 		} // end if
 	}// end showPhoneInfo
 }// end Person

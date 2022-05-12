@@ -94,23 +94,21 @@ public class PhoneBookManager {
 	void allDisplay() {
 		Iterator it = infoStorage.iterator();
 
-		if (infoStorage.isEmpty()) {
-			System.out.println("저장된 정보가 없습니다.");
-			System.out.println();
+		if (!infoStorageCheck()) {
 			return;
 		} // end if
 
+		System.out.println("━━━━━━━━━━━━━━━━━━━ 연락처 리스트 ━━━━━━━━━━━━━━━━━━━");
 		while (it.hasNext()) {
 			Person pTemp = (Person) it.next();
 			System.out.println(pTemp.showPhoneInfo());
 		} // end while
+		System.out.println("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
 		System.out.println();
 	}// end allDisplay
 
 	void searchData() {
-		if (infoStorage.isEmpty()) {
-			System.out.println("저장된 정보가 없습니다.");
-			System.out.println();
+		if (!infoStorageCheck()) { // infoStorage가 비었는지 체크
 			return;
 		} // end if
 
@@ -129,9 +127,7 @@ public class PhoneBookManager {
 	}// end searchData
 
 	void updateData() throws MenuChoiceException {
-		if (infoStorage.isEmpty()) {
-			System.out.println("저장된 정보가 없습니다.");
-			System.out.println();
+		if (!infoStorageCheck()) { // infoStorage가 비었는지 체크
 			return;
 		} // end if
 
@@ -204,11 +200,11 @@ public class PhoneBookManager {
 	}// end updateData
 
 	void deleteData() {
-		if (infoStorage.isEmpty()) {
-			System.out.println("저장된 정보가 없습니다.");
-			System.out.println();
+		if (!infoStorageCheck()) { // infoStorage가 비었는지 체크
 			return;
 		} // end if
+
+		allDisplay();
 
 		System.out.print("삭제할 이름은?==> ");
 		String name = MenuViewer.scanner.nextLine();
@@ -238,4 +234,13 @@ public class PhoneBookManager {
 
 		return null;
 	}// end search
+
+	private boolean infoStorageCheck() {
+		if (infoStorage.isEmpty()) {
+			System.out.println("저장된 정보가 없습니다.");
+			System.out.println();
+			return false;
+		} // end if
+		return true;
+	}// end infoStorageCheck
 }// end PhoneBookManager

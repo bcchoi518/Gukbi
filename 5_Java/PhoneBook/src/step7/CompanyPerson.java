@@ -19,6 +19,6 @@ public class CompanyPerson extends Person {
 
 	@Override
 	String showPhoneInfo() {
-		return super.showPhoneInfo() + "\t회사: " + companyName;
+		return super.showPhoneInfo() + "   회사: " + companyName;
 	}// end showPhoneInfo
 }// end CompanyPerson

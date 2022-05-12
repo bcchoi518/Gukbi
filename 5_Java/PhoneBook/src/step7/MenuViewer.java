@@ -22,7 +22,7 @@ public class MenuViewer {
 		System.out.println("2. 대학");
 		System.out.println("3. 직장");
 		System.out.print("선택: ==> ");
-	}// end showSubMenu
+	}// end showInputSubMenu
 
 	static void showUpdateSubMenu(Person p) {
 		System.out.println("선택하세요...");

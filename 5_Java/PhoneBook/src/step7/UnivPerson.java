@@ -22,6 +22,6 @@ public class UnivPerson extends Person {
 
 	@Override
 	String showPhoneInfo() {
-		return super.showPhoneInfo() + "\t전공: " + major + "\t학년 : " + grade;
+		return super.showPhoneInfo() + "   전공: " + major + "   학년 : " + grade;
 	}// end showPhoneInfo
 }// end UnivPerson
