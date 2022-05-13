@@ -1,8 +1,9 @@
-package step7;
+package step8;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Person {
+public class Person implements Serializable {
 	String name;
 	String phoneNumber;
 	String birth;

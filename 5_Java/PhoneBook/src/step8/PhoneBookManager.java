@@ -1,5 +1,11 @@
-package step7;
+package step8;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -9,6 +15,7 @@ public class PhoneBookManager {
 	Collection<Person> infoStorage = new HashSet<Person>();
 
 	private PhoneBookManager() {
+		loadData();
 	}
 
 	public static PhoneBookManager getInstance() { // Singleton
@@ -222,6 +229,61 @@ public class PhoneBookManager {
 			System.out.printf("잘못 누르셨습니다.%n%n");
 		} // end if
 	}// end deleteAll
+
+	private void loadData() {
+		File dataFile = new File("Person.dat");
+		if (!dataFile.exists()) {
+			try {
+				dataFile.createNewFile();
+				return;
+			} catch (IOException e) {
+				e.printStackTrace();
+			} // end try-catch
+		} // end if
+		FileInputStream fis = null;
+		ObjectInputStream in = null;
+		try {
+			fis = new FileInputStream("Person.dat");
+			in = new ObjectInputStream(fis);
+			infoStorage = (HashSet<Person>) in.readObject();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (in != null) {
+					in.close();
+				} // end if
+				if (fis != null) {
+					fis.close();
+				} // end if
+			} catch (IOException e) {
+				e.printStackTrace();
+			} // end try-catch
+		} // end try-catch-finally
+	}// end loadData
+
+	void saveData() {
+		FileOutputStream fos = null;
+		ObjectOutputStream out = null;
+		try {
+			fos = new FileOutputStream("Person.dat");
+			out = new ObjectOutputStream(fos);
+			out.writeObject(infoStorage);
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (out != null) {
+					out.close();
+				} // end if
+				if (fos != null) {
+					fos.close();
+				} // end if
+			} catch (IOException e) {
+				e.printStackTrace();
+			} // end try-catch
+		} // end try-catch-finally
+	}// end saveData
 
 	private Person search(String name) {
 		Iterator<Person> it = infoStorage.iterator();

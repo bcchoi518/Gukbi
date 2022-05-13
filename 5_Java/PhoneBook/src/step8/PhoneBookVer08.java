@@ -1,6 +1,6 @@
-package step7;
+package step8;
 
-public class PhoneBookVer07 {
+public class PhoneBookVer08 {
 
 	public static void main(String[] args) {
 		PhoneBookManager pm = PhoneBookManager.getInstance();
@@ -36,6 +36,7 @@ public class PhoneBookVer07 {
 					pm.deleteAll();
 					break;
 				case MainMenu.EXIT:
+					pm.saveData();
 					System.out.println("프로그램 종료");
 					return;
 				}// end switch
@@ -47,4 +48,4 @@ public class PhoneBookVer07 {
 			} // end try-catch
 		} // end while
 	}// end main
-}// end PhoneBookVer07
+}// end PhoneBookVer08
