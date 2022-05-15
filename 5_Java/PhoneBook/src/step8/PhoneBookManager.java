@@ -103,7 +103,7 @@ public class PhoneBookManager {
 
 		System.out.println("━━━━━━━━━━━━━━━━━━━ 연락처 리스트 ━━━━━━━━━━━━━━━━━━━");
 		while (it.hasNext()) {
-			Person pTemp = (Person) it.next();
+			Person pTemp = it.next();
 			System.out.println(pTemp.showPhoneInfo());
 		} // end while
 		System.out.printf("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━%n%n");
@@ -181,10 +181,10 @@ public class PhoneBookManager {
 					break;
 				}// end switch
 
-				if (choice > 0) {
-					System.out.printf("수정 완료%n%n");
-				} else if (choice == -1) {
+				if (choice == -1) {
 					System.out.printf("잘못 누르셨습니다.%n%n");
+				} else {
+					System.out.printf("수정 완료%n%n");
 				} // end if
 			} while (choice != 0);
 		} else {
@@ -218,12 +218,12 @@ public class PhoneBookManager {
 		} // end if
 
 		System.out.print("데이터 전체 삭제를 진행하시겠습니까? (Y/N)> ");
-		String tmp = MenuViewer.scanner.nextLine();
+		String temp = MenuViewer.scanner.nextLine();
 
-		if (tmp.equalsIgnoreCase("Y")) {
+		if (temp.equalsIgnoreCase("Y")) {
 			infoStorage.removeAll(infoStorage);
 			System.out.printf("삭제 완료%n%n");
-		} else if (tmp.equalsIgnoreCase("N")) {
+		} else if (temp.equalsIgnoreCase("N")) {
 			System.out.printf("삭제 작업이 취소되었습니다.%n%n");
 		} else {
 			System.out.printf("잘못 누르셨습니다.%n%n");
@@ -290,7 +290,7 @@ public class PhoneBookManager {
 		Person pTemp = null;
 
 		while (it.hasNext()) {
-			pTemp = (Person) it.next();
+			pTemp = it.next();
 			if (pTemp.name.equals(name)) {
 				return pTemp;
 			} // end if
