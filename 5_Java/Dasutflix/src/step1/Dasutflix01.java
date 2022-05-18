@@ -2,22 +2,27 @@ package step1;
 
 public class Dasutflix01 {
 	public static void main(String[] args) {
-		PlayManager pm = PlayManager.getInstance();
+		PlayManager playM = PlayManager.getInstance();
 		User uTemp = null;
 		int choice = -1;
 
-		try {
-			while (true) {
+		while (true) {
+			try {
 				MenuViewer.showLogIn();
 				choice = Integer.parseInt(MenuViewer.sc.nextLine());
 				switch (choice) {
 				case 1:
-					uTemp = pm.signIn();
-					pm.play(uTemp);
+					uTemp = playM.signIn();
+					if (uTemp instanceof Admin) {
+						Admin admin = (Admin) uTemp;
+						playM.play(admin);
+					} else {
+						playM.play(uTemp);
+					} // end if
 					break;
 				case 2:
-					pm.um.signUp();
-					pm.um.allDisplayUser();// 지울코드
+					playM.signUp();
+					playM.userM.allDisplayUser();// 지울코드
 					break;
 				case 3:
 					System.out.println("프로그램이 종료됩니다.");
@@ -25,13 +30,13 @@ public class Dasutflix01 {
 				default:
 					throw new ChoiceException(choice);
 				}// end switch
-			} // end while
-		} catch (ChoiceException e) {
-			e.showErrorMessage();
-		} catch (NotExistException e) {
-			e.showErrorMessage();
-		} catch (Exception e) {
-			e.printStackTrace();
-		} // end try-catch
+			} catch (ChoiceException e) {
+				e.showErrorMessage();
+			} catch (NotExistException e) {
+				e.showErrorMessage();
+			} catch (Exception e) {
+				e.printStackTrace();
+			} // end try-catch
+		} // end while
 	}// end main
 }// end Test

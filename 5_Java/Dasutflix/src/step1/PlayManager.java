@@ -1,27 +1,53 @@
 package step1;
 
 public class PlayManager {
-	private static PlayManager pm;
-	UserManager um;
+	private static PlayManager playM;
+	UserManager userM;
+	ProfileManager profileM;
 
 	private PlayManager() {
-		um = UserManager.getInstance();
-		um.userStorage.add(new Admin());
+		userM = UserManager.getInstance();
+		profileM = ProfileManager.getInstance();
+		userM.userStorage.add(new Admin());
 	}
 
 	public static PlayManager getInstance() {
-		if (pm == null) {
-			pm = new PlayManager();
+		if (playM == null) {
+			playM = new PlayManager();
 		} // end if
-		return pm;
+		return playM;
 	}// end getInstance
+
+	void signUp() {
+		System.out.print("사용하실 ID를 입력하세요: ");
+		String id = MenuViewer.sc.nextLine();
+		System.out.print("사용하실 PassWord를 입력하세요: ");
+		String pw = MenuViewer.sc.nextLine();
+		User uTemp = new User(id, pw);
+		if (!userM.userStorage.add(uTemp)) {
+			System.out.println("존재하는 회원입니다.");
+			return;
+		} // end if
+		System.out.print("사용하실 프로필 닉네임을 입력하세요: ");
+		String nickname = MenuViewer.sc.nextLine();
+		uTemp.pf.setNickname(nickname);
+		System.out.println("선호하는 장르를 3가지 고르세요");
+		System.out.println("공포, 코믹, 드라마, 에로, SF");
+		for (int i = 0; i < uTemp.pf.FAVORITE_MAX; i++) {
+			System.out.print(">> ");
+			String favorite = MenuViewer.sc.nextLine();
+			uTemp.pf.favorite.add(favorite);
+		} // end for
+		uTemp.pf.setActive(true);
+		System.out.println("회원가입을 축하합니다!");
+	}// end signUp
 
 	User signIn() throws ChoiceException, NotExistException {
 		System.out.print("ID를 입력하세요: ");
 		String id = MenuViewer.sc.nextLine();
 		System.out.print("PassWord를 입력하세요: ");
 		String pw = MenuViewer.sc.nextLine();
-		User uTemp = um.search(id);
+		User uTemp = userM.search(id);
 		if (uTemp == null) {
 			throw new NotExistException();
 		} // end if
@@ -35,14 +61,14 @@ public class PlayManager {
 	}// end createUser
 
 	void signOut() {
-		User uTemp = um.searchIsOnline();
+		User uTemp = userM.searchIsOnline();
 		uTemp.setOnline(false);
 	}// end signOut
 
-	void play(User user) throws ChoiceException, NotExistException {
+	void play(User user) {
 		int choice = -1;
-		try {
-			while (true) {
+		while (true) {
+			try {
 				MenuViewer.showMainMenu(user);
 				choice = Integer.parseInt(MenuViewer.sc.nextLine());
 				switch (choice) {
@@ -50,41 +76,62 @@ public class PlayManager {
 					signOut();
 					return;
 				case 1:
-					um.profileSetting();
+					profileM.profileSetting();
 					break;
 				case 2:
+					System.out.println("공사중");
 					break;
 				case 3:
+					System.out.println("공사중");
 					break;
 				case 4:
+					configurationSetting();
 					break;
 				default:
 					throw new ChoiceException(choice);
 				}// end switch
-			} // end while
-		} catch (ChoiceException e) {
-			throw new ChoiceException(choice);
-		} catch (NotExistException e) {
-			throw new NotExistException();
-		}
-		// end try-catch
+			} catch (ChoiceException e) {
+				e.showErrorMessage();
+			} catch (NotExistException e) {
+				e.showErrorMessage();
+			} catch (Exception e) {
+				e.printStackTrace();
+			} // end try-catch
+		} // end while
 	}// end play
 
-	void play(Admin admin) throws ChoiceException {
+	void play(Admin admin) {
 		int choice = 0;
-		try {
-			MenuViewer.showMainMenu(admin);
-			choice = Integer.parseInt(MenuViewer.sc.nextLine());
-			switch (choice) {
-			case 0:
-				return;
-			case 1:
-				break;
-			case 2:
-				break;
-			}// end switch
-		} catch (Exception e) {
-			throw new ChoiceException(choice);
-		} // end try-catch
+		while (true) {
+			try {
+				MenuViewer.showMainMenu(admin);
+				choice = Integer.parseInt(MenuViewer.sc.nextLine());
+				switch (choice) {
+				case 0:
+					return;
+				case 1:
+					userM.userManagement();
+					break;
+				case 2:
+					System.out.println("공사중");
+					break;
+				case 3:
+					userM.changeAdminPassword();
+					break;
+				default:
+					throw new ChoiceException(choice);
+				}// end switch
+			} catch (ChoiceException e) {
+				e.showErrorMessage();
+			} catch (NotExistException e) {
+				e.showErrorMessage();
+			} catch (Exception e) {
+				e.printStackTrace();
+			} // end try-catch
+		} // end while
 	}// end play
+
+	void configurationSetting() {
+		System.out.println("공사중");
+	}// end configurationSetting
 }// end PlayManager

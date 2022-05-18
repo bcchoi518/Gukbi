@@ -1,14 +1,14 @@
 package step1;
 
-public class Settings {
+public class Configuration {
 	private String nations;
 	private boolean caption;
 	private String quality;
 
-	public Settings() {
+	public Configuration() {
 	}
 
-	public Settings(String nations, boolean caption, String quality) {
+	public Configuration(String nations, boolean caption, String quality) {
 		this.nations = nations;
 		this.caption = caption;
 		this.quality = quality;

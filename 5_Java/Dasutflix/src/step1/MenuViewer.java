@@ -1,6 +1,5 @@
 package step1;
 
-import java.util.Iterator;
 import java.util.Scanner;
 
 public class MenuViewer {
@@ -22,48 +21,21 @@ public class MenuViewer {
 	}// end showMainMenu
 
 	static void showUserMenu(User user) throws NotExistException {
-		Iterator<Profile> it = user.profileStorage.iterator();
-		Profile pfTemp = null;
-		while (it.hasNext()) {
-			pfTemp = it.next();
-			if (pfTemp.isActive()) {
-				break;
-			} else {
-				throw new NotExistException();
-			} // end if
-		} // end while
 		System.out.println("0. 로그아웃");
 		System.out.println("1. 프로필");
 		System.out.println("2. 영상검색");
 		System.out.println("3. 영상정보");
 		System.out.println("4. 환경설정");
-		System.out.print(pfTemp.getNickname() + "> ");
+		System.out.print(user.pf.getNickname() + "> ");
 	}// end showUserMenu
 
-	static void showAdminMenu() {
-		System.out.println("0. 로그아웃");
-		System.out.println("1. 회원관리");
-		System.out.println("2. 영상관리");
-		System.out.print("admin> ");
-	}// end showAdminMenu
-
 	static void showProfileMenu(User user) throws NotExistException {
-		Iterator<Profile> it = user.profileStorage.iterator();
-		Profile pfTemp = null;
-		while (it.hasNext()) {
-			pfTemp = it.next();
-			if (pfTemp.isActive()) {
-				break;
-			} else {
-				throw new NotExistException();
-			} // end if
-		} // end while
 		System.out.println("0. 나가기");
 		System.out.println("1. 프로필변경");
 		System.out.println("2. 프로필생성");
 		System.out.println("3. 프로필수정");
 		System.out.println("4. 프로필삭제");
-		System.out.print(pfTemp.getNickname() + "> ");
+		System.out.print(user.pf.getNickname() + "> ");
 	}// end showUserMenu
 
 	static void showSettingsMenu() {
@@ -73,6 +45,23 @@ public class MenuViewer {
 		System.out.println("3. 화질설정");
 		System.out.print("선택: ==> ");
 	}// end showSettingsMenu
+
+	static void showAdminMenu() {
+		System.out.println("0. 로그아웃");
+		System.out.println("1. 회원관리");
+		System.out.println("2. 영상관리");
+		System.out.println("3. 비밀번호 변경");
+		System.out.print("admin> ");
+	}// end showAdminMenu
+
+	static void showUserManagementMenu() {
+		System.out.println("0. 로그아웃");
+		System.out.println("1. 전체조회");
+		System.out.println("2. 회원검색");
+		System.out.println("3. 회원수정");
+		System.out.println("4. 회원삭제");
+		System.out.print("admin> ");
+	}// end showAdminMenu
 
 	static void showMoiveInfo() {
 		System.out.println("0. 나가기");

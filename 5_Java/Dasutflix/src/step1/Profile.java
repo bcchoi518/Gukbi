@@ -49,6 +49,6 @@ public class Profile {
 
 	@Override
 	public String toString() {
-		return "nickname: " + nickname;
+		return "nickname: " + nickname + "(" + (isActive ? "활성화" : "비활성화") + ")";
 	}// end toString
 }// end Profile

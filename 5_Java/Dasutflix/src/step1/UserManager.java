@@ -4,158 +4,121 @@ import java.util.HashSet;
 import java.util.Iterator;
 
 public class UserManager {
-	private static UserManager um;
+	private static UserManager userM;
 	HashSet<User> userStorage = new HashSet<User>();
 
 	private UserManager() {
 	}
 
 	public static UserManager getInstance() {
-		if (um == null) {
-			um = new UserManager();
+		if (userM == null) {
+			userM = new UserManager();
 		} // end if
-		return um;
+		return userM;
 	}// end getInstance
 
-	void signUp() {
-		System.out.print("사용하실 ID를 입력하세요: ");
-		String id = MenuViewer.sc.nextLine();
-		System.out.print("사용하실 PassWord를 입력하세요: ");
-		String pw = MenuViewer.sc.nextLine();
-		User uTemp = new User(id, pw);
-		if (!userStorage.add(uTemp)) {
-			System.out.println("존재하는 회원입니다.");
-			return;
-		} // end if
-		System.out.print("사용하실 프로필 닉네임을 입력하세요: ");
-		String nickname = MenuViewer.sc.nextLine();
-		uTemp.pf.setNickname(nickname);
-		System.out.println("선호하는 장르를 3가지 고르세요");
-		System.out.println("공포, 코믹, 드라마, 에로, SF");
-		for (int i = 0; i < uTemp.pf.FAVORITE_MAX; i++) {
-			System.out.print(">> ");
-			String favorite = MenuViewer.sc.nextLine();
-			uTemp.pf.favorite.add(favorite);
-		} // end for
-		uTemp.pf.setActive(true);
-		System.out.println("회원가입을 축하합니다!");
-	}// end createUser
-
-	void profileSetting() throws NotExistException, ChoiceException {
+	void userManagement() {
 		while (true) {
-			User uTemp = searchIsOnline();
-			MenuViewer.showProfileMenu(uTemp);
-			int choice = Integer.parseInt(MenuViewer.sc.nextLine());
-			switch (choice) {
-			case 0:
-				return;
-			case 1:
-				allDisplayProfile();
-				changeProfile();
-				break;
-			case 2:
-				createProfile();
-				break;
-			case 3:
-				updateProfile();
-				break;
-			case 4:
-				deleteProfile();
-				break;
-			default:
-				throw new ChoiceException(choice);
-			}// end switch
+			try {
+				MenuViewer.showUserManagementMenu();
+				int choice = Integer.parseInt(MenuViewer.sc.nextLine());
+				switch (choice) {
+				case 0:
+					return;
+				case 1:
+					allDisplayUser();
+					break;
+				case 2:
+					searchUser();
+					break;
+				case 3:
+					updateUser();
+					break;
+				case 4:
+					deleteUser();
+					break;
+				default:
+					throw new ChoiceException(choice);
+				}// end switch
+			} catch (ChoiceException e) {
+				e.showErrorMessage();
+			} catch (NotExistException e) {
+				e.showErrorMessage();
+			} catch (Exception e) {
+				e.printStackTrace();
+			} // end try-catch
 		} // end while
 	}// end profileSetting
-
-	void createProfile() {
-		User uTemp = searchIsOnline();
-		Profile pfTemp = new Profile();
-		System.out.print("사용할 프로필 닉네임을 입력하세요: ");
-		String nickname = MenuViewer.sc.nextLine();
-		pfTemp.setNickname(nickname);
-		System.out.println("선호할 장르를 3가지 고르세요");
-		System.out.println("공포, 코믹, 드라마, 에로, SF");
-		for (int i = 0; i < uTemp.pf.FAVORITE_MAX; i++) {
-			System.out.print(">> ");
-			String favorite = MenuViewer.sc.nextLine();
-			pfTemp.favorite.add(favorite);
-		} // end for
-		if (uTemp.profileStorage.add(pfTemp)) {
-			System.out.println("프로필 생성");
-		} // end if
-	}// end createProfile
-
-	void changeProfile() throws NotExistException {
-		System.out.print("사용할 프로필 닉네임을 입력하세요: ");
-		String nickname = MenuViewer.sc.nextLine();
-		Profile changeTemp = searchProfile(nickname);
-		if (changeTemp == null) {
-			throw new NotExistException();
-		} else {
-			Profile curTemp = searchIsActive();
-			curTemp.setActive(false);
-			changeTemp.setActive(true);
-		} // end if
-	}// end changeProfile
-
-	void updateProfile() {
-		Profile pfTemp = searchIsActive();
-		pfTemp.favorite.removeAll(pfTemp.favorite);
-		System.out.print("변경할 프로필 닉네임을 입력하세요: ");
-		pfTemp.setNickname(MenuViewer.sc.nextLine());
-		System.out.println("변경할 장르를 3가지 고르세요");
-		System.out.println("공포, 코믹, 드라마, 에로, SF");
-		for (int i = 0; i < pfTemp.FAVORITE_MAX; i++) {
-			System.out.print(">> ");
-			String favorite = MenuViewer.sc.nextLine();
-			pfTemp.favorite.add(favorite);
-		} // end for
-	}// end updateProfile
-
-	void deleteProfile() {
-		System.out.print("삭제할 프로필 닉네임을 입력하세요: ");
-		String nickname = MenuViewer.sc.nextLine();
-		Profile pfTemp = searchProfile(nickname);
-		User uTemp = searchIsOnline();
-		uTemp.profileStorage.remove(pfTemp);
-	}// end deleteProfile
 
 	void allDisplayUser() {
 		if (!userStorageCheck()) {
 			return;
 		} // end if
-
 		Iterator<User> it = userStorage.iterator();
-
 		System.out.println("━━━━━━━━━━━━━━━━━━━━ 회원 정보 ━━━━━━━━━━━━━━━━━━━━");
 		while (it.hasNext()) {
 			User uTemp = it.next();
 			System.out.println(uTemp.toString());
 		} // end while
 		System.out.printf("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━%n%n");
-	}// end allDisplay
+	}// end allDisplayUser
 
-	void allDisplayProfile() {
-		if (!profileStorageCheck()) {
+	void searchUser() throws NotExistException {
+		if (!userStorageCheck()) {
 			return;
 		} // end if
-		User uTemp = searchIsOnline();
+		System.out.print("검색할 ID를 입력하세요: ");
+		String id = MenuViewer.sc.nextLine();
+		User uTemp = search(id);
+		if (uTemp == null) {
+			throw new NotExistException();
+		} // end if
+		System.out.println(uTemp.toString());
+	}// end searchUser
 
-		Iterator<Profile> it = uTemp.profileStorage.iterator();
+	void updateUser() throws NotExistException {
+		if (!userStorageCheck()) {
+			return;
+		} // end if
+		System.out.print("수정할 ID를 입력하세요: ");
+		String id = MenuViewer.sc.nextLine();
+		User uTemp = search(id);
+		if (uTemp == null) {
+			throw new NotExistException();
+		} // end if
+		System.out.print("새로운 ID를 입력하세요: ");
+		id = MenuViewer.sc.nextLine();
+		uTemp.setId(id);
+		System.out.print("새로운 Password를 입력하세요: ");
+		String pw = MenuViewer.sc.nextLine();
+		uTemp.setPw(pw);
+		System.out.println("수정 완료");
+	}// end updateUser
 
-		System.out.println("━━━━━━━━━━━━━━━━━━━━ 프로필 정보 ━━━━━━━━━━━━━━━━━━━━");
-		while (it.hasNext()) {
-			Profile pfTemp = it.next();
-			System.out.println(pfTemp.toString());
-		} // end while
-		System.out.printf("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━%n%n");
-	}// end allDisplay
+	void deleteUser() throws NotExistException {
+		if (!userStorageCheck()) {
+			return;
+		} // end if
+		System.out.print("삭제할 ID를 입력하세요: ");
+		String id = MenuViewer.sc.nextLine();
+		User uTemp = search(id);
+		if (uTemp == null) {
+			throw new NotExistException();
+		} // end if
+		userStorage.remove(uTemp);
+		System.out.println("삭제 완료");
+	}// end deleteUser
+
+	void changeAdminPassword() {
+		User uTemp = search("admin");
+		System.out.print("변경할 패스워드를 입력하세요: ");
+		String pw = MenuViewer.sc.nextLine();
+		uTemp.setPw(pw);
+	}// end changeAdminPassword
 
 	User search(String id) {
 		Iterator<User> it = userStorage.iterator();
 		User uTemp = null;
-
 		while (it.hasNext()) {
 			uTemp = it.next();
 			if (uTemp.getId().equals(id)) {
@@ -165,40 +128,13 @@ public class UserManager {
 		return null;
 	}// end search
 
-	Profile searchProfile(String nickname) {
-		User uTemp = searchIsOnline();
-		Iterator<Profile> it = uTemp.profileStorage.iterator();
-		Profile pfTemp = null;
-		while (it.hasNext()) {
-			pfTemp = it.next();
-			if (pfTemp.getNickname().equals(nickname)) {
-				return pfTemp;
-			} // end if
-		} // end while
-		return null;
-	}// end search
-
 	User searchIsOnline() {
 		Iterator<User> it = userStorage.iterator();
 		User uTemp = null;
-
 		while (it.hasNext()) {
 			uTemp = it.next();
 			if (uTemp.isOnline()) {
 				return uTemp;
-			} // end if
-		} // end while
-		return null;
-	}// end searchIsOnline
-
-	Profile searchIsActive() {
-		User uTemp = searchIsOnline();
-		Iterator<Profile> it = uTemp.profileStorage.iterator();
-		Profile pfTemp = null;
-		while (it.hasNext()) {
-			pfTemp = it.next();
-			if (pfTemp.isActive()) {
-				return pfTemp;
 			} // end if
 		} // end while
 		return null;
@@ -211,13 +147,4 @@ public class UserManager {
 		} // end if
 		return true;
 	}// end userStorageCheck
-
-	private boolean profileStorageCheck() {
-		User uTemp = searchIsOnline();
-		if (uTemp.profileStorage.isEmpty()) {
-			System.out.printf("저장된 정보가 없습니다.%n%n");
-			return false;
-		} // end if
-		return true;
-	}// end profileStorageCheck
 }// end UserManager
