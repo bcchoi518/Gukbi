@@ -6,6 +6,7 @@ import java.util.Objects;
 public class User {
 	private String id;
 	private String pw;
+	private boolean isOnline;
 	Profile pf;
 	HashSet<Profile> profileStorage = new HashSet<Profile>(5);
 
@@ -16,6 +17,7 @@ public class User {
 		this.id = id;
 		this.pw = pw;
 		pf = new Profile();
+		profileStorage.add(pf);
 	}
 
 	public String getId() {
@@ -33,6 +35,14 @@ public class User {
 	public void setPw(String pw) {
 		this.pw = pw;
 	}// end setPw
+
+	public boolean isOnline() {
+		return isOnline;
+	}// end isOnline
+
+	public void setOnline(boolean isOnline) {
+		this.isOnline = isOnline;
+	}// end setOnline
 
 	@Override
 	public int hashCode() {

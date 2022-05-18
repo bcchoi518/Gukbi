@@ -4,10 +4,11 @@ import java.util.HashSet;
 import java.util.Objects;
 
 public class Profile {
-	private String nickname;
 	final int FAVORITE_MAX = 3;
 	HashSet<String> favorite = new HashSet<String>(FAVORITE_MAX);
 	HashSet<String> saved = new HashSet<String>();
+	private String nickname;
+	private boolean isActive;
 
 	public Profile() {
 	}
@@ -23,6 +24,14 @@ public class Profile {
 	public void setNickname(String nickname) {
 		this.nickname = nickname;
 	}// end setNickname
+
+	public boolean isActive() {
+		return isActive;
+	}// end isActive
+
+	public void setActive(boolean isActive) {
+		this.isActive = isActive;
+	}// end setActive
 
 	@Override
 	public int hashCode() {

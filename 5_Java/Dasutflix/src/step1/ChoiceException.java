@@ -12,11 +12,11 @@ public class ChoiceException extends Exception {
 		wrongStringChoice = Input;
 	}
 
-	public void showWrongIntChoice() {
-		System.out.printf(wrongIntChoice + "에 해당하는 선택은 존재하지 않습니다.%n%n");
-	}// end showWrongIntChoice
-
-	public void showWrongStringChoice() {
-		System.out.printf(wrongStringChoice + "에 해당하는 선택은 존재하지 않습니다.%n%n");
-	}// end showWrongIntChoice
+	public void showErrorMessage() {
+		if (wrongStringChoice != null) {
+			System.out.printf("잘못 입력하셨습니다.%n%n");
+		} else {
+			System.out.printf(wrongIntChoice + "에 해당하는 선택은 존재하지 않습니다.%n%n");
+		}
+	}// end showErrorMessage
 }// end MenuChoiceException
