@@ -37,6 +37,21 @@ public class UserManager {
 		userStorage.add(uTemp);
 	}// end createUser
 
+	User signIn() {
+		System.out.print("ID를 입력하세요: ");
+		String id = MenuViewer.sc.nextLine();
+		System.out.print("PassWord를 입력하세요: ");
+		String pw = MenuViewer.sc.nextLine();
+		User uTemp = search(id);
+		if (uTemp.getPw().equals(pw)) {
+			System.out.println("Hello Dasutflix world!!");
+			return uTemp;
+		} else {
+
+		}
+		return uTemp;
+	}// end createUser
+
 	void allDisplay() {
 		if (!userStorageCheck()) {
 			return;
