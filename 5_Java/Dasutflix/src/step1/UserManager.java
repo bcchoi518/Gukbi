@@ -44,8 +44,10 @@ public class UserManager {
 				e.showErrorMessage();
 			} catch (NotExistException e) {
 				e.showErrorMessage();
+			} catch (NumberFormatException e) {
+				System.err.println("[ERROR] 숫자만 입력 가능합니다.");
 			} catch (Exception e) {
-				e.printStackTrace();
+				System.err.println("[ERROR] 알수 없는 오류가 발생하였습니다.");
 			} // end try-catch
 		} // end while
 	}// end profileSetting
