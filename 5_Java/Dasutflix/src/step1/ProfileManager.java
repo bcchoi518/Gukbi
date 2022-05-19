@@ -4,7 +4,7 @@ import java.util.Iterator;
 
 public class ProfileManager {
 	private static ProfileManager profileM;
-	UserManager userM;
+	private UserManager userM;
 
 	private ProfileManager() {
 		userM = UserManager.getInstance();
@@ -54,7 +54,7 @@ public class ProfileManager {
 		} // end while
 	}// end profileSetting
 
-	void createProfile() {
+	private void createProfile() {
 		User uTemp = userM.searchIsOnline();
 		Profile pfTemp = new Profile();
 		System.out.print("사용할 프로필 닉네임을 입력하세요: ");
@@ -75,7 +75,7 @@ public class ProfileManager {
 		} // end if
 	}// end createProfile
 
-	void changeProfile() throws NotExistException {
+	private void changeProfile() throws NotExistException {
 		System.out.print("사용할 프로필 닉네임을 입력하세요: ");
 		String nickname = MenuViewer.sc.nextLine();
 		Profile changeTemp = searchProfile(nickname);
@@ -88,7 +88,7 @@ public class ProfileManager {
 		uTemp.pf.setActive(true);
 	}// end changeProfile
 
-	void updateProfile() throws NotExistException {
+	private void updateProfile() throws NotExistException {
 		Profile pfTemp = searchIsActive();
 		if (pfTemp == null) {
 			throw new NotExistException();
@@ -107,7 +107,7 @@ public class ProfileManager {
 		System.out.println("수정 완료");
 	}// end updateProfile
 
-	void deleteProfile() throws NotExistException {
+	private void deleteProfile() throws NotExistException {
 		System.out.print("삭제할 프로필 닉네임을 입력하세요: ");
 		String nickname = MenuViewer.sc.nextLine();
 		Profile pfTemp = searchProfile(nickname);
@@ -122,7 +122,7 @@ public class ProfileManager {
 		System.out.println("삭제 완료");
 	}// end deleteProfile
 
-	void allDisplayProfile() {
+	private void allDisplayProfile() {
 		if (!profileStorageCheck()) {
 			return;
 		} // end if
@@ -138,7 +138,7 @@ public class ProfileManager {
 		System.out.printf("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━%n%n");
 	}// end allDisplayProfile
 
-	Profile searchProfile(String nickname) {
+	private Profile searchProfile(String nickname) {
 		User uTemp = userM.searchIsOnline();
 		Iterator<Profile> it = uTemp.profileStorage.iterator();
 		Profile pfTemp = null;
@@ -151,7 +151,7 @@ public class ProfileManager {
 		return null;
 	}// end searchProfile
 
-	Profile searchIsActive() {
+	private Profile searchIsActive() {
 		User uTemp = userM.searchIsOnline();
 		Iterator<Profile> it = uTemp.profileStorage.iterator();
 		Profile pfTemp = null;

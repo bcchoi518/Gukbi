@@ -3,16 +3,14 @@ package step1;
 public class Dasutflix01 {
 	public static void main(String[] args) {
 		PlayManager playM = PlayManager.getInstance();
-		User uTemp = null;
-		int choice = -1;
 
 		while (true) {
 			try {
 				MenuViewer.showLogIn();
-				choice = Integer.parseInt(MenuViewer.sc.nextLine());
+				int choice = Integer.parseInt(MenuViewer.sc.nextLine());
 				switch (choice) {
 				case 1:
-					uTemp = playM.signIn();
+					User uTemp = playM.signIn();
 					if (uTemp instanceof Admin) {
 						Admin admin = (Admin) uTemp;
 						playM.play(admin);
@@ -22,7 +20,6 @@ public class Dasutflix01 {
 					break;
 				case 2:
 					playM.signUp();
-					playM.userM.allDisplayUser();// 지울코드
 					break;
 				case 3:
 					System.out.println("프로그램이 종료됩니다.");

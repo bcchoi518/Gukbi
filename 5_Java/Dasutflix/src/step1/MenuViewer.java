@@ -36,7 +36,7 @@ public class MenuViewer {
 		System.out.println("3. 프로필수정");
 		System.out.println("4. 프로필삭제");
 		System.out.print(user.pf.getNickname() + "> ");
-	}// end showUserMenu
+	}// end showProfileMenu
 
 	static void showSettingsMenu() {
 		System.out.println("0. 나가기");
@@ -61,14 +61,14 @@ public class MenuViewer {
 		System.out.println("3. 회원수정");
 		System.out.println("4. 회원삭제");
 		System.out.print("admin> ");
-	}// end showAdminMenu
+	}// end showUserManagementMenu
 
-	static void showMoiveInfo() {
+	static void showMovieInfo() {
 		System.out.println("0. 나가기");
 		System.out.println("1. 줄거리");
 		System.out.println("2. 별점");
 		System.out.println("3. 영상시청");
 		System.out.print("선택: ==> ");
-	}// end showMoiveInfo
+	}// end showMovieInfo
 
 }// end MenuViewer

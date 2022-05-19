@@ -1,8 +1,8 @@
 package step1;
 
 public class ChoiceException extends Exception {
-	int wrongIntChoice;
-	String wrongStringChoice;
+	private int wrongIntChoice;
+	private String wrongStringChoice;
 
 	public ChoiceException(int choice) {
 		wrongIntChoice = choice;

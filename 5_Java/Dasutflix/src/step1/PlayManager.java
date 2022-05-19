@@ -2,8 +2,8 @@ package step1;
 
 public class PlayManager {
 	private static PlayManager playM;
-	UserManager userM;
-	ProfileManager profileM;
+	private UserManager userM;
+	private ProfileManager profileM;
 
 	private PlayManager() {
 		userM = UserManager.getInstance();
@@ -60,7 +60,7 @@ public class PlayManager {
 		} // end if
 	}// end createUser
 
-	void signOut() {
+	private void signOut() {
 		User uTemp = userM.searchIsOnline();
 		uTemp.setOnline(false);
 	}// end signOut
@@ -135,7 +135,7 @@ public class PlayManager {
 		} // end while
 	}// end play
 
-	void configurationSetting() {
+	private void configurationSetting() {
 		System.out.println("공사중");
 	}// end configurationSetting
 }// end PlayManager

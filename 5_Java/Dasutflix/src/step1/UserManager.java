@@ -52,7 +52,7 @@ public class UserManager {
 		} // end while
 	}// end profileSetting
 
-	void allDisplayUser() {
+	private void allDisplayUser() {
 		if (!userStorageCheck()) {
 			return;
 		} // end if
@@ -65,7 +65,7 @@ public class UserManager {
 		System.out.printf("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━%n%n");
 	}// end allDisplayUser
 
-	void searchUser() throws NotExistException {
+	private void searchUser() throws NotExistException {
 		if (!userStorageCheck()) {
 			return;
 		} // end if
@@ -78,7 +78,7 @@ public class UserManager {
 		System.out.println(uTemp.toString());
 	}// end searchUser
 
-	void updateUser() throws NotExistException {
+	private void updateUser() throws NotExistException {
 		if (!userStorageCheck()) {
 			return;
 		} // end if
@@ -97,7 +97,7 @@ public class UserManager {
 		System.out.println("수정 완료");
 	}// end updateUser
 
-	void deleteUser() throws NotExistException {
+	private void deleteUser() throws NotExistException {
 		if (!userStorageCheck()) {
 			return;
 		} // end if
