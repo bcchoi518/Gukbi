@@ -5,16 +5,18 @@ import java.util.Objects;
 
 public class Profile {
 	final int FAVORITE_MAX = 3;
-	HashSet<String> favorite = new HashSet<String>(FAVORITE_MAX);
-	HashSet<String> saved = new HashSet<String>();
 	private String nickname;
 	private boolean isActive;
+	Configuration config;
+	HashSet<String> favorite = new HashSet<String>(FAVORITE_MAX);
+	HashSet<String> saved = new HashSet<String>();
 
 	public Profile() {
 	}
 
 	public Profile(String nickname) {
 		this.nickname = nickname;
+		config = new Configuration();
 	}
 
 	public String getNickname() {
@@ -49,6 +51,6 @@ public class Profile {
 
 	@Override
 	public String toString() {
-		return "nickname: " + nickname + "(" + (isActive ? "활성화" : "비활성화") + ")  " + "favorite: " + favorite;
+		return "nickname: " + nickname + "(" + (isActive ? "활성화" : "비활성화") + ")" + "  favorite: " + favorite;
 	}// end toString
 }// end Profile

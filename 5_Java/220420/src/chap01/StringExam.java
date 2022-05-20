@@ -5,13 +5,13 @@ public class StringExam {
 	public static void main(String[] args) {
 
 		String str1 = "abc";
-		String str2 = new String("abc"); // new Å°¿öµå·Î »õ·Î¿î °´Ã¼¸¦ »ý¼ºÇÔ
-		String str3 = "abc"; // ¸Þ¸ð¸®»ó¿¡ "abc"°¡ ÀÖÀ¸¹Ç·Î ±× ÁÖ¼Ò°ªÀ» str3¿¡ ÀúÀå
-		String str4 = new String("abc"); // new Å°¿öµå·Î »ý¼ºÇÏ¸é ¸Å¹ø »õ·Î¿î °´Ã¼¸¦ »ý¼º
+		String str2 = new String("abc"); // new Å°ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Î¿ï¿½ ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+		String str3 = "abc"; // ï¿½Þ¸ð¸®»ï¿½ "abc"ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ ï¿½ï¿½ ï¿½Ö¼Ò°ï¿½ï¿½ï¿½ str3ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+		String str4 = new String("abc"); // new Å°ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¸ï¿½ ï¿½Å¹ï¿½ ï¿½ï¿½ï¿½Î¿ï¿½ ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
-		System.out.println(str1 == str2); // false, str1°ú str2°¡ ÂüÁ¶ÇÏ°í ÀÖ´Â °¢°¢ÀÇ ÁÖ¼Ò¸¦ ºñ±³
-		System.out.println(str1 == str3); // true, ÀÌ¹Ì ¸¸µé¾îÁ® ÀÖ´Â "abc"ÀÇ ÁÖ¼Ò°ªÀ» str3¿¡ ÀúÀåÇß±â ¶§¹®¿¡ °°Àº ÁÖ¼Ò¸¦ ÂüÁ¶
-		System.out.println(str1.equals(str2)); // true, °¢°¢ÀÌ ÂüÁ¶ÇÏ°í ÀÖ´Â ³»¿ëÀ» ºñ±³ÇÏ¿© °á°ú¸¦ ¹ÝÈ¯
+		System.out.println(str1 == str2); // false, str1ï¿½ï¿½ str2ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¼Ò¸ï¿½ ï¿½ï¿½
+		System.out.println(str1 == str3); // true, ï¿½Ì¹ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ "abc"ï¿½ï¿½ ï¿½Ö¼Ò°ï¿½ï¿½ï¿½ str3ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ß±ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¼Ò¸ï¿½ ï¿½ï¿½ï¿½ï¿½
+		System.out.println(str1.equals(str2)); // true, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ï¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¯
 		System.out.println(str2 == str4); // false
 
 		System.out.println();
@@ -21,7 +21,11 @@ public class StringExam {
 		System.out.println("str1.equals(\"abc\") ? " + str1.equals("abc"));
 		System.out.println("str2.equals(\"abc\") ? " + str2.equals("abc"));
 		System.out.println("str2.equals(\"ABC\") ? " + str2.equals("ABC"));
-		System.out.println("str2.equalsIgnoreCase(\"ABC\") ? " + str2.equalsIgnoreCase("ABC"));	//´ë¼Ò¹®ÀÚ¸¦ ¹«½ÃÇÏ°í ºñ±³
+		System.out.println("str2.equalsIgnoreCase(\"ABC\") ? " + str2.equalsIgnoreCase("ABC")); // ï¿½ï¿½Ò¹ï¿½ï¿½Ú¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½ï¿½
+
+		String[] Arr = { "000", "111", "222", "333", "444" };
+		int a = 3;
+		System.out.println(Arr[a]);
 
 	}// end main
 

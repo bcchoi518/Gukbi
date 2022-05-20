@@ -4,19 +4,21 @@ import java.util.HashSet;
 import java.util.Objects;
 
 public class User {
+	final int PROFILE_MAX = 5;
 	private String id;
 	private String pw;
+	private int age;
 	private boolean isOnline;
 	Profile pf;
-	HashSet<Profile> profileStorage = new HashSet<Profile>(5);
+	HashSet<Profile> profileStorage = new HashSet<Profile>(PROFILE_MAX);
 
 	public User() {
 	}
 
-	public User(String id, String pw) {
+	public User(String id, String pw, int age) {
 		this.id = id;
 		this.pw = pw;
-		pf = new Profile();
+		this.age = age;
 	}
 
 	public String getId() {
@@ -34,6 +36,14 @@ public class User {
 	public void setPw(String pw) {
 		this.pw = pw;
 	}// end setPw
+
+	public int getAge() {
+		return age;
+	}// end getAge
+
+	public void setAge(int age) {
+		this.age = age;
+	}// end setAge
 
 	public boolean isOnline() {
 		return isOnline;
@@ -59,6 +69,6 @@ public class User {
 
 	@Override
 	public String toString() {
-		return "id: " + id + ", pw: " + pw + ", favorite: " + pf.favorite;
+		return "id: " + id + "  pw: " + pw + "  age: " + age + "  favorite: " + pf.favorite;
 	}// end toString
 }// end User

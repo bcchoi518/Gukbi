@@ -85,21 +85,16 @@ public class UserManager {
 		System.out.print("수정할 ID를 입력하세요: ");
 		String id = MenuViewer.sc.nextLine();
 		User uTemp = search(id);
-		userStorage.remove(uTemp);
 		if (uTemp == null) {
 			throw new NotExistException();
 		} // end if
-		System.out.print("새로운 ID를 입력하세요: ");
-		id = MenuViewer.sc.nextLine();
-		uTemp.setId(id);
 		System.out.print("새로운 Password를 입력하세요: ");
 		String pw = MenuViewer.sc.nextLine();
 		uTemp.setPw(pw);
-		if (userStorage.add(uTemp)) {
-			System.out.println("수정 완료");
-		} else {
-			System.out.println("수정 실패");
-		} // end if
+		System.out.print("새로운 나이를 입력하세요: ");
+		int age = Integer.parseInt(MenuViewer.sc.nextLine());
+		uTemp.setAge(age);
+		System.out.println("수정 완료");
 	}// end updateUser
 
 	private void deleteUser() throws NotExistException {
