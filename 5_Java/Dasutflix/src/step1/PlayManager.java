@@ -39,7 +39,11 @@ public class PlayManager {
 			uTemp.pf.favorite.add(favorite);
 		} // end for
 		uTemp.pf.setActive(true);
-		System.out.println("회원가입을 축하합니다!");
+		if (uTemp.profileStorage.add(uTemp.pf)) {
+			System.out.println("회원가입을 축하합니다!");
+		} else {
+			System.out.println("회원가입에 실패하였습니다.");
+		} // end if
 	}// end signUp
 
 	User signIn() throws ChoiceException, NotExistException {

@@ -85,6 +85,7 @@ public class UserManager {
 		System.out.print("수정할 ID를 입력하세요: ");
 		String id = MenuViewer.sc.nextLine();
 		User uTemp = search(id);
+		userStorage.remove(uTemp);
 		if (uTemp == null) {
 			throw new NotExistException();
 		} // end if
@@ -94,7 +95,11 @@ public class UserManager {
 		System.out.print("새로운 Password를 입력하세요: ");
 		String pw = MenuViewer.sc.nextLine();
 		uTemp.setPw(pw);
-		System.out.println("수정 완료");
+		if (userStorage.add(uTemp)) {
+			System.out.println("수정 완료");
+		} else {
+			System.out.println("수정 실패");
+		} // end if
 	}// end updateUser
 
 	private void deleteUser() throws NotExistException {
@@ -106,16 +111,22 @@ public class UserManager {
 		User uTemp = search(id);
 		if (uTemp == null) {
 			throw new NotExistException();
+		} else if (uTemp.getId() == "admin") {
+			System.out.println("관리자는 삭제할 수 없습니다.");
 		} // end if
-		userStorage.remove(uTemp);
-		System.out.println("삭제 완료");
+		if (userStorage.remove(uTemp)) {
+			System.out.println("삭제 완료");
+		} else {
+			System.out.println("삭제 실패");
+		} // end if
 	}// end deleteUser
 
 	void changeAdminPassword() {
 		User uTemp = search("admin");
-		System.out.print("변경할 패스워드를 입력하세요: ");
+		System.out.print("변경할 password를 입력하세요: ");
 		String pw = MenuViewer.sc.nextLine();
 		uTemp.setPw(pw);
+		System.out.println("password가 변경되었습니다.");
 	}// end changeAdminPassword
 
 	User search(String id) {

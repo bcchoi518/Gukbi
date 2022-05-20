@@ -89,15 +89,14 @@ public class ProfileManager {
 	}// end changeProfile
 
 	private void updateProfile() throws NotExistException {
-		Profile pfTemp = searchIsActive();
+		System.out.print("수정할 프로필 닉네임을 입력하세요: ");
+		String nickname = MenuViewer.sc.nextLine();
+		Profile pfTemp = searchProfile(nickname);
 		if (pfTemp == null) {
 			throw new NotExistException();
 		} // end if
 		pfTemp.favorite.removeAll(pfTemp.favorite);
-		System.out.print("수정할 프로필 닉네임을 입력하세요: ");
-		pfTemp.setNickname(MenuViewer.sc.nextLine());
-
-		System.out.println("수정할 장르를 3가지 고르세요");
+		System.out.println("새로운 장르를 3가지 고르세요");
 		System.out.println("공포, 코믹, 드라마, 에로, SF");
 		for (int i = 0; i < pfTemp.FAVORITE_MAX; i++) {
 			System.out.print(">> ");
@@ -118,8 +117,11 @@ public class ProfileManager {
 			return;
 		} // end if
 		User uTemp = userM.searchIsOnline();
-		uTemp.profileStorage.remove(pfTemp);
-		System.out.println("삭제 완료");
+		if (uTemp.profileStorage.remove(pfTemp)) {
+			System.out.println("삭제 완료");
+		} else {
+			System.out.println("삭제 실패");
+		} // end if
 	}// end deleteProfile
 
 	private void allDisplayProfile() {

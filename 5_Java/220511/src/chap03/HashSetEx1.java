@@ -11,14 +11,25 @@ public class HashSetEx1 {
 		set.add("abc");
 		set.add(new Person("David", 10));
 		set.add(new Person("David", 10));
-
 		System.out.println(set);
+
+		HashSet set2 = new HashSet();
+		Person p1 = new Person("dodo", 10);
+		Person p2 = new Person("dodo", 20);
+		set2.add(p1);
+		p1.age = 20;
+		System.out.println(p1.hashCode());
+
+		set2.add(p2);
+		System.out.println(set2);
+		System.out.println(p2.hashCode());
 	}// end main
 }// end HashSetEx1
 
 class Person {
 	String name;
 	int age;
+	int test;
 
 	public Person(String name, int age) {
 		this.name = name;
@@ -43,6 +54,6 @@ class Person {
 
 	@Override
 	public String toString() {
-		return name + ":" + age;
+		return name + ":" + age + ":" + test;
 	}// end toString
 }// end Person

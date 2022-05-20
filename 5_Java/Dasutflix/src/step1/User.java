@@ -17,7 +17,6 @@ public class User {
 		this.id = id;
 		this.pw = pw;
 		pf = new Profile();
-		profileStorage.add(pf);
 	}
 
 	public String getId() {

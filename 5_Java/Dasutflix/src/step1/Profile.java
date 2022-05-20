@@ -36,7 +36,7 @@ public class Profile {
 	@Override
 	public int hashCode() {
 		return Objects.hash(nickname);
-	}
+	}// end hashCode
 
 	@Override
 	public boolean equals(Object obj) {
@@ -49,6 +49,6 @@ public class Profile {
 
 	@Override
 	public String toString() {
-		return "nickname: " + nickname + "(" + (isActive ? "활성화" : "비활성화") + ")";
+		return "nickname: " + nickname + "(" + (isActive ? "활성화" : "비활성화") + ")  " + "favorite: " + favorite;
 	}// end toString
 }// end Profile
