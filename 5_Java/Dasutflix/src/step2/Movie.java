@@ -1,4 +1,4 @@
-package movieManager;
+package step2;
 
 import java.io.Serializable;
 

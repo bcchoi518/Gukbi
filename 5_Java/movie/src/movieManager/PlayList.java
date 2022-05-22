@@ -5,12 +5,12 @@ import java.util.Iterator;
 
 public class PlayList extends Movie {
 	static ArrayList<Movie> playList = new ArrayList<Movie>();
-	void playListCreate() { // ¸Ş´ºÈ­¸é¿¡¼­ MyList¿Í RecommandList¸¦ µû·Î È£ÃâÇÏ¸é ÀÌ ºÎºĞ »èÁ¦ °¡´É
+	void playListCreate() { // ë©”ë‰´í™”ë©´ì—ì„œ MyListì™€ RecommandListë¥¼ ë”°ë¡œ í˜¸ì¶œí•˜ë©´ ì´ ë¶€ë¶„ ì‚­ì œ ê°€ëŠ¥
 		Iterator<Movie> it = MyList.myList.iterator();
-		for(int i=0;i<5;i++) { //Âò¸ñ·Ï 5°³¸¸ ºÒ·¯¿Í ÇÃ·¹ÀÌ¸®½ºÆ®¿¡ ÀúÀå
+		for(int i=0;i<5;i++) { //ì°œëª©ë¡ 5ê°œë§Œ ë¶ˆëŸ¬ì™€ í”Œë ˆì´ë¦¬ìŠ¤íŠ¸ì— ì €ì¥
 			Movie mv = (Movie)it.next();
 			playList.add(mv);
 		}
-		playList.addAll(5, RecommandList.recommandList); //±× µÚ·Î ÃßÃµ¸ñ·Ï ÀüºÎ ÀúÀå
+		playList.addAll(5, RecommandList.recommandList); //ê·¸ ë’¤ë¡œ ì¶”ì²œëª©ë¡ ì „ë¶€ ì €ì¥
 	}
 }

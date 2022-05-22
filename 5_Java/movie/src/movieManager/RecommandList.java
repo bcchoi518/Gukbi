@@ -6,8 +6,8 @@ import java.util.Iterator;
 public class RecommandList extends PlayList {
 	static ArrayList<Movie> recommandList = new ArrayList<Movie>();
 	
-	void recommandListCreate() { //°ü½É¸ñ·ÏÀÌ ¹è¿­ÀÌ¶ó °¡Á¤ÇÏ°í ÀÛ¼º
-		String[] tmp = new String[3]; //ÀÓ½Ã À¯Àú °ü½É ¸ñ·Ï
+	void recommandListCreate() { //ê´€ì‹¬ëª©ë¡ì´ ë°°ì—´ì´ë¼ ê°€ì •í•˜ê³  ì‘ì„±
+		String[] tmp = new String[3]; //ì„ì‹œ ìœ ì € ê´€ì‹¬ ëª©ë¡
 		Iterator<Movie> it = MovieManager.movie.iterator();
 		for(int i=0;i<tmp.length;i++) {
 			while(it.hasNext()) {

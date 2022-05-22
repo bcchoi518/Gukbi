@@ -12,7 +12,7 @@ public class MovieAdmin {
 		while(true) {
 			
 			try {
-				MovieMenuViewer.showMenu();
+				MenuViewer.showMenu();
 				choice= Integer.parseInt(sc.nextLine());
 				if(choice<Menu.INPUT||choice>Menu.LOAD) {
 					throw new MenuChoiceException(choice);
@@ -46,10 +46,10 @@ public class MovieAdmin {
 					break;
 				}
 			} catch (NumberFormatException e) {
-				System.out.println("¼ıÀÚ¸¦ ÀÔ·ÂÇØÁÖ¼¼¿ä.");
+				System.out.println("ìˆ«ìë¥¼ ì…ë ¥í•´ì£¼ì„¸ìš”.");
 			} catch (MenuChoiceException e) {
 				e.showWrongChoice();
-				System.out.println("¸Ş´º·Î µ¹¾Æ°©´Ï´Ù.");
+				System.out.println("ë©”ë‰´ë¡œ ëŒì•„ê°‘ë‹ˆë‹¤.");
 			}
 		}
 	}

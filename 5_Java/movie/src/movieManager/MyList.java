@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class MyList extends PlayList {
 	static ArrayList<Movie> myList = new ArrayList<Movie>();
-	void myListCreate() { //À¯Àúµ¥ÀÌÅÍ°¡ setÀÌ³ª listÇüÅÂ°¡ ¾Æ´Ï¶ó¸é ³ªÁß¿¡ RecommandListÄÚµå µû¿Í¼­ ¸Å²ã¾ßÇÔ
-		//userdata¿¡¼­ Á÷Á¢ ¿¬°á
+	void myListCreate() { //ìœ ì €ë°ì´í„°ê°€ setì´ë‚˜ listí˜•íƒœê°€ ì•„ë‹ˆë¼ë©´ ë‚˜ì¤‘ì— RecommangListì½”ë“œ ë”°ì™€ì„œ ë§¤ê¿”ì•¼í•¨
+		//userdataì—ì„œ ì§ì ‘ ì—°ê²°
 	}
 }

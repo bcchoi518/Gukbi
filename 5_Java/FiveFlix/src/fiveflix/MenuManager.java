@@ -5,6 +5,9 @@ import java.util.Iterator;
 
 public class MenuManager extends MovieSet {
 	private static MenuManager mm;
+	
+	private MenuManager() {
+	}
 
 	public static MenuManager getInstance() {
 		if (mm == null)

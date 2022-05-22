@@ -5,11 +5,11 @@ public class MenuChoiceException extends Exception {
 	
 	public MenuChoiceException(int choice)
 	{
-		super("Àß¸øµÈ ¼±ÅÃÀÌ ÀÌ·ïÁ³½À´Ï´Ù.");
+		super("ì˜ëª»ëœ ì„ íƒì´ ì´ë¤„ì¡ŒìŠµë‹ˆë‹¤.");
 		wrongChoice=choice;
 	}
 	
 	public void showWrongChoice() {
-		System.out.println(wrongChoice+"¿¡ ÇØ´çÇÏ´Â ¼±ÅÃÀº Á¸ÀçÇÏÁö ¾Ê½À´Ï´Ù.");
+		System.out.println(wrongChoice+"ì— í•´ë‹¹í•˜ëŠ” ì„ íƒì€ ì¡´ì¬í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.");
 	}
 }

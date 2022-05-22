@@ -4,10 +4,12 @@ public class PlayManager {
 	private static PlayManager playM;
 	private UserManager userM;
 	private ProfileManager profileM;
+	private MovieManager movieM;
 
 	private PlayManager() {
 		userM = UserManager.getInstance();
 		profileM = ProfileManager.getInstance();
+		movieM = MovieManager.getInstance();
 		userM.userStorage.add(new Admin());
 	}
 
@@ -49,9 +51,9 @@ public class PlayManager {
 	}// end signUp
 
 	User signIn() throws ChoiceException, NotExistException {
-		System.out.print("ID를 입력하세요: ");
+		System.out.print("ID: ");
 		String id = MenuViewer.sc.nextLine();
-		System.out.print("PassWord를 입력하세요: ");
+		System.out.print("PW: ");
 		String pw = MenuViewer.sc.nextLine();
 		User uTemp = userM.search(id);
 		if (uTemp == null) {
@@ -59,7 +61,8 @@ public class PlayManager {
 		} // end if
 		if (uTemp.getPw().equals(pw)) {
 			uTemp.setOnline(true);
-			System.out.println("Hello Dasutflix world!!");
+			System.out.println("Login Success!!");
+			System.out.println();
 			return uTemp;
 		} else {
 			throw new ChoiceException(pw);
@@ -88,9 +91,6 @@ public class PlayManager {
 					System.out.println("공사중");
 					break;
 				case 3:
-					System.out.println("공사중");
-					break;
-				case 4:
 					configurationSetting(user);
 					break;
 				default:
@@ -121,7 +121,7 @@ public class PlayManager {
 					userM.userManagement();
 					break;
 				case 2:
-					System.out.println("공사중");
+					movieM.movieManagement();
 					break;
 				case 3:
 					userM.changeAdminPassword();
