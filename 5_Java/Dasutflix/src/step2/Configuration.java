@@ -6,7 +6,7 @@ public class Configuration {
 	private String quality;
 
 	public Configuration() {
-		this("대한민국", false, "720p");
+		this("Korea", false, "720p");
 	}
 
 	public Configuration(String nations, boolean caption, String quality) {
@@ -41,6 +41,6 @@ public class Configuration {
 
 	@Override
 	public String toString() {
-		return "nations: " + nations + "  caption: " + (caption ? "켬" : "끔") + "  quality: " + quality;
+		return "nations: " + nations + "  caption: " + (caption ? "ON" : "OFF") + "  quality: " + quality;
 	}// end toString
 }// end Settings

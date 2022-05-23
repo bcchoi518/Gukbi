@@ -69,6 +69,6 @@ public class User {
 
 	@Override
 	public String toString() {
-		return "id: " + id + "  pw: " + pw + "  age: " + age + "  favorite: " + pf.favorite;
+		return "id: " + id + "  pw: " + pw + "  age: " + age + "  isOnline: " + isOnline;
 	}// end toString
 }// end User

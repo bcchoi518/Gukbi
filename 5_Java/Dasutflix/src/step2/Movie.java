@@ -8,9 +8,7 @@ public class Movie implements Serializable {
 	String genre; // 장르
 	double score; // 별점
 	String synopsis; // 줄거리
-	int ageGrade; // 시청연령
-	String tag; // 태그
-	String contentsRating; // 관람등급
+	int filmRating; // 연령제한
 	int scoreCount; // 별점 평균치 계산용
 	int scoreSum; // 별점 평균치 계산용
 
@@ -51,20 +49,12 @@ public class Movie implements Serializable {
 		this.synopsis = synopsis;
 	}
 
-	public int getAgeGrade() {
-		return ageGrade;
+	public int getFilmRating() {
+		return filmRating;
 	}
 
-	public void setAgeGrade(int ageGrade) {
-		this.ageGrade = ageGrade;
-	}
-
-	public String isContentsRating() {
-		return contentsRating;
-	}
-
-	public void setContentsRating(String contentsRating) {
-		this.contentsRating = contentsRating;
+	public void setFilmRating(int filmRating) {
+		this.filmRating = filmRating;
 	}
 
 	public int getSerialNumber() {
@@ -73,14 +63,6 @@ public class Movie implements Serializable {
 
 	public void setSerialNumber(int serialNumber) {
 		this.serialNumber = serialNumber;
-	}
-
-	public String getTag() {
-		return tag;
-	}
-
-	public void setTag(String tag) {
-		this.tag = tag;
 	}
 
 	public int getScoreCount() {
@@ -99,13 +81,9 @@ public class Movie implements Serializable {
 		this.scoreSum = scoreSum;
 	}
 
-	public String getContentsRating() {
-		return contentsRating;
-	}
-
 	@Override
 	public String toString() {
 		return "시리얼넘버: " + serialNumber + "\n제목: " + title + ", 장르: " + genre + " , 별점: " + score + ", 시청연령: "
-				+ contentsRating + ", 태그: " + tag + "\n";
+				+ filmRating + "\n";
 	}
 }

@@ -22,7 +22,7 @@ public class Dasutflix02 {
 					playM.signUp();
 					break;
 				case 3:
-					System.out.println("프로그램이 종료됩니다.");
+					System.out.println("Good Bye");
 					return;
 				default:
 					throw new ChoiceException(choice);
@@ -32,9 +32,9 @@ public class Dasutflix02 {
 			} catch (NotExistException e) {
 				e.showErrorMessage();
 			} catch (NumberFormatException e) {
-				System.err.println("[ERROR] 숫자만 입력 가능합니다.");
+				System.err.println("[ERROR] Please enter numbers only.");
 			} catch (Exception e) {
-				System.err.println("[ERROR] 알수 없는 오류가 발생하였습니다.");
+				System.err.println("[ERROR] Unknown error occurred");
 			} // end try-catch
 		} // end while
 	}// end main

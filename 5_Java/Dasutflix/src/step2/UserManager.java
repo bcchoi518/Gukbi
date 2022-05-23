@@ -45,9 +45,9 @@ public class UserManager {
 			} catch (NotExistException e) {
 				e.showErrorMessage();
 			} catch (NumberFormatException e) {
-				System.err.println("[ERROR] 숫자만 입력 가능합니다.");
+				System.err.println("[ERROR] Please enter numbers only.");
 			} catch (Exception e) {
-				System.err.println("[ERROR] 알수 없는 오류가 발생하였습니다.");
+				System.err.println("[ERROR] Unknown error occurred");
 			} // end try-catch
 		} // end while
 	}// end profileSetting
@@ -57,7 +57,8 @@ public class UserManager {
 			return;
 		} // end if
 		Iterator<User> it = userStorage.iterator();
-		System.out.println("━━━━━━━━━━━━━━━━━━━━ 회원 정보 ━━━━━━━━━━━━━━━━━━━━");
+		System.out.println();
+		System.out.println("━━━━ Membership information ━━━━━━━━━━━━━━━━━━━━━━━");
 		while (it.hasNext()) {
 			User uTemp = it.next();
 			System.out.println(uTemp.toString());
@@ -69,7 +70,7 @@ public class UserManager {
 		if (!userStorageCheck()) {
 			return;
 		} // end if
-		System.out.print("검색할 ID를 입력하세요: ");
+		System.out.print("Enter ID to search: ");
 		String id = MenuViewer.sc.nextLine();
 		User uTemp = search(id);
 		if (uTemp == null) {
@@ -82,46 +83,46 @@ public class UserManager {
 		if (!userStorageCheck()) {
 			return;
 		} // end if
-		System.out.print("수정할 ID를 입력하세요: ");
+		System.out.print("Enter ID to modify: ");
 		String id = MenuViewer.sc.nextLine();
 		User uTemp = search(id);
 		if (uTemp == null) {
 			throw new NotExistException();
 		} // end if
-		System.out.print("새로운 Password를 입력하세요: ");
+		System.out.print("Enter a new password: ");
 		String pw = MenuViewer.sc.nextLine();
 		uTemp.setPw(pw);
-		System.out.print("새로운 나이를 입력하세요: ");
+		System.out.print("Enter a new age: ");
 		int age = Integer.parseInt(MenuViewer.sc.nextLine());
 		uTemp.setAge(age);
-		System.out.println("수정 완료");
+		System.out.println("Modification complete");
 	}// end updateUser
 
 	private void deleteUser() throws NotExistException {
 		if (!userStorageCheck()) {
 			return;
 		} // end if
-		System.out.print("삭제할 ID를 입력하세요: ");
+		System.out.print("Enter ID to delete: ");
 		String id = MenuViewer.sc.nextLine();
 		User uTemp = search(id);
 		if (uTemp == null) {
 			throw new NotExistException();
 		} else if (uTemp.getId() == "admin") {
-			System.out.println("관리자는 삭제할 수 없습니다.");
+			System.out.println("Administrator cannot delete");
 		} // end if
 		if (userStorage.remove(uTemp)) {
-			System.out.println("삭제 완료");
+			System.out.println("Delete complete");
 		} else {
-			System.out.println("삭제 실패");
+			System.out.println("Deletion failed");
 		} // end if
 	}// end deleteUser
 
 	void changeAdminPassword() {
 		User uTemp = search("admin");
-		System.out.print("변경할 password를 입력하세요: ");
+		System.out.print("Enter password to change: ");
 		String pw = MenuViewer.sc.nextLine();
 		uTemp.setPw(pw);
-		System.out.println("password가 변경되었습니다.");
+		System.out.println("Password change completed");
 	}// end changeAdminPassword
 
 	User search(String id) {
@@ -150,7 +151,7 @@ public class UserManager {
 
 	private boolean userStorageCheck() {
 		if (userStorage.isEmpty()) {
-			System.out.printf("저장된 정보가 없습니다.%n%n");
+			System.out.printf("[Info] No information saved%n%n");
 			return false;
 		} // end if
 		return true;

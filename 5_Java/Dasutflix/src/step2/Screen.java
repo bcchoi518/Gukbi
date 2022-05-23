@@ -61,14 +61,14 @@ public class Screen {
 	}
 
 	public static void getWatchScreen() throws InterruptedException {
-		System.out.println("영화가 시작합니다");
+		System.out.println("The movie begins");
 		System.out.println();
 
-		System.out.println("     ___________ ");
+		System.out.println("     __________________ ");
 		Thread.sleep(300);
-		System.out.println("   |  영화보는 중.. |");
+		System.out.println("   |  Watching a movie.. |");
 		Thread.sleep(300);
-		System.out.println("    ＼＿＿＿＿＿＿＿＿／");
+		System.out.println("    ＼＿＿＿＿＿＿＿＿＿＿＿＿＿／");
 		Thread.sleep(300);
 		System.out.println("  　　ｏ");
 		Thread.sleep(300);
@@ -83,7 +83,7 @@ public class Screen {
 		System.out.println("  　 　＼/　　　/");
 
 		System.out.println();
-		System.out.println("영화가 끝났습니다");
+		System.out.println("The movie is over");
 
 	}
 }

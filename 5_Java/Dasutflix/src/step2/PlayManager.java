@@ -21,32 +21,32 @@ public class PlayManager {
 	}// end getInstance
 
 	void signUp() {
-		System.out.print("사용하실 ID를 입력하세요: ");
+		System.out.print("Enter ID to use: ");
 		String id = MenuViewer.sc.nextLine();
-		System.out.print("사용하실 PassWord를 입력하세요: ");
+		System.out.print("Enter Password to use: ");
 		String pw = MenuViewer.sc.nextLine();
-		System.out.print("나이를 입력하세요: ");
+		System.out.print("Enter your age: ");
 		int age = Integer.parseInt(MenuViewer.sc.nextLine());
 		User uTemp = new User(id, pw, age);
 		if (!userM.userStorage.add(uTemp)) {
-			System.out.println("존재하는 회원입니다.");
+			System.out.println("Member that already exists");
 			return;
 		} // end if
-		System.out.print("사용하실 프로필 닉네임을 입력하세요: ");
+		System.out.print("Enter the profile nickname you want to use: ");
 		String nickname = MenuViewer.sc.nextLine();
 		uTemp.pf = new Profile(nickname);
-		System.out.println("선호하는 장르를 3가지 고르세요");
-		System.out.println("공포, 코믹, 드라마, 에로, SF");
+		System.out.println("Choose 3 genres that you prefer");
+		MenuViewer.showGenre();
 		for (int i = 0; i < uTemp.pf.FAVORITE_MAX; i++) {
 			System.out.print(">> ");
-			String favorite = MenuViewer.sc.nextLine();
-			uTemp.pf.favorite.add(favorite);
+			int tmp = Integer.parseInt(MenuViewer.sc.nextLine());
+			uTemp.pf.favorite.add(MenuViewer.genreArr[tmp - 1]);
 		} // end for
 		uTemp.pf.setActive(true);
 		if (uTemp.profileStorage.add(uTemp.pf)) {
-			System.out.println("회원가입을 축하합니다!");
+			System.out.println("Congratulations on your membership!");
 		} else {
-			System.out.println("회원가입에 실패하였습니다.");
+			System.out.println("Failed to sign up for membership");
 		} // end if
 	}// end signUp
 
@@ -61,7 +61,7 @@ public class PlayManager {
 		} // end if
 		if (uTemp.getPw().equals(pw)) {
 			uTemp.setOnline(true);
-			System.out.println("Login Success!!");
+			System.out.println("Login successful");
 			System.out.println();
 			return uTemp;
 		} else {
@@ -102,9 +102,9 @@ public class PlayManager {
 			} catch (NotExistException e) {
 				e.showErrorMessage();
 			} catch (NumberFormatException e) {
-				System.err.println("[ERROR] 숫자만 입력 가능합니다.");
+				System.err.println("[ERROR] Please enter numbers only.");
 			} catch (Exception e) {
-				System.err.println("[ERROR] 알수 없는 오류가 발생하였습니다.");
+				System.err.println("[ERROR] Unknown error occurred");
 			} // end try-catch
 		} // end while
 	}// end play
@@ -135,9 +135,9 @@ public class PlayManager {
 			} catch (NotExistException e) {
 				e.showErrorMessage();
 			} catch (NumberFormatException e) {
-				System.err.println("[ERROR] 숫자만 입력 가능합니다.");
+				System.err.println("[ERROR] Please enter numbers only.");
 			} catch (Exception e) {
-				System.err.println("[ERROR] 알수 없는 오류가 발생하였습니다.");
+				System.err.println("[ERROR] Unknown error occurred");
 			} // end try-catch
 		} // end while
 	}// end play
@@ -169,16 +169,16 @@ public class PlayManager {
 			} catch (ChoiceException e) {
 				e.showErrorMessage();
 			} catch (NumberFormatException e) {
-				System.err.println("[ERROR] 숫자만 입력 가능합니다.");
+				System.err.println("[ERROR] Please enter numbers only.");
 			} catch (Exception e) {
-				System.err.println("[ERROR] 알수 없는 오류가 발생하였습니다.");
+				System.err.println("[ERROR] Unknown error occurred");
 			} // end try-catch
 		} // end while
 	}// end configurationSetting
 
 	private void selectNation() {
 		User uTemp = userM.searchIsOnline();
-		String[] sArr = { "대한민국", "미국", "일본", "중국" };
+		String[] sArr = { "Korea", "USA", "Japan", "China" };
 		for (int i = 0; i < sArr.length; i++) {
 			System.out.printf("%d.%s  ", (i + 1), sArr[i]);
 		} // end for
@@ -186,16 +186,16 @@ public class PlayManager {
 		System.out.print(uTemp.pf.getNickname() + "> ");
 		int input = Integer.parseInt(MenuViewer.sc.nextLine());
 		uTemp.pf.config.setNations(sArr[input - 1]);
-		System.out.println("국가 설정 완료");
+		System.out.println("Country Settings Completed");
 	}// end selectNation
 
 	private void selectCaption() {
 		User uTemp = userM.searchIsOnline();
 		uTemp.pf.config.setCaption(!uTemp.pf.config.isCaption());
 		if (uTemp.pf.config.isCaption()) {
-			System.out.println("자막 켬");
+			System.out.println("Caption ON");
 		} else {
-			System.out.println("자막 끔");
+			System.out.println("Caption OFF");
 		} // end if
 	}// end selectCaption
 
@@ -209,7 +209,7 @@ public class PlayManager {
 		System.out.print(uTemp.pf.getNickname() + "> ");
 		int input = Integer.parseInt(MenuViewer.sc.nextLine());
 		uTemp.pf.config.setQuality(sArr[input - 1]);
-		System.out.println("화질 설정 완료");
+		System.out.println("Image quality setting complete");
 	}// end selectQuality
 
 	private void showConfiguration() {
@@ -219,21 +219,21 @@ public class PlayManager {
 
 	void showContents() {
 		int col = 5;
-		for (int i = 0; i < movieM.movie.size(); i += 5) {
+		for (int i = 0; i < movieM.movieStorage.size(); i += 5) {
 			for (int k = i; k < (i + col); k++) {
-				System.out.printf("Title: %-20s", movieM.movie.get(k).getTitle());
+				System.out.printf("Title: %-20s", movieM.movieStorage.get(k).getTitle());
 			} // end for
 			System.out.println();
 			for (int k = i; k < (i + col); k++) {
-				System.out.printf("Genre: %-20s", movieM.movie.get(k).getGenre());
+				System.out.printf("Genre: %-20s", movieM.movieStorage.get(k).getGenre());
 			} // end for
 			System.out.println();
 			for (int k = i; k < (i + col); k++) {
-				System.out.printf("AgeGrade: %-20d", movieM.movie.get(k).getAgeGrade());
+				System.out.printf("FilmRating: %-20d", movieM.movieStorage.get(k).getFilmRating());
 			} // end for
 			System.out.println();
 			for (int k = i; k < (i + col); k++) {
-				System.out.printf("Score: %-20.1f", movieM.movie.get(k).getScore());
+				System.out.printf("Score: %-20.1f", movieM.movieStorage.get(k).getScore());
 			} // end for
 			System.out.printf("%n%n");
 		} // end for

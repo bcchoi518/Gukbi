@@ -4,6 +4,8 @@ import java.util.Scanner;
 
 public class MenuViewer {
 	static Scanner sc = new Scanner(System.in);
+	static String[] genreArr = { "Thriller", "Horror", "Comedy", "Drama", "SF", "Action", "Romance", "Animation",
+			"Fantasy" };
 
 	static void showLogIn() throws InterruptedException {
 		Screen.netflixLogo1();
@@ -41,28 +43,26 @@ public class MenuViewer {
 		System.out.println("　　　"
 				+ "└ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ┘");
 		System.out.println();
-//		System.out.println("0. 로그아웃");
-//		System.out.println("1. 프로필");
-//		System.out.println("2. 콘텐츠");
-//		System.out.println("3. 환경설정");
 		System.out.print(user.pf.getNickname() + "> ");
 	}// end showUserMenu
 
 	static void showProfileMenu(User user) throws NotExistException {
-		System.out.println("0. 나가기");
-		System.out.println("1. 프로필변경");
-		System.out.println("2. 프로필생성");
-		System.out.println("3. 프로필수정");
-		System.out.println("4. 프로필삭제");
+		System.out.println();
+		System.out.println("0. Exit");
+		System.out.println("1. Change Profile");
+		System.out.println("2. Create Profile");
+		System.out.println("3. Modify Profile");
+		System.out.println("4. Delete Profile");
 		System.out.print(user.pf.getNickname() + "> ");
 	}// end showProfileMenu
 
 	static void showSettingsMenu(User user) {
-		System.out.println("0. 나가기");
-		System.out.println("1. 설정조회");
-		System.out.println("2. 국가설정");
-		System.out.println("3. 자막설정");
-		System.out.println("4. 화질설정");
+		System.out.println();
+		System.out.println("0. Exit");
+		System.out.println("1. Settings check");
+		System.out.println("2. Country setting");
+		System.out.println("3. Caption setting");
+		System.out.println("4. Image quality settings");
 		System.out.print(user.pf.getNickname() + "> ");
 	}// end showSettingsMenu
 
@@ -80,39 +80,48 @@ public class MenuViewer {
 		System.out.println("　　　"
 				+ "└ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ┘");
 		System.out.println();
-//		System.out.println("0. 로그아웃");
-//		System.out.println("1. 회원관리");
-//		System.out.println("2. 영상관리");
-//		System.out.println("3. 비밀번호 변경");
 		System.out.print("admin> ");
 	}// end showAdminMenu
 
 	static void showUserManagementMenu() {
-		System.out.println("0. 나가기");
-		System.out.println("1. 전체조회");
-		System.out.println("2. 회원검색");
-		System.out.println("3. 회원수정");
-		System.out.println("4. 회원삭제");
+		System.out.println();
+		System.out.println("0. Exit");
+		System.out.println("1. Membership inquiry");
+		System.out.println("2. Search for membership");
+		System.out.println("3. Membership modification");
+		System.out.println("4. Delete membership");
 		System.out.print("admin> ");
 	}// end showUserManagementMenu
 
 	static void showMovieInfo(User user) {
-		System.out.println("0. 나가기");
-		System.out.println("1. 줄거리");
-		System.out.println("2. 별점");
-		System.out.println("3. 영상시청");
+		System.out.println();
+		System.out.println("0. Exit");
+		System.out.println("1. Synopsis");
+		System.out.println("2. Movie Rating");
+		System.out.println("3. Watching movies");
 		System.out.print(user.pf.getNickname() + "> ");
 	}// end showMovieInfo
 
 	static void showMovieManagementMenu() {
-		System.out.println("0. 나가기");
-		System.out.println("1. 영화 입력");
-		System.out.println("2. 영화 검색");
-		System.out.println("3. 영화 수정");
-		System.out.println("4. 영화 삭제");
-		System.out.println("5. 전체 출력");
-		System.out.println("6. 데이터 저장");
-		System.out.println("7. 데이터 로드"); // 프로그램 시작 부분에 필요함
+		System.out.println();
+		System.out.println("0. Exit");
+		System.out.println("1. Movie registration");
+		System.out.println("2. Movie search");
+		System.out.println("3. Movie Correction");
+		System.out.println("4. Delete a movie");
+		System.out.println("5. Movie inquiry");
+		System.out.println("6. Save Data");
+		System.out.println("7. Load Data"); // 프로그램 시작 부분에 필요함
 		System.out.print("admin> ");
 	}// end showMovieManagementMenu
+
+	static void showGenre() {
+		for (int i = 0; i < genreArr.length; i++) {
+			if (i > 0 && i % 3 == 0) {
+				System.out.println();
+			} // end if
+			System.out.printf("%d.%-10s ", i + 1, genreArr[i]);
+		} // end for
+		System.out.println();
+	}// end showGenre
 }// end MenuViewer

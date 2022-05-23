@@ -47,36 +47,40 @@ public class ProfileManager {
 			} catch (NotExistException e) {
 				e.showErrorMessage();
 			} catch (NumberFormatException e) {
-				System.err.println("[ERROR] 숫자만 입력 가능합니다.");
+				System.err.println("[ERROR] Please enter numbers only.");
 			} catch (Exception e) {
-				System.err.println("[ERROR] 알수 없는 오류가 발생하였습니다.");
+				System.err.println("[ERROR] Unknown error occurred");
 			} // end try-catch
 		} // end while
 	}// end profileSetting
 
 	private void createProfile() {
 		User uTemp = userM.searchIsOnline();
+		if (uTemp.profileStorage.size() == uTemp.PROFILE_MAX) {
+			System.out.println("The profile is limited to five profiles.");
+			return;
+		} // end if
 		Profile pfTemp = new Profile();
-		System.out.print("사용할 프로필 닉네임을 입력하세요: ");
+		System.out.print("Enter a profile nickname to use: ");
 		String nickname = MenuViewer.sc.nextLine();
 		pfTemp.setNickname(nickname);
-		System.out.println("선호할 장르를 3가지 고르세요");
-		System.out.println("공포, 코믹, 드라마, 에로, SF");
-		for (int i = 0; i < uTemp.pf.FAVORITE_MAX; i++) {
+		System.out.println("Choose 3 genres that you prefer");
+		MenuViewer.showGenre();
+		for (int i = 0; i < pfTemp.FAVORITE_MAX; i++) {
 			System.out.print(">> ");
-			String favorite = MenuViewer.sc.nextLine();
-			pfTemp.favorite.add(favorite);
+			int tmp = Integer.parseInt(MenuViewer.sc.nextLine());
+			pfTemp.favorite.add(MenuViewer.genreArr[tmp - 1]);
 		} // end for
 		if (uTemp.profileStorage.add(pfTemp)) {
 			uTemp.pf.setActive(false);
 			uTemp.pf = pfTemp;
 			uTemp.pf.setActive(true);
-			System.out.println("프로필 생성 완료");
+			System.out.println("Profile creation complete");
 		} // end if
 	}// end createProfile
 
 	private void changeProfile() throws NotExistException {
-		System.out.print("사용할 프로필 닉네임을 입력하세요: ");
+		System.out.print("Enter a profile nickname to use: ");
 		String nickname = MenuViewer.sc.nextLine();
 		Profile changeTemp = searchProfile(nickname);
 		if (changeTemp == null) {
@@ -89,38 +93,38 @@ public class ProfileManager {
 	}// end changeProfile
 
 	private void updateProfile() throws NotExistException {
-		System.out.print("수정할 프로필 닉네임을 입력하세요: ");
+		System.out.print("Enter profile nickname to modify: ");
 		String nickname = MenuViewer.sc.nextLine();
 		Profile pfTemp = searchProfile(nickname);
 		if (pfTemp == null) {
 			throw new NotExistException();
 		} // end if
 		pfTemp.favorite.removeAll(pfTemp.favorite);
-		System.out.println("새로운 장르를 3가지 고르세요");
-		System.out.println("공포, 코믹, 드라마, 에로, SF");
+		System.out.println("Choose 3 new genres");
+		MenuViewer.showGenre();
 		for (int i = 0; i < pfTemp.FAVORITE_MAX; i++) {
 			System.out.print(">> ");
-			String favorite = MenuViewer.sc.nextLine();
-			pfTemp.favorite.add(favorite);
+			int tmp = Integer.parseInt(MenuViewer.sc.nextLine());
+			pfTemp.favorite.add(MenuViewer.genreArr[tmp - 1]);
 		} // end for
-		System.out.println("수정 완료");
+		System.out.println("Modification complete");
 	}// end updateProfile
 
 	private void deleteProfile() throws NotExistException {
-		System.out.print("삭제할 프로필 닉네임을 입력하세요: ");
+		System.out.print("Enter profile nickname to delete: ");
 		String nickname = MenuViewer.sc.nextLine();
 		Profile pfTemp = searchProfile(nickname);
 		if (pfTemp == null) {
 			throw new NotExistException();
 		} else if (pfTemp.isActive()) {
-			System.out.println("현재 선택된 프로필은 삭제할 수 없습니다.");
+			System.out.println("Cannot delete currently selected profile");
 			return;
 		} // end if
 		User uTemp = userM.searchIsOnline();
 		if (uTemp.profileStorage.remove(pfTemp)) {
-			System.out.println("삭제 완료");
+			System.out.println("Delete complete");
 		} else {
-			System.out.println("삭제 실패");
+			System.out.println("Deletion failed");
 		} // end if
 	}// end deleteProfile
 
@@ -132,7 +136,7 @@ public class ProfileManager {
 
 		Iterator<Profile> it = uTemp.profileStorage.iterator();
 
-		System.out.println("━━━━━━━━━━━━━━━━━━━━ 프로필 정보 ━━━━━━━━━━━━━━━━━━━━");
+		System.out.println("━━━━ Profile Information ━━━━━━━━━━━━━━━━━━━━━━━━━");
 		while (it.hasNext()) {
 			Profile pfTemp = it.next();
 			System.out.println(pfTemp.toString());
@@ -169,7 +173,7 @@ public class ProfileManager {
 	private boolean profileStorageCheck() {
 		User uTemp = userM.searchIsOnline();
 		if (uTemp.profileStorage.isEmpty()) {
-			System.out.printf("저장된 정보가 없습니다.%n%n");
+			System.out.printf("[Info] No information saved%n%n");
 			return false;
 		} // end if
 		return true;

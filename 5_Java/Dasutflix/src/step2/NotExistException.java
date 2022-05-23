@@ -6,6 +6,6 @@ public class NotExistException extends Exception {
 	}
 
 	public void showErrorMessage() {
-		System.out.printf("[INFO] 정보를 찾을 수 없습니다.%n%n");
+		System.out.printf("[INFO] No information found%n%n");
 	}// end showErrorMessage
 }// end NotExistException

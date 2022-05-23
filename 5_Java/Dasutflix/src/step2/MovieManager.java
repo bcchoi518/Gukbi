@@ -11,8 +11,8 @@ import java.util.Iterator;
 public class MovieManager {
 	private static MovieManager movieM;
 	File dataFile = new File("Movie.dat");
-	ArrayList<Movie> movie = new ArrayList<Movie>();
-	ArrayList<Movie> tmpMovie = new ArrayList<Movie>();
+	ArrayList<Movie> movieStorage = new ArrayList<Movie>();
+//	ArrayList<Movie> tmpMovie = new ArrayList<Movie>();
 	int count = 0;
 
 	private MovieManager() {
@@ -62,154 +62,142 @@ public class MovieManager {
 					load();
 					break;
 				}
-			} catch (NumberFormatException e) {
-				System.out.println("숫자를 입력해주세요.");
 			} catch (ChoiceException e) {
 				e.showErrorMessage();
-				System.out.println("메뉴로 돌아갑니다.");
-			}
+			} catch (NotExistException e) {
+				e.showErrorMessage();
+			} catch (NumberFormatException e) {
+				System.err.println("[ERROR] Please enter numbers only.");
+			} catch (Exception e) {
+				System.err.println("[ERROR] Unknown error occurred");
+			} // end try-catch
 		}
 	}
 
 	void inputMovie() throws ChoiceException { // 입력
 		Movie mv = new Movie();
 
-		System.out.print("제목: ");
+		System.out.print("Title: ");
 		String title = MenuViewer.sc.nextLine();
 		mv.setTitle(title);
-		System.out.print("장르: ");
+		System.out.print("Genre: ");
 		String genre = MenuViewer.sc.nextLine();
 		mv.setGenre(genre);
-		System.out.print("줄거리: ");
+		System.out.print("Synopsis: ");
 		String synopsis = MenuViewer.sc.nextLine();
 		mv.setSynopsis(synopsis);
-		System.out.print("시청연령: ");
-		int ageGrade = Integer.parseInt(MenuViewer.sc.nextLine());
-		mv.setAgeGrade(ageGrade);
-//		System.out.print("관람등급) 1. Kids  2. Adult");
-//		int Rating = Integer.parseInt(MenuViewer.sc.nextLine());
-//		if (Rating < 1 || Rating > 2) {
-//			throw new ChoiceException(Rating);
-//		}
-//		mv.setContentsRating(ratingSetting(Rating));
-//		System.out.println("1.코믹 2.호러 3.로맨스");
-//		System.out.print("태그 번호를 선택해주세요 : ");
-//		int tag = Integer.parseInt(MenuViewer.sc.nextLine());
-//		if (tag < 1 || tag > 3) {
-//			throw new ChoiceException(tag);
-//		}
-//		mv.setTag(tagSetting(tag));
-		mv.setSerialNumber(movie.size() + 1);
-		movie.add(mv);
+		System.out.print("FilmRating: ");
+		int filmRating = Integer.parseInt(MenuViewer.sc.nextLine());
+		mv.setFilmRating(filmRating);
+		mv.setSerialNumber(movieStorage.size() + 1);
+		movieStorage.add(mv);
 	}
 
-	void updateMovie() throws ChoiceException { // 수정
-		System.out.print("수정할 영화 제목: ");
+	void updateMovie() throws ChoiceException, NotExistException { // 수정
+		System.out.print("Enter movie title to modify: ");
 		String title = MenuViewer.sc.nextLine();
 
 		counting(title);
 
 		if (count == 1) {
 			Movie mv = search(title);
-			System.out.print("장르: ");
+			if (mv == null) {
+				throw new NotExistException();
+			} // end if
+			System.out.print("Genre: ");
 			String genre = MenuViewer.sc.nextLine();
 			mv.setGenre(genre);
-			System.out.print("줄거리: ");
+			System.out.print("Synopsis: ");
 			String synopsis = MenuViewer.sc.nextLine();
 			mv.setSynopsis(synopsis);
-			System.out.print("관람등급) 1. Kids  2. Adult");
-			int Rating = Integer.parseInt(MenuViewer.sc.nextLine());
-			if (Rating < 1 || Rating > 2) {
-				throw new ChoiceException(Rating);
-			}
-			mv.setContentsRating(ratingSetting(Rating));
-			System.out.println("1.코믹 2.호러 3.로맨스");
-			System.out.print("태그 번호를 선택해주세요: ");
-			int tag = Integer.parseInt(MenuViewer.sc.nextLine());
-			if (tag < 1 || tag > 3) {
-				throw new ChoiceException(tag);
-			}
-			mv.setTag(tagSetting(tag));
 		} else if (count > 1) {
 			Movie mv = search(title);
-			System.out.println("검색 결과가 " + count + "건 있습니다. 시리얼 넘버를 입력해주세요.");
+			if (mv == null) {
+				throw new NotExistException();
+			} // end if
+			System.out.println("There are " + count + " search results. Please enter a serial number");
 			int tmpSerialNumber = Integer.parseInt(MenuViewer.sc.nextLine());
 			mv = serialNumberSearch(tmpSerialNumber);
-			System.out.print("장르: ");
+			System.out.print("Genre: ");
 			String genre = MenuViewer.sc.nextLine();
 			mv.setGenre(genre);
-			System.out.print("줄거리: ");
+			System.out.print("Synopsis: ");
 			String synopsis = MenuViewer.sc.nextLine();
 			mv.setSynopsis(synopsis);
-			System.out.print("관람등급) 1. Kids  2. Adult");
-			int Rating = Integer.parseInt(MenuViewer.sc.nextLine());
-			if (Rating < 1 || Rating > 2) {
-				throw new ChoiceException(Rating);
-			}
-			mv.setContentsRating(ratingSetting(Rating));
-			System.out.println("1.코믹 2.호러 3.로맨스");
-			System.out.print("태그 번호를 선택해주세요: ");
-			int tag = Integer.parseInt(MenuViewer.sc.nextLine());
-			if (tag < 1 || tag > 3) {
-				throw new ChoiceException(tag);
-			}
-			mv.setTag(tagSetting(tag));
 		} else if (count == 0) {
-			System.out.println("알림: 수정할 정보가 존재하지 않음");
+			System.out.println("[INFO]: Information to modify does not exist");
 		}
 		count = 0;
 	}
 
-	void deleteMovie() { // 삭제
-		System.out.print("삭제할 영화 제목: ");
+	void deleteMovie() throws NotExistException { // 삭제
+		if (!movieStorageCheck()) {
+			return;
+		} // end if
+		System.out.print("Title of movie to delete: ");
 		String title = MenuViewer.sc.nextLine();
 
 		counting(title);
 
 		if (count == 1) {
 			Movie mv = search(title);
-			movie.remove(mv);
-			System.out.println("삭제 완료");
+			if (mv == null) {
+				throw new NotExistException();
+			} // end if
+			movieStorage.remove(mv);
+			System.out.println("Delete complete");
 			deleteSerialNumber(mv.serialNumber);
 		} else if (count > 1) {
 			Movie mv = search(title);
-			System.out.println("검색 결과가" + count + "건 있습니다. 시리얼 넘버를 입력해주세요.");
+			if (mv == null) {
+				throw new NotExistException();
+			} // end if
+			System.out.println("There are " + count + " search results. Please enter a serial number");
 			int tmpSerialNumber = Integer.parseInt(MenuViewer.sc.nextLine());
 			mv = serialNumberSearch(tmpSerialNumber);
-			movie.remove(mv);
+			if (mv == null) {
+				throw new NotExistException();
+			} // end if
+			movieStorage.remove(mv);
 			deleteSerialNumber(mv.serialNumber);
 		} else if (count == 0) {
-			System.out.println("알림: 삭제할 정보가 존재하지 않음");
+			System.out.println("[Info] Information to delete does not exist");
 		}
 		count = 0;
 	}
 
 	void searchMovie() { // 검색
-		System.out.print("검색할 영화 제목: ");
+		if (!movieStorageCheck()) {
+			return;
+		} // end if
+		System.out.print("Enter a movie title to search for: ");
 		String title = MenuViewer.sc.nextLine();
 
 		counting(title);
 
 		if (count >= 1) {
-			System.out.println("검색 결과가 " + count + "건 있습니다.");
+			System.out.println("There are " + count + " search results.");
 		} else if (count == 0) {
-			System.out.println("입력정보와 일치하는 정보가 존재하지 않음");
+			System.out.println("Information matching input does not exist");
 		}
 		count = 0;
 	}
 
 	void allDisplay() { // 전체출력
-		Iterator<Movie> it = movie.iterator();
+		if (!movieStorageCheck()) {
+			return;
+		} // end if
+		Iterator<Movie> it = movieStorage.iterator();
 		while (it.hasNext()) {
-			Movie tmp = (Movie) it.next();
+			Movie tmp = it.next();
 			System.out.println(tmp);
 		}
 	}
 
 	void deleteSerialNumber(int mvSerialNumber) { // 시리얼 넘버 공백 제거
-		Iterator<Movie> it = movie.iterator();
+		Iterator<Movie> it = movieStorage.iterator();
 		while (it.hasNext()) {
-			Movie tmp = (Movie) it.next();
+			Movie tmp = it.next();
 			if (tmp.serialNumber > mvSerialNumber) {
 				tmp.serialNumber--;
 			}
@@ -217,9 +205,9 @@ public class MovieManager {
 	}
 
 	private Movie search(String title) { // 동일 제목 검색
-		Iterator<Movie> it = movie.iterator();
+		Iterator<Movie> it = movieStorage.iterator();
 		while (it.hasNext()) {
-			Movie tmp = (Movie) it.next();
+			Movie tmp = it.next();
 			if (tmp.title.equals(title)) {
 				return tmp;
 			}
@@ -228,10 +216,13 @@ public class MovieManager {
 	}
 
 	void counting(String title) { // 동일 제목 갯수 카운팅
-		Iterator<Movie> it = movie.iterator();
+		if (!movieStorageCheck()) {
+			return;
+		} // end if
+		Iterator<Movie> it = movieStorage.iterator();
 		Movie tmp = new Movie();
 		while (it.hasNext()) {
-			tmp = (Movie) it.next();
+			tmp = it.next();
 			if (tmp.title.contains(title)) {
 				System.out.println(tmp);
 				count++;
@@ -240,10 +231,10 @@ public class MovieManager {
 	}
 
 	private Movie serialNumberSearch(int tmpNumber) { // 동일 시리얼넘버 검색
-		Iterator<Movie> it = movie.iterator();
+		Iterator<Movie> it = movieStorage.iterator();
 		Movie tmp = new Movie();
 		while (it.hasNext()) {
-			tmp = (Movie) it.next();
+			tmp = it.next();
 			if (tmpNumber == tmp.serialNumber) {
 				return tmp;
 			}
@@ -251,34 +242,13 @@ public class MovieManager {
 		return null;
 	}
 
-	private String ratingSetting(int ratingNumber) { // 관람등급 설정
-		String tag = "";
-		switch (ratingNumber) {
-		case 1:
-			tag = "Kids";
-			break;
-		case 2:
-			tag = "Adult";
-			break;
-		}
-		return tag;
-	}
-
-	private String tagSetting(int tagNumber) { // 태그 추가
-		String tag = "";
-		switch (tagNumber) {
-		case 1:
-			tag = "코믹";
-			break;
-		case 2:
-			tag = "호러";
-			break;
-		case 3:
-			tag = "로맨스";
-			break;
-		}
-		return tag;
-	}
+	private boolean movieStorageCheck() {
+		if (movieStorage.isEmpty()) {
+			System.out.printf("[info] No information saved%n%n");
+			return false;
+		} // end if
+		return true;
+	}// end movieStorageCheck
 
 	void save() { // 무비 데이터 저장
 		FileOutputStream fos = null;
@@ -288,7 +258,7 @@ public class MovieManager {
 			fos = new FileOutputStream(dataFile);
 			out = new ObjectOutputStream(fos);
 
-			Iterator<Movie> it = movie.iterator();
+			Iterator<Movie> it = movieStorage.iterator();
 			while (it.hasNext()) {
 				out.writeObject(it.next());
 			}
@@ -322,7 +292,7 @@ public class MovieManager {
 				Movie tmp = (Movie) in.readObject();
 				if (tmp == null)
 					break;
-				movie.add(tmp);
+				movieStorage.add(tmp);
 			}
 		} catch (Exception e) {
 		} finally {
