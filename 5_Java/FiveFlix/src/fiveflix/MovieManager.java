@@ -5,10 +5,10 @@ import java.util.Iterator;
 
 public class MovieManager {
 	private static MovieManager mng;
-	HashSet<Movies> romanceSet = new HashSet<Movies>();
-	HashSet<Movies> actionSet = new HashSet<Movies>();
-	HashSet<Movies> animeSet = new HashSet<Movies>();
-	HashSet<Movies> originalSet = new HashSet<Movies>();
+	HashSet<Movie> romanceSet = new HashSet<Movie>();
+	HashSet<Movie> actionSet = new HashSet<Movie>();
+	HashSet<Movie> animeSet = new HashSet<Movie>();
+	HashSet<Movie> originalSet = new HashSet<Movie>();
 	
 	
 	public static MovieManager getInstance() {
@@ -17,9 +17,9 @@ public class MovieManager {
 		return mng;
 	}
 	void romance() {
-		Iterator<Movies> it = romanceSet.iterator();
+		Iterator<Movie> it = romanceSet.iterator();
 		while(it.hasNext()) {
-			Movies romance = it.next();
+			Movie romance = it.next();
 			romance.showMovieInfo();
 				
 			}

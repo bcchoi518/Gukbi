@@ -1,13 +1,13 @@
 package fiveflix;
 
-public class Movies {
+public class Movie {
 	String title;
 	double rate;
 	String story;
 	int ageGrade;
 	String genre;
 
-	Movies(String title, double rate, String story, int ageGrade, String genre) {
+	Movie(String title, double rate, String story, int ageGrade, String genre) {
 		this.title = title;
 		this.rate = rate;
 		this.story = story;

@@ -1,8 +1,5 @@
 package Netflix;
 
-import java.io.Serializable;
-import java.util.Scanner;
-
 public class User {
 	String userId;
 	String userPwd;

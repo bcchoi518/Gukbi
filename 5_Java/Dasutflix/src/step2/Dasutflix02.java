@@ -1,6 +1,6 @@
 package step2;
 
-public class Dasutflix01 {
+public class Dasutflix02 {
 	public static void main(String[] args) {
 		PlayManager playM = PlayManager.getInstance();
 
@@ -38,4 +38,4 @@ public class Dasutflix01 {
 			} // end try-catch
 		} // end while
 	}// end main
-}// end Test
+}// end Dasutflix02

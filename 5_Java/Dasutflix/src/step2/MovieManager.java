@@ -1,7 +1,6 @@
 package step2;
 
 import java.io.File;
-
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
@@ -11,8 +10,8 @@ import java.util.Iterator;
 
 public class MovieManager {
 	private static MovieManager movieM;
-//	File dataFile = new File("Movie.dat");
-	static ArrayList<Movie> movie = new ArrayList<Movie>();
+	File dataFile = new File("Movie.dat");
+	ArrayList<Movie> movie = new ArrayList<Movie>();
 	ArrayList<Movie> tmpMovie = new ArrayList<Movie>();
 	int count = 0;
 
@@ -25,20 +24,22 @@ public class MovieManager {
 		} // end if
 		return movieM;
 	}// end getInstance
-	
+
 	void movieManagement() {
-		int choice=0;
-		
-		while(true) {
-			
+		int choice = 0;
+
+		while (true) {
+
 			try {
 				MenuViewer.showMovieManagementMenu();
-				choice= Integer.parseInt(MenuViewer.sc.nextLine());
-				if(choice<1||choice>7) {
+				choice = Integer.parseInt(MenuViewer.sc.nextLine());
+				if (choice < 0 || choice > 7) {
 					throw new ChoiceException(choice);
 				}
-				
-				switch(choice) {
+
+				switch (choice) {
+				case 0:
+					return;
 				case 1:
 					inputMovie();
 					break;
@@ -55,10 +56,10 @@ public class MovieManager {
 					allDisplay();
 					break;
 				case 6:
-//					save();
+					save();
 					break;
 				case 7:
-//					load();
+					load();
 					break;
 				}
 			} catch (NumberFormatException e) {
@@ -69,7 +70,7 @@ public class MovieManager {
 			}
 		}
 	}
-	
+
 	void inputMovie() throws ChoiceException { // 입력
 		Movie mv = new Movie();
 
@@ -77,24 +78,27 @@ public class MovieManager {
 		String title = MenuViewer.sc.nextLine();
 		mv.setTitle(title);
 		System.out.print("장르: ");
-		String category = MenuViewer.sc.nextLine();
-		mv.setCategory(category);
+		String genre = MenuViewer.sc.nextLine();
+		mv.setGenre(genre);
 		System.out.print("줄거리: ");
 		String synopsis = MenuViewer.sc.nextLine();
 		mv.setSynopsis(synopsis);
-		System.out.print("관람등급) 1. Kids  2. Adult");
-		int Rating = Integer.parseInt(MenuViewer.sc.nextLine());
-		if (Rating < 1 || Rating > 2) {
-			throw new ChoiceException(Rating);
-		}
-		mv.setContentsRating(ratingSetting(Rating));
-		System.out.println("1.코믹 2.호러 3.로맨스");
-		System.out.print("태그 번호를 선택해주세요 : ");
-		int tag = Integer.parseInt(MenuViewer.sc.nextLine());
-		if (tag < 1 || tag > 3) {
-			throw new ChoiceException(tag);
-		}
-		mv.setTag(tagSetting(tag));
+		System.out.print("시청연령: ");
+		int ageGrade = Integer.parseInt(MenuViewer.sc.nextLine());
+		mv.setAgeGrade(ageGrade);
+//		System.out.print("관람등급) 1. Kids  2. Adult");
+//		int Rating = Integer.parseInt(MenuViewer.sc.nextLine());
+//		if (Rating < 1 || Rating > 2) {
+//			throw new ChoiceException(Rating);
+//		}
+//		mv.setContentsRating(ratingSetting(Rating));
+//		System.out.println("1.코믹 2.호러 3.로맨스");
+//		System.out.print("태그 번호를 선택해주세요 : ");
+//		int tag = Integer.parseInt(MenuViewer.sc.nextLine());
+//		if (tag < 1 || tag > 3) {
+//			throw new ChoiceException(tag);
+//		}
+//		mv.setTag(tagSetting(tag));
 		mv.setSerialNumber(movie.size() + 1);
 		movie.add(mv);
 	}
@@ -108,8 +112,8 @@ public class MovieManager {
 		if (count == 1) {
 			Movie mv = search(title);
 			System.out.print("장르: ");
-			String category = MenuViewer.sc.nextLine();
-			mv.setCategory(category);
+			String genre = MenuViewer.sc.nextLine();
+			mv.setGenre(genre);
 			System.out.print("줄거리: ");
 			String synopsis = MenuViewer.sc.nextLine();
 			mv.setSynopsis(synopsis);
@@ -132,8 +136,8 @@ public class MovieManager {
 			int tmpSerialNumber = Integer.parseInt(MenuViewer.sc.nextLine());
 			mv = serialNumberSearch(tmpSerialNumber);
 			System.out.print("장르: ");
-			String category = MenuViewer.sc.nextLine();
-			mv.setCategory(category);
+			String genre = MenuViewer.sc.nextLine();
+			mv.setGenre(genre);
 			System.out.print("줄거리: ");
 			String synopsis = MenuViewer.sc.nextLine();
 			mv.setSynopsis(synopsis);
@@ -276,60 +280,60 @@ public class MovieManager {
 		return tag;
 	}
 
-//	void save() { // 무비 데이터 저장
-//		FileOutputStream fos = null;
-//		ObjectOutputStream out = null;
-//
-//		try {
-//			fos = new FileOutputStream(dataFile);
-//			out = new ObjectOutputStream(fos);
-//
-//			Iterator<Movie> it = movie.iterator();
-//			while (it.hasNext()) {
-//				out.writeObject(it.next());
-//			}
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		} finally {
-//			try {
-//				if (out != null)
-//					out.close();
-//				if (fos != null)
-//					fos.close();
-//			} catch (Exception e) {
-//				e.printStackTrace();
-//			}
-//		}
-//	}
+	void save() { // 무비 데이터 저장
+		FileOutputStream fos = null;
+		ObjectOutputStream out = null;
 
-//	void load() { // 무비 데이터 로드
-//		if (dataFile.exists() == false) {
-//			return;
-//		}
-//
-//		FileInputStream fis = null;
-//		ObjectInputStream in = null;
-//
-//		try {
-//			fis = new FileInputStream(dataFile);
-//			in = new ObjectInputStream(fis);
-//
-//			while (true) {
-//				Movie tmp = (Movie) in.readObject();
-//				if (tmp == null)
-//					break;
-//				movie.add(tmp);
-//			}
-//		} catch (Exception e) {
-//		} finally {
-//			try {
-//				if (in != null)
-//					in.close();
-//				if (fis != null)
-//					fis.close();
-//			} catch (Exception e) {
-//				e.printStackTrace();
-//			}
-//		}
-//	}
+		try {
+			fos = new FileOutputStream(dataFile);
+			out = new ObjectOutputStream(fos);
+
+			Iterator<Movie> it = movie.iterator();
+			while (it.hasNext()) {
+				out.writeObject(it.next());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (out != null)
+					out.close();
+				if (fos != null)
+					fos.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	void load() { // 무비 데이터 로드
+		if (dataFile.exists() == false) {
+			return;
+		}
+
+		FileInputStream fis = null;
+		ObjectInputStream in = null;
+
+		try {
+			fis = new FileInputStream(dataFile);
+			in = new ObjectInputStream(fis);
+
+			while (true) {
+				Movie tmp = (Movie) in.readObject();
+				if (tmp == null)
+					break;
+				movie.add(tmp);
+			}
+		} catch (Exception e) {
+		} finally {
+			try {
+				if (in != null)
+					in.close();
+				if (fis != null)
+					fis.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
 }

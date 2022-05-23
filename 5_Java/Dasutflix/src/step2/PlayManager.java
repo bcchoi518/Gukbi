@@ -88,7 +88,8 @@ public class PlayManager {
 					profileM.profileSetting();
 					break;
 				case 2:
-					System.out.println("공사중");
+					showContents();
+					Screen.getWatchScreen();
 					break;
 				case 3:
 					configurationSetting(user);
@@ -215,4 +216,26 @@ public class PlayManager {
 		User uTemp = userM.searchIsOnline();
 		System.out.println(uTemp.pf.config.toString());
 	}// end showConfiguration
+
+	void showContents() {
+		int col = 5;
+		for (int i = 0; i < movieM.movie.size(); i += 5) {
+			for (int k = i; k < (i + col); k++) {
+				System.out.printf("Title: %-20s", movieM.movie.get(k).getTitle());
+			} // end for
+			System.out.println();
+			for (int k = i; k < (i + col); k++) {
+				System.out.printf("Genre: %-20s", movieM.movie.get(k).getGenre());
+			} // end for
+			System.out.println();
+			for (int k = i; k < (i + col); k++) {
+				System.out.printf("AgeGrade: %-20d", movieM.movie.get(k).getAgeGrade());
+			} // end for
+			System.out.println();
+			for (int k = i; k < (i + col); k++) {
+				System.out.printf("Score: %-20.1f", movieM.movie.get(k).getScore());
+			} // end for
+			System.out.printf("%n%n");
+		} // end for
+	}// end showContents
 }// end PlayManager

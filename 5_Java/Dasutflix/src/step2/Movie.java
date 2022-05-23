@@ -3,100 +3,109 @@ package step2;
 import java.io.Serializable;
 
 public class Movie implements Serializable {
-  int serialNumber; // 시리얼넘버
-  String title; // 제목
-  String category; // 장르
-  double score; // 별점
-  String synopsis; // 줄거리
-  String tag; // 태그
-  String contentsRating; // 관람등급
-  int scoreCount; // 별점 평균치 계산용
-  int scoreSum; // 별점 평균치 계산용
+	int serialNumber; // 시리얼넘버
+	String title; // 제목
+	String genre; // 장르
+	double score; // 별점
+	String synopsis; // 줄거리
+	int ageGrade; // 시청연령
+	String tag; // 태그
+	String contentsRating; // 관람등급
+	int scoreCount; // 별점 평균치 계산용
+	int scoreSum; // 별점 평균치 계산용
 
-  Movie() {
-  }
+	Movie() {
+	}
 
-  public String getTitle() {
-    return title;
-  }
+	public String getTitle() {
+		return title;
+	}
 
-  public void setTitle(String title) {
-    this.title = title;
-  }
+	public void setTitle(String title) {
+		this.title = title;
+	}
 
-  public String getCategory() {
-    return category;
-  }
+	public String getGenre() {
+		return genre;
+	}
 
-  public void setCategory(String category) {
-    this.category = category;
-  }
+	public void setGenre(String genre) {
+		this.genre = genre;
+	}
 
-  public double getScore() {
-    return score;
-  }
+	public double getScore() {
+		return score;
+	}
 
-  public void setScore(double score) { // 유저가 별점 매길때마다 호출해서 계산
-    scoreCount++;
-    scoreSum += score;
-    this.score = scoreSum / (scoreCount * 5);
-  }
+	public void setScore(double score) { // 유저가 별점 매길때마다 호출해서 계산
+		scoreCount++;
+		scoreSum += score;
+		this.score = scoreSum / (scoreCount * 5);
+	}
 
-  public String getSynopsis() {
-    return synopsis;
-  }
+	public String getSynopsis() {
+		return synopsis;
+	}
 
-  public void setSynopsis(String synopsis) {
-    this.synopsis = synopsis;
-  }
+	public void setSynopsis(String synopsis) {
+		this.synopsis = synopsis;
+	}
 
-  public String isContentsRating() {
-    return contentsRating;
-  }
+	public int getAgeGrade() {
+		return ageGrade;
+	}
 
-  public void setContentsRating(String contentsRating) {
-    this.contentsRating = contentsRating;
-  }
+	public void setAgeGrade(int ageGrade) {
+		this.ageGrade = ageGrade;
+	}
 
-  public int getSerialNumber() {
-    return serialNumber;
-  }
+	public String isContentsRating() {
+		return contentsRating;
+	}
 
-  public void setSerialNumber(int serialNumber) {
-    this.serialNumber = serialNumber;
-  }
+	public void setContentsRating(String contentsRating) {
+		this.contentsRating = contentsRating;
+	}
 
-  public String getTag() {
-    return tag;
-  }
+	public int getSerialNumber() {
+		return serialNumber;
+	}
 
-  public void setTag(String tag) {
-    this.tag = tag;
-  }
+	public void setSerialNumber(int serialNumber) {
+		this.serialNumber = serialNumber;
+	}
 
-  public int getScoreCount() {
-    return scoreCount;
-  }
+	public String getTag() {
+		return tag;
+	}
 
-  public void setScoreCount(int scoreCount) {
-    this.scoreCount = scoreCount;
-  }
+	public void setTag(String tag) {
+		this.tag = tag;
+	}
 
-  public int getScoreSum() {
-    return scoreSum;
-  }
+	public int getScoreCount() {
+		return scoreCount;
+	}
 
-  public void setScoreSum(int scoreSum) {
-    this.scoreSum = scoreSum;
-  }
+	public void setScoreCount(int scoreCount) {
+		this.scoreCount = scoreCount;
+	}
 
-  public String getContentsRating() {
-    return contentsRating;
-  }
+	public int getScoreSum() {
+		return scoreSum;
+	}
 
-  @Override
-  public String toString() {
-    return "시리얼넘버 : " + serialNumber + "\n제목 : " + title + ", 장르 : " + category + " , 별점 : " + score
-        + ", 관람등급 : " + contentsRating + ", 태그 : " + tag + "\n";
-  }
+	public void setScoreSum(int scoreSum) {
+		this.scoreSum = scoreSum;
+	}
+
+	public String getContentsRating() {
+		return contentsRating;
+	}
+
+	@Override
+	public String toString() {
+		return "시리얼넘버: " + serialNumber + "\n제목: " + title + ", 장르: " + genre + " , 별점: " + score + ", 시청연령: "
+				+ contentsRating + ", 태그: " + tag + "\n";
+	}
 }

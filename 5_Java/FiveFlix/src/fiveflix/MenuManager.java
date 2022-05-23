@@ -99,13 +99,13 @@ public class MenuManager extends MovieSet {
 
 	void favorite() {
 		AllMovie();
-		HashSet<Movies> favoriteSet = new HashSet<Movies>();
+		HashSet<Movie> favoriteSet = new HashSet<Movie>();
 		//while (true) {
 			System.out.println("Enter the name of the movie you want to include in your Favorites list.");
 			String movieName = FiveFlix.sc.nextLine();
-			Iterator<Movies> it = allMovieSet.iterator();
+			Iterator<Movie> it = allMovieSet.iterator();
 			while (it.hasNext()) {
-				Movies tmp = (Movies) it.next();
+				Movie tmp = (Movie) it.next();
 				if (allMovieSet.contains(movieName)) {
 					favoriteSet.add(tmp);
 					if (favoriteSet.add(tmp)) {

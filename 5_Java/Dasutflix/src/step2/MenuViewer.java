@@ -4,30 +4,17 @@ import java.util.Scanner;
 
 public class MenuViewer {
 	static Scanner sc = new Scanner(System.in);
-	
-	static void showLogo() throws InterruptedException {
-		System.out.println("______  ______   _     _    _____   ______  _       _____    __   __");
-	    Thread.sleep(100); 
-	    System.out.println("|  ___| |_   _| | |   | |  |  ___| |  ___| | |     |_   _|   \\ \\ / /");
-	    Thread.sleep(100);
-	    System.out.println("| |_      | |   | |   | |  | |__   | |_    | |       | |      \\ V / ");
-	    Thread.sleep(100);
-	    System.out.println("|  _|     | |   | |   | |  | __|   |  _|   | |       | |      / ^ \\ ");
-	    Thread.sleep(100);
-	    System.out.println("| |      _| |_  \\ \\___/ /  | |___  | |     | |____  _| |_    / / \\ \\ ");
-	    Thread.sleep(100);
-	    System.out.println("|_|      \\___/   \\_____/   \\____/  \\_|     \\_____/  \\___/    \\/   \\/");
-	    System.out.println();
-	    Thread.sleep(800);
-	}//end logo
 
 	static void showLogIn() throws InterruptedException {
-		MenuViewer.showLogo();
-	    System.out.println("┌───────────────────────────────────────────────────────────────────┐");
-		System.out.print("│\tSignIn(1)\t");
-		System.out.print("│\tSignUp(2)\t");
-		System.out.println("│\tExit(3)\t    │");
-		System.out.println("└───────────────────────────────────────────────────────────────────┘");
+		Screen.netflixLogo1();
+		System.out.println();
+		System.out.println("　　　"
+				+ "┌ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ┐");
+		System.out.print("\t\t\tSignIn(1)");
+		System.out.print("\t\tSignUp(2)");
+		System.out.println("\t\tExit(3)");
+		System.out.println("　　　"
+				+ "└ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ┘");
 		System.out.println();
 		System.out.print("Choice> ");
 	}// end showLogIn
@@ -41,15 +28,18 @@ public class MenuViewer {
 	}// end showMainMenu
 
 	static void showUserMenu(User user) throws NotExistException, InterruptedException {
-		MenuViewer.showLogo();
-		System.out.println("        \t\t*_Hello Fiveflix world_*");
-		System.out.println("┌───────────────────────────────────────────────────────────────────┐");
-		System.out.print("│\t     LogOut(0)    \t  ");
-		System.out.println("│\t       Profile(1)  \t    │");
-		System.out.println("├───────────────────────────────────────────────────────────────────┤");
-		System.out.print("│\t    Contents(2)   \t  ");
-		System.out.println("│\t    Configuration(3)  \t    │");
-		System.out.println("└───────────────────────────────────────────────────────────────────┘");
+		Screen.netflixLogo1();
+		System.out.println("        \t\t\t\t*_Hello Fiveflix world_*");
+		System.out.println();
+		System.out.println("　　　"
+				+ "┌ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ┐");
+		System.out.print("\t\t   LogOut(0)");
+		System.out.print("\t  Profile(1)");
+//		System.out.println("├───────────────────────────────────────────────────────────────────┤");
+		System.out.print("\t  Contents(2)  ");
+		System.out.println("\t  Configuration(3)");
+		System.out.println("　　　"
+				+ "└ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ┘");
 		System.out.println();
 //		System.out.println("0. 로그아웃");
 //		System.out.println("1. 프로필");
@@ -77,15 +67,18 @@ public class MenuViewer {
 	}// end showSettingsMenu
 
 	static void showAdminMenu() throws InterruptedException {
-		MenuViewer.showLogo();
-		System.out.println("        \t\t*_Hello Fiveflix world_*");
-		System.out.println("┌───────────────────────────────────────────────────────────────────┐");
-		System.out.print("│\t      LogOut(0)       \t  ");
-		System.out.println("│\t   User Management(1)  \t    │");
-		System.out.println("├───────────────────────────────────────────────────────────────────┤");
-		System.out.print("│\tContents Management(2)\t  ");
-		System.out.println("│\t   Change Password(3)  \t    │");
-		System.out.println("└───────────────────────────────────────────────────────────────────┘");
+		Screen.netflixLogo1();
+		System.out.println("        \t\t\t\t*_Hello Fiveflix world_*");
+		System.out.println();
+		System.out.println("　　　"
+				+ "┌ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ┐");
+		System.out.print("\tLogOut(0)");
+		System.out.print("\tUserManagement(1)");
+//		System.out.println("├───────────────────────────────────────────────────────────────────┤");
+		System.out.print("\tContentsManagement(2) ");
+		System.out.println("\t  ChangePassword(3)");
+		System.out.println("　　　"
+				+ "└ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ┘");
 		System.out.println();
 //		System.out.println("0. 로그아웃");
 //		System.out.println("1. 회원관리");
@@ -110,15 +103,16 @@ public class MenuViewer {
 		System.out.println("3. 영상시청");
 		System.out.print(user.pf.getNickname() + "> ");
 	}// end showMovieInfo
-	
+
 	static void showMovieManagementMenu() {
+		System.out.println("0. 나가기");
 		System.out.println("1. 영화 입력");
 		System.out.println("2. 영화 검색");
 		System.out.println("3. 영화 수정");
 		System.out.println("4. 영화 삭제");
 		System.out.println("5. 전체 출력");
 		System.out.println("6. 데이터 저장");
-		System.out.println("7. 데이터 로드"); //프로그램 시작 부분에 필요함
+		System.out.println("7. 데이터 로드"); // 프로그램 시작 부분에 필요함
 		System.out.print("admin> ");
-	}//end showMovieManagementMenu
+	}// end showMovieManagementMenu
 }// end MenuViewer
