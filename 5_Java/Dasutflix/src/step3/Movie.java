@@ -1,18 +1,18 @@
-package step2;
+package step3;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 
 public class Movie implements Serializable {
-	int serialNumber; // 시리얼넘버
-	String title; // 제목
-	String genre; // 장르
-	double score; // 별점
-	String synopsis; // 줄거리
-	int filmRating; // 연령제한
-	int scoreCount; // 별점 평균치 계산용
-	int scoreSum; // 별점 평균치 계산용
-	ArrayList<String> userCheck;
+	int serialNumber; // �떆由ъ뼹�꽆踰�
+	String title; // �젣紐�
+	String genre; // �옣瑜�
+	double score; // 蹂꾩젏
+	String synopsis; // 以꾧굅由�
+	int filmRating; // �뿰�졊�젣�븳
+	int scoreCount; // 蹂꾩젏 �룊洹좎튂 怨꾩궛�슜
+	int scoreSum; // 蹂꾩젏 �룊洹좎튂 怨꾩궛�슜
+	ArrayList<String> userCheck; // 평점 기록용
 
 	Movie() {
 	}
@@ -25,17 +25,25 @@ public class Movie implements Serializable {
 		this.title = title;
 	}
 
+	public String getGenre() {
+		return genre;
+	}
+
+	public void setGenre(String genre) {
+		this.genre = genre;
+	}
+
 	public double getScore() {
 		return score;
 	}
 
-	public void setScore(double score) {
+	public void setScore(double score) { // �쑀��媛� 蹂꾩젏 留ㅺ만�븣留덈떎 �샇異쒗빐�꽌 怨꾩궛
 		if (score <= 5 && score >= 0) {
 			scoreCount++;
 			scoreSum += score;
 			this.score = scoreSum / scoreCount;
 		} else {
-			System.out.println("Please enter a value between 0 and 5");
+			System.out.println("0에서 5사이의 값을 입력해주세요.");
 		}
 	}
 
@@ -45,6 +53,14 @@ public class Movie implements Serializable {
 
 	public void setSynopsis(String synopsis) {
 		this.synopsis = synopsis;
+	}
+
+	public int getFilmRating() {
+		return filmRating;
+	}
+
+	public void setFilmRating(int filmRating) {
+		this.filmRating = filmRating;
 	}
 
 	public int getSerialNumber() {
@@ -63,28 +79,12 @@ public class Movie implements Serializable {
 		this.scoreCount = scoreCount;
 	}
 
-	public double getScoreSum() {
+	public int getScoreSum() {
 		return scoreSum;
 	}
 
 	public void setScoreSum(int scoreSum) {
 		this.scoreSum = scoreSum;
-	}
-
-	public String getGenre() {
-		return genre;
-	}
-
-	public void setGenre(String genre) {
-		this.genre = genre;
-	}
-
-	public int getFilmRating() {
-		return filmRating;
-	}
-
-	public void setFilmRating(int filmRating) {
-		this.filmRating = filmRating;
 	}
 
 	public String getStarScore() {
@@ -118,13 +118,13 @@ public class Movie implements Serializable {
 		if (score >= 4.5 && score <= 5) {
 			return "★★★★★";
 		} else {
-			return "Rating out of range";
+			return "별점값이 범위에서 벗어남";
 		}
 	}
 
 	@Override
 	public String toString() {
-		return "SerialNumber: " + serialNumber + "\nTitle: " + title + ", Genre: " + genre + " , Rating: " + score
-				+ ", FilmRating: " + filmRating + "\n";
+		return "�떆由ъ뼹�꽆踰�: " + serialNumber + "\n�젣紐�: " + title + ", �옣瑜�: " + genre + " , 蹂꾩젏: " + score
+				+ ", �떆泥��뿰�졊: " + filmRating + "\n";
 	}
 }

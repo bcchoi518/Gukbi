@@ -1,16 +1,18 @@
-package step2;
+package step3;
 
 public class PlayManager {
 	private static PlayManager playM;
 	private UserManager userM;
 	private ProfileManager profileM;
 	private MovieManager movieM;
+	MovieUser mu;
 
 	private PlayManager() {
 		userM = UserManager.getInstance();
 		profileM = ProfileManager.getInstance();
 		movieM = MovieManager.getInstance();
 		userM.userStorage.add(new Admin());
+		mu = MovieUser.getInstance();
 	}
 
 	public static PlayManager getInstance() {
@@ -88,7 +90,7 @@ public class PlayManager {
 					profileM.profileSetting();
 					break;
 				case 2:
-					showContents();
+					mu.userMenu();
 					Screen.getWatchScreen();
 					break;
 				case 3:

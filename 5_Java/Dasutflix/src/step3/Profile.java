@@ -1,4 +1,4 @@
-package step2;
+package step3;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -10,7 +10,7 @@ public class Profile {
 	private boolean isActive;
 	Configuration config;
 	HashSet<String> favorite = new HashSet<String>(FAVORITE_MAX);
-	ArrayList<Movie> saved = new ArrayList<Movie>();
+	ArrayList<Movie> myList = new ArrayList<Movie>();
 
 	public Profile() {
 	}
@@ -52,7 +52,7 @@ public class Profile {
 
 	@Override
 	public String toString() {
-		return "nickname: " + nickname + "(" + (isActive ? "Activate" : "Deactivate") + ")" + "  favorite: " + favorite
-				+ "  saved: " + saved;
+		return "Nickname: " + nickname + "(" + (isActive ? "Activate" : "Deactivate") + ")" + "  Favorite: " + favorite
+				+ "  MyList: " + myList;
 	}// end toString
 }// end Profile
