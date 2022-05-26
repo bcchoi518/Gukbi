@@ -1,4 +1,4 @@
-package step7;
+package step8;
 
 public class ChoiceException extends Exception {
 	private int wrongIntChoice;

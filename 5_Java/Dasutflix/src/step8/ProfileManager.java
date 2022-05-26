@@ -1,4 +1,4 @@
-package step7;
+package step8;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -193,6 +193,9 @@ public class ProfileManager {
 	
 	void loadProfileData() {
 		User uTemp = userM.searchIsOnline();
+		if(uTemp.getId()=="admin") {
+			return;
+		}//end
 		File dataFile = new File(uTemp.getId()+"_ProfileData.dat");
 		if (!dataFile.exists()) {
 			try {
@@ -229,6 +232,9 @@ public class ProfileManager {
 		ObjectOutputStream out = null;
 		User uTemp = userM.searchIsOnline();
 		try {
+			if(uTemp.getId()=="admin") {
+				return;
+			}//end
 			fos = new FileOutputStream(uTemp.getId()+"_ProfileData.dat");
 			out = new ObjectOutputStream(fos);
 			out.writeObject(uTemp.profileStorage);

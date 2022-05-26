@@ -1,4 +1,4 @@
-package step7;
+package step8;
 
 public class PlayManager {
 	private static PlayManager playM;
@@ -25,39 +25,44 @@ public class PlayManager {
 	}// end getInstance
 
 	void signUp() {
-		System.out.print("Enter ID to use: ");
+		System.out.print("    �������������������������������������������������������� �뾿 ENTER ID TO USE>  ");
 		String id = MenuViewer.sc.nextLine();
-		System.out.print("Enter Password to use: ");
+		System.out.print("    �������������������������������������������������������� �뾿 ENTER PW TO USE>  ");
 		String pw = MenuViewer.sc.nextLine();
-		System.out.print("Enter your age: ");
+		System.out.print("    �������������������������������������������������������� �뾿 ENTER YOUR AGE>  ");
 		int age = Integer.parseInt(MenuViewer.sc.nextLine());
 		User uTemp = new User(id, pw, age);
 		if (!userM.userStorage.add(uTemp)) {
-			System.out.println("Member that already exists");
+			System.out.println();
+			System.out.println("    .....oOoOoOoOoOoOoOoOps!( Member that already Exists )");
 			return;
 		} // end if
-		System.out.print("Enter the profile nickname to use: ");
+		System.out.print("    �������������������������������������������������������� �뾿 ENTER NICKNAME TO USE>  ");
 		String nickname = MenuViewer.sc.nextLine();
 		uTemp.pf = new Profile(nickname);
-		System.out.println("Choose 3 genres that you prefer");
+		System.out.println();
+		System.out.println("    漱섃쳵漱섃쳵漱섃쳵漱섃쳵漱섃쳵漱섃쳵漱섃쳵漱섃쳵 쨌 쨌 Choose 3 genres that you prefer 쨌 쨌 漱섃쳵漱섃쳵漱섃쳵漱섃쳵漱섃쳵漱섃쳵漱섃쳵漱섃쳵");
+		System.out.println();
 		MenuViewer.showGenre();
 		for (int i = 0; i < uTemp.pf.FAVORITE_MAX; i++) {
-			System.out.print(">> ");
+			System.out.print("                >> ");
 			int tmp = Integer.parseInt(MenuViewer.sc.nextLine());
 			uTemp.pf.favorite.add(MenuViewer.genreArr[tmp - 1]);
 		} // end for
 		uTemp.pf.setActive(true);
 		if (uTemp.profileStorage.add(uTemp.pf)) {
-			System.out.println("Congratulations on your membership!");
+			System.out.println("                       惜ⓥ뵂�뵂�뵂�뵂�뵂�쀋뤜�  CONGRATULATIONS ON YOUR MEMBERSHIP  �듚롅쀢뵂�뵂�뵂�뵂�뵂惜�");
+			System.out.println();
 		} else {
-			System.out.println("Failed to sign up for membership");
+			System.out.println();
+			System.out.println("    .....oOoOoOoOoOoOoOoOps!( Failed to sign up for Membership )");
 		} // end if
 	}// end signUp
 
 	User signIn() throws ChoiceException, NotExistException {
-		System.out.print("ID: ");
+		System.out.print("    �������������������������������������������������������� �뾿 ID>  ");
 		String id = MenuViewer.sc.nextLine();
-		System.out.print("PW: ");
+		System.out.print("    �������������������������������������������������������� �뾿 PW>  ");
 		String pw = MenuViewer.sc.nextLine();
 		User uTemp = userM.search(id);
 		if (uTemp == null) {
@@ -66,9 +71,11 @@ public class PlayManager {
 		if (uTemp.getPw().equals(pw)) {
 			uTemp.setOnline(true);
 			profileM.loadProfileData();
-			uTemp.pf.loadMyList();
-			uTemp.pf.loadFavorite();
-			System.out.println("Login successful");
+			if (uTemp.getId() != "admin") {
+				uTemp.pf.loadMyList();
+				uTemp.pf.loadFavorite();
+			}//end if
+			System.out.println("    ��������������������������������������������������������   Login Successful !  ");
 			System.out.println();
 			return uTemp;
 		} else {
@@ -99,7 +106,7 @@ public class PlayManager {
 					profileM.profileSetting();
 					break;
 				case 2:
-					mu.userMenu();
+					mu.userMenu(MovieManager.getInstance().movieStorage);
 					break;
 				case 3:
 					configurationSetting(user);
@@ -112,9 +119,11 @@ public class PlayManager {
 			} catch (NotExistException e) {
 				e.showErrorMessage();
 			} catch (NumberFormatException e) {
-				System.err.println("[ERROR] Please enter numbers only.");
+				System.out.println();
+				System.err.println("    .....oOoOoOoOoOoOoOoOps!( Please enter Numbers ONLY )");
 			} catch (Exception e) {
-				System.err.println("[ERROR] Unknown error occurred");
+				System.out.println();
+				System.err.println("    .....oOoOoOoOoOoOoOoOps!( Unknown ERROR Occurred )");
 				System.err.println(e);
 			} // end try-catch
 		} // end while
@@ -146,9 +155,11 @@ public class PlayManager {
 			} catch (NotExistException e) {
 				e.showErrorMessage();
 			} catch (NumberFormatException e) {
-				System.err.println("[ERROR] Please enter numbers only.");
+				System.out.println();
+				System.err.println("    .....oOoOoOoOoOoOoOoOps!( Please enter Numbers ONLY )");
 			} catch (Exception e) {
-				System.err.println("[ERROR] Unknown error occurred");
+				System.out.println();
+				System.err.println("    .....oOoOoOoOoOoOoOoOps!( Unknown ERROR Occurred )");
 			} // end try-catch
 		} // end while
 	}// end play
@@ -180,51 +191,56 @@ public class PlayManager {
 			} catch (ChoiceException e) {
 				e.showErrorMessage();
 			} catch (NumberFormatException e) {
-				System.err.println("[ERROR] Please enter numbers only.");
+				System.out.println();
+				System.err.println("    .....oOoOoOoOoOoOoOoOps!( Please enter Numbers ONLY )");
 			} catch (Exception e) {
-				System.err.println("[ERROR] Unknown error occurred");
+				System.out.println();
+				System.err.println("    .....oOoOoOoOoOoOoOoOps!( Unknown ERROR Occurred )");
 			} // end try-catch
 		} // end while
 	}// end configurationSetting
 
 	private void selectNation() {
 		User uTemp = userM.searchIsOnline();
+		System.out.print("    �������������������������������������������������������� ");
 		String[] sArr = { "Korea", "USA", "Japan", "China" };
 		for (int i = 0; i < sArr.length; i++) {
-			System.out.printf("%d.%s  ", (i + 1), sArr[i]);
+			System.out.printf("[%d.%s  ", (i + 1), sArr[i]+"]");
 		} // end for
 		System.out.println();
-		System.out.print(uTemp.pf.getNickname() + "> ");
+		System.out.print("    �������������������������������������������������������� "+uTemp.pf.getNickname() + "> ");
 		int input = Integer.parseInt(MenuViewer.sc.nextLine());
 		uTemp.pf.config.setNations(sArr[input - 1]);
-		System.out.println("Country Settings Completed");
+		System.out.println("    �������������������������������������������������������� Country Settings Completed !");
 	}// end selectNation
 
 	private void selectCaption() {
 		User uTemp = userM.searchIsOnline();
 		uTemp.pf.config.setCaption(!uTemp.pf.config.isCaption());
 		if (uTemp.pf.config.isCaption()) {
-			System.out.println("Caption ON");
+			System.out.println("    �������������������������������������������������������� Caption [ ON ]");
 		} else {
-			System.out.println("Caption OFF");
+			System.out.println("    �������������������������������������������������������� Caption [ OFF ]");
 		} // end if
 	}// end selectCaption
 
 	private void selectQuality() {
 		User uTemp = userM.searchIsOnline();
+		System.out.print("    �������������������������������������������������������� ");
 		String[] sArr = { "144p", "240p", "360p", "480p", "720p", "1080p" };
 		for (int i = 0; i < sArr.length; i++) {
-			System.out.printf("%d.%s  ", (i + 1), sArr[i]);
+			System.out.printf("[%d.%s  ", (i + 1), sArr[i]+"]");
 		} // end for
 		System.out.println();
-		System.out.print(uTemp.pf.getNickname() + "> ");
+		System.out.print("    �������������������������������������������������������� "+uTemp.pf.getNickname() + "> ");
 		int input = Integer.parseInt(MenuViewer.sc.nextLine());
 		uTemp.pf.config.setQuality(sArr[input - 1]);
-		System.out.println("Image quality setting complete");
+		System.out.println("    �������������������������������������������������������� Image quality setting complete !");
 	}// end selectQuality
 
 	private void showConfiguration() {
 		User uTemp = userM.searchIsOnline();
+		System.out.print("    �������������������������������������������������������� ");
 		System.out.println(uTemp.pf.config.toString());
 	}// end showConfiguration
 

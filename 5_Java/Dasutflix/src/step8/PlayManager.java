@@ -1,4 +1,4 @@
-package step7;
+package step8;
 
 public class PlayManager {
 	private static PlayManager playM;
@@ -11,10 +11,10 @@ public class PlayManager {
 		userM = UserManager.getInstance();
 		profileM = ProfileManager.getInstance();
 		movieM = MovieManager.getInstance();
-		userM.userStorage.add(new Admin());
 		mu = MovieUser.getInstance();
 		userM.loadUserData();
 		movieM.load();
+		userM.userStorage.add(new Admin());
 	}
 
 	public static PlayManager getInstance() {
@@ -71,8 +71,10 @@ public class PlayManager {
 		if (uTemp.getPw().equals(pw)) {
 			uTemp.setOnline(true);
 			profileM.loadProfileData();
-			uTemp.pf.loadMyList();
-			uTemp.pf.loadFavorite();
+			if (uTemp.getId() != "admin") {
+				uTemp.pf.loadMyList();
+				uTemp.pf.loadFavorite();
+			}//end if
 			System.out.println("    ────────────────────────────   Login Successful !  ");
 			System.out.println();
 			return uTemp;

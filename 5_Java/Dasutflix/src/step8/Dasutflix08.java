@@ -1,6 +1,6 @@
-package step7;
+package step8;
 
-public class Dasutflix07 {
+public class Dasutflix08 {
 	public static void main(String[] args) {
 		PlayManager playM = PlayManager.getInstance();
 
@@ -36,9 +36,10 @@ public class Dasutflix07 {
 				System.out.println();
 				System.out.println("    .....oOoOoOoOoOoOoOoOps!( Please enter numbers ONLY )");
 			} catch (Exception e) {
+				e.printStackTrace();
 				System.out.println();
 				System.out.println("    .....oOoOoOoOoOoOoOoOps!( Unknown ERROR Occurred )");
 			} // end try-catch
 		} // end while
 	}// end main
-}// end Dasutflix07
+}// end Dasutflix08
