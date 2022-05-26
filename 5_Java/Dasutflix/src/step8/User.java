@@ -12,7 +12,7 @@ public class User implements Serializable {
 	private boolean isOnline;
 	Profile pf;
 	HashSet<Profile> profileStorage = new HashSet<Profile>(PROFILE_MAX);
-	
+
 	public User() {
 	}
 

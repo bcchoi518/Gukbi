@@ -70,8 +70,8 @@ public class PlayManager {
 		} // end if
 		if (uTemp.getPw().equals(pw)) {
 			uTemp.setOnline(true);
+//			profileM.loadProfileData();
 			if (uTemp.getId() != "admin") {
-//				profileM.loadProfileData();
 //				uTemp.pf.loadMyList();
 //				uTemp.pf.loadFavorite();
 			}//end if
@@ -85,11 +85,9 @@ public class PlayManager {
 
 	private void signOut() {
 		User uTemp = userM.searchIsOnline();
-		if(uTemp.getId() != "admin") {
-//			profileM.saveProfileData();
-//			uTemp.pf.saveMyList();
-//			uTemp.pf.saveFavorite();
-		}//end if
+//		profileM.saveProfileData();
+//		uTemp.pf.saveMyList();
+//		uTemp.pf.saveFavorite();
 		uTemp.setOnline(false);
 //		userM.saveUserData();
 	}// end signOut
@@ -108,7 +106,7 @@ public class PlayManager {
 					profileM.profileSetting();
 					break;
 				case 2:
-					mu.userMenu();
+					mu.userMenu(MovieManager.getInstance().movieStorage);
 					break;
 				case 3:
 					configurationSetting(user);
