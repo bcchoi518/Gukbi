@@ -30,7 +30,6 @@ public class UserManager {
 				int choice = Integer.parseInt(MenuViewer.sc.nextLine());
 				switch (choice) {
 				case 0:
-					saveUserData();
 					return;
 				case 1:
 					allDisplayUser();

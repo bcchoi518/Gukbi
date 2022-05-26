@@ -1,4 +1,4 @@
-package step8;
+package step8_2;
 
 public class Screen {
 	public static void netflixLogo() throws InterruptedException {

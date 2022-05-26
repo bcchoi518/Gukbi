@@ -32,7 +32,6 @@ public class ProfileManager {
 				int choice = Integer.parseInt(MenuViewer.sc.nextLine());
 				switch (choice) {
 				case 0:
-					saveProfileData();
 					return;
 				case 1:
 					allDisplayProfile();

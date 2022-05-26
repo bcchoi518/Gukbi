@@ -1,4 +1,4 @@
-package step8;
+package step8_2;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -30,7 +30,6 @@ public class UserManager {
 				int choice = Integer.parseInt(MenuViewer.sc.nextLine());
 				switch (choice) {
 				case 0:
-					saveUserData();
 					return;
 				case 1:
 					allDisplayUser();

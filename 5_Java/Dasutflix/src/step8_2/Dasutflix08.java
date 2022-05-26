@@ -1,4 +1,4 @@
-package step8;
+package step8_2;
 
 public class Dasutflix08 {
 	public static void main(String[] args) {
@@ -36,7 +36,7 @@ public class Dasutflix08 {
 				System.out.println();
 				System.out.println("    .....oOoOoOoOoOoOoOoOps!( Please enter numbers ONLY )");
 			} catch (Exception e) {
-				e.printStackTrace();
+//				e.printStackTrace();
 				System.out.println();
 				System.out.println("    .....oOoOoOoOoOoOoOoOps!( Unknown ERROR Occurred )");
 			} // end try-catch

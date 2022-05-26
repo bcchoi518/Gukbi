@@ -1,4 +1,4 @@
-package step8;
+package step8_2;
 
 public class PlayManager {
 	private static PlayManager playM;
@@ -12,7 +12,7 @@ public class PlayManager {
 		profileM = ProfileManager.getInstance();
 		movieM = MovieManager.getInstance();
 		mu = MovieUser.getInstance();
-		userM.loadUserData();
+//		userM.loadUserData();
 		movieM.load();
 		userM.userStorage.add(new Admin());
 	}
@@ -72,8 +72,8 @@ public class PlayManager {
 			uTemp.setOnline(true);
 			profileM.loadProfileData();
 			if (uTemp.getId() != "admin") {
-				uTemp.pf.loadMyList();
-				uTemp.pf.loadFavorite();
+//				uTemp.pf.loadMyList();
+//				uTemp.pf.loadFavorite();
 			}//end if
 			System.out.println("    ��������������������������������������������������������   Login Successful !  ");
 			System.out.println();
@@ -85,11 +85,11 @@ public class PlayManager {
 
 	private void signOut() {
 		User uTemp = userM.searchIsOnline();
-		profileM.saveProfileData();
-		uTemp.pf.saveMyList();
-		uTemp.pf.saveFavorite();
+//		profileM.saveProfileData();
+//		uTemp.pf.saveMyList();
+//		uTemp.pf.saveFavorite();
 		uTemp.setOnline(false);
-		userM.saveUserData();
+//		userM.saveUserData();
 	}// end signOut
 
 	void play(User user) {
