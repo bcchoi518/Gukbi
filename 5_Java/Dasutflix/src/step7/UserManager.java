@@ -30,7 +30,6 @@ public class UserManager {
 				int choice = Integer.parseInt(MenuViewer.sc.nextLine());
 				switch (choice) {
 				case 0:
-					saveUserData();
 					return;
 				case 1:
 					allDisplayUser();
@@ -52,9 +51,9 @@ public class UserManager {
 			} catch (NotExistException e) {
 				e.showErrorMessage();
 			} catch (NumberFormatException e) {
-				System.err.println("[ERROR] Please enter numbers only.");
+				System.err.println("    .....oOoOoOoOoOoOoOoOps!( Please enter Numbers ONLY )");
 			} catch (Exception e) {
-				System.err.println("[ERROR] Unknown error occurred");
+				System.err.println("    .....oOoOoOoOoOoOoOoOps!( Unknown ERROR Occurred )");
 			} // end try-catch
 		} // end while
 	}// end profileSetting
@@ -65,24 +64,26 @@ public class UserManager {
 		} // end if
 		Iterator<User> it = userStorage.iterator();
 		System.out.println();
-		System.out.println("?��?��?��?�� Membership information ?��?��?��?��?��?��?��?��?��?��?��?��?��?��?��?��?��?��?��?��?��?��?��");
+		System.out.println("    ──────────────────────────── Membership information ");
 		while (it.hasNext()) {
 			User uTemp = it.next();
+			System.out.print("    ──────────────────────────── ");
 			System.out.println(uTemp.toString());
 		} // end while
-		System.out.printf("?��?��?��?��?��?��?��?��?��?��?��?��?��?��?��?��?��?��?��?��?��?��?��?��?��?��?��?��?��?��?��?��?��?��?��?��?��?��?��?��?��?��?��?��?��?��?��?��?��?��%n%n");
+		System.out.println();
 	}// end allDisplayUser
 
 	private void searchUser() throws NotExistException {
 		if (!userStorageCheck()) {
 			return;
 		} // end if
-		System.out.print("Enter ID to search: ");
+		System.out.print("    ──────────────────────────── Enter ID to search> ");
 		String id = MenuViewer.sc.nextLine();
 		User uTemp = search(id);
 		if (uTemp == null) {
 			throw new NotExistException();
 		} // end if
+		System.out.print("    ──────────────────────────── ");
 		System.out.println(uTemp.toString());
 	}// end searchUser
 
@@ -90,46 +91,46 @@ public class UserManager {
 		if (!userStorageCheck()) {
 			return;
 		} // end if
-		System.out.print("Enter ID to modify: ");
+		System.out.print("    ──────────────────────────── Enter ID to modify> ");
 		String id = MenuViewer.sc.nextLine();
 		User uTemp = search(id);
 		if (uTemp == null) {
 			throw new NotExistException();
 		} // end if
-		System.out.print("Enter a new password: ");
+		System.out.print("    ──────────────────────────── Enter a new password> ");
 		String pw = MenuViewer.sc.nextLine();
 		uTemp.setPw(pw);
-		System.out.print("Enter a new age: ");
+		System.out.print("    ──────────────────────────── Enter a new age> ");
 		int age = Integer.parseInt(MenuViewer.sc.nextLine());
 		uTemp.setAge(age);
-		System.out.println("Modification complete");
+		System.out.println("    ──────────────────────────── Modification complete !");
 	}// end updateUser
 
 	private void deleteUser() throws NotExistException {
 		if (!userStorageCheck()) {
 			return;
 		} // end if
-		System.out.print("Enter ID to delete: ");
+		System.out.print("    ──────────────────────────── Enter ID to delete> ");
 		String id = MenuViewer.sc.nextLine();
 		User uTemp = search(id);
 		if (uTemp == null) {
 			throw new NotExistException();
 		} else if (uTemp.getId() == "admin") {
-			System.out.println("Administrator cannot delete");
+			System.out.println("    ──────────────────────────── Administrator cannot delete");
 		} // end if
 		if (userStorage.remove(uTemp)) {
-			System.out.println("Delete complete");
+			System.out.println("    ──────────────────────────── Delete complete !");
 		} else {
-			System.out.println("Deletion failed");
+			System.out.println("    ──────────────────────────── Deletion failed !");
 		} // end if
 	}// end deleteUser
 
 	void changeAdminPassword() {
 		User uTemp = search("admin");
-		System.out.print("Enter password to change: ");
+		System.out.print("    ──────────────────────────── Enter password to change> ");
 		String pw = MenuViewer.sc.nextLine();
 		uTemp.setPw(pw);
-		System.out.println("Password change completed");
+		System.out.println("    ──────────────────────────── Password change completed !");
 	}// end changeAdminPassword
 
 	User search(String id) {
@@ -158,7 +159,7 @@ public class UserManager {
 
 	private boolean userStorageCheck() {
 		if (userStorage.isEmpty()) {
-			System.out.printf("[Info] No information saved%n%n");
+			System.out.printf("    ──────────────────────────── No information saved%n%n");
 			return false;
 		} // end if
 		return true;

@@ -41,6 +41,6 @@ public class Configuration {
 
 	@Override
 	public String toString() {
-		return "nations: " + nations + "  caption: " + (caption ? "ON" : "OFF") + "  quality: " + quality;
+		return "[NATIONS: " + nations + "  CAPTION: " + (caption ? "ON" : "OFF") + "  QUALITY: " + quality+"]";
 	}// end toString
 }// end Settings

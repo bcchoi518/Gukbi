@@ -43,7 +43,7 @@ public class Movie implements Serializable {
 			scoreSum += score;
 			this.score = scoreSum / scoreCount;
 		} else {
-			System.out.println("0?��?�� 5?��?��?�� 값을 ?��?��?��주세?��.");
+			System.out.println("    ──────────────────────────── Enter Score Between 0 and 5.");
 		}
 	}
 
@@ -89,42 +89,42 @@ public class Movie implements Serializable {
 
 	public String getStarScore() {
 		if (score >= 0 && score <= 0.5) {
-			return "��";
+			return "☆";
 		}
-		if (score > 0.5 && score <= 1) {
-			return "��";
+		if (score >= 0.5 && score <= 1) {
+			return "★";
 		}
-		if (score > 1 && score <= 1.5) {
-			return "�ڡ�";
+		if (score >= 1 && score <= 1.5) {
+			return "★☆";
 		}
-		if (score > 1.5 && score <= 2) {
-			return "�ڡ�";
+		if (score >= 1.5 && score <= 2) {
+			return "★★";
 		}
-		if (score > 2 && score <= 2.5) {
-			return "�ڡڡ�";
+		if (score >= 2 && score <= 2.5) {
+			return "★★☆";
 		}
-		if (score > 2.5 && score <= 3) {
-			return "�ڡڡ�";
+		if (score >= 2.5 && score <= 3) {
+			return "★★★";
 		}
-		if (score > 3 && score <= 3.5) {
-			return "�ڡڡڡ�";
+		if (score >= 3 && score <= 3.5) {
+			return "★★★☆";
 		}
-		if (score > 3.5 && score <= 4) {
-			return "�ڡڡڡ�";
+		if (score >= 3.5 && score <= 4) {
+			return "★★★★";
 		}
-		if (score > 4 && score <= 4.5) {
-			return "�ڡڡڡڡ�";
+		if (score >= 4 && score <= 4.5) {
+			return "★★★★☆";
 		}
-		if (score > 4.5 && score <= 5) {
-			return "�ڡڡڡڡ�";
+		if (score >= 4.5 && score <= 5) {
+			return "★★★★★";
 		} else {
-			return "�������� �������� ���";
+			return "    ──────────────────────────── Rating is Out of Range";
 		}
 	}
 
 	@Override
 	public String toString() {
-		return "�떆?��?�뼹�꽆踰�: " + serialNumber + "\n�젣紐�: " + title + ", �옣?���?: " + genre + " , 蹂꾩?��: " + score
-				+ ", �떆泥��뿰�졊: " + filmRating + "\n";
+		return "    ──────────────────────────── "+"[SERIAL NUMBER: " + serialNumber + "  TITLE: " + title + "  GENRE: " + genre + "  SCORE: " + score
+				+ "  FILMRATING: " + filmRating + "]\n";
 	}
 }

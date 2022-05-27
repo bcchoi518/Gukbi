@@ -22,8 +22,8 @@ public class Dasutflix07 {
 					playM.signUp();
 					break;
 				case 3:
-					playM.backUp();
-					System.out.println("Good Bye");
+					System.out.println();
+					System.out.println("                       ୨┈┈┈┈┈˗ˏˋ  GOOD BYE ! HOPE TO SEE YOU AGAIN  ˊˎ˗┈┈┈┈┈୧");
 					return;
 				default:
 					throw new ChoiceException(choice);
@@ -33,9 +33,12 @@ public class Dasutflix07 {
 			} catch (NotExistException e) {
 				e.showErrorMessage();
 			} catch (NumberFormatException e) {
-				System.err.println("[ERROR] Please enter numbers only.");
+				System.out.println();
+				System.out.println("    .....oOoOoOoOoOoOoOoOps!( Please enter numbers ONLY )");
 			} catch (Exception e) {
-				System.err.println("[ERROR] Unknown error occurred");
+				e.printStackTrace();
+				System.out.println();
+				System.out.println("    .....oOoOoOoOoOoOoOoOps!( Unknown ERROR Occurred )");
 			} // end try-catch
 		} // end while
 	}// end main

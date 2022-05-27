@@ -67,9 +67,9 @@ public class MovieManager {
 			} catch (NotExistException e) {
 				e.showErrorMessage();
 			} catch (NumberFormatException e) {
-				System.err.println("[ERROR] Please enter numbers only.");
+				System.err.println("    .....oOoOoOoOoOoOoOoOps!( Please enter numbers ONLY )");
 			} catch (Exception e) {
-				System.err.println("[ERROR] Unknown error occurred");
+				System.err.println("    .....oOoOoOoOoOoOoOoOps!( Unknown ERROR Occurred )");
 			} // end try-catch
 		}//end while
 	}//end movieManagement
@@ -79,17 +79,17 @@ public class MovieManager {
 		Movie mv = new Movie();
 		MenuViewer menuViewer = new MenuViewer();
 
-		System.out.print("Title: ");
+		System.out.print("    ──────────────────────────── Title> ");
 		String title = MenuViewer.sc.nextLine();
 		mv.setTitle(title);
 		menuViewer.showGenre();
-		System.out.print("Genre: ");
+		System.out.print("    ──────────────────────────── Genre> ");
 		int genre = Integer.parseInt(MenuViewer.sc.nextLine());
 		mv.setGenre(genre);
-		System.out.print("Synopsis: ");
+		System.out.print("    ──────────────────────────── Synopsis> ");
 		String synopsis = MenuViewer.sc.nextLine();
 		mv.setSynopsis(synopsis);
-		System.out.print("FilmRating: ");
+		System.out.print("    ──────────────────────────── Filmrating> ");
 		int filmRating = Integer.parseInt(MenuViewer.sc.nextLine());
 		mv.setFilmRating(filmRating);
 		mv.setSerialNumber(movieStorage.size() + 1);
@@ -97,7 +97,7 @@ public class MovieManager {
 	}
 
 	void updateMovie() throws ChoiceException, NotExistException {
-		System.out.print("Enter movie title to modify: ");
+		System.out.print("    ──────────────────────────── Enter movie title to Modify> ");
 		String title = MenuViewer.sc.nextLine();
 
 		counting(title);
@@ -109,10 +109,10 @@ public class MovieManager {
 			} // end if
 			MenuViewer mViewer = new MenuViewer();
 			mViewer.showGenre();
-			System.out.print("Genre: ");
+			System.out.print("    ──────────────────────────── Genre> ");
 			int genre = Integer.parseInt(MenuViewer.sc.nextLine());
 			mv.setGenre(genre);
-			System.out.print("Synopsis: ");
+			System.out.print("    ──────────────────────────── Synopsis> ");
 			String synopsis = MenuViewer.sc.nextLine();
 			mv.setSynopsis(synopsis);
 		} else if (count > 1) {
@@ -120,19 +120,20 @@ public class MovieManager {
 			if (mv == null) {
 				throw new NotExistException();
 			} // end if
-			System.out.println("There are " + count + " search results. Please enter a serial number");
+			System.out.println("    ──────────────────────────── There are "+count+ " search results");
+			System.out.println("    ──────────────────────────── Please enter a serial number> ");
 			int tmpSerialNumber = Integer.parseInt(MenuViewer.sc.nextLine());
 			mv = serialNumberSearch(tmpSerialNumber);
 			MenuViewer mViewer = new MenuViewer();
 			mViewer.showGenre();
-			System.out.print("Genre: ");
+			System.out.print("    ──────────────────────────── Genre> ");
 			int genre = Integer.parseInt(MenuViewer.sc.nextLine());
 			mv.setGenre(genre);
-			System.out.print("Synopsis: ");
+			System.out.print("    ──────────────────────────── Synopsis> ");
 			String synopsis = MenuViewer.sc.nextLine();
 			mv.setSynopsis(synopsis);
 		} else if (count == 0) {
-			System.out.println("[INFO]: Information to modify does not exist");
+			System.out.println("    .....oOoOoOoOoOoOoOoOps!( Information to modify does not exist )");
 		}
 		count = 0;
 	}
@@ -141,7 +142,7 @@ public class MovieManager {
 		if (!movieStorageCheck()) {
 			return;
 		} // end if
-		System.out.print("Title of movie to delete: ");
+		System.out.print("    ──────────────────────────── Title of movie to Delete> ");
 		String title = MenuViewer.sc.nextLine();
 
 		counting(title);
@@ -152,14 +153,15 @@ public class MovieManager {
 				throw new NotExistException();
 			} // end if
 			movieStorage.remove(mv);
-			System.out.println("Delete complete");
+			System.out.println("    ──────────────────────────── Delete complete !");
 			deleteSerialNumber(mv.serialNumber);
 		} else if (count > 1) {
 			Movie mv = search(title);
 			if (mv == null) {
 				throw new NotExistException();
 			} // end if
-			System.out.println("There are " + count + " search results. Please enter a serial number");
+			System.out.println("    ──────────────────────────── There are "+count+ " search results");
+			System.out.println("    ──────────────────────────── Please enter a serial number> ");
 			int tmpSerialNumber = Integer.parseInt(MenuViewer.sc.nextLine());
 			mv = serialNumberSearch(tmpSerialNumber);
 			if (mv == null) {
@@ -168,7 +170,7 @@ public class MovieManager {
 			movieStorage.remove(mv);
 			deleteSerialNumber(mv.serialNumber);
 		} else if (count == 0) {
-			System.out.println("[Info] Information to delete does not exist");
+			System.out.println("    .....oOoOoOoOoOoOoOoOps!( Information to delete does not exist )");
 		}
 		count = 0;
 	}
@@ -177,15 +179,15 @@ public class MovieManager {
 		if (!movieStorageCheck()) {
 			return;
 		} // end if
-		System.out.print("Enter a movie title to search for: ");
+		System.out.print("    ──────────────────────────── Enter a movie title to search for> ");
 		String title = MenuViewer.sc.nextLine();
 
 		counting(title);
 
 		if (count >= 1) {
-			System.out.println("There are " + count + " search results.");
+			System.out.println("    ──────────────────────────── There are "+count+ " search results");
 		} else if (count == 0) {
-			System.out.println("Information matching input does not exist");
+			System.out.println("    ──────────────────────────── Information matching input does not exist");
 		}
 		count = 0;
 	}
@@ -251,7 +253,7 @@ public class MovieManager {
 
 	private boolean movieStorageCheck() {
 		if (movieStorage.isEmpty()) {
-			System.out.printf("[info] No information saved%n%n");
+			System.out.printf("    .....oOoOoOoOoOoOoOoOps!( No Information Saved )");
 			return false;
 		} // end if
 		return true;

@@ -32,7 +32,6 @@ public class ProfileManager {
 				int choice = Integer.parseInt(MenuViewer.sc.nextLine());
 				switch (choice) {
 				case 0:
-					saveProfileData();
 					return;
 				case 1:
 					allDisplayProfile();
@@ -55,9 +54,9 @@ public class ProfileManager {
 			} catch (NotExistException e) {
 				e.showErrorMessage();
 			} catch (NumberFormatException e) {
-				System.err.println("[ERROR] Please enter numbers only.");
+				System.err.println("    .....oOoOoOoOoOoOoOoOps!( Please enter Numbers ONLY )");
 			} catch (Exception e) {
-				System.err.println("[ERROR] Unknown error occurred");
+				System.err.println("    .....oOoOoOoOoOoOoOoOps!( Unknown ERROR Occurred )");
 			} // end try-catch
 		} // end while
 	}// end profileSetting
@@ -65,17 +64,19 @@ public class ProfileManager {
 	private void createProfile() {
 		User uTemp = userM.searchIsOnline();
 		if (uTemp.profileStorage.size() == uTemp.PROFILE_MAX) {
-			System.out.println("The profile is limited to five profiles.");
+			System.out.println("    ──────────────────────────── The profile is limited to five profiles.");
 			return;
 		} // end if
 		Profile pfTemp = new Profile();
-		System.out.print("Enter a profile nickname to use: ");
+		System.out.print("    ──────────────────────────── Enter a profile nickname to use: ");
 		String nickname = MenuViewer.sc.nextLine();
 		pfTemp.setNickname(nickname);
-		System.out.println("Choose 3 genres that you prefer");
+		System.out.println();
+		System.out.println("    ⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘ · · Choose 3 genres that you prefer · · ⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘");
+		System.out.println();
 		MenuViewer.showGenre();
 		for (int i = 0; i < pfTemp.FAVORITE_MAX; i++) {
-			System.out.print(">> ");
+			System.out.print("                >> ");
 			int tmp = Integer.parseInt(MenuViewer.sc.nextLine());
 			pfTemp.favorite.add(MenuViewer.genreArr[tmp - 1]);
 		} // end for
@@ -83,12 +84,12 @@ public class ProfileManager {
 			uTemp.pf.setActive(false);
 			uTemp.pf = pfTemp;
 			uTemp.pf.setActive(true);
-			System.out.println("Profile creation complete");
+			System.out.println("    ──────────────────────────── Profile creation complete !");
 		} // end if
 	}// end createProfile
 
 	private void changeProfile() throws NotExistException {
-		System.out.print("Enter a profile nickname to use: ");
+		System.out.print("    ──────────────────────────── Enter a profile nickname to use: ");
 		String nickname = MenuViewer.sc.nextLine();
 		Profile changeTemp = searchProfile(nickname);
 		if (changeTemp == null) {
@@ -101,38 +102,40 @@ public class ProfileManager {
 	}// end changeProfile
 
 	private void updateProfile() throws NotExistException {
-		System.out.print("Enter profile nickname to modify: ");
+		System.out.print("    ──────────────────────────── Enter profile nickname to modify> ");
 		String nickname = MenuViewer.sc.nextLine();
 		Profile pfTemp = searchProfile(nickname);
 		if (pfTemp == null) {
 			throw new NotExistException();
 		} // end if
 		pfTemp.favorite.removeAll(pfTemp.favorite);
-		System.out.println("Choose 3 new genres");
+		System.out.println();
+		System.out.println("    ⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘ · · Choose 3 genres that you prefer · · ⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘⫘");
+		System.out.println();
 		MenuViewer.showGenre();
 		for (int i = 0; i < pfTemp.FAVORITE_MAX; i++) {
-			System.out.print(">> ");
+			System.out.print("                >> ");
 			int tmp = Integer.parseInt(MenuViewer.sc.nextLine());
 			pfTemp.favorite.add(MenuViewer.genreArr[tmp - 1]);
 		} // end for
-		System.out.println("Modification complete");
+		System.out.println("    ──────────────────────────── Modification complete !");
 	}// end updateProfile
 
 	private void deleteProfile() throws NotExistException {
-		System.out.print("Enter profile nickname to delete: ");
+		System.out.print("    ──────────────────────────── Enter profile nickname to delete> ");
 		String nickname = MenuViewer.sc.nextLine();
 		Profile pfTemp = searchProfile(nickname);
 		if (pfTemp == null) {
 			throw new NotExistException();
 		} else if (pfTemp.isActive()) {
-			System.out.println("Cannot delete currently selected profile");
+			System.out.println("    ──────────────────────────── Cannot delete currently selected profile");
 			return;
 		} // end if
 		User uTemp = userM.searchIsOnline();
 		if (uTemp.profileStorage.remove(pfTemp)) {
-			System.out.println("Delete complete");
+			System.out.println("    ──────────────────────────── Delete complete !");
 		} else {
-			System.out.println("Deletion failed");
+			System.out.println("    ──────────────────────────── Deletion failed");
 		} // end if
 	}// end deleteProfile
 
@@ -144,12 +147,12 @@ public class ProfileManager {
 
 		Iterator<Profile> it = uTemp.profileStorage.iterator();
 
-		System.out.println("?��?��?��?�� Profile Information ?��?��?��?��?��?��?��?��?��?��?��?��?��?��?��?��?��?��?��?��?��?��?��?��?��");
+		System.out.println();
+		System.out.println("    ──────────────────────────── Profile Information  ");
 		while (it.hasNext()) {
 			Profile pfTemp = it.next();
 			System.out.println(pfTemp.toString());
 		} // end while
-		System.out.printf("?��?��?��?��?��?��?��?��?��?��?��?��?��?��?��?��?��?��?��?��?��?��?��?��?��?��?��?��?��?��?��?��?��?��?��?��?��?��?��?��?��?��?��?��?��?��?��?��?��?��%n%n");
 	}// end allDisplayProfile
 
 	private Profile searchProfile(String nickname) {
@@ -181,7 +184,7 @@ public class ProfileManager {
 	private boolean profileStorageCheck() {
 		User uTemp = userM.searchIsOnline();
 		if (uTemp.profileStorage.isEmpty()) {
-			System.out.printf("[Info] No information saved%n%n");
+			System.out.printf("    ──────────────────────────── No information saved%n%n");
 			return false;
 		} // end if
 		return true;
@@ -189,6 +192,9 @@ public class ProfileManager {
 	
 	void loadProfileData() {
 		User uTemp = userM.searchIsOnline();
+		if(uTemp.getId()=="admin") {
+			return;
+		}//end
 		File dataFile = new File(uTemp.getId()+"_ProfileData.dat");
 		if (!dataFile.exists()) {
 			try {
@@ -225,6 +231,9 @@ public class ProfileManager {
 		ObjectOutputStream out = null;
 		User uTemp = userM.searchIsOnline();
 		try {
+			if(uTemp.getId()=="admin") {
+				return;
+			}//end
 			fos = new FileOutputStream(uTemp.getId()+"_ProfileData.dat");
 			out = new ObjectOutputStream(fos);
 			out.writeObject(uTemp.profileStorage);

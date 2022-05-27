@@ -57,29 +57,31 @@ public class Screen {
 	}
 
 	public static void getWatchScreen() throws InterruptedException {
-		System.out.println("The movie begins");
+		System.out.println();
+		System.out.println();
+		System.out.println("    ▬▭▬▭▬▭▬▭▬▭▬▭▬▭▬▭▬▭▬▭▬▭▬▭▬▭▬ The movie begins ▬▭▬▭▬▭▬▭▬▭▬▭▬▭▬▭▬▭▬▭▬▭▬▭▬▭▬");
 		System.out.println();
 
-		System.out.println("     ___________________ ");
+		System.out.println("                         ___________________ ");
 		Thread.sleep(300);
-		System.out.println("   |  Watching a movie.. |");
+		System.out.println("                       |  Watching a movie.. |");
 		Thread.sleep(300);
-		System.out.println("    ＼＿＿＿＿＿＿＿＿＿＿＿＿／");
+		System.out.println("                        ＼＿＿＿＿＿＿＿＿＿＿＿＿／");
 		Thread.sleep(300);
-		System.out.println("  ????�?");
+		System.out.println("                      　　ｏ");
 		Thread.sleep(300);
-		System.out.println("  ???? ??");
+		System.out.println("                   　   　 。");
 		Thread.sleep(300);
-		System.out.println("  ?????��＿∧");
+		System.out.println("                   　   　∧＿∧");
 		Thread.sleep(300);
-		System.out.println("  ?? (*??･ω･)");
+		System.out.println("                      　 (*　･ω･)");
 		Thread.sleep(300);
-		System.out.println("  �?(__?��/￣￣�?/_");
+		System.out.println("                      ＿(__つ/￣￣￣/_");
 		Thread.sleep(300);
-		System.out.println("  ?? ??�?/??????/");
+		System.out.println("                   　    　＼/　　　/");
 
 		System.out.println();
-		System.out.println("The movie is over");
+		System.out.println("    ▬▭▬▭▬▭▬▭▬▭▬▭▬▭▬▭▬▭▬▭▬▭▬▭▬▭ The movie is over ▬▭▬▭▬▭▬▭▬▭▬▭▬▭▬▭▬▭▬▭▬▭▬▭▬▭▬");
 
 	}
 

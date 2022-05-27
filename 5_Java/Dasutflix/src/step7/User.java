@@ -70,6 +70,6 @@ public class User implements Serializable {
 
 	@Override
 	public String toString() {
-		return "id: " + id + "  pw: " + pw + "  age: " + age + "  isOnline: " + isOnline;
+		return "[ID: " + id + "  PW: " + pw + "  AGE: " + age + "  ON/OFF: " + isOnline+"]";
 	}// end toString
 }// end User

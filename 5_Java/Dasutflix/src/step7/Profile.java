@@ -59,8 +59,8 @@ public class Profile implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Nickname: " + nickname + "(" + (isActive ? "Activate" : "Deactivate") + ")" + "  Favorite: " + favorite
-				+ "  MyList: " + myList;
+		return "    ──────────────────────────── Nickname: " + nickname + "(" + (isActive ? "Activate" : "Deactivate") + ")" + "\n    ──────────────────────────── Favorite: " + favorite
+				+ "\n    ──────────────────────────── MyList\n" + "    ──────────────────────────── "+ myList;
 	}// end toString
 	
 	void loadMyList() {

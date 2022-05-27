@@ -14,9 +14,13 @@ public class ChoiceException extends Exception {
 
 	public void showErrorMessage() {
 		if (wrongStringChoice != null) {
-			System.out.printf("[WARNNING] You have entered it incorrectly%n%n");
+			//System.out.printf("[WARNNING] You have entered it incorrectly%n%n");
+			System.out.println();
+			System.out.println("    .....oOoOoOoOoOoOoOoOps!( You have entered it Incorrectly )");
 		} else {
-			System.out.printf("[WARNNING] The choice corresponding to " + wrongIntChoice + " does not exist%n%n");
+			System.out.println();
+			System.out.println("    .....oOoOoOoOoOoOoOoOps!( The choice corresponding to " + wrongIntChoice + " does not Exist");
+			//System.out.printf("[WARNNING] The choice corresponding to " + wrongIntChoice + " does not exist%n%n");
 		} // end if
 	}// end showErrorMessage
 }// end MenuChoiceException
