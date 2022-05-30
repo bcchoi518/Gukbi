@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>form88.html</title>
+</head>
+
+<body>
+  <h2>성적입력 & 조회</h2>
+  <hr>
+  <form method="post" action="processingGet.jsp">
+    <table border="3" cellspacing="0">
+      <!-- get방식: 도메인 주소뒤에 정보가 붙어서 요청 -->
+      <!-- post방식: 도메인 주소뒤에 정보가 안나옴 -->
+      <tr>
+        <th>전공(학과)</th>
+        <td><input type="text" name="major" value="컴퓨터과학" /></td>
+      </tr>
+      <tr>
+        <th>이&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 름</th>
+        <td><input type="text" name="name" value="" /></td>
+      </tr>
+      <tr>
+        <th>중간 성적</th>
+        <td><input type="password" name="middle" /></td>
+      </tr>
+      <tr>
+        <th>기말 성적</th>
+        <td><input type="number" name="final" /></td>
+      </tr>
+      </tr>
+      <tr align="center">
+        <td colspan="2"><input type="submit" value="처리결과 조회" /> &nbsp;<input type="reset" value="입력 취소" /></td>
+      </tr>
+      <!-- 처리결과 조회를 클릭하면 submit이 form의 action속성을 호출 -->
+      <!-- 입력 취소를 클릭하면 <input> tag에 value 속성 값이 없는 것만 지워짐 -->
+    </table>
+  </form>
+
+  <hr>
+  <hr>
+  <form method="post" action="processingGet.jsp">
+    <table border="1" cellspacing="0">
+      <!-- get방식: 도메인 주소뒤에 정보가 붙어서 요청 -->
+      <!-- post방식: 도메인 주소뒤에 정보가 안나옴 -->
+      <tr>
+        <th>ID</th>
+        <td><input type="text" name="id" value="" /></td>
+      </tr>
+      <tr>
+        <th>PASSWORD</th>
+        <td><input type="password" name="pwd" value="" /></td>
+      </tr>
+      <tr>
+        <th>이름</th>
+        <td><input type="text" name="name" /></td>
+      </tr>
+      <tr>
+        <th>나이</th>
+        <td><input type="number" name="age" /></td>
+      </tr>
+      <tr>
+        <th>E-MAIL</th>
+        <td><input type="text" name="email" /></td>
+      </tr>
+      <tr>
+        <th>Nickname</th>
+        <td><input type="text" name="nickname" /></td>
+      </tr>
+      </tr>
+      <tr align="center">
+        <td colspan="2"><input type="submit" value="회원가입" /> &nbsp;<input type="reset" value="입력 취소" /></td>
+      </tr>
+      <!-- 처리결과 조회를 클릭하면 submit이 form의 action속성을 호출 -->
+      <!-- 입력 취소를 클릭하면 <input> tag에 value 속성 값이 없는 것만 지워짐 -->
+    </table>
+  </form>
+</body>
+
+</html>

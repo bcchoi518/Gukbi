@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>form87.html</title>
+</head>
+
+<body>
+  <h2>성적입력 & 조회</h2>
+  <hr>
+  <pre>
+  <form method="post" action="processingGet.jsp">
+    <!-- get방식: 도메인 주소뒤에 정보가 붙어서 요청 -->
+    <!-- post방식: 도메인 주소뒤에 정보가 안나옴 -->
+    전공(학과) : <input type="text" name="major" value="컴퓨터과학"/>
+    이      름 : <input type="text" name="name" value=""/>
+    중간  성적 : <input type="password" name="middle" />
+    기말  성적 : <input type="number" name="final" />
+    <hr>
+    <input type="submit" value="처리결과 조회" /> <input type="reset" value="입력 취소" />
+    <!-- 처리결과 조회를 클릭하면 submit이 form의 action속성을 호출 -->
+    <!-- 입력 취소를 클릭하면 <input> tag에 value 속성 값이 없는 것만 지워짐 -->
+  </form>
+</pre><!-- 문서작성시 작성하는 모습 그대로 웹 페이지에 적용되는 <pre> Tag -->
+</body>
+
+</html>
