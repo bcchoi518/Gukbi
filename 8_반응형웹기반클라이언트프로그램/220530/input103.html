@@ -9,57 +9,60 @@
 </head>
 
 <body>
-  <h1>회원 정보</h1>
-  <hr>
-  <hr>
-  <fieldset>
-    <legend>인적사항</legend>
-    이름 : <input type="text" name="name" value="ID 입력요망" />
-    주민번호 : <input type="text" name="regNo" size="6" value="" />-<input type="text" name="regNo" size="7" value="" /><br>
-    국적 : <select name="country">
-      <option value="korea" selected>내국인(대한민국)</option>
-      <option value="USA">외국인(미국)</option>
-      <option value="UK">외국인(영국)</option>
-      <option value="Germany">외국인(독일)</option>
-      <option value="Japan">외국인(일본)</option>
-      <option value="China">외국인(중국)</option>
-    </select> <br>
-    취득 자격증 : <select name="certificate" size="1" multiple>
-      <option value="1급" selected>정보처리기사 1급</option>
-      <option value="2급">정보처리기사 2급</option>
-      <option value="3급">정보처리기사 3급</option>
-      <option value="4급">정보처리기사 4급</option>
-      <option value="5급">정보처리기사 5급</option>
-    </select>
-  </fieldset>
-  <fieldset>
-    <legend>성별 & 학년</legend>
-    성별 : <input type="radio" name="gender" value="male" id="g1" /><label for="g1">남성</label>
-    <input type="radio" name="gender" value="female" id="g2" /><label for="g2">여성</label> <br>
-    학년 : <input type="radio" name="year" value="freshman" id="y1" /><label for="y1">1학년</label>
-    <input type="radio" name="year" value="sophomore" id="y2" checked /><label for="y2">2학년</label>
-    <input type="radio" name="year" value="junior" id="y3" /><label for="y3">3학년</label>
-    <input type="radio" name="year" value="senior" id="y4" /><label for="y4">4학년</label>
-  </fieldset>
-  <fieldset>
-    <legend>취미</legend>
-    <input type="checkbox" name="hobby" value="reading" id="h1"><label for="h1">독서</label>
-    <input type="checkbox" name="hobby" value="badook" id="h2"><label for="h2">바둑</label>
-    <input type="checkbox" name="hobby" value="golf" id="h3"><label for="h3">골프</label>
-    <input type="checkbox" name="hobby" value="climbing" id="h4"><label for="h4">등산</label>
-    <input type="checkbox" name="hobby" value="travel" id="h5"><label for="h5">여행</label>
-    <input type="checkbox" name="hobby" value="etc" id="h6"><label for="h6">기타</label>
-  </fieldset>
-  <fieldset>
-    <legend>메모사항</legend>
-    <textarea name="memo" id="note" cols="100" rows="3">
+  <form>
+    <h1>회원 정보</h1>
+    <hr>
+    <hr>
+    <fieldset>
+      <legend>인적사항</legend>
+      이름 : <input type="text" placeholder="ID 입력 요망" name="name" value="" />
+      주민번호 : <input type="text" name="regNo" size="6" value="" />-<input type="text" name="regNo" size="7"
+        value="" /><br>
+      국적 : <select name="country">
+        <option value="korea" selected>내국인(대한민국)</option>
+        <option value="USA">외국인(미국)</option>
+        <option value="UK">외국인(영국)</option>
+        <option value="Germany">외국인(독일)</option>
+        <option value="Japan">외국인(일본)</option>
+        <option value="China">외국인(중국)</option>
+      </select> <br>
+      취득 자격증 : <select name="certificate" size="1" step="1" multiple>
+        <option value="1급" selected>정보처리기사 1급</option>
+        <option value="2급">정보처리기사 2급</option>
+        <option value="3급">정보처리기사 3급</option>
+        <option value="4급">정보처리기사 4급</option>
+        <option value="5급">정보처리기사 5급</option>
+      </select>
+    </fieldset>
+    <fieldset>
+      <legend>성별 & 학년</legend>
+      성별 : <input type="radio" name="gender" value="male" id="g1" /><label for="g1">남성</label>
+      <input type="radio" name="gender" value="female" id="g2" /><label for="g2">여성</label> <br>
+      학년 : <input type="radio" name="year" value="freshman" id="y1" /><label for="y1">1학년</label>
+      <input type="radio" name="year" value="sophomore" id="y2" checked /><label for="y2">2학년</label>
+      <input type="radio" name="year" value="junior" id="y3" /><label for="y3">3학년</label>
+      <input type="radio" name="year" value="senior" id="y4" /><label for="y4">4학년</label>
+    </fieldset>
+    <fieldset>
+      <legend>취미</legend>
+      <input type="checkbox" name="hobby" value="reading" id="h1"><label for="h1">독서</label>
+      <input type="checkbox" name="hobby" value="badook" id="h2"><label for="h2">바둑</label>
+      <input type="checkbox" name="hobby" value="golf" id="h3"><label for="h3">골프</label>
+      <input type="checkbox" name="hobby" value="climbing" id="h4"><label for="h4">등산</label>
+      <input type="checkbox" name="hobby" value="travel" id="h5"><label for="h5">여행</label>
+      <input type="checkbox" name="hobby" value="etc" id="h6"><label for="h6">기타</label>
+    </fieldset>
+    <fieldset>
+      <legend>메모사항</legend>
+      <textarea name="memo" id="note" cols="100" rows="3">
 
       메모글을 남겨 주세요</textarea>
-  </fieldset><br>
-  첨부 서류 : <input type="file" name="filename" id="attach">
-  <hr>
-  <button type="submit">저장하기</button>
-  <button type="reset">다시 입력하기</button>
+    </fieldset><br>
+    첨부 서류 : <input type="file" name="filename" id="attach">
+    <hr>
+    <button type="submit">저장하기</button>
+    <button type="reset">다시 입력하기</button>
+  </form>
 </body>
 
 </html>
