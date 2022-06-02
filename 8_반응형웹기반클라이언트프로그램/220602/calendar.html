@@ -11,6 +11,15 @@
       width: 80%;
       height: 500px;
       border-collapse: collapse;
+      border-bottom: 1px solid black;
+    }
+
+    #year {
+      font-size: 3.5rem;
+    }
+
+    #month {
+      font-size: 2.7rem;
     }
 
     th {
@@ -22,8 +31,8 @@
       width: calc(100% / 7);
       font-size: 1.2rem;
       font-weight: bold;
-      border-left: 1px solid black;
       border-right: 1px solid black;
+      border-left: 1px solid black;
     }
 
     .c1 {
@@ -39,6 +48,14 @@
       height: 10px;
     }
 
+    caption {
+      text-align: left;
+      margin-left: 20px;
+      margin-bottom: 20px;
+      font-family: 맑은 고딕;
+      font-weight: bold;
+    }
+
     .text {
       display: table-cell;
       vertical-align: top;
@@ -48,32 +65,29 @@
       border-bottom: 1px solid black;
     }
 
-    caption {
-      text-align: left;
-      margin-left: 20px;
-      margin-bottom: 20px;
-      font-family: 맑은 고딕;
-      font-weight: bold;
-    }
-
-    #year {
-      font-size: 3.5rem;
-    }
-
-    #month {
-      font-size: 2.7rem;
-    }
-
     .noson {
       display: table-cell;
       vertical-align: bottom;
+      font-size: 0.9rem;
       color: red;
       text-align: right;
     }
 
-    #test {
-      display: table-cell;
-      vertical-align: text-bottom;
+    #dup {
+      display: flex;
+      width: auto;
+      height: auto;
+      margin: 0px;
+      flex-direction: column;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+
+    p {
+      text-align: right;
+      color: red;
+      position: relative;
+      top: 15px;
     }
   </style>
 </head>
@@ -174,7 +188,8 @@
     <tr>
       <td class="text"></td>
       <td class="text noson">손없는날</td>
-      <td class="text">철도의날</td>
+      <td class="text">철도의날 <p>손없는날</p>
+      </td>
       <td class="text"></td>
       <td class="text"></td>
       <td class="text"></td>
