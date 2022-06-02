@@ -1,0 +1,30 @@
+header {
+  width: 100vw;
+  height: 10vh;
+  background-color: pink;
+}
+.main {
+  display: flex;
+  width: 100vw;
+  flex-direction: row;
+  padding: 0px 0px;
+}
+nav {
+  flex: 1;
+  background-color: orange;
+}
+section {
+  flex: 8;
+  height: calc(100vh - 20vh);
+  background-color: skyblue;
+}
+aside {
+  flex: 1;
+  background-color: tomato;
+}
+
+footer {
+  width: 100vw;
+  height: 10vh;
+  background-color: yellowgreen;
+}

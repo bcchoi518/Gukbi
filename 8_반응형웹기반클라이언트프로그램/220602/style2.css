@@ -1,0 +1,7 @@
+table {
+  table-layout: fixed;
+  width: 80%;
+  border-collapse: separate;
+  border-spacing: 5px 10px;
+  border: 2px solid blue;
+}
