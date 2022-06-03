@@ -8,23 +8,23 @@
   <title>calendar</title>
   <style>
     table {
-      width: 80%;
+      width: 100%;
       height: 500px;
       border-collapse: collapse;
       border-bottom: 1px solid black;
     }
 
     #year {
-      font-size: 3.5rem;
+      font-size: 4rem;
     }
 
     #month {
-      font-size: 2.7rem;
+      font-size: 2.9rem;
     }
 
     th {
       font-size: 1.5rem;
-      border-bottom: 1px solid black;
+      border-bottom: 1px solid red;
     }
 
     td {
@@ -38,14 +38,17 @@
     .c1 {
       color: red;
       height: 20px;
+      border-left: none;
     }
 
     .c7 {
       color: blue;
+      border-right: none;
     }
 
     .date {
       height: 10px;
+      padding-left: 10px;
     }
 
     caption {
@@ -57,7 +60,6 @@
     }
 
     .text {
-      display: table-cell;
       vertical-align: top;
       font-size: 0.9rem;
       color: blue;
@@ -66,21 +68,10 @@
     }
 
     .noson {
-      display: table-cell;
       vertical-align: bottom;
       font-size: 0.9rem;
       color: red;
       text-align: right;
-    }
-
-    #dup {
-      display: flex;
-      width: auto;
-      height: auto;
-      margin: 0px;
-      flex-direction: column;
-      justify-content: space-between;
-      flex-wrap: wrap;
     }
 
     p {
@@ -94,7 +85,9 @@
 
 <body>
   <table>
-    <caption><span id="year">2022년</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span id="month">6월</span>
+    <caption>
+      <span id="year">2022년</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <span id="month">6월</span>
     </caption>
     <tr>
       <th class="c1">일</th>
@@ -106,94 +99,94 @@
       <th class="c7">토</th>
     </tr>
     <tr>
-      <td class="c1"></td>
-      <td></td>
-      <td></td>
-      <td>1</td>
-      <td>2</td>
-      <td>3</td>
-      <td class="c7">4</td>
+      <td class="date c1"></td>
+      <td class="date"></td>
+      <td class="date"></td>
+      <td class="date">1</td>
+      <td class="date">2</td>
+      <td class="date">3</td>
+      <td class="date c7">4</td>
     </tr>
     <tr>
-      <td class="text"></td>
+      <td class="text c1"></td>
       <td class="text"></td>
       <td class="text"></td>
       <td class="text">의병의날, 지방선거</td>
       <td class="text"></td>
       <td class="text">단오</td>
-      <td class="text"></td>
+      <td class="text c7"></td>
     </tr>
     <tr>
-      <td class="c1">5</td>
-      <td>6</td>
-      <td>7</td>
-      <td>8</td>
-      <td>9</td>
-      <td>10</td>
-      <td class="c7">11</td>
+      <td class="date c1">5</td>
+      <td class="date">6</td>
+      <td class="date">7</td>
+      <td class="date">8</td>
+      <td class="date">9</td>
+      <td class="date">10</td>
+      <td class="date c7">11</td>
     </tr>
     <tr>
-      <td class="text">환경의날</td>
+      <td class="text c1">환경의날</td>
       <td class="text">현충일, 망종</td>
       <td class="text noson">손없는날</td>
       <td class="text noson">손업는날</td>
       <td class="text">구강보건의날</td>
       <td class="text">6.10민주항쟁</td>
-      <td class="text"></td>
+      <td class="text c7"></td>
     </tr>
     <tr>
-      <td class="c1">12</td>
-      <td>13</td>
-      <td>14</td>
-      <td>15</td>
-      <td>16</td>
-      <td>17</td>
-      <td class="c7">18</td>
+      <td class="date c1">12</td>
+      <td class="date">13</td>
+      <td class="date">14</td>
+      <td class="date">15</td>
+      <td class="date">16</td>
+      <td class="date">17</td>
+      <td class="date c7">18</td>
     </tr>
     <tr>
-      <td class="text"></td>
+      <td class="text c1"></td>
       <td class="text"></td>
       <td class="text"></td>
       <td class="text"></td>
       <td class="text"></td>
       <td class="text noson">손없는날</td>
-      <td class="text noson">손없는날</td>
+      <td class="text noson c7">손없는날</td>
     </tr>
     <tr>
-      <td class="c1">19</td>
-      <td>20</td>
-      <td>21</td>
-      <td>22</td>
-      <td>23</td>
-      <td>24</td>
-      <td class="c7">25</td>
+      <td class="date c1">19</td>
+      <td class="date">20</td>
+      <td class="date">21</td>
+      <td class="date">22</td>
+      <td class="date">23</td>
+      <td class="date">24</td>
+      <td class="date c7">25</td>
     </tr>
     <tr>
+      <td class="text c1"></td>
       <td class="text"></td>
       <td class="text"></td>
       <td class="text"></td>
       <td class="text"></td>
       <td class="text"></td>
-      <td class="text"></td>
-      <td class="text">6.25한국전쟁</td>
+      <td class="text c7">6.25한국전쟁</td>
     </tr>
     <tr>
-      <td class="c1">26</td>
-      <td>27</td>
-      <td>28</td>
-      <td>29</td>
-      <td>30</td>
-      <td></td>
-      <td class="c7"></td>
+      <td class="date c1">26</td>
+      <td class="date">27</td>
+      <td class="date">28</td>
+      <td class="date">29</td>
+      <td class="date">30</td>
+      <td class="date"></td>
+      <td class="date c7"></td>
     <tr>
-      <td class="text"></td>
+      <td class="text c1"></td>
       <td class="text noson">손없는날</td>
       <td class="text">철도의날 <p>손없는날</p>
       </td>
       <td class="text"></td>
       <td class="text"></td>
       <td class="text"></td>
-      <td class="text"></td>
+      <td class="text c7"></td>
     </tr>
   </table>
 </body>
