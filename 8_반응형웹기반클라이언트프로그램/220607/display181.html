@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>display181.html</title>
+  <style>
+    h3 {
+      background-color: aqua;
+    }
+
+    span {
+      background-color: orange;
+    }
+
+    img {
+      background-color: green;
+      width: 40px;
+      height: 60px;
+    }
+
+    ul {
+      background-color: yellow;
+    }
+
+    li {
+      background-color: lightgray;
+    }
+
+    table {
+      background-color: skyblue;
+    }
+
+    li#a {
+      display: none;
+      margin-right: 100px;
+      border: dotted;
+    }
+
+    td#b {
+      background-color: red;
+    }
+  </style>
+</head>
+
+<body>
+  <div>
+    <h3>이 교재는 <img src="./img/html5.png" alt="html5.png" /><span>HTML5 프로그래밍</span>을 공부합니다.</h3>
+  </div>
+  <div>
+    <ul>
+      <li>HTML5</li>
+      <li id="a">CSS3</li>
+      <li>Javascript</li>
+    </ul>
+  </div>
+  <hr>
+  <table border="1">
+    <caption>웹 프로그래밍</caption>
+    <tr>
+      <th>구분</th>
+      <th>내용</th>
+    </tr>
+    <tr>
+      <td>클라이언트</td>
+      <td>HTML5 문서</td>
+      <td id="b">CSS3</td>
+      <td>Javascript</td>
+    </tr>
+    <tr>
+      <td>서버</td>
+      <td>PHP 코드</td>
+      <td>MySQL</td>
+      <td>PHP/MySQL 연동</td>
+    </tr>
+  </table>
+</body>
+
+</html>
