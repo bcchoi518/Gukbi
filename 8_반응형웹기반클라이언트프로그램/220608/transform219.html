@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>transform219.html</title>
+  <style>
+    #img1 {
+      margin: 10px;
+      transform: translate(10px, 50px);
+    }
+
+    #img2 {
+      margin: 10px;
+      transform: rotate(-20deg);
+    }
+
+    #img3 {
+      margin: 10px;
+      transform: skew(-10deg, -10deg);
+    }
+
+    #img4 {
+      margin: 10px;
+      transform: scale(0.7, 0.7);
+    }
+
+    #img5 {
+      margin: 10px;
+      transform: scaleX(1.5);
+    }
+
+    #img6 {
+      margin-left: 100px;
+      margin-top: 50px;
+      border: 1px solid black;
+      box-shadow: 5px 5px 10px blue;
+      transition: all 10s ease;
+    }
+
+    #img6:hover {
+      border: 1px solid red;
+      box-shadow: 5px 5px 10px blue;
+      transform: rotate(20deg);
+    }
+  </style>
+</head>
+
+<body>
+
+  기본: <img src="../img/image1.JPG" alt="인왕산" id="img0" width="200" height="150" />
+  이동: <img src="../img/image1.JPG" alt="인왕산" id="img1" width="200" height="150" />
+  회전: <img src="../img/image1.JPG" alt="인왕산" id="img2" width="200" height="150" /><br>
+  왜곡: <img src="../img/image1.JPG" alt="인왕산" id="img3" width="200" height="150" />
+  축소: <img src="../img/image1.JPG" alt="인왕산" id="img4" width="200" height="150" />
+  확대: <img src="../img/image1.JPG" alt="인왕산" id="img5" width="200" height="150" />
+  <hr>
+  마우스를 이미지로 가져가면 이미지가 회전합니다. <br>
+  <img src="../img/image1.JPG" alt="인왕산" id="img6" width="200" height="150" />
+</body>
+
+</html>

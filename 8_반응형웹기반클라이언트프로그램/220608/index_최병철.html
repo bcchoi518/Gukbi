@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>index_최병철.html</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    #container {
+      height: 410px;
+    }
+
+    #header {
+      background-color: dimgray;
+      color: white;
+      height: 15%;
+      text-align: center;
+      line-height: 60px;
+      border-top-left-radius: 60px 30px;
+      border-top-right-radius: 60px 30px;
+      border-bottom-left-radius: 30px 60px;
+      border-bottom-right-radius: 30px 60px;
+      box-shadow: 5px -5px rgb(150, 150, 150);
+      text-shadow: 1px 1px 2px black, 0 0 25px blue, 0 0 5px darkblue;
+      color: white;
+      margin-bottom: 5px;
+    }
+
+    #menu {
+      color: white;
+      float: left;
+      width: 20%;
+      height: 75%;
+      z-index: 1;
+      overflow-x: hidden;
+    }
+
+    a {
+      margin: 5px;
+      border-radius: 30%/100%;
+      background-color: dimgray;
+      text-shadow: 1px 1px 10px black, 0 0 25px blue, 0 0 5px darkblue;
+      color: white;
+    }
+
+    #menu a {
+      display: block;
+      color: white;
+      padding: 16px;
+      text-decoration: none;
+      text-align: center;
+    }
+
+    #menu a:hover {
+      background-color: lightgray;
+      color: black;
+    }
+
+    #content {
+      background-color: ghostwhite;
+      float: left;
+      width: 60%;
+      height: 75%;
+    }
+
+    iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    #side {
+      background-color: gainsboro;
+      float: left;
+      width: 20%;
+      height: 75%;
+      border-radius: 5%;
+      text-align: center;
+      padding: 15px;
+    }
+
+    ul {
+      width: 90%;
+    }
+
+    #footer {
+      background-color: darkgray;
+      height: 10%;
+      text-align: center;
+      line-height: 40px;
+      border-radius: 10px;
+      clear: both;
+      position: relative;
+      top: 5px;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="container">
+    <div id="header">
+      <h1>웹 페이지 타이틀</h1>
+    </div>
+    <div id="menu">
+      <a href="">메뉴항목 1</a>
+      <a href="">메뉴항목 2</a>
+      <a href="">메뉴항목 3</a>
+      <a href="">메뉴항목 4</a>
+      <a href="">메뉴항목 5</a>
+    </div>
+    <div id="content">
+      <iframe src="sample_최병철.html" name="frameName" id="f1" seamless /></iframe>
+    </div>
+    <div id="side">참고내용
+      <ul>
+        <li>참고내용 1</li>
+        <li>참고내용 2</li>
+        <li>참고내용 3</li>
+        <li>참고내용 4</li>
+      </ul>
+    </div>
+    <div id="footer">
+      연락처 : 010-0000-0000 &nbsp;&nbsp;&nbsp;&nbsp;
+      ⓒright : 웹·페이지 개발자
+    </div>
+  </div>
+</body>
+
+</html>

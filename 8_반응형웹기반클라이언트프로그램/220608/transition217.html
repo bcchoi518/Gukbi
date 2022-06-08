@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>transition217.html</title>
+  <style>
+    div {
+      background-color: gray;
+      margin: 5px;
+      width: 100px;
+      text-align: center;
+      transition: width 5s;
+      transition-delay: 0.1s;
+    }
+
+    #b1:hover {
+      width: 150px;
+    }
+
+    #b2:hover {
+      width: 200px;
+    }
+
+    #b3:hover {
+      width: 300px;
+    }
+
+    #b4:hover {
+      width: 400px;
+    }
+
+    #b5:hover {
+      width: 500px;
+    }
+  </style>
+</head>
+
+<body>
+  마우스를 박스로 가져가면, 길이가 늘어납니다.
+  <div id="b1">Level 1</div>
+  <div id="b2">Level 2</div>
+  <div id="b3">Level 3</div>
+  <div id="b4">Level 4</div>
+  <div id="b5">Level 5</div>
+</body>
+
+</html>

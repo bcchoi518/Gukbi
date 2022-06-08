@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>gradient224.html</title>
+  <style>
+    h3 {
+      width: 200px;
+      height: 50px;
+      margin: 10px;
+      line-height: 50px;
+      text-align: center;
+      display: inline-block;
+    }
+
+    #b1 {
+      background: radial-gradient(red, yellow, gray);
+    }
+
+    #b2 {
+      background: radial-gradient(red 5%, yellow 15%, gray 60%);
+    }
+
+    #b3 {
+      background: repeating-radial-gradient(red, yellow 10%, gray 15%);
+    }
+
+    #b4 {
+      background: radial-gradient(circle, red, yellow, gray);
+    }
+
+    #b5 {
+      background: radial-gradient(farthest-corner at 60% 55%, red, yellow, gray);
+    }
+
+    #b6 {
+      background: radial-gradient(farthest-side at 60% 55%, red, yellow, gray);
+    }
+
+    #b7 {
+      background: radial-gradient(closest-corner at 60% 55%, red, yellow, gray);
+    }
+
+    #b8 {
+      background: radial-gradient(closest-side at 60% 55%, red, yellow, gray);
+    }
+  </style>
+</head>
+
+<body>
+  <h3 id="b1">(1) 균등한 타원변화</h3>
+  <h3 id="b2">(2) 서로 다른 타원변화</h3>
+  <h3 id="b3">(3) 반복</h3>
+  <h3 id="b4">(4) 원형 변화</h3>
+  <h3 id="b5">(5) farthest-corner</h3>
+  <h3 id="b6">(6) farthest-side</h3>
+  <h3 id="b7">(7) closest-corner</h3>
+  <h3 id="b8">(8) closest-side</h3>
+</body>
+
+</html>
