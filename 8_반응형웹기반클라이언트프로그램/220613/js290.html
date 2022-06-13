@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>js290.html</title>
+  <style>
+    table {
+      width: 300px;
+    }
+
+    td {
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+  <script>
+    //  for 문의 중첩
+    document.write("<table border=1");
+    document.write("<tr><td> n </td><td>n 제곱</td><td>n 세제곱</td><td>n 네제곱</td></tr>");
+    for (n = 1; n < 6; n++) {
+      document.write("<tr>");
+      result = n;
+      document.write("<td>" + result + "</td>");
+      for (k = 0; k < 3; k++) {
+        result = result * n;
+        document.write("<td>" + result + "</td>");
+      }
+      document.write("</tr>");
+    }
+    document.write("</table>");  
+  </script>
+</body>
+
+</html>
