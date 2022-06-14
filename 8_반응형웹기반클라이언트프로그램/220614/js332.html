@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>js332.html</title>
+</head>
+
+<body>
+  <script>
+    let obj = new Object();
+
+    obj.name = "조민규";
+    obj.major = "건축공학";
+
+    document.write("obj의 constructor: ");
+    document.write(obj.constructor + "<br>");
+
+    document.write("obj의 toString():  ");
+    document.write(obj.toString()); // 상속 메서드  
+    document.write("<br>");
+
+    // toString() 재정의  
+    obj.toString = function () {
+      document.write("{ name: " + this.name + ", major: " + this.major + " }<br>");
+    };
+
+    document.write("obj의 toString(): ");
+    document.write(obj.toString());  // 재정의 메서드(재정의 하면서 return 값을 정의하지 않았기 때문에 undefined)
+  </script>
+</body>
+
+</html>

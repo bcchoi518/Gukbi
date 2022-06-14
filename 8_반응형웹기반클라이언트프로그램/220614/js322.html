@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>js322.html</title>
+</head>
+
+<body>
+  <h3> 행운번호를 추천합니다. </h3>
+  <hr>
+  <button onclick="luckyNumber();">행운번호 생성</button>
+
+  <script>
+    function luckyNumber() {
+      let num = new Array();
+      for (i = 0; i < 7; i++) {
+        let tmp = Math.floor(Math.random() * 45) + 1;
+        if (num.includes(tmp)) {
+          document.write('중복: ' + tmp + '<br>');
+          i--;
+        } else {
+          num[i] = tmp;
+        }
+      }
+      document.write("<h3> 행운 번호</h3><hr>");
+      for (i = 0; i < 6; i++) {
+        document.write(num[i] + " ");
+      }
+      document.write("<br>보너스 : " + num[num.length - 1]);
+    }
+  </script>
+</body>
+
+</html>

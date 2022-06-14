@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>js309.html</title>
+</head>
+
+<body>
+  <script>
+    function f1(f2, n) {
+      document.write('콜백함수를 ' + n + '번 호출함!' + '<br>');
+      for (i = 0; i < n; i++) {
+        f2();
+      }//end for
+    }//end f1
+
+    var f3 = function () {
+      document.write('Welcome to HTML5! <br>');
+    }//end f3
+
+    f1(f3, 5);
+    document.write('<hr>');
+
+    f1(() => document.write('Welcome to Javascript! <br>'), 5);
+  </script>
+</body>
+
+</html>

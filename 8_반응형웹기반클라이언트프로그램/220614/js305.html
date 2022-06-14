@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>js305.html</title>
+</head>
+
+<body>
+  <h3> 2차 방정식 <img src="../img/exp.png" height=20 /> 의 근 계산</h3>
+  <button onclick="slove();">2차방정식 근 구하기</button>
+
+  <script>
+    function slove() {
+      var a1 = prompt("2차방정식의 2차항 계수는 ? ");
+      var b1 = prompt("2차방정식의 1차항 계수는 ? ");
+      var c1 = prompt("2차방정식의 상수항 계수는 ? ");
+      a = parseInt(a1); b = parseInt(b1); c = parseInt(c1);
+      d = b * b - 4 * a * c;
+      if (a == 0) {
+        alert("2차방정식이 아님!");
+      } else if (d < 0) {
+        alert("근 없음!");
+      } else if (d == 0) {
+        root1 = (-1 * b + Math.sqrt(d)) / (2 * a);
+        // return 값: String, 인자로 전달된 길이의 수를 리턴
+        // toPrecision과 toFixed의 차이는 전자가 수의 길이를 제한한다면, 
+        // 후자는 소수점의 자리수를 제한한다.
+        alert("중근 : " + root1.toPrecision(3));
+      } else {
+        root1 = (-1 * b + Math.sqrt(d)) / (2 * a);
+        root2 = (-1 * b - Math.sqrt(d)) / (2 * a);
+        alert("서로다른 두 실근 : " + root1.toPrecision(3) + ", " + root2.toPrecision(3));
+      }//end if
+    }//end slove
+  </script>
+</body>
+
+</html>
