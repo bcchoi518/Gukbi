@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>js368.html</title>
+</head>
+
+<body>
+  <h3> 웹브라우저 <h3>
+      <div id="p1">
+        <img src="../img/wb1.png" width=60 height=60 />
+        <img src="../img/wb2.png" width=60 height=60 id="w1" />
+        <img src="../img/wb3.png" width=60 height=60 />
+        <img src="../img/wb4.png" width=60 height=60 id="w2" />
+        <img src="../img/wb5.png" width=60 height=60 />
+        <img src="../img/wb6.png" width=60 height=60 />
+      </div>
+      <hr>
+      <button onclick="deleteNetscape();">넷스케이프 삭제</button>
+      <button onclick="replaceSapari();">사파리 대체</button>
+      <hr>
+
+      <script>
+        function deleteNetscape() {
+          let deletedTag = document.getElementById('w1');
+          deletedTag.parentNode.removeChild(deletedTag);
+        }
+
+        function replaceSapari() {
+          let newTag = document.createElement('img');
+          newTag.setAttribute('src', '../img/wb10.png');
+          newTag.setAttribute('width', '60px');
+          newTag.setAttribute('height', '60px');
+          let oldTag = document.getElementById('w2');
+          let parent = oldTag.parentNode;
+          parent.replaceChild(newTag, oldTag);
+        } 
+      </script>
+</body>
+
+</html>

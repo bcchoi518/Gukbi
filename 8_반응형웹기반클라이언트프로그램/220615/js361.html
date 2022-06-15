@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>js361.html</title>
+  <style>
+    #switch {
+      background: lightyellow;
+    }
+  </style>
+</head>
+
+<body>
+  <h3> 전구 스위치 On/Off </h3>
+  <img id="light" src="../img/lightoff.png" style="width:70px">
+  <button id="switch" onclick="changeSwitch()">On</button>
+  <script>
+    function changeSwitch() {
+      let tag1 = document.getElementById('light');
+      let tag2 = document.getElementById('switch');
+      if (tag2.innerHTML == 'On') {
+        tag2.innerHTML = 'Off';
+        tag2.style.backgroundColor = "lightgray";
+        tag1.src = '../img/lighton.png';
+      }
+      else {
+        tag2.innerHTML = 'On';
+        tag2.style.background = "lightyellow";
+        tag1.src = '../img/lightoff.png';
+      }
+    } 
+  </script>
+</body>
+
+</html>

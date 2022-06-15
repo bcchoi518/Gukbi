@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>js375.html</title>
+</head>
+
+<body>
+  <h3> 피겨선수의 회전 연속동작 <h3>
+      <hr>
+      <div id="p1">
+        <img id="f7" src="../img/f7.png" width=200 height=250 style="visibility: visible;" />
+        <img id="f6" src="../img/f6.png" width=200 height=250 style="visibility: hidden;" />
+        <img id="f5" src="../img/f5.png" width=200 height=250 style="visibility: hidden;" />
+        <img id="f4" src="../img/f4.png" width=200 height=250 style="visibility: hidden;" />
+        <img id="f3" src="../img/f3.png" width=200 height=250 style="visibility: hidden;" />
+        <img id="f2" src="../img/f2.png" width=200 height=250 style="visibility: hidden;" />
+        <img id="f1" src="../img/f1.png" width=200 height=250 style="visibility: hidden;" />
+      </div>
+      <hr>
+      <button onclick="s=setInterval(movingImages, 500);">Start</button>
+      <button onclick="clearInterval(s);">Stop</button>
+
+      <script>
+        function movingImages() {
+          // let parent = document.getElementById('p1');
+          // let imgTags = document.querySelectorAll('img');
+          // let movingImage = imgTags[0];
+          // movingImage.parentNode.removeChild(movingImage);
+          // parent.appendChild(movingImage);
+          // console.log(movingImage);
+          let count = 7;
+          let cImg = document.getElementById('f' + count);
+        }
+      </script>
+</body>
+
+</html>
