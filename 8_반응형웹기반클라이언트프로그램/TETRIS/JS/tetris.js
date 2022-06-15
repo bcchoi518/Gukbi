@@ -2,6 +2,10 @@ import BLOCKS from './blocks.js';
 
 // DOM
 const playground = document.querySelector('.playground > ul');
+const gameText = document.querySelector('.game-text');
+const scoreDisplay = document.querySelector('.score');
+const levelDisplay = document.querySelector('.level');
+const restartButton = document.querySelector('.game-text > button');
 
 // Setting
 const GAME_ROWS = 20;
@@ -9,12 +13,13 @@ const GAME_COLS = 10;
 
 // variables
 let score = 0;
+let level = 1;
 let duration = 500;
 let downInterval;
 let tempMovingItem;
 
 const movingItem = {
-  type: 'tree',
+  type: '',
   direction: 0,
   top: 0,
   left: 0,
@@ -28,7 +33,7 @@ function init() {
   for (let i = 0; i < GAME_ROWS; i++) {
     prependNewLine();
   } //end for
-  renderBlocks();
+  generateNewBlock();
 } //end init
 
 function prependNewLine() {
@@ -58,8 +63,12 @@ function renderBlocks(moveType = '') {
       target.classList.add(type, 'moving');
     } else {
       tempMovingItem = { ...movingItem };
+      if (moveType === 'retry') {
+        clearInterval(downInterval);
+        showGameoverText();
+      } //end if
       setTimeout(() => {
-        renderBlocks();
+        renderBlocks('retry');
         if (moveType === 'top') {
           seizeBlock();
         } //end if
@@ -78,11 +87,49 @@ function seizeBlock() {
     moving.classList.remove('moving');
     moving.classList.add('seized');
   });
-  generateNewBlock();
+  checkMatch();
 } //end seizeBlock
 
+function checkMatch() {
+  const childNodes = playground.childNodes;
+  childNodes.forEach((child) => {
+    let matched = true;
+    child.children[0].childNodes.forEach((li) => {
+      if (!li.classList.contains('seized')) {
+        matched = false;
+      } //end if
+    });
+    if (matched) {
+      child.remove();
+      prependNewLine();
+      score++;
+      scoreDisplay.innerText = score;
+      if (score !== 0 && score % 10 === 0) {
+        levelUp();
+      } //end if
+    } //end if
+  });
+  generateNewBlock();
+} //end checkMatch
+
+function levelUp() {
+  level++;
+  levelDisplay.innerText = level;
+  duration -= level * 10;
+  clearInterval(downInterval);
+  downInterval = setInterval(() => {
+    moveBlock('top', 1);
+  }, duration);
+} //end levelUp
+
 function generateNewBlock() {
-  movingItem.type = '';
+  clearInterval(downInterval);
+  downInterval = setInterval(() => {
+    moveBlock('top', 1);
+  }, duration);
+  const blockArray = Object.entries(BLOCKS);
+  const randomIndex = Math.floor(Math.random() * blockArray.length);
+  movingItem.type = blockArray[randomIndex][0];
   movingItem.top = 0;
   movingItem.left = 3;
   movingItem.direction = 0;
@@ -108,6 +155,17 @@ function changeDirection() {
   renderBlocks();
 } //end changeDirection
 
+function dropBlock() {
+  clearInterval(downInterval);
+  downInterval = setInterval(() => {
+    moveBlock('top', 1);
+  }, 10);
+} //end dropBlock
+
+function showGameoverText() {
+  gameText.style.display = 'flex';
+} //end showGameoverText
+
 // event handling
 document.addEventListener('keydown', (e) => {
   switch (e.keyCode) {
@@ -123,8 +181,16 @@ document.addEventListener('keydown', (e) => {
     case 38:
       changeDirection();
       break;
+    case 32:
+      dropBlock();
+      break;
     default:
       break;
   } //end switch
-  console.log(e);
 }); //end addEventListener
+
+restartButton.addEventListener('click', () => {
+  playground.innerHTML = '';
+  gameText.style.display = 'none';
+  init();
+});
