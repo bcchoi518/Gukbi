@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>js406.html</title>
+</head>
+
+<body>
+  <h3> 수강신청 과목을 모두 선택하세요 </h3>
+  <hr>
+  <input type="checkbox" name="s" value="2" onchange="apply(this)" id="s1" /><label for="s1">교양컴퓨터(2학점)</label>
+  <input type="checkbox" name="s" value="4" onchange="apply(this)" id="s2" /><label for="s2">자료구조실습(4학점)</label>
+  <input type="checkbox" name="s" value="3" onchange="apply(this)" id="s3" /><label for="s3">데이터베이스(3학점)</label>
+  <input type="checkbox" name="s" value="4" onchange="apply(this)" id="s4" /><label for="s4">알고리즘실습(4학점)</label>
+  <input type="checkbox" name="s" value="3" onchange="apply(this)" id="s5" /><label for="s5">네트워크(3학점)</label>
+  <hr>
+  총 수강신청 학점 : <input type="text" id="sum" value="" />
+  <script>
+    let total = 0;
+    function apply(subject) {
+      if (subject.checked == true) {
+        total = total + parseInt(subject.value);
+      } else {
+        total = total - parseInt(subject.value);
+      }//end if
+      document.getElementById("sum").value = total;
+    }//end apply
+  </script>
+</body>
+
+</html>

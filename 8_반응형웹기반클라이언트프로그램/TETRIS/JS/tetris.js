@@ -29,6 +29,10 @@ init();
 
 // functions
 function init() {
+  score = 0;
+  level = 1;
+  scoreDisplay.innerText = score;
+  levelDisplay.innerText = level;
   tempMovingItem = { ...movingItem };
   for (let i = 0; i < GAME_ROWS; i++) {
     prependNewLine();

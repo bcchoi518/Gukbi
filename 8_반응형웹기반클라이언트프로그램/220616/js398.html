@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>js398.html</title>
+  <script>
+    window.onload = function () {
+      document.getElementById("a1").onclick = f;
+      document.getElementById("a2").addEventListener("click", f);
+      document.getElementById("a3").onclick = f2;
+    }
+
+    function f(e) {
+      e.preventDefault();
+    }//end f
+
+    function f2(e) {
+      let result = confirm("정보검색 사이트로 연결할까요 ?");
+      if (result == false) {
+        e.preventDefault();
+      }//end if
+    }//end f2
+  </script>
+</head>
+
+<body>
+  <a href="http://www.google.co.kr" target="_blank"> 하이퍼링크-1 </a><br>
+  <a href="http://www.google.co.kr" target="_blank" onclick=" return false; "> 하이퍼링크-2 </a><br>
+  <a href="http://www.google.co.kr" target="_blank" onclick=" f(event); "> 하이퍼링크-3 </a><br>
+  <a href="http://www.google.co.kr" target="_blank" id="a1"> 하이퍼링크-4 </a><br>
+  <a href="http://www.google.co.kr" target="_blank" id="a2"> 하이퍼링크-5 </a><br>
+  <a href="http://www.google.co.kr" target="_blank" id="a3"> 하이퍼링크-6 </a>
+</body>
+
+</html>

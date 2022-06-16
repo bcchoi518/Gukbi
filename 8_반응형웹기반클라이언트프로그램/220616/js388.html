@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>js388.html</title>
+  <script>
+    function dataReading() {
+      let output1 = "", output2 = "";
+      let years = document.getElementsByName("year");
+      for (let i = 0; i < years.length; i++) {
+        if (years[i].checked == true) {
+          yearValue = years[i].value;
+          break;
+        }//end if
+      }//end for
+      output1 = output1 + '학년 : ' + yearValue;
+
+      let subjects = document.getElementsByName("subject");
+      let checkedValue = ""
+      for (i = 0; i < subjects.length; i++) {
+        if (subjects[i].checked == true)
+          checkedValue = checkedValue + ' ' + subjects[i].value;
+      }//end for
+      output2 = output2 + '좋아하는 과목 : ' + checkedValue;
+
+      let obj = document.getElementById("result");
+      obj.innerHTML = output1 + '<br>' + output2;
+    }//end dataReading
+  </script>
+</head>
+
+<body>
+  <form>
+    <h3>Q1. 학생의 학년은 ? </h3>
+    <input type="radio" name="year" value="1" />1학년
+    <input type="radio" name="year" value="2" checked />2학년
+    <input type="radio" name="year" value="3" />3학년
+    <input type="radio" name="year" value="4" />4학년
+    <br>
+    <h3>Q2. 학생이 좋아하는 과목은 ? </h3>
+    <input type="checkbox" name="subject" value="알고리즘" />알고리즘
+    <input type="checkbox" name="subject" value="자료구조" />자료구조
+    <input type="checkbox" name="subject" value="데이타베이스" />데이타베이스
+    <input type="checkbox" name="subject" value="운영체제" />운영체제
+    <input type="checkbox" name="subject" value="네트워크" />네트워크
+    <hr>
+    <input type="button" value="입력 완료" onclick="dataReading();" />
+  </form>
+
+  <div id="result"> </div>
+</body>
+
+</html>
