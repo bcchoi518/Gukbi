@@ -5,14 +5,18 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>exam10_최병철</title>
+  <title>exam_최병철</title>
   <style>
+    #jeju {
+      width: fit-content;
+    }
+
     #insertImg {
       list-style: none;
     }
 
-    fieldset {
-      height: 100%;
+    ol {
+      margin: 0;
     }
   </style>
 </head>
@@ -27,114 +31,113 @@
     <li id="jeju"> 제주도 </li>
     <li id="hawaii"> 하와이 </li>
     <li id="grandCanyon"> 그랜드캐년 </li>
-    </u1>
-    <br>
+  </ul>
+  <br>
 
-    <input id="inputData" type="text" max="20" />
-    <button id="recommend">추천 여행지</button>
-    <fieldset>
-      <legend> 추천된 여행지 리스트</legend>
-      <ol id="ol"></ol>
-    </fieldset>
-    <script>
-      // DOM
-      const bucketList = document.getElementById('bucketList');
-      const logoDisplay = document.getElementById('logo');
-      const jejuDisplay = document.getElementById('jeju');
-      const hawaiiDisplay = document.getElementById('hawaii');
-      const grandCanyonDisplay = document.getElementById('grandCanyon');
-      const recommendPlace = document.getElementById('recommend');
-      const recommendList = document.querySelectorAll('li.recommendList');
+  <input id="inputData" type="text" max="20" />
+  <button id="recommend">추천 여행지</button>
+  <fieldset>
+    <legend> 추천된 여행지 리스트</legend>
+    <ol id="ol"></ol>
+  </fieldset>
+  <script>
+    // DOM
+    const bucketList = document.getElementById('bucketList');
+    const logoDisplay = document.getElementById('logo');
+    const jejuDisplay = document.getElementById('jeju');
+    const hawaiiDisplay = document.getElementById('hawaii');
+    const grandCanyonDisplay = document.getElementById('grandCanyon');
+    const recommendPlace = document.getElementById('recommend');
 
-      //variables
-      let mouseCheck = false;
-      let index = 0;
+    //variables
+    let mouseCheck = false;
+    let index = 0;
 
-      // functions
-      function changeColor() {
-        if (event.target.style.backgroundColor === 'lightgray') {
-          event.target.style.backgroundColor = 'white';
-        } else {
-          event.target.style.backgroundColor = 'lightgray';
-        }//end if
-      }//end changeColor
+    // functions
+    function changeColor() {
+      if (event.target.style.backgroundColor === 'lightgray') {
+        event.target.style.backgroundColor = 'white';
+      } else {
+        event.target.style.backgroundColor = 'lightgray';
+      }//end if
+    }//end changeColor
 
-      function changeImg1() {
-        if (!mouseCheck) {
-          logoDisplay.src = 'img/tourlogo.png';
-        }//end if
-      }//end changeImg1
+    function changeImg1() {
+      if (!mouseCheck) {
+        logoDisplay.src = 'img/tourlogo.png';
+      }//end if
+    }//end changeImg1
 
-      function changeImg2() {
-        if (!mouseCheck) {
-          logoDisplay.src = 'img/html5.png';
-        }//end if
-      }//end changeImg2
+    function changeImg2() {
+      if (!mouseCheck) {
+        logoDisplay.src = 'img/html5.png';
+      }//end if
+    }//end changeImg2
 
-      function fixedImg() {
-        mouseCheck = true;
-        if (mouseCheck) {
-          logoDisplay.src = "img/tourlogo.png";
-        }//end if
-      }//end fixedImg
+    function fixedImg() {
+      mouseCheck = true;
+      if (mouseCheck) {
+        logoDisplay.src = 'img/tourlogo.png';
+      }//end if
+    }//end fixedImg
 
-      function insertImg() {
-        const newImage = document.createElement('img');
-        const imgNode = document.createElement('li');
-        imgNode.id = 'insertImg';
-        newImage.src = 'img/jeju.jpg';
-        newImage.style.width = '100px';
-        newImage.style.height = '100px';
-        imgNode.appendChild(newImage);
-        bucketList.insertBefore(imgNode, hawaiiDisplay);
-      }//end insertImg
+    function insertImg() {
+      const newImage = document.createElement('img');
+      const imgNode = document.createElement('li');
+      imgNode.id = 'insertImg';
+      newImage.src = 'img/jeju.jpg';
+      newImage.style.width = '100px';
+      newImage.style.height = '100px';
+      imgNode.appendChild(newImage);
+      bucketList.insertBefore(imgNode, hawaiiDisplay);
+    }//end insertImg
 
-      function removeImg() {
-        const imgNode = document.getElementById('insertImg');
-        bucketList.removeChild(imgNode);
-      }//end removeImg
+    function removeImg() {
+      const imgNode = document.getElementById('insertImg');
+      bucketList.removeChild(imgNode);
+    }//end removeImg
 
-      function changeText() {
-        const canyonArr = ['그랜드캐년', '자이언캐년', '브라이언캐년'];
-        if (index === 2) {
-          index = 0;
-        } else {
-          index++;
-        }//end if
-        grandCanyonDisplay.innerText = canyonArr[index];
-      }//end changeText
+    function changeText() {
+      const canyonArr = ['그랜드캐년', '자이언캐년', '브라이언캐년'];
+      if (index === 2) {
+        index = 0;
+      } else {
+        index++;
+      }//end if
+      grandCanyonDisplay.innerText = canyonArr[index];
+    }//end changeText
 
-      function addPlace() {
-        const inTag = document.getElementById('inputData');
-        const listPlace = document.getElementById('ol');
-        const newPlace = document.createElement('li');
-        const placeNode = document.createTextNode(inTag.value);
-        newPlace.classList.add('recommendList');
-        newPlace.appendChild(placeNode);
-        listPlace.appendChild(newPlace);
-        inTag.value = '';
-      }//end addPlace
+    function addPlace() {
+      const inTag = document.getElementById('inputData');
+      if (inTag.value === '') {
+        alert('추천 여행지를 입력하세요.');
+        return;
+      }//end if
+      const listPlace = document.getElementById('ol');
+      const newPlace = document.createElement('li');
+      const placeNode = document.createTextNode(inTag.value);
+      newPlace.setAttribute('ondblclick', 'moveToBucketList(event)');
+      newPlace.appendChild(placeNode);
+      listPlace.appendChild(newPlace);
+      inTag.value = '';
+    }//end addPlace
 
-      function addBucketList(e) {
-        const target = e.target.innerText;
-        const newPlace = document.createElement('li');
-        const placeNode = document.createTextNode(target);
-        newPlace.appendChild(placeNode);
-        bucketList.appendChild(newPlace);
-      }//end addBucketList
+    function moveToBucketList(event) {
+      bucketList.appendChild(event.target);
+      event.target.removeAttribute('ondblclick');
+    }//end moveToBucketList
 
-      // event handling
-      logoDisplay.addEventListener('mouseover', changeImg1);
-      logoDisplay.addEventListener('mouseout', changeImg2);
-      logoDisplay.addEventListener('click', fixedImg);
-      hawaiiDisplay.addEventListener('mouseover', changeColor);
-      hawaiiDisplay.addEventListener('mouseout', changeColor);
-      jejuDisplay.addEventListener('mouseover', insertImg);
-      jejuDisplay.addEventListener('mouseout', removeImg);
-      grandCanyonDisplay.addEventListener('click', changeText);
-      recommendPlace.addEventListener('click', addPlace);
-      // recommendList.addEventListener('dblclick', addBucketList);
-    </script>
+    // event handling
+    logoDisplay.addEventListener('mouseover', changeImg1);
+    logoDisplay.addEventListener('mouseout', changeImg2);
+    logoDisplay.addEventListener('click', fixedImg);
+    hawaiiDisplay.addEventListener('mouseover', changeColor);
+    hawaiiDisplay.addEventListener('mouseout', changeColor);
+    jejuDisplay.addEventListener('mouseover', insertImg);
+    jejuDisplay.addEventListener('mouseout', removeImg);
+    grandCanyonDisplay.addEventListener('click', changeText);
+    recommendPlace.addEventListener('click', addPlace);
+  </script>
 </body>
 
 </html>
