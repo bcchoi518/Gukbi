@@ -15,8 +15,20 @@
       list-style: none;
     }
 
+    #grandCanyon {
+      width: fit-content;
+    }
+
     ol {
       margin: 0;
+    }
+
+    input {
+      margin-left: 20px;
+    }
+
+    fieldset {
+      margin-left: 20px;
     }
   </style>
 </head>
@@ -50,7 +62,6 @@
     const recommendPlace = document.getElementById('recommend');
 
     //variables
-    let mouseCheck = false;
     let index = 0;
 
     // functions
@@ -63,22 +74,16 @@
     }//end changeColor
 
     function changeImg1() {
-      if (!mouseCheck) {
-        logoDisplay.src = 'img/tourlogo.png';
-      }//end if
+      logoDisplay.src = 'img/tourlogo.png';
     }//end changeImg1
 
     function changeImg2() {
-      if (!mouseCheck) {
-        logoDisplay.src = 'img/html5.png';
-      }//end if
+      logoDisplay.src = 'img/html5.png';
     }//end changeImg2
 
     function fixedImg() {
-      mouseCheck = true;
-      if (mouseCheck) {
-        logoDisplay.src = 'img/tourlogo.png';
-      }//end if
+      logoDisplay.removeEventListener('mouseover', changeImg1);
+      logoDisplay.removeEventListener('mouseout', changeImg2);
     }//end fixedImg
 
     function insertImg() {
