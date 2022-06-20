@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>join</title>
+  <link rel="stylesheet" href="./CSS/join.css">
+  <script src="./JS/check.js" defer></script>
+</head>
+
+<body>
+  <header>
+    <h1>쇼핑몰 회원관리 ver 1.0</h1>
+  </header>
+  <nav>
+    <ul>
+      <li><a href="join.html">회원등록</a></li>
+      <li><a href="list.html">회원목록조회/수정</a></li>
+      <li><a href="salary.html">회원매출조회</a></li>
+      <li><a href="index.html">홈으로.</a></li>
+    </ul>
+  </nav>
+  <section>
+    <h2>홈쇼핑 회원 등록</h2>
+    <form>
+      <table border="1">
+        <tr>
+          <th>회원번호(자동발생)</th>
+          <td><input type="text" name="custno" id="custno" readonly /></td>
+        </tr>
+        <tr>
+          <th>회원성명</th>
+          <td><input type="text" name="custname" id="custname" /></td>
+        </tr>
+        <tr>
+          <th>회원전화</th>
+          <td><input type="text" name="phone" id="phone" /></td>
+        </tr>
+        <tr>
+          <th>회원주소</th>
+          <td><input type="text" name="address" id="address" /></td>
+        </tr>
+        <tr>
+          <th>가입일자</th>
+          <td><input type="text" name="joindate" id="joindate" /></td>
+        </tr>
+        <tr>
+          <th>고객등급 [A:VIP, B:일반, C:직원]</th>
+          <td><input type="text" name="grade" id="grade" /></td>
+        </tr>
+        <tr>
+          <th>도시코드</th>
+          <td><input type="text" name="city" id="city"></td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <input type="submit" id="submitbtn" value="등록" /> &nbsp;&nbsp;&nbsp;
+            <input type="button" id="searchbtn" value="조회" />
+          </td>
+        </tr>
+      </table>
+    </form>
+  </section>
+  <footer>
+    <p>HRDKOREA Copyright©2016 All rights reserved. Human Resources Development Service of Korea.</p>
+  </footer>
+</body>
+
+</html>
