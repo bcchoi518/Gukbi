@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>jQuery440.html</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script>
+    $(function () {
+      $('p').css({
+        backgroundColor: 'gray',
+        height: '30',
+        width: function (idx) {
+          return 50 + 30 * idx;
+        }
+      });
+    }); 
+  </script>
+</head>
+
+<body>
+  <h3> Web Programming ! </h3>
+  <hr>
+  <p class="a"> HTML5 </p>
+  <p class="a"> CSS3 </p>
+  <p class="a"> 자바스크립트 </p>
+</body>
+
+</html>

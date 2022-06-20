@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>jQuery439.html</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <style>
+    #box1 {
+      width: 300px;
+      height: 100px;
+      border: 1px black solid;
+      text-align: center;
+      line-height: 100px;
+    }
+  </style>
+  <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+  <script>
+    $(document).ready(function () {
+      $("#b1").click(function () {
+        $("#box1").css({
+          fontSize: '20px',
+          width: '250px',
+          height: '50px',
+          lineHeight: '50px',
+          borderRadius: '30%',
+          boxShadow: '5px -5px darkgray',
+        });
+      });
+    });   
+  </script>
+</head>
+
+<body>
+  <h3>What Can JavaScript Do?</h3>
+  <div id="box1"> 자바스크립트 입문 </div><br>
+  <button id="b1"> 스타일 변경</button>
+</body>
+
+</html>

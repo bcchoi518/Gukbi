@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>jQuery437.html</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <style>
+    .current {
+      background-color: orange;
+    }
+
+    p {
+      background-Color: gray;
+      height: 30px;
+      width: 150px;
+    }
+  </style>
+  <script>
+    $(function () {
+      $('p').mouseover(function () {
+        // $(this).addClass('current');
+        $(this).toggleClass('current');
+      });
+      $('p').mouseout(function () {
+        // $(this).removeClass('current');
+        $(this).toggleClass('current');
+      });
+    }); 
+  </script>
+</head>
+
+<body>
+  <h3> Web Programming ! </h3>
+  <hr>
+  <p id="p1"> HTML5 </p>
+  <p id="p2"> CSS3 </p>
+  <p id="p3"> 자바스크립트 </p>
+</body>
+
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>jQuery441.html</title>
+  <style>
+    #switch {
+      background: lightyellow;
+    }
+  </style>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script>
+    $(function () {
+      $('#switch').click(function () {
+        if ($('#switch').html() == 'On') {
+          $('#switch').html('Off');
+          $('#switch').css('backgroundColor', 'lightgray');
+          $('#light').attr('src', '../img/lighton.png');
+        }
+        else {
+          $('#switch').html('On');
+          $('#switch').css('backgroundColor', 'lightyellow');
+          $('#light').attr('src', '../img/lightoff.png');
+        }
+      });
+    });
+  </script>
+</head>
+
+<body>
+  <h3>전구 스위치 On/Off</h3>
+  <img id="light" src="../img/lightoff.png" style="width:70px">
+  <button id="switch">On</button>
+</body>
+
+</html>
