@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>jQuery450.html</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script>
+    $(function () {
+      $('#panel').css('display', 'none');
+      $("#flip").click(function () {
+        $("#panel").slideToggle("slow");
+      });
+    });
+  </script>
+</head>
+
+<body>
+  <div id="flip">여기를 클릭하면 내용이 내려오고/올라 갑니다. </div>
+  <div id="panel">
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sit amet pretium urna. Vivamus venenatis velit nec
+    neque ultricies, eget elementum magna tristique. Quisque vehicula, risus eget aliquam placerat, purus leo tincidunt
+    eros, eget luctus quam orci in velit. Praesent scelerisque tortor sed accumsan convallis.
+  </div>
+</body>
+
+</html>

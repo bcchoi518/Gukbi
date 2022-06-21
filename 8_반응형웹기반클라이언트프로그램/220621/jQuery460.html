@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>jQuery460.html</title>
+  <style>
+    body {
+      font: 12px/1.2 Verdana, sans-serif;
+      padding: 0 10px;
+    }
+
+    a:link,
+    a:visited {
+      text-decoration: none;
+      color: #416CE5;
+      border-bottom: 1px solid #416CE5;
+    }
+
+    h2 {
+      font-size: 13px;
+      margin: 15px 0 0 0;
+    }
+  </style>
+  <link rel="stylesheet" href="./css/colorbox.css">
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="./JS/jquery.colorbox-min.js"></script>
+  <script>
+    $(function () {
+      //Examples of how to assign the Colorbox event to elements				
+      $(".group3").colorbox({ rel: 'group3', transition: "none", width: "75%", height: "75%" });
+    });
+  </script>
+</head>
+
+<body>
+  <h1>Colorbox 플러그인 활용</h1>
+  <h2>No Transition + fixed width and height (75% of screen size)</h2>
+  <p><a class="group3" href="../img/img1.jpg" title="키웨스트 일몰">키웨스트 일몰</a></p>
+  <p><a class="group3" href="../img/img2.jpg" title="그랜드캐년 석양">그랜드캐년 석양</a></p>
+  <p><a class="group3" href="../img/img3.jpg" title="남한산성 성곽길 ">남한산성</a></p>
+</body>
+
+</html>

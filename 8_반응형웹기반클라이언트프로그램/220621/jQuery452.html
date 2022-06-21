@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>jQuery452.html</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script>
+    $(function () {
+      $(".box").css({
+        'display': 'inline-block',
+        'width': '80px',
+        'height': '80px',
+        'color': 'white'
+      });
+
+      $("button").click(function () {
+        $("#b1").fadeToggle();
+        $("#b2").fadeToggle("slow");
+        $("#b3").fadeToggle(5000);
+      });
+    });
+  </script>
+</head>
+
+<body>
+  <div>
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+    Phasellus imperdiet, nulla et dictum interdum...
+  </div>
+  <hr>
+  <button>Click to fade in boxes</button><br> <br>
+  <div class="box" id="b1" style="background:black;">박스1</div>
+  <div class="box" id="b2" style="background:lightgray;">박스2</div>
+  <div class="box" id="b3" style="background:gray;">박스3</div>
+</body>
+
+</html>
