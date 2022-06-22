@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>canvas480.html</title>
+</head>
+
+<body>
+  <canvas id="c1" width="300" height="350" style="border:1px solid gray;" />
+  <script>
+    let c = document.getElementById("c1");
+    /** @type {CanvasRenderingContext2D} */
+    let obj = c.getContext("2d");
+    let imgObj = new Image();
+    imgObj.src = "../img/html5.png";
+
+    imgObj.onload = function () {
+      obj.drawImage(imgObj, 10, 10);  // 원본이미지 그리기 
+      obj.translate(150, 10) // 캔버스 이동
+      obj.drawImage(imgObj, 10, 10);
+
+      obj.setTransform(1, 0, 0, 1, 0, 0);   // 캔버스변형 초기화  
+      obj.scale(0.7, 1.2);  // 캔버스 축소
+      obj.drawImage(imgObj, 10, 130);
+
+      obj.setTransform(1, 0, 0, 1, 0, 0);   // 캔버스변형 초기화  
+      obj.translate(200, 180)  // 캔버스 이동 
+      obj.rotate(0.25 * Math.PI) // 캔버스 회전 
+      obj.drawImage(imgObj, 0, 0);
+    };     
+  </script>
+</body>
+
+</html>

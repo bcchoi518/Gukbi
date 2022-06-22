@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>canvas472.html</title>
+</head>
+
+<body>
+  <canvas id="c1" width="500" height="300" style="border:1px solid gray;" />
+  <script>
+    let c = document.getElementById("c1");
+    /** @type {CanvasRenderingContext2D} */
+    let obj = c.getContext("2d");
+
+    // 선형 그레디언트 객체 생성 
+    let grdObj1 = obj.createLinearGradient(0, 0, 200, 0);
+    grdObj1.addColorStop(0, "white");
+    grdObj1.addColorStop(1, "black");
+    obj.fillStyle = grdObj1;
+    obj.fillRect(50, 120, 200, 150);
+
+    // 원형 그레디언트 객체 생성
+    let grdObj2 = obj.createRadialGradient(70, 70, 20, 100, 100, 150);
+    grdObj2.addColorStop(0, "white");
+    grdObj2.addColorStop(1, "black");
+    obj.fillStyle = grdObj2;
+    obj.fillRect(20, 20, 200, 150);
+
+    // 이미지 패턴 지정  
+    let imgObj = new Image();
+    imgObj.src = "../img/image1.jpg";
+    imgObj.onload = function () {
+      let patternObj = obj.createPattern(imgObj, "repeat");
+      obj.rect(280, 50, 200, 150);
+      obj.fillStyle = patternObj;
+      obj.fill();
+    };     
+  </script>
+</body>
+
+</html>

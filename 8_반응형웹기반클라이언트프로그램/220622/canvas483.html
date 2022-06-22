@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>canvas483.html</title>
+</head>
+
+<body onmousedown="down(event);" onmousemove="move(event);" onmouseup="up(event);">
+  <canvas id="c1" width="250" height="250" style="border:1px solid gray;" />
+  <script>
+    let c = document.getElementById("c1");
+    /** @type{CanvasRenderingContext2D} */
+    let obj = c.getContext("2d");
+
+    let X = 0, Y = 0;
+    obj.lineWidth = "2"; obj.strokeStyle = "green";
+    let drawState = false;
+
+    function down(e) {
+      drawState = true;
+      X = e.offsetX; Y = e.offsetY;
+    }
+
+    function move(e) {
+      if (drawState) {
+        obj.beginPath();
+        obj.moveTo(X, Y);
+        obj.lineTo(e.offsetX, e.offsetY);
+        obj.stroke();
+        X = e.offsetX; Y = e.offsetY;
+      }
+    }
+
+    function up(e) {
+      drawState = false;
+    }  
+  </script>
+</body>
+
+</html>
