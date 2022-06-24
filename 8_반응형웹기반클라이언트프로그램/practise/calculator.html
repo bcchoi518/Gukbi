@@ -70,7 +70,7 @@
       width: 190px;
     }
 
-    #log {
+    .log_key {
       position: absolute;
       border: none;
       right: 0px;
@@ -99,6 +99,10 @@
       list-style: none;
       font-size: 30px;
     }
+
+    .pressed {
+      background: linear-gradient(0.5turn, gray, white, gray);
+    }
   </style>
 </head>
 
@@ -108,28 +112,28 @@
       <ul id="log_list">
       </ul>
     </div>
-    <button class="log_key" value="log" id="log">LOG</button>
+    <button class="log_key" value="log" id="l">LOG</button>
     <div class="display" id="result"></div>
     <div class="display" id="calc"></div>
     <div id="btn">
-      <button class="back_key" value="back" id="back">Back</button>
-      <button class="c_key" value="c" id="c">C</button>
-      <button class="num_key" value="7">7</button>
-      <button class="num_key" value="8">8</button>
-      <button class="num_key" value="9">9</button>
-      <button class="op_key" value="/">/</button>
-      <button class="num_key" value="4">4</button>
-      <button class="num_key" value="5">5</button>
-      <button class="num_key" value="6">6</button>
-      <button class="op_key" value="*">*</button>
-      <button class="num_key" value="1">1</button>
-      <button class="num_key" value="2">2</button>
-      <button class="num_key" value="3">3</button>
-      <button class="op_key" value="-">-</button>
-      <button class="point_key" value=".">.</button>
-      <button class="num_key" value="0">0</button>
-      <button class="equal_key" value="=">=</button>
-      <button class="op_key" value="+">+</button>
+      <button class="back_key" value="back" id="Backspace">Back</button>
+      <button class="c_key" value="c" id="Escape">C</button>
+      <button class="num_key" value="7" id="7">7</button>
+      <button class="num_key" value="8" id="8">8</button>
+      <button class="num_key" value="9" id="9">9</button>
+      <button class="op_key" value="/" id="/">/</button>
+      <button class="num_key" value="4" id="4">4</button>
+      <button class="num_key" value="5" id="5">5</button>
+      <button class="num_key" value="6" id="6">6</button>
+      <button class="op_key" value="*" id="*">*</button>
+      <button class="num_key" value="1" id="1">1</button>
+      <button class="num_key" value="2" id="2">2</button>
+      <button class="num_key" value="3" id="3">3</button>
+      <button class="op_key" value="-" id="-">-</button>
+      <button class="point_key" value="." id=".">.</button>
+      <button class="num_key" value="0" id="0">0</button>
+      <button class="equal_key" value="=" id="Enter">=</button>
+      <button class="op_key" value="+" id="+">+</button>
     </div>
 
   </div>
@@ -289,15 +293,7 @@
     }
     // 계산하기 위한 피연산자 변수에 셋팅할때 수행되는 함수
     function setOperand() {
-      // 피연산자의 순서대로 값을 저장
-      // if (operand1 == null) {
-      //   operand1 = displayCalc.innerText;
-      //   displayCalc.innerText = 0;
-      // } else {
-      //   operand2 = displayCalc.innerText;
-      //   displayCalc.innerText = 0;
-      // }
-      // 연산자 우선순위 고려하여 연산자를 op에 저장
+      // 연산자 우선순위를 고려하여 계산에 사용할 연산자의 index를 저장
       if (opArr.includes('*') || opArr.includes('/')) {
         let mIdx = opArr.indexOf('*');
         let dIdx = opArr.indexOf('/');
@@ -306,28 +302,18 @@
         } else {
           index = dIdx == -1 ? mIdx : dIdx;
         }
-        op = opArr.splice(index, 1);
-        operand1 = operandArr.splice(index, 1);
-        operand2 = operandArr.splice(index, 1);
       } else {
-        op = opArr.splice(0, 1)[0];
-        operand1 = operandArr.splice(0, 1)[0];
-        operand2 = operandArr.splice(0, 1)[0];
+        index = 0;
       }
-      // op에 저장한 연산자 위치의 앞과 뒤의 피연산자를 각각 변수에 저장
-      // if (operand1 == null) {
-      //   operand1 = displayCalc.innerText;
-      //   displayCalc.innerText = 0;
-      // } else {
-      //   operand2 = displayCalc.innerText;
-      //   displayCalc.innerText = 0;
-      // }
+      // 해당 위치의 값을 각각의 변수에 저장
+      op = opArr.splice(index, 1)[0];
+      operand1 = operandArr.splice(index, 1)[0];
+      operand2 = operandArr.splice(index, 1)[0];
     }
     // 계산할때 수행되는 함수
     function calc() {
       while (opArr.length != 0) {
         setOperand();
-        console.log(op);
         switch (op) {
           case '+':
             result = Number(operand1) + Number(operand2);
@@ -344,7 +330,14 @@
             result = Math.round(result * 100) / 100;
             break;
         }
-        // 계산할 인자가 더 있다면 result를 operandArr에 index위치에 삽입해야함
+        if (opArr.length != 0) {
+          operandArr.splice(index, 0, result);
+          op = null;
+          operand1 = null;
+          operand2 = null;
+        } else {
+          break;
+        }
       }
       completedCalc();
     }
@@ -397,6 +390,20 @@
     pointKey.addEventListener('click', pressPointKey);
     // log 버튼에 이벤트 등록
     logBtn.addEventListener('click', showLog);
+    // keyboard 이벤트 등록
+    document.addEventListener('keydown', (e) => {
+      const key = document.getElementById(e.key);
+      if (key) {
+        key.click();
+        key.classList.add('pressed');
+      }
+    });
+    document.addEventListener('keyup', (e) => {
+      const key = document.getElementById(e.key);
+      if (key) {
+        key.classList.remove('pressed');
+      }
+    });
   </script>
 </body>
 
