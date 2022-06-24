@@ -5,11 +5,9 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>calculator_최병철</title>
+  <title>calculator</title>
   <style>
     * {
-      margin: 0;
-      padding: 0;
       box-sizing: border-box;
     }
 
@@ -17,8 +15,8 @@
       background-color: rgba(250, 250, 250, 0.4);
       width: 390px;
       height: 100px;
-      margin: 4px auto;
-      padding: 5px 15px;
+      margin: 5px auto;
+      padding: 5px;
       font-size: 30px;
       line-height: 90px;
       text-align: right;
@@ -26,10 +24,11 @@
 
     #calc_wapper {
       position: relative;
-      width: 395px;
+      width: 400px;
       height: 590px;
-      background-color: rgb(100, 100, 250);
+      background-color: silver;
       margin: 0 auto;
+      padding: 1px;
     }
 
     #btn {
@@ -46,12 +45,12 @@
     .back_key,
     .equal_key,
     .point_key {
-      width: 98px;
-      height: 74px;
-      margin: 1px 0px;
-      font-size: 35px;
-      background: linear-gradient(0.5turn, rgb(190, 211, 231), white, rgb(190, 211, 231));
-      border: 0.5px solid gray;
+      width: 93px;
+      height: 70px;
+      margin: 2px;
+      font-size: 40px;
+      background: linear-gradient(0.5turn, lightgray, white, lightgray);
+      border: none;
     }
 
     .num_key:hover,
@@ -60,22 +59,22 @@
     .back_key:hover,
     .equal_key:hover,
     .point_key:hover {
-      background: linear-gradient(0.5turn, rgb(170, 170, 300), white, rgb(170, 170, 300));
+      background: linear-gradient(0.5turn, gray, white, gray);
     }
 
     .back_key {
-      width: 196px;
+      width: 190px;
     }
 
     .c_key {
-      width: 196px;
+      width: 190px;
     }
 
     #log {
       position: absolute;
       border: none;
       right: 0px;
-      margin: 2px 5px;
+      margin: 5px;
       background-color: rgba(0, 0, 0, 0.1);
       color: white;
       font-size: 20px;
@@ -84,8 +83,7 @@
     #log_list_wrapper {
       position: absolute;
       display: none;
-      background-color: rgb(100, 100, 250);
-      margin: 0 auto;
+      background-color: silver;
       width: 250px;
       height: 590px;
       right: -250px;
@@ -94,9 +92,10 @@
 
     #log_list {
       position: absolute;
-      height: 100%;
-      width: 99%;
-      background-color: rgba(250, 250, 250, 0.4);
+      top: -25px;
+      height: 98%;
+      width: 98%;
+      background-color: rgba(250, 250, 250, 0.5);
       list-style: none;
       font-size: 30px;
     }
@@ -156,6 +155,7 @@
     let op; // 계산을 하기 위해 연산자를 담을 변수
     let result; // 계산 결과값을 담을 변수
     let expression; // 계산이 끝난 식을 기록하기 위한 변수
+    let index;
 
     //execute
     init(); // 계산기 실행시 초기화
@@ -205,7 +205,10 @@
         ready();
       }
       op = e.target.value;
-      setOperand();
+      saveOperand();
+      saveOp();
+      displayCalc.innerText = 0;
+      // setOperand();
       displayResultUpdate(op);
       if (result != null) {
         logging();
@@ -218,7 +221,8 @@
       } else if (op == null) {
         return;
       }
-      setOperand();
+      saveOperand();
+      displayCalc.innerText = 0;
       calc();
       if (result != null) {
         expression = displayResult.innerText;
@@ -286,36 +290,66 @@
     // 계산하기 위한 피연산자 변수에 셋팅할때 수행되는 함수
     function setOperand() {
       // 피연산자의 순서대로 값을 저장
-      if (operand1 == null) {
-        operand1 = displayCalc.innerText;
-        displayCalc.innerText = 0;
+      // if (operand1 == null) {
+      //   operand1 = displayCalc.innerText;
+      //   displayCalc.innerText = 0;
+      // } else {
+      //   operand2 = displayCalc.innerText;
+      //   displayCalc.innerText = 0;
+      // }
+      // 연산자 우선순위 고려하여 연산자를 op에 저장
+      if (opArr.includes('*') || opArr.includes('/')) {
+        let mIdx = opArr.indexOf('*');
+        let dIdx = opArr.indexOf('/');
+        if (mIdx < dIdx) {
+          index = mIdx == -1 ? dIdx : mIdx;
+        } else {
+          index = dIdx == -1 ? mIdx : dIdx;
+        }
+        op = opArr.splice(index, 1);
+        operand1 = operandArr.splice(index, 1);
+        operand2 = operandArr.splice(index, 1);
       } else {
-        operand2 = displayCalc.innerText;
-        displayCalc.innerText = 0;
+        op = opArr.splice(0, 1)[0];
+        operand1 = operandArr.splice(0, 1)[0];
+        operand2 = operandArr.splice(0, 1)[0];
       }
+      // op에 저장한 연산자 위치의 앞과 뒤의 피연산자를 각각 변수에 저장
+      // if (operand1 == null) {
+      //   operand1 = displayCalc.innerText;
+      //   displayCalc.innerText = 0;
+      // } else {
+      //   operand2 = displayCalc.innerText;
+      //   displayCalc.innerText = 0;
+      // }
     }
     // 계산할때 수행되는 함수
     function calc() {
-      // 피연산자에 값이 없으면 calc 함수를 수행하지 않음
-      if (operand1 == null || operand2 == null) {
-        return;
+      while (opArr.length != 0) {
+        setOperand();
+        console.log(op);
+        switch (op) {
+          case '+':
+            result = Number(operand1) + Number(operand2);
+            break;
+          case '-':
+            result = Number(operand1) - Number(operand2);
+            break;
+          case '*':
+            result = Number(operand1) * Number(operand2);
+            break;
+          case '/':
+            result = Number(operand1) / Number(operand2);
+            // 소수점 둘째 자리까지 표현
+            result = Math.round(result * 100) / 100;
+            break;
+        }
+        // 계산할 인자가 더 있다면 result를 operandArr에 index위치에 삽입해야함
       }
-      switch (op) {
-        case '+':
-          result = Number(operand1) + Number(operand2);
-          break;
-        case '-':
-          result = Number(operand1) - Number(operand2);
-          break;
-        case '*':
-          result = Number(operand1) * Number(operand2);
-          break;
-        case '/':
-          result = Number(operand1) / Number(operand2);
-          // 소수점 둘째 자리까지 표현
-          result = Math.round(result * 100) / 100;
-          break;
-      }
+      completedCalc();
+    }
+    // 계산이 끝나면 수행되는 함수
+    function completedCalc() {
       displayResultUpdate(equalKey.value);
       displayResultUpdate(result);
       displayCalcUpdate(result);
