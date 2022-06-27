@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <title>exam03.html</title>
+  <!-- 응시자: 최병철 -->
+  <style>
+    #jeju {
+      width: fit-content;
+    }
+
+    #insertImg {
+      list-style: none;
+    }
+
+    #grandCanyon {
+      width: fit-content;
+    }
+
+    ol {
+      margin: 0;
+    }
+
+    input {
+      margin-left: 20px;
+    }
+
+    fieldset {
+      margin-left: 20px;
+    }
+  </style>
+  <script>
+
+    $(function () {
+      //variables
+      let index = 0;
+
+      // functions
+      function changeColor() {
+        if (event.target.style.backgroundColor === 'lightgray') {
+          event.target.style.backgroundColor = 'white';
+        } else {
+          event.target.style.backgroundColor = 'lightgray';
+        }//end if
+      }//end changeColor
+
+      function changeImg1() {
+        $('#logo').attr('src', 'img/tourlogo.png');
+      }//end changeImg1
+
+      function changeImg2() {
+        $('#logo').attr('src', 'img/html5.png');
+      }//end changeImg2
+
+      function fixedImg() {
+        $('#logo').off('mouseover');
+        $('#logo').off('mouseout');
+      }//end fixedImg
+
+      function insertImg() {
+        const newImage = $('<img>');
+        newImage.attr({ 'src': 'img/jeju.jpg', 'id': 'insertImg' }).css({ 'width': '100px', 'height': '100px', 'display': 'block' });
+        $('#jeju').append(newImage);
+      }//end insertImg
+
+      function removeImg() {
+        $('#insertImg').remove();
+      }//end removeImg
+
+      function changeText() {
+        const canyonArr = ['그랜드캐년', '자이언캐년', '브라이언캐년'];
+        if (index === 2) {
+          index = 0;
+        } else {
+          index++;
+        }//end if
+        $('#grandCanyon').text(canyonArr[index]);
+      }//end changeText
+
+      function addPlace() {
+        const inTag = $('#inputData');
+        const newNode = $('<li>');
+        if (inTag.val() === '') {
+          alert('추천 여행지를 입력하세요.');
+          return;
+        }//end if
+        newNode.text(inTag.val());
+        $('#ol').append(newNode);
+        inTag.val('');
+      }//end addPlace
+
+      function moveToBucketList(event) {
+        $('#bucketList').append(event.target);
+        $(event.target).removeAttr('ondblclick');
+      }//end moveToBucketList
+
+      // event handling
+      $('#logo').mouseover(changeImg1);
+      $('#logo').mouseout(changeImg2);
+      $('#logo').click(fixedImg);
+      $('#hawaii').mouseover(changeColor);
+      $('#hawaii').mouseout(changeColor);
+      $('#jeju').mouseover(insertImg);
+      $('#jeju').mouseout(removeImg);
+      $('#grandCanyon').click(changeText);
+      $('#recommend').click(addPlace);
+      $(document).on('dblclick', '#ol li', moveToBucketList);
+    });
+  </script>
+</head>
+
+<body>
+  <h2>
+    <img id="logo" src="img/html5.png" width="50" height="50" />
+    여행 버킷 리스트 !
+  </h2>
+  <hr>
+  <ul id="bucketList">
+    <li id="jeju"> 제주도 </li>
+    <li id="hawaii"> 하와이 </li>
+    <li id="grandCanyon"> 그랜드캐년 </li>
+  </ul>
+  <br>
+
+  <input id="inputData" type="text" max="20" />
+  <button id="recommend">추천 여행지</button>
+  <fieldset>
+    <legend> 추천된 여행지 리스트</legend>
+    <ol id="ol"></ol>
+  </fieldset>
+</body>
+
+</html>
