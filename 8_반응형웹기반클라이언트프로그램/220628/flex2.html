@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>flex1.html</title>
+  <style>
+    .container {
+      width: 600px;
+      background-color: #eee;
+      border: 1px solid #222;
+      margin-bottom: 30px;
+      display: flex;
+    }
+
+    .box {
+      width: 80px;
+      background-color: tomato;
+      margin: 5px;
+      padding: 5px 45px;
+    }
+
+    p {
+      color: white;
+      text-align: center;
+      font-weight: bold;
+      font-size: 20px;
+    }
+
+    #opt1 {
+      flex-flow: row wrap;
+    }
+
+    #opt2 {
+      flex-flow: row nowrap;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container" id="opt1">
+    <div class="box">
+      <p>1</p>
+    </div>
+    <div class="box">
+      <p>2</p>
+    </div>
+    <div class="box">
+      <p>3</p>
+    </div>
+    <div class="box">
+      <p>4</p>
+    </div>
+    <div class="box">
+      <p>5</p>
+    </div>
+    <div class="box">
+      <p>6</p>
+    </div>
+  </div>
+  <div class="container" id="opt2">
+    <div class="box">
+      <p>1</p>
+    </div>
+    <div class="box">
+      <p>2</p>
+    </div>
+    <div class="box">
+      <p>3</p>
+    </div>
+    <div class="box">
+      <p>4</p>
+    </div>
+    <div class="box">
+      <p>5</p>
+    </div>
+    <div class="box">
+      <p>6</p>
+    </div>
+  </div>
+</body>
+
+</html>

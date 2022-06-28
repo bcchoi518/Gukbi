@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>media_exam.html</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: rgb(9, 100, 160);
+    }
+
+    ul {
+      list-style: none;
+      display: flex;
+      flex-direction: row;
+      margin: 5px;
+    }
+
+    li {
+      height: 200px;
+    }
+
+    img {
+      width: 250px;
+      height: 200px;
+    }
+
+    p {
+      width: 250px;
+      height: 200px;
+      padding: 25px;
+      background-color: white;
+      font-weight: bold;
+      font-size: 1.7rem;
+      text-align: center;
+    }
+
+    .container {
+      display: flex;
+      height: 100vh;
+      flex-flow: row wrap;
+      justify-content: center;
+      align-items: center;
+    }
+
+    @media screen and (max-width: 1024px) {
+      .container {
+        flex-direction: column;
+      }
+    }
+
+    @media screen and (max-width: 600px) {
+      ul {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <ul>
+      <li><img src="../img/pic1.jpg" alt="" /></li>
+      <li>
+        <p>일 분 전만큼 먼 시간은 없다.<br> - Jim Bishop</p>
+      </li>
+    </ul>
+    <ul>
+      <li><img src="../img/pic2.jpg" alt="" /></li>
+      <li>
+        <p>낡은 옷은 그냥 입고 새 책을 사라.<br> - Austin Phelps</p>
+      </li>
+    </ul>
+  </div>
+</body>
+
+</html>
