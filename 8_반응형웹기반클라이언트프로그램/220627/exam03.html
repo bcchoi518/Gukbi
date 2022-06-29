@@ -50,11 +50,11 @@
       }//end changeColor
 
       function changeImg1() {
-        $('#logo').attr('src', 'img/tourlogo.png');
+        $('#logo').attr('src', '../img/tourlogo.png');
       }//end changeImg1
 
       function changeImg2() {
-        $('#logo').attr('src', 'img/html5.png');
+        $('#logo').attr('src', '../img/html5.png');
       }//end changeImg2
 
       function fixedImg() {
@@ -64,7 +64,7 @@
 
       function insertImg() {
         const newImage = $('<img>');
-        newImage.attr({ 'src': 'img/jeju.jpg', 'id': 'insertImg' }).css({ 'width': '100px', 'height': '100px', 'display': 'block' });
+        newImage.attr({ 'src': '../img/jeju.jpg', 'id': 'insertImg' }).css({ 'width': '100px', 'height': '100px', 'display': 'block' });
         $('#jeju').append(newImage);
       }//end insertImg
 
@@ -116,7 +116,7 @@
 
 <body>
   <h2>
-    <img id="logo" src="img/html5.png" width="50" height="50" />
+    <img id="logo" src="../img/html5.png" width="50" height="50" />
     여행 버킷 리스트 !
   </h2>
   <hr>

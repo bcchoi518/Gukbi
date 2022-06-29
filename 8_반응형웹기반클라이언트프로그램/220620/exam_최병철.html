@@ -35,7 +35,7 @@
 
 <body>
   <h2>
-    <img id="logo" src="img/html5.png" width="50" height="50" />
+    <img id="logo" src="../img/html5.png" width="50" height="50" />
     여행 버킷 리스트 !
   </h2>
   <hr>
@@ -74,11 +74,11 @@
     }//end changeColor
 
     function changeImg1() {
-      logoDisplay.src = 'img/tourlogo.png';
+      logoDisplay.src = '../img/tourlogo.png';
     }//end changeImg1
 
     function changeImg2() {
-      logoDisplay.src = 'img/html5.png';
+      logoDisplay.src = '../img/html5.png';
     }//end changeImg2
 
     function fixedImg() {
@@ -90,7 +90,7 @@
       const newImage = document.createElement('img');
       const imgNode = document.createElement('li');
       imgNode.id = 'insertImg';
-      newImage.src = 'img/jeju.jpg';
+      newImage.src = '../img/jeju.jpg';
       newImage.style.width = '100px';
       newImage.style.height = '100px';
       imgNode.appendChild(newImage);
