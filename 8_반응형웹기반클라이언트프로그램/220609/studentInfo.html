@@ -35,15 +35,14 @@
       <th>기말성적</th>
       <th>총점</th>
       <th>평균</th>
-      <script>
-        var i = 0;
-        while (i < stu.length) {
-          total = stu[i].middle + stu[i].final;
-          avg = total / 2;
-          document.write('<tr><td>' + stu[i].name + '</td><td>' + stu[i].middle + '</td><td>' + stu[i].final + '</td><td>' + total + '</td><td>' + avg + '</td></tr>');
-          i++;
-        }//end while
-      </script>
+    </tr>
+    <script>
+      for (var i = 0; i < stu.length; i++) {
+        total = stu[i].middle + stu[i].final;
+        avg = total / 2;
+        document.write('<tr><td>' + stu[i].name + '</td><td>' + stu[i].middle + '</td><td>' + stu[i].final + '</td><td>' + total + '</td><td>' + avg + '</td></tr>');
+      }//end while
+    </script>
   </table>
   <hr>
   <h3>Q2) [문제2]에서 평균 성적이 80점 이상인 학생들만 출력하도록 HTML 문서를 수정하라.</h3>
@@ -57,14 +56,12 @@
       <th>평균</th>
     </tr>
     <script>
-      var i = 0;
-      while (i < stu.length) {
+      for (var i = 0; i < stu.length; i++) {
         total = stu[i].middle + stu[i].final;
         avg = total / 2;
         if (avg > 80) {
           document.write('<tr><td>' + stu[i].name + '</td><td>' + stu[i].middle + '</td><td>' + stu[i].final + '</td><td>' + total + '</td><td>' + avg + '</td></tr>');
         }//end if
-        i++;
       }//end while
     </script>
   </table>
