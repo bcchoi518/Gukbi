@@ -254,14 +254,14 @@
     function handleSelect(e) {
       document.querySelector('.selected').classList.remove('selected');
       e.target.classList.add('selected');
-      const targetClass = e.target.classList;
-      const targetCards = document.querySelectorAll('.category');
+      const targetClassList = e.target.classList;
+      const Cards = document.querySelectorAll('.category');
       showAllCard();
-      targetCards.forEach(function (card) {
+      Cards.forEach(function (card) {
         const cardClass = card.classList[1];
-        if (targetClass.contains('all')) {
+        if (targetClassList.contains('all')) {
           return;
-        } else if (!targetClass.contains(cardClass)) {
+        } else if (!targetClassList.contains(cardClass)) {
           card.parentElement.parentElement.style.display = 'none';
         }
       });
