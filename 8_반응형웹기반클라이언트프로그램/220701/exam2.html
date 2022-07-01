@@ -66,18 +66,19 @@
       const dateText = $('#date');
       const remainTimeBtn = $('button');
       const infoWrapper = $('#info_wrapper');
-      const date = new Date();
+      const today = new Date();
 
       function getDate() {
-        const year = String(date.getFullYear());
-        const month = String(date.getMonth() + 1);
-        const day = String(date.getDate());
-        const dayOfWeek = String(date.getDay());
+        const year = String(today.getFullYear());
+        const month = String(today.getMonth() + 1);
+        const day = String(today.getDate());
+        const dayOfWeek = String(today.getDay());
         const week = ['일', '월', '화', '수', '목', '금', '토'];
         dateText.text(`${year}년 ${month}월 ${day}일 ${week[dayOfWeek]}요일`);
       }
 
       function getClock() {
+        const date = new Date();
         const hours = String(date.getHours()).padStart(2, '0');
         const minutes = String(date.getMinutes()).padStart(2, '0');
         const seconds = String(date.getSeconds()).padStart(2, '0');
@@ -89,11 +90,6 @@
         }
         timeText.text(`${ap} ${hours} : ${minutes} : ${seconds}`);
       }
-
-      getDate();
-      getClock();
-      setInterval(getClock, 1000);
-
       remainTimeBtn.click(function () {
         infoWrapper.toggleClass('show');
         if (!infoWrapper.hasClass('show')) {
@@ -101,7 +97,7 @@
           infoWrapper.children().last().remove();
         } else {
           const dDay = new Date('2022-10-13');
-          const remainTime = Math.floor((dDay - date) / (24 * 60 * 60 * 1000));
+          const remainTime = Math.floor((dDay - today) / (24 * 60 * 60 * 1000));
           const infoNode = $('<p>');
           const infoText = `수료일까지는 ${remainTime}일이 남았습니다.`;
           infoNode.text(infoText);
@@ -109,6 +105,9 @@
           infoWrapper.css('display', 'block');
         }
       });
+      getDate();
+      getClock();
+      setInterval(getClock, 1000);
     });
   </script>
 </body>
