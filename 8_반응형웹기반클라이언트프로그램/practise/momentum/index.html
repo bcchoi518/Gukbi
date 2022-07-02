@@ -13,10 +13,13 @@
   <form class="hidden" id="login-form">
     <input required maxlength="15" type="text" placeholder="What is your name?">
     <!-- form안에서 엔터를 누르고 input안에 더이상 입력값이 존재하지 않는다면 자동으로 summit 된다는 규칙 -->
-    <input type="submit" value="Log In">
+    <input class="hidden" type="submit" value="Log In">
   </form>
   <h2 id="clock">00:00:00</h2>
-  <h1 id="greeting" class="hidden"></h1>
+  <div id="greeting" class="hidden">
+    <span></span>
+    <button></button>
+  </div>
   <form id="todo-form">
     <input type="text" placeholder="Write a To Do and Press Enter" required />
   </form>
@@ -25,11 +28,16 @@
     <span></span>
     <span></span>
   </div>
-  <script src="./JS/greetings.js"></script>
-  <script src="./JS/clock.js"></script>
-  <script src="./JS/quotes.js"></script>
-  <script src="./JS/background.js"></script>
-  <script src="./JS/todo.js"></script>
+  <div id="weather">
+    <span></span>
+    <span></span>
+  </div>
+  <script src="JS/greetings.js"></script>
+  <script src="JS/clock.js"></script>
+  <script src="JS/quotes.js"></script>
+  <script src="JS/background.js"></script>
+  <script src="JS/todo.js"></script>
+  <script src="JS/weather.js"></script>
 </body>
 
 </html>
