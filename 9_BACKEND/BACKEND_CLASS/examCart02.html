@@ -21,7 +21,7 @@
       <td>주문일</td>
     </tr>
     <tr>
-      <td><input type="checkbox" class="jumunhunho" value="cart_005"></td>
+      <td><input type="checkbox" class="cartBunho" value="cart_005"></td>
       <td>cart_005</td>
       <td>바나나</td>
       <td>10000</td>
@@ -29,7 +29,7 @@
       <td>2022-07-05</td>
     </tr>
     <tr>
-      <td><input type="checkbox" class="jumunhunho" value="cart_004"></td>
+      <td><input type="checkbox" class="cartBunho" value="cart_004"></td>
       <td>cart_004</td>
       <td>키위</td>
       <td>20000</td>
@@ -37,7 +37,7 @@
       <td>2022-07-05</td>
     </tr>
     <tr>
-      <td><input type="checkbox" class="jumunhunho" value="cart_003"></td>
+      <td><input type="checkbox" class="cartBunho" value="cart_003"></td>
       <td>cart_003</td>
       <td>사과</td>
       <td>7000</td>
@@ -45,7 +45,7 @@
       <td>2022-07-05</td>
     </tr>
     <tr>
-      <td><input type="checkbox" class="jumunhunho" value="cart_002"></td>
+      <td><input type="checkbox" class="cartBunho" value="cart_002"></td>
       <td>cart_002</td>
       <td>파인애플</td>
       <td>15000</td>
@@ -53,7 +53,7 @@
       <td>2022-07-05</td>
     </tr>
     <tr>
-      <td><input type="checkbox" class="jumunhunho" value="cart_001"></td>
+      <td><input type="checkbox" class="cartBunho" value="cart_001"></td>
       <td>cart_001</td>
       <td>복분자</td>
       <td>30000</td>
@@ -74,16 +74,23 @@
 <script>
   function deleteCart() {
     // class로 묶어서 객체를 배열형태로 가져옴
-    const jumuns = document.getElementsByClassName('jumunhunho');
+    const jumuns = document.getElementsByClassName('cartBunho');
     let selected = [];
-    let i = 0;
+    // let i = 0;
+    // while (i < jumuns.length) {
+    //   if (jumuns[i].checked == true) {
+    //     selected.push(jumuns[i].value);
+    //   }//end if
+    //   i++;
+    // }//end while
+
     // querySelectorAll로 객체를 가지고 오면 forEach 사용가능
-    while (i < jumuns.length) {
-      if (jumuns[i].checked == true) {
-        selected.push(jumuns[i].value);
+    const carts = document.querySelectorAll('.cartBunho');
+    carts.forEach((cart) => {
+      if (cart.checked == true) {
+        selected.push(cart.value);
       }//end if
-      i++;
-    }//end while
+    });
 
     document.imsiform.checkValue.value = selected.toString();
     // form태그안에 action, method, submit 하지 않고 자바스크립트 코드에서도 가능
