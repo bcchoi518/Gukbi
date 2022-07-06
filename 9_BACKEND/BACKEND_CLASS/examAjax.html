@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>examAjax</title>
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+  <style>
+    button {
+      height: 50px;
+      border: 1px solid gray;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <h2>로그인</h2>
+  <table border="0">
+    <tr>
+      <td>아이디:</td>
+      <td><input type="text" name="id" id="id" /></td>
+      <td rowspan="2"><button type="button" id="btnLogin">로그인</button></td>
+    </tr>
+    <tr>
+      <td>비밀번호:</td>
+      <td><input type="password" name="passwd" id="passwd" /></td>
+    </tr>
+  </table>
+  <button type="button" id="btnNaver">네이버</button>
+  <button type="button" id="btnDaum">다음</button>
+  <button type="button" id="btnZum">Zum</button>
+  <hr>
+  <div id="moveUrl" style="border: 1px solid blue; display: none;"></div>
+
+  <div id="result"></div>
+</body>
+
+</html>
+
+<script>
+  $(function () {
+    $('#btnLogin').click(function () {
+      const id = $('#id').val();
+      const passwd = $('#passwd').val();
+      const param = { 'id': id, 'passwd': passwd };
+      console.log(param);
+      $.ajax({ // 비동기식, 호출, 실행 ....
+        type: 'post',
+        data: param,
+        url: 'examAjaxProc.html',
+        success: function (result) {
+          $('#result').html(result);
+        }
+      });
+    });
+    $('#btnNaver').click(function () {
+      $('#moveUrl').html('<font style="color: red; font-weight: bold;">https://www.naver.com</font>');
+      move();
+    });
+    $('#btnDaum').click(function () {
+      $('#moveUrl').html('<strong>https://www.daum.net</strong>');
+      move();
+    });
+    $('#btnZum').click(function () {
+      $('#moveUrl').html('<b>https://www.Zum.com</b>');
+      move();
+    });
+  });
+
+  function move() {
+    location.href = $('#moveUrl').text();
+  }
+</script>
