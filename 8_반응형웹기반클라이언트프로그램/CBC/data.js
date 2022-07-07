@@ -20,7 +20,7 @@ function handleLogin() {
     document.login_form.passwd.focus();
     return;
   } else if (id == data.id && pw == data.pw) {
-    url = 'login_success.html';
+    url = './login_success.html';
   }
 
   document.login_form.action = url;
