@@ -3,20 +3,18 @@ package exam01;
 import java.util.Scanner;
 
 public class Test02 {
-
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
 		String name;
 		String jumin;
 		String address;
-		String str = "123";
 
 		System.out.print("이름을 입력하세요: ");
 		name = sc.nextLine();
 		System.out.print("주민번호를 입력하세요(123456-1234567): ");
 		jumin = sc.nextLine().trim();
 
-		// 소거법
+		// 소거법 : 정상적인 값을 제거해서 비정상적인 값의 여부 확인
 		String tmp = jumin;
 		tmp = tmp.replace("0", "");
 		tmp = tmp.replace("1", "");
