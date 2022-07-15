@@ -1,0 +1,50 @@
+* 회원관리 *
+
+1. DB 설계
+
+Entity : 회원
+	- 회원번호
+	- 아이디
+	- 비밀번호
+	- 이름
+	- 주민번호
+	- 전화번호
+	- 이메일
+	- 주소
+	- 등록일
+	
+	
+Entity: member
+	- memberNo		number
+	- memberId		varchar2(50)
+	- memberPasswd	varchar2(50)
+	- memberName	varchar2(50)
+	- memberJumin	varchar2(50)
+	- memberPhone	varchar2(50)
+	- memberEmail	varchar2(50)
+	- memberAddress	varchar2(50)
+	- regiDate		date
+	
+	
+create table member (
+	memberNo		number		 not null,
+	memberId		varchar2(50) not null,
+	memberPasswd	varchar2(50) not null,
+	memberName		varchar2(50) not null,
+	memberJumin		varchar2(50) not null,
+	memberPhone		varchar2(50) not null,
+	memberEmail		varchar2(50) not null,
+	memberAddress	varchar2(50) not null,
+	regiDate		date		 not null,
+	unique (memberNo),
+	primary key (memberId),
+	unique (memberJumin)
+);
+
+*제약조건
+primary key: 중복 허용안함, null값 허용안함
+unique: 중복 허용안함, null값 허용함
+foreign key: PK <-> FK
+not null: null값 허용안함
+check: 값을 입력받을때 지정한 값외에는 저장하지 않음
+default: null값이 들어오면 default값 적용하라
