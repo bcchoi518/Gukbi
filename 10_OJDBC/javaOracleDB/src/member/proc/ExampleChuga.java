@@ -5,7 +5,7 @@ import java.util.Scanner;
 import member.model.MemberDAO;
 import member.model.MemberDTO;
 
-public class Example {
+public class ExampleChuga {
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
 		
@@ -34,7 +34,12 @@ public class Example {
 		dto.setMemberAddress(memberAddress);
 
 		MemberDAO dao = new MemberDAO();
-		dao.setInsert(dto);
+		int result = dao.setInsert(dto);
 		
+		if (result > 0) {
+			System.out.println("-- success insert !! --");
+		} else {
+			System.out.println("-- fail insert !! --");
+		}//end if
 	}//end main
 }//end Example
