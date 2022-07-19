@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 
 import common.DB;
 
@@ -12,35 +13,26 @@ public class MemberDAO {
 	PreparedStatement pstmt = null;
 	ResultSet rs = null;
 	
-	public void getSelectAll() {
+	public ArrayList<MemberDTO> getSelectAll() {
+		ArrayList<MemberDTO> list = new ArrayList<>();
 		try {
 			conn = DB.dbConn();
 //			---------------------------------------------------
 			String sql = "select memberNo, memberId, memberName, regiDate from member";
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
-			int k = 0;
 			while (rs.next()) {
-				int memberNo = rs.getInt("memberNo");
-				String memberId = rs.getString("memberId");
-				String memberName = rs.getString("memberName");
-//				String memberJumin = rs.getString("memberJumin");
-//				String memberPhone = rs.getString("memberPhone");
-//				String memberEmail = rs.getString("memberEmail");
-//				String memberAddress = rs.getString("memberAddress");
-				Date regiDate = rs.getDate("regiDate");
+				MemberDTO dto = new MemberDTO();
+				dto.setMemberNo(rs.getInt("memberNo"));
+				dto.setMemberId(rs.getString("memberId"));
+				dto.setMemberName(rs.getString("memberName"));
+//				dto.setMemberJumin(rs.getString("memberJumin"));
+//				dto.setMemberPhone(rs.getString("memberPhone"));
+//				dto.setMemberEmail(rs.getString("memberEmail"));
+//				dto.setMemberAddress(rs.getString("memberAddress"));
+				dto.setRegiDate(rs.getDate("regiDate"));
 				
-				String imsi = "";
-				imsi += memberNo + " / ";
-				imsi += memberId + " / ";
-				imsi += memberName + " / ";
-//				imsi += memberJumin + " / ";
-//				imsi += memberPhone + " / ";
-//				imsi += memberEmail + " / ";
-//				imsi += memberAddress + " / ";
-				imsi += regiDate;
-				
-				System.out.println(++k + ". " + imsi);
+				list.add(dto);
 			}//end while
 //			---------------------------------------------------
 		} catch (Exception e) {
@@ -48,37 +40,27 @@ public class MemberDAO {
 		} finally {
 			DB.dbConnClose(rs, pstmt, conn);
 		}//end try-catch-finally
+		return list;
 	}//end getSelectAll
 	
-	public void getSelectOne(MemberDTO dto) {
+	public MemberDTO getSelectOne(MemberDTO paramDto) {
+		MemberDTO dto = new MemberDTO();
 		try {
 			conn = DB.dbConn();
 //			---------------------------------------------------
 			String sql = "select * from member where memberNo = ?";
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, dto.getMemberNo());
+			pstmt.setInt(1, paramDto.getMemberNo());
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
-				int memberNo = rs.getInt("memberNo");
-				String memberId = rs.getString("memberId");
-				String memberName = rs.getString("memberName");
-				String memberJumin = rs.getString("memberJumin");
-				String memberPhone = rs.getString("memberPhone");
-				String memberEmail = rs.getString("memberEmail");
-				String memberAddress = rs.getString("memberAddress");
-				Date regiDate = rs.getDate("regiDate");
-				
-				String imsi = "";
-				imsi += memberNo + " / ";
-				imsi += memberId + " / ";
-				imsi += memberName + " / ";
-				imsi += memberJumin + " / ";
-				imsi += memberPhone + " / ";
-				imsi += memberEmail + " / ";
-				imsi += memberAddress + " / ";
-				imsi += regiDate;
-				
-				System.out.println(imsi);
+				dto.setMemberNo(rs.getInt("memberNo"));
+				dto.setMemberId(rs.getString("memberId"));
+				dto.setMemberName(rs.getString("memberName"));
+				dto.setMemberJumin(rs.getString("memberJumin"));
+				dto.setMemberPhone(rs.getString("memberPhone"));
+				dto.setMemberEmail(rs.getString("memberEmail"));
+				dto.setMemberAddress(rs.getString("memberAddress"));
+				dto.setRegiDate(rs.getDate("regiDate"));
 			}//end if
 //			---------------------------------------------------
 		} catch (Exception e) {
@@ -86,9 +68,10 @@ public class MemberDAO {
 		} finally {
 			DB.dbConnClose(rs, pstmt, conn);
 		}//end try-catch-finally
+		return dto;
 	}//end getSelectOne
 	
-	public int setInsert(MemberDTO dto) {
+	public int setInsert(MemberDTO paramDto) {
 		int result = 0;
 		try {
 			conn = DB.dbConn();
@@ -97,13 +80,13 @@ public class MemberDAO {
 			String sql = "insert into member values (seq_member.nextval, ?, ?, ?, ?, ?, ?, ?, sysdate)";
 			pstmt = conn.prepareStatement(sql);
 			// ? 자리의 값을 채움
-			pstmt.setString(1, dto.getMemberId());
-			pstmt.setString(2, dto.getMemberPasswd());
-			pstmt.setString(3, dto.getMemberName());
-			pstmt.setString(4, dto.getMemberJumin());
-			pstmt.setString(5, dto.getMemberPhone());
-			pstmt.setString(6, dto.getMemberEmail());
-			pstmt.setString(7, dto.getMemberAddress());
+			pstmt.setString(1, paramDto.getMemberId());
+			pstmt.setString(2, paramDto.getMemberPasswd());
+			pstmt.setString(3, paramDto.getMemberName());
+			pstmt.setString(4, paramDto.getMemberJumin());
+			pstmt.setString(5, paramDto.getMemberPhone());
+			pstmt.setString(6, paramDto.getMemberEmail());
+			pstmt.setString(7, paramDto.getMemberAddress());
 			result = pstmt.executeUpdate(); // 결과를 반환(결과값 개수가 추가되었다!)
 			//-------------------------------------------
 		} catch (Exception e) {
@@ -115,16 +98,16 @@ public class MemberDAO {
 		return result;
 	}//end setInsert
 	
-	public int setUpdate(MemberDTO dto) {
+	public int setUpdate(MemberDTO paramDto) {
 		int result = 0;
 		try {
 			conn = DB.dbConn();
 //			-------------------------------------
 			String sql = "update member set memberId = ?, memberName = ? where memberNo = ?";
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, dto.getMemberId());
-			pstmt.setString(2, dto.getMemberName());
-			pstmt.setInt(3, dto.getMemberNo());
+			pstmt.setString(1, paramDto.getMemberId());
+			pstmt.setString(2, paramDto.getMemberName());
+			pstmt.setInt(3, paramDto.getMemberNo());
 			result = pstmt.executeUpdate();
 //			-------------------------------------
 		} catch (Exception e) {
@@ -135,14 +118,14 @@ public class MemberDAO {
 		return result;
 	}//end setUpdate
 	
-	public int setDelete(MemberDTO dto) {
+	public int setDelete(MemberDTO paramDto) {
 		int result = 0;
 		try {
 			conn = DB.dbConn();
 //			-------------------------------------
 			String sql = "delete from member where memberNo = ?";
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, dto.getMemberNo());
+			pstmt.setInt(1, paramDto.getMemberNo());
 			result = pstmt.executeUpdate();
 //			-------------------------------------
 		} catch (Exception e) {

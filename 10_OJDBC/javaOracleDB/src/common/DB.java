@@ -6,9 +6,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 public class DB {
-	PreparedStatement pstmt = null;
-	ResultSet rs = null;
-	
 	public static Connection dbConn() {
 		Connection conn = null;
 		try {

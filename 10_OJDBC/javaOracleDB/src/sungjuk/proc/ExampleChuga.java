@@ -31,8 +31,6 @@ public class ExampleChuga {
 			grade = "양";
 		}//end if
 		
-
-		
 //		String imsi = "";
 //		imsi += name + "|";
 //		imsi += kor + "|";

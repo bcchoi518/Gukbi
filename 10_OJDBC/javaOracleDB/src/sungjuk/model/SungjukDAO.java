@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 
 import common.DB;
 
@@ -12,7 +13,8 @@ public class SungjukDAO {
 	PreparedStatement pstmt = null;
 	ResultSet rs = null;
 	
-	public void getSelectAll() {
+	public ArrayList<SungjukDTO> getSelectAll() {
+		ArrayList<SungjukDTO> list = new ArrayList<>();
 		try {
 			conn = DB.dbConn();
 //			---------------------------------------
@@ -20,66 +22,47 @@ public class SungjukDAO {
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
-				int no = rs.getInt("no");
-				String name = rs.getString("name");
-				int kor = rs.getInt("kor");
-				int eng = rs.getInt("eng");
-				int mat = rs.getInt("mat");
-				int tot = rs.getInt("tot");
-				double avg = rs.getDouble("avg");
-				String grade = rs.getString("grade");
-				Date regiDate = rs.getDate("regiDate");
+				SungjukDTO dto = new SungjukDTO();
+				dto.setNo(rs.getInt("no"));
+				dto.setName(rs.getString("name"));
+				dto.setKor(rs.getInt("kor"));
+				dto.setEng(rs.getInt("eng"));
+				dto.setMat(rs.getInt("mat"));
+				dto.setTot(rs.getInt("tot"));
+				dto.setAvg(rs.getDouble("avg"));
+				dto.setGrade(rs.getString("grade"));
+				dto.setRegiDate(rs.getDate("regiDate"));
 				
-				String imsi = "";
-				imsi += name + ", ";
-				imsi += kor + ", ";
-				imsi += eng + ", ";
-				imsi += mat + ", ";
-				imsi += tot + ", ";
-				imsi += avg + ", ";
-				imsi += grade + ", ";
-				imsi += regiDate;
-				
-				System.out.println(imsi);
+				list.add(dto);
 			}//end while
 //			---------------------------------------
 		} catch (Exception e) {
 			System.out.println("-- DB 접속 실패 --");
 		} finally {
 			DB.dbConnClose(rs, pstmt, conn);
-		}
+		}//end try-catch-finally
+		return list;
 	}//end getSelectAll
 	
-	public void getSelectOne(SungjukDTO dto) {
+	public SungjukDTO getSelectOne(SungjukDTO paramDto) {
+		SungjukDTO dto = new SungjukDTO();
 		try {
 			conn = DB.dbConn();
 //			---------------------------------
 			String sql = "select * from sungjuk where no = ?";
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, dto.getNo());
+			pstmt.setInt(1, paramDto.getNo());
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
-				int no = rs.getInt("no");
-				String name = rs.getString("name");
-				int kor = rs.getInt("kor");
-				int eng = rs.getInt("eng");
-				int mat = rs.getInt("mat");
-				int tot = rs.getInt("tot");
-				double avg = rs.getDouble("avg");
-				String grade = rs.getString("grade");
-				Date regiDate = rs.getDate("regiDate");
-				
-				String imsi = "";
-				imsi += name + ", ";
-				imsi += kor + ", ";
-				imsi += eng + ", ";
-				imsi += mat + ", ";
-				imsi += tot + ", ";
-				imsi += avg + ", ";
-				imsi += grade + ", ";
-				imsi += regiDate;
-				
-				System.out.println(imsi);
+				dto.setNo(rs.getInt("no"));
+				dto.setName(rs.getString("name"));
+				dto.setKor(rs.getInt("kor"));
+				dto.setEng(rs.getInt("eng"));
+				dto.setMat(rs.getInt("mat"));
+				dto.setTot(rs.getInt("tot"));
+				dto.setAvg(rs.getDouble("avg"));
+				dto.setGrade(rs.getString("grade"));
+				dto.setRegiDate(rs.getDate("regiDate"));
 			}//end if
 //			---------------------------------
 		} catch (Exception e) {
@@ -87,6 +70,7 @@ public class SungjukDAO {
 		} finally {
 			DB.dbConnClose(rs, pstmt, conn);
 		}//end try-catch-finally
+		return dto;
 	}//end getSelectOne
 	
 	public void setInsert01(String name, int kor, int eng, int mat, int tot, double avg, String grade) {
@@ -120,20 +104,20 @@ public class SungjukDAO {
 		System.out.println("grade: "+ sungjukArray[6]);
 	}//end setInsert03
 	
-	public int setInsert04(SungjukDTO dto) {
+	public int setInsert04(SungjukDTO paramDto) {
 		int result = 0;
 		try {
 			conn = DB.dbConn();
 //			----------------------------------------
 			String sql = "insert into sungjuk values (seq_sungjuk.nextval, ?, ?, ?, ?, ?, ?, ?, sysdate)";
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, dto.getName());
-			pstmt.setInt(2, dto.getKor());
-			pstmt.setInt(3, dto.getEng());
-			pstmt.setInt(4, dto.getMat());
-			pstmt.setInt(5, dto.getTot());
-			pstmt.setDouble(6, dto.getAvg());
-			pstmt.setString(7, dto.getGrade());
+			pstmt.setString(1, paramDto.getName());
+			pstmt.setInt(2, paramDto.getKor());
+			pstmt.setInt(3, paramDto.getEng());
+			pstmt.setInt(4, paramDto.getMat());
+			pstmt.setInt(5, paramDto.getTot());
+			pstmt.setDouble(6, paramDto.getAvg());
+			pstmt.setString(7, paramDto.getGrade());
 			result = pstmt.executeUpdate();
 //			----------------------------------------
 		} catch (Exception e) {
@@ -144,19 +128,20 @@ public class SungjukDAO {
 		return result;
 	}//end setInsert04
 	
-	public int setUpdate(SungjukDTO dto) {
+	public int setUpdate(SungjukDTO paramDto) {
 		int result = 0;
 		try {
 			conn = DB.dbConn();
 //			--------------------------------
 			String sql = "update sungjuk set kor = ?, eng = ?, mat = ?, tot = ?, avg = ?, grade = ? where no = ?";
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, dto.getKor());
-			pstmt.setInt(2, dto.getEng());
-			pstmt.setInt(3, dto.getMat());
-			pstmt.setInt(4, dto.getTot());
-			pstmt.setDouble(5, dto.getAvg());
-			pstmt.setString(6, dto.getGrade());
+			pstmt.setInt(1, paramDto.getKor());
+			pstmt.setInt(2, paramDto.getEng());
+			pstmt.setInt(3, paramDto.getMat());
+			pstmt.setInt(4, paramDto.getTot());
+			pstmt.setDouble(5, paramDto.getAvg());
+			pstmt.setString(6, paramDto.getGrade());
+			pstmt.setInt(7, paramDto.getNo());
 			result = pstmt.executeUpdate();
 //			--------------------------------
 		} catch (Exception e) {
@@ -167,14 +152,14 @@ public class SungjukDAO {
 		return result;
 	}//end setUpdate
 	
-	public int setDelete(SungjukDTO dto) {
+	public int setDelete(SungjukDTO paramDto) {
 		int result = 0;
 		try {
 			conn = DB.dbConn();
 //			----------------------------------
 			String sql = "delete from sungjuk where no = ?";
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, dto.getNo());
+			pstmt.setInt(1, paramDto.getNo());
 			result = pstmt.executeUpdate();
 //			----------------------------------
 		} catch (Exception e) {

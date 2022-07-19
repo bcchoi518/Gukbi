@@ -8,12 +8,10 @@ import sungjuk.model.SungjukDTO;
 public class ExampleSakje {
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
+		SungjukDTO dto = new SungjukDTO();
 		
 		System.out.print("삭제할 No를 입력하세요: ");
-		int no = Integer.parseInt(sc.nextLine());
-		
-		SungjukDTO dto = new SungjukDTO();
-		dto.setNo(no);
+		dto.setNo(Integer.parseInt(sc.nextLine()));
 		
 		SungjukDAO dao = new SungjukDAO();
 		int result = dao.setDelete(dto);

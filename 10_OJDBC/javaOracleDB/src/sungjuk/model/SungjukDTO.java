@@ -13,6 +13,21 @@ public class SungjukDTO {
 	private String grade;
 	private Date regiDate;
 	
+	public void calc() {
+		tot = kor + eng + mat;
+		avg = tot / 3.0;
+		
+		grade = "가";
+		if (avg >= 90) {
+			grade = "수";
+		} else if (avg >= 80) {
+			grade = "우";
+		} else if (avg >= 70) {
+			grade = "미";
+		} else if (avg >= 60) {
+			grade = "양";
+		}//end if
+	}
 	public int getNo() {
 		return no;
 	}
