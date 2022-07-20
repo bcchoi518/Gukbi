@@ -1,6 +1,7 @@
 package product.model;
 
 import java.sql.Date;
+import java.util.Scanner;
 
 public class ProductDTO {
 	private int productCode;
@@ -10,6 +11,53 @@ public class ProductDTO {
 	private String vender;
 	private Date regiDate;
 	
+	public ProductDTO() {
+	}
+	
+	public void dataInput(String gubun) {
+		Scanner scanner = new Scanner(System.in);
+		if (gubun.equals("view") || gubun.equals("sujung") || gubun.equals("sakje")) {
+			String imsi = "상세보기";
+			if (gubun.equals("sujung")) {
+				imsi = "수정";
+			} else if (gubun.equals("sakje")) {
+				imsi = "삭제";
+			}//end if
+			System.out.print(imsi + "할 상품코드: ");
+			productCode = Integer.parseInt(scanner.nextLine());
+			
+			ProductDAO productDao = new ProductDAO();
+			int result = productDao.dataCheck(productCode);
+			if (result == 0) {
+				System.out.println("데이터가 없습니다.");
+				return;
+			}//end if
+		}//end if
+		if (gubun.equals("chuga") || gubun.equals("sujung")) {
+		System.out.print("상품이름: ");
+		productName = scanner.nextLine();
+		System.out.print("상품가격: ");
+		productPrice = Integer.parseInt(scanner.nextLine());
+		System.out.print("상품설명: ");
+		productContent = scanner.nextLine();
+		System.out.print("제조사: ");
+		vender = scanner.nextLine();
+		}//end if
+	}//end dataInput
+	
+	public void display(String gubun) {
+		String msg = "";
+		msg += productCode + "\t";
+		msg += productName + "\t";
+		msg += productPrice + "\t";
+		if (gubun.equals("view")) {
+			msg += productContent + "\t";
+		}//end if
+		msg += vender + "\t";
+		msg += regiDate;
+		
+		System.out.println(msg);
+	}//end display
 	public int getProductCode() {
 		return productCode;
 	}

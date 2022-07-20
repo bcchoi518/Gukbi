@@ -1,7 +1,6 @@
 package member.model;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -13,12 +12,33 @@ public class MemberDAO {
 	PreparedStatement pstmt = null;
 	ResultSet rs = null;
 	
+	public int dataCheck(int memberNo) {
+		int result = 0;
+		try {
+			conn = DB.dbConn();
+//			----------------------------------------
+			String sql = "select count(memberNo) as count from member where memberNo = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, memberNo);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				result = rs.getInt("count");
+			}//end if
+//			----------------------------------------
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DB.dbConnClose(rs, pstmt, conn);
+		}//end try-catch-finally
+		return result;
+	}//end dataCheck
+	
 	public ArrayList<MemberDTO> getSelectAll() {
 		ArrayList<MemberDTO> list = new ArrayList<>();
 		try {
 			conn = DB.dbConn();
 //			---------------------------------------------------
-			String sql = "select memberNo, memberId, memberName, regiDate from member";
+			String sql = "select memberNo, memberId, memberName, regiDate from member order by memberNo desc";
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
@@ -103,11 +123,12 @@ public class MemberDAO {
 		try {
 			conn = DB.dbConn();
 //			-------------------------------------
-			String sql = "update member set memberId = ?, memberName = ? where memberNo = ?";
+			String sql = "update member set memberPhone = ?, memberEmail = ?, memberAddress = ? where memberNo = ?";
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, paramDto.getMemberId());
-			pstmt.setString(2, paramDto.getMemberName());
-			pstmt.setInt(3, paramDto.getMemberNo());
+			pstmt.setString(1, paramDto.getMemberPhone());
+			pstmt.setString(2, paramDto.getMemberEmail());
+			pstmt.setString(3, paramDto.getMemberAddress());
+			pstmt.setInt(4, paramDto.getMemberNo());
 			result = pstmt.executeUpdate();
 //			-------------------------------------
 		} catch (Exception e) {

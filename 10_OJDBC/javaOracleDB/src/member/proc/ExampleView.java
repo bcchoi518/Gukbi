@@ -15,16 +15,16 @@ public class ExampleView {
 		memberDto.setMemberNo(memberNo);
 		
 		MemberDAO dao = new MemberDAO();
-		MemberDTO dto = dao.getSelectOne(memberDto);
+		MemberDTO resultDto = dao.getSelectOne(memberDto);
 		
-		System.out.println("memberNo: " + dto.getMemberNo());
-		System.out.println("memberId: " + dto.getMemberId());
-		System.out.println("memberName: " + dto.getMemberName());
-		System.out.println("memberJumin: " + dto.getMemberJumin());
-		System.out.println("memberPhone: " + dto.getMemberPhone());
-		System.out.println("memberEmail: " + dto.getMemberEmail());
-		System.out.println("memberPhone: " + dto.getMemberPhone());
-		System.out.println("memberAddress: " + dto.getMemberAddress());
-		System.out.println("regiDate: " + dto.getRegiDate());
+		System.out.println("memberNo: " + resultDto.getMemberNo());
+		System.out.println("memberId: " + resultDto.getMemberId());
+		System.out.println("memberName: " + resultDto.getMemberName());
+		System.out.println("memberJumin: " + resultDto.getMemberJumin());
+		System.out.println("memberPhone: " + resultDto.getMemberPhone());
+		System.out.println("memberEmail: " + resultDto.getMemberEmail());
+		System.out.println("memberPhone: " + resultDto.getMemberPhone());
+		System.out.println("memberAddress: " + resultDto.getMemberAddress());
+		System.out.println("regiDate: " + resultDto.getRegiDate());
 	}//end main
 }//end ExampleView

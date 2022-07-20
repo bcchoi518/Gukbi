@@ -16,13 +16,13 @@ public class ExampleView {
 		productDto.setProductCode(productCode);
 		
 		ProductDAO productDao = new ProductDAO();
-		ProductDTO dto = productDao.getSelectOne(productDto);
+		ProductDTO resultDto = productDao.getSelectOne(productDto);
 		
-		System.out.println("productCode: " + dto.getProductCode());
-		System.out.println("productName: " + dto.getProductName());
-		System.out.println("productPrice: " + dto.getProductPrice());
-		System.out.println("productContent: " + dto.getProductContent());
-		System.out.println("vender: " + dto.getVender());
-		System.out.println("regiDate: " + dto.getRegiDate());
+		System.out.println("productCode: " + resultDto.getProductCode());
+		System.out.println("productName: " + resultDto.getProductName());
+		System.out.println("productPrice: " + resultDto.getProductPrice());
+		System.out.println("productContent: " + resultDto.getProductContent());
+		System.out.println("vender: " + resultDto.getVender());
+		System.out.println("regiDate: " + resultDto.getRegiDate());
 	}//end main
 }//end ExampleView

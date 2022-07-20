@@ -14,16 +14,16 @@ public class ExampleView {
 		sungjukDto.setNo(Integer.parseInt(sc.nextLine()));
 		
 		SungjukDAO dao = new SungjukDAO();
-		SungjukDTO dto = dao.getSelectOne(sungjukDto);
+		SungjukDTO resultDto = dao.getSelectOne(sungjukDto);
 		
-		System.out.println("productCode: " + dto.getNo());
-		System.out.println("productName: " + dto.getName());
-		System.out.println("productPrice: " + dto.getKor());
-		System.out.println("productContent: " + dto.getEng());
-		System.out.println("vender: " + dto.getMat());
-		System.out.println("vender: " + dto.getTot());
-		System.out.println("vender: " + dto.getAvg());
-		System.out.println("vender: " + dto.getGrade());
-		System.out.println("regiDate: " + dto.getRegiDate());
+		System.out.println("no: " + resultDto.getNo());
+		System.out.println("name: " + resultDto.getName());
+		System.out.println("kor: " + resultDto.getKor());
+		System.out.println("eng: " + resultDto.getEng());
+		System.out.println("mat: " + resultDto.getMat());
+		System.out.println("tot: " + resultDto.getTot());
+		System.out.println("avg: " + resultDto.getAvg());
+		System.out.println("grade: " + resultDto.getGrade());
+		System.out.println("regiDate: " + resultDto.getRegiDate());
 	}//end main
 }//end ExampleView

@@ -13,12 +13,33 @@ public class SungjukDAO {
 	PreparedStatement pstmt = null;
 	ResultSet rs = null;
 	
+	public int dataCheck(int no) {
+		int result = 0;
+		try {
+			conn = DB.dbConn();
+//			----------------------------------------
+			String sql = "select count(no) as count from sungjuk where no = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, no);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				result = rs.getInt("count");
+			}//end if
+//			----------------------------------------
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DB.dbConnClose(rs, pstmt, conn);
+		}//end try-catch-finally
+		return result;
+	}//end dataCheck
+	
 	public ArrayList<SungjukDTO> getSelectAll() {
 		ArrayList<SungjukDTO> list = new ArrayList<>();
 		try {
 			conn = DB.dbConn();
 //			---------------------------------------
-			String sql = "select * from sungjuk";
+			String sql = "select * from sungjuk order by no desc";
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 			while (rs.next()) {

@@ -12,12 +12,12 @@ public class ExampleList {
 		ArrayList<ProductDTO> list = productDao.getSelectAll();
 		
 		for (int i = 0; i < list.size(); i++) {
-			ProductDTO productDto = list.get(i);
-			int productCode = productDto.getProductCode();
-			String productName = productDto.getProductName();
-			int productPrice = productDto.getProductPrice();
-			String vender = productDto.getVender();
-			Date regiDate = productDto.getRegiDate();
+			ProductDTO resultDto = list.get(i);
+			int productCode = resultDto.getProductCode();
+			String productName = resultDto.getProductName();
+			int productPrice = resultDto.getProductPrice();
+			String vender = resultDto.getVender();
+			Date regiDate = resultDto.getRegiDate();
 			
 			System.out.println("productCode: " + productCode);
 			System.out.println("productName: " + productName);

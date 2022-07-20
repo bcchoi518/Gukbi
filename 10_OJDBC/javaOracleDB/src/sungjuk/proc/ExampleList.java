@@ -11,16 +11,16 @@ public class ExampleList {
 		SungjukDAO dao = new SungjukDAO();
 		ArrayList<SungjukDTO> list = dao.getSelectAll();
 		for (int i = 0; i < list.size(); i++) {
-			SungjukDTO dto = list.get(i);
-			int no = dto.getNo();
-			String name = dto.getName();
-			int kor = dto.getKor();
-			int eng = dto.getEng();
-			int mat = dto.getMat();
-			int tot = dto.getTot();
-			double avg = dto.getAvg();
-			String grade = dto.getGrade();
-			Date regiDate = dto.getRegiDate();
+			SungjukDTO resultDto = list.get(i);
+			int no = resultDto.getNo();
+			String name = resultDto.getName();
+			int kor = resultDto.getKor();
+			int eng = resultDto.getEng();
+			int mat = resultDto.getMat();
+			int tot = resultDto.getTot();
+			double avg = resultDto.getAvg();
+			String grade = resultDto.getGrade();
+			Date regiDate = resultDto.getRegiDate();
 			
 			System.out.println("no: " + no);
 			System.out.println("name: " + name);

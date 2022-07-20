@@ -13,6 +13,27 @@ public class ProductDAO {
 	PreparedStatement pstmt;
 	ResultSet rs;
 	
+	public int dataCheck(int productCode) {
+		int result = 0;
+		try {
+			conn = DB.dbConn();
+//			----------------------------------------
+			String sql = "select count(productCode) as count from product where productCode = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, productCode);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				result = rs.getInt("count");
+			}//end if
+//			----------------------------------------
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DB.dbConnClose(rs, pstmt, conn);
+		}//end try-catch-finally
+		return result;
+	}//end dataCheck
+	
 	public ArrayList<ProductDTO> getSelectAll() {
 		ArrayList<ProductDTO> list = new ArrayList<>();
 		try {

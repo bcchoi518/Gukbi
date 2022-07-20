@@ -12,15 +12,15 @@ public class ExampleList {
 		ArrayList<MemberDTO> list = dao.getSelectAll();
 		
 		for (int i = 0; i < list.size(); i++) {
-			MemberDTO dto = list.get(i);
-			int memberNo = dto.getMemberNo();
-			String memberId = dto.getMemberId();
-			String memberName = dto.getMemberName();
-//			String memberJumin = dto.getMemberJumin();
-//			String memberPhone = dto.getMemberPhone();
-//			String memberEmail = dto.getMemberEmail();
-//			String memberAddress = dto.getMemberAddress();
-			Date regiDate = dto.getRegiDate();
+			MemberDTO resultDto = list.get(i);
+			int memberNo = resultDto.getMemberNo();
+			String memberId = resultDto.getMemberId();
+			String memberName = resultDto.getMemberName();
+//			String memberJumin = resultDto.getMemberJumin();
+//			String memberPhone = resultDto.getMemberPhone();
+//			String memberEmail = resultDto.getMemberEmail();
+//			String memberAddress = resultDto.getMemberAddress();
+			Date regiDate = resultDto.getRegiDate();
 			
 			System.out.println("memberNo: " + memberNo);
 			System.out.println("memberId: " + memberId);
