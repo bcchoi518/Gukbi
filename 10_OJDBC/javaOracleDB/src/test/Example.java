@@ -14,13 +14,10 @@ public class Example {
 			
 			switch(choice) {
 				case 1:
-					member.proc.Example.main(args);
 					break;
 				case 2:
-					sungjuk.proc.Example.main(args);
 					break;
 				case 3:
-					product.proc.Example.main(args);
 					break;
 				default:
 					System.out.println("-- 프로그램종료 --");

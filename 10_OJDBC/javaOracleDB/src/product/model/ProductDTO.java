@@ -29,7 +29,9 @@ public class ProductDTO {
 			ProductDAO productDao = new ProductDAO();
 			int result = productDao.dataCheck(productCode);
 			if (result == 0) {
+				System.out.println("─── Info ─────────────────────────────────────────────────────────────────────────");
 				System.out.println("데이터가 없습니다.");
+				System.out.println("──────────────────────────────────────────────────────────────────────────────────");
 				return;
 			}//end if
 		}//end if

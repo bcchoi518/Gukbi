@@ -24,6 +24,11 @@ public class MemberDAO {
 			if (rs.next()) {
 				result = rs.getInt("count");
 			}//end if
+			if (result == 0) {
+				System.out.println("─── Info ─────────────────────────────────────────────────────────────────────────");
+				System.out.println("데이터가 없습니다.");
+				System.out.println("──────────────────────────────────────────────────────────────────────────────────");
+			}//end if
 //			----------------------------------------
 		} catch (Exception e) {
 			e.printStackTrace();

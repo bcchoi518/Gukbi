@@ -29,7 +29,9 @@ public class MemberDTO {
 			MemberDAO memberDao = new MemberDAO();
 			int result = memberDao.dataCheck(memberNo);
 			if (result == 0) {
+				System.out.println("─── Info ─────────────────────────────────────────────────────────────────────────");
 				System.out.println("데이터가 없습니다.");
+				System.out.println("──────────────────────────────────────────────────────────────────────────────────");
 				return;
 			}//end if
 		}//end if
