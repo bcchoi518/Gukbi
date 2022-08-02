@@ -19,6 +19,15 @@
 	} else if (avg >= 60) {
 		grade = "양";
 	}//end if
+	
+	String gradeDisplayText01 = "";
+	String gradeDisplayText02 = "";
+	if (grade.equals("수") || grade.equals("우")) {
+		gradeDisplayText01 = "<font style=\"color: red; font-weight: bold;\">";
+		gradeDisplayText02 = "</font>";
+	}//end if
+	
+	String gradeDisplayText03 = gradeDisplayText01 + "(" + grade + ")" + gradeDisplayText02;
 %>
 
 <!DOCTYPE html>
@@ -28,52 +37,56 @@
 <title>test03.jsp</title>
 </head>
 <body>
-<h2>test03.jsp</h2>
-
-<table border="1">
-	<tr>
-		<td width="80px">이름 : </td>
-		<td width="150px"><font style="color: blue; font-weight: bold;"><%=name%></font></td>
-	</tr>
-	<% if (kor >= 60) { %>
+	<h2>test03.jsp</h2>
+	
+	<table border="1">
 		<tr>
-			<td>국어 : </td>
-			<td><%=kor%></td>
+			<td width="80px">이름 : </td>
+			<td width="200px"><font style="color: blue; font-weight: bold;"><%=name%></font></td>
 		</tr>
-	<% } %>
-	<tr>
-		<td>영어 : </td>
-		<td><%=eng%></td>
-	</tr>
-	<tr>
-		<td>수학 : </td>
-		<td><%=mat%></td>
-	</tr>
-	<tr>
-		<td>총점 : </td>
-		<td><%=tot%></td>
-	</tr>
-	<tr>
-		<td>평균 : </td>
-		<td>
-			<%=avg%>
-			<% if(grade.equals("수") || grade.equals("우")) { %>
-				(<font style="color: red; font-weight: bold;"><%=grade%></font>)
-			<% } else { %>
-				(<%=grade%>)
-			<% } %>
-		</td>
-	</tr>
-<%-- 	<tr>
-		<td>등급 : </td>
-		<td>
-		<% if(grade.equals("수") || grade.equals("우")) { %> avg >= 80
-			<font style="color: red; font-weight: bold;"><%=grade%></font>
-		<% } else { %>
-			<%=grade%>
+		<% if (kor >= 60) { %>
+			<tr>
+				<td>국어 : </td>
+				<td><%=kor%></td>
+			</tr>
 		<% } %>
-		</td>
-	</tr> --%>
-</table>
+		<tr>
+			<td>영어 : </td>
+			<td><%=eng%></td>
+		</tr>
+		<tr>
+			<td>수학 : </td>
+			<td><%=mat%></td>
+		</tr>
+		<tr>
+			<td>총점 : </td>
+			<td><%=tot%></td>
+		</tr>
+		<tr>
+			<td>평균 : </td>
+			<td>
+				<%=avg%>
+				<% if(grade.equals("수") || grade.equals("우")) { %>
+					(<font style="color: red; font-weight: bold;"><%=grade%></font>)
+				<% } else { %>
+					(<%=grade%>)
+				<% } %>
+				&nbsp; / &nbsp; 
+				<%=gradeDisplayText01 %> (<%=grade %>) <%=gradeDisplayText02 %>
+				&nbsp; / &nbsp;
+				<%=gradeDisplayText03 %> 
+			</td>
+		</tr>
+		<tr>
+			<td>등급 : </td>
+			<td>
+			<% if(grade.equals("수") || grade.equals("우")) { %>
+				<font style="color: red; font-weight: bold;"><%=grade%></font>
+			<% } else { %>
+				<%=grade%>
+			<% } %>
+			</td>
+		</tr>
+	</table>
 </body>
 </html>
