@@ -1,0 +1,76 @@
+table {
+  width: 100%;
+  height: 500px;
+  border-collapse: collapse;
+  border-bottom: 1px solid black;
+}
+
+#year {
+  font-size: 4rem;
+}
+
+#month {
+  font-size: 2.9rem;
+}
+
+th {
+  font-size: 1.5rem;
+  height: 40px;
+  border-bottom: 1px solid red;
+}
+
+td {
+  width: calc(100% / 7);
+  font-weight: bold;
+  border-right: 1px solid black;
+  border-left: 1px solid black;
+}
+
+td:first-child,
+th:first-child {
+  color: red;
+  border-left: none;
+}
+
+td:last-child,
+th:last-child {
+  color: blue;
+  border-right: none;
+}
+
+.date > td {
+  font-size: 1.2rem;
+  height: 10px;
+  padding-left: 10px;
+}
+
+caption {
+  text-align: left;
+  margin-left: 20px;
+  margin-bottom: 20px;
+  font-family: 맑은 고딕;
+  font-weight: bold;
+}
+
+.text > td {
+  vertical-align: top;
+  font-size: 1rem;
+  color: blue;
+  height: calc(410px / 5);
+  border-bottom: 1px solid black;
+}
+
+td.noson {
+  vertical-align: bottom;
+  font-size: 1rem;
+  color: red;
+  text-align: right;
+}
+
+p {
+  text-align: right;
+  font-size: 1rem;
+  color: red;
+  position: relative;
+  top: 23px;
+}

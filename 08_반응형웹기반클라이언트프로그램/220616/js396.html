@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>js396.html</title>
+  <script>
+    window.onload = function () {
+      document.getElementById("old").onclick = eventHandler;
+      document.getElementById("old").onmouseover = eventHandler;
+      document.getElementById("standard").addEventListener("click", eventHandler);
+      document.getElementById("standard").addEventListener("mouseover", eventHandler);
+    }
+
+    function eventHandler(e) {
+      var output = e + " : " + e.type + " 이벤트가 발생함 ! ";
+      var obj = document.getElementById("result");
+      obj.innerHTML = output;
+    }
+
+  </script>
+</head>
+
+<body>
+  <h4> 이벤트 모델의 이벤트객체 처리 </h4>
+  <hr>
+  인라인이벤트 모델 :
+  <button onclick="eventHandler(event);" onmouseover="eventHandler(event);">이벤트 발생</button> <br>
+
+  고전이벤트 모델 :
+  <button id="old">이벤트 발생</button> <br>
+
+  표준이벤트 모델 :
+  <button id="standard">이벤트 발생</button> <br>
+  <hr>
+  <div id="result"> </div>
+</body>
+
+</html>

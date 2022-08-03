@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>watch.html</title>
+</head>
+
+<body>
+  <canvas id="c1" width="300" height="300"></canvas>
+  <script>
+    let c = document.getElementById("c1");
+    let obj = c.getContext("2d");
+    let r = 120;
+    obj.translate(150, 150);
+    setInterval(clock, 500);
+
+    //function
+    function clock() {
+      clockStyle();
+      displayClock(obj, r);
+      displayTime(obj, r);
+    }
+    function clockStyle() {
+      obj.beginPath();
+      obj.rect(-120, -120, 240, 240);
+      obj.lineWidth = 15;
+      obj.strokeStyle = 'peru';
+      obj.stroke();
+      obj.fillStyle = 'white';
+      obj.fill();
+      obj.beginPath();
+      obj.arc(0, 0, 15, 0, 2 * Math.PI);
+      obj.fillStyle = 'black';
+      obj.fill();
+    }
+    function displayClock(obj, r) {
+      let degree;
+      let num;
+      obj.font = "30px Broadway";
+      obj.textBaseline = "middle";
+      obj.textAlign = "center";
+      for (num = 1; num < 13; num++) {
+        degree = num * Math.PI / 6;
+        obj.rotate(degree);
+        obj.translate(0, -r * 0.8);
+        obj.rotate(-degree);
+        obj.fillText(num.toString(), 0, 0);
+        obj.rotate(degree);
+        obj.translate(0, r * 0.8);
+        obj.rotate(-degree);
+      }
+    }
+    function displayTime(obj, r) {
+      let current = new Date();
+      let h = current.getHours();
+      let m = current.getMinutes();
+      let s = current.getSeconds();
+      h = h % 12;
+      h1 = (h * Math.PI / 6) + (m * Math.PI / (6 * 60)) + (s * Math.PI / (6 * 60 * 60));
+      displayJarum(obj, h1, 60, 15);
+      m1 = (m * Math.PI / 30) + (s * Math.PI / (30 * 60));
+      displayJarum(obj, m1, 70, 10);
+      s1 = (s * Math.PI / 30);
+      displayJarum(obj, s1, 75, 3);
+    }
+    function displayJarum(obj, position, length, width) {
+      obj.beginPath();
+      obj.lineWidth = width;
+      obj.moveTo(0, 0);
+      obj.rotate(position);
+      obj.lineTo(0, -length);
+      obj.strokeStyle = 'black';
+      obj.stroke();
+      obj.rotate(-position);
+    }
+  </script>
+</body>
+
+</html>

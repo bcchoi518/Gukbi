@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>jQuery433.html</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script>
+    $(function () {
+      $('#b1').click(function () {
+        let txt = "이제부터는 자바스크립트를 공부합니다 !";
+        txt = txt + "<br><hr>";
+        txt = txt + "<img src='../img/jslogo.png'  width= 150 height=100 /><hr>";
+        txt = txt + "<p> 즐겁게 열심히 합시다 ! </p>";
+        $("#p1").html(txt);
+      });
+    });    
+  </script>
+</head>
+
+<body>
+  <h2>Web Programming!</h2>
+  <p id="p1">지금까지 HTML과 CSS를 공부했습니다.</p>
+  <button id="b1">Next</button>
+</body>
+
+</html>

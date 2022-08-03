@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>exam1.html</title>
+  <!-- 응시자: 최병철 -->
+  <style>
+    table {
+      border: 3px solid black;
+      border-collapse: collapse;
+      background-color: beige;
+      width: 400px;
+      margin: 0 auto;
+    }
+
+    th {
+      background-color: rgba(188, 188, 253, 0.811);
+      width: 70px;
+    }
+
+    caption {
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+
+    input[name="address"] {
+      width: 97%;
+    }
+  </style>
+</head>
+
+<body>
+  <form>
+    <table border="1">
+      <caption>학생 정보 입력</caption>
+      <tr>
+        <th>학 번</th>
+        <td><input type="text" name="number" autofocus></td>
+      </tr>
+      <tr>
+        <th>이 름</th>
+        <td><input type="text" name="name"></td>
+      </tr>
+      <th>학 년</th>
+      <td>
+        <input type="radio" name="grade" value="1">1학년
+        <input type="radio" name="grade" value="2">2학년
+        <input type="radio" name="grade" value="3">3학년
+        <input type="radio" name="grade" value="4">4학년
+      </td>
+      </tr>
+      <tr>
+        <th>학 과</th>
+        <td><input type="text" name="major"></td>
+      </tr>
+      <tr>
+      <tr>
+        <th>주 소</th>
+        <td><input type="text" name="address"></td>
+      </tr>
+      <tr style="text-align: center;">
+        <td colspan="2">
+          <input type="submit" value="전송">
+          <input type="reset" value="취소">
+        </td>
+      </tr>
+    </table>
+  </form>
+</body>
+
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>gradient223.html</title>
+  <style>
+    h3 {
+      width: 150px;
+      height: 50px;
+      margin: 10px;
+      line-height: 50px;
+      text-align: center;
+      display: inline-block;
+    }
+
+    #b1 {
+      background: linear-gradient(red, yellow);
+    }
+
+    #b2 {
+      background: linear-gradient(to right, red, yellow);
+    }
+
+    #b3 {
+      background: linear-gradient(to bottom right, red, yellow);
+    }
+
+    #b4 {
+      background: linear-gradient(-90deg, red, yellow);
+    }
+
+    #b5 {
+      background: linear-gradient(red, yellow, green);
+    }
+
+    #b6 {
+      background: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet);
+    }
+
+    #b7 {
+      background: linear-gradient(to right, rgba(255, 0, 0, 0), rgba(255, 0, 0, 1));
+    }
+
+    #b8 {
+      background: repeating-linear-gradient(red, yellow 10%, green 20%);
+    }
+  </style>
+</head>
+
+<body>
+  <h3 id="b1">(1)</h3>
+  <h3 id="b2">(2)</h3>
+  <h3 id="b3">(3)</h3>
+  <h3 id="b4">(4)</h3>
+  <h3 id="b5">(5)</h3>
+  <h3 id="b6">(6)</h3>
+  <h3 id="b7">(7)</h3>
+  <h3 id="b8">(8)</h3>
+</body>
+
+</html>

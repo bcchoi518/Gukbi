@@ -1,0 +1,14 @@
+div {
+  margin: 20px;
+  width: 150px;
+  height: 50px;
+  border: 10px gray solid;
+}
+#b1 {
+  background-color: lavender;
+  padding: 20px;
+}
+#b2 {
+  background-color: orange;
+  padding: 10px 30px;
+}

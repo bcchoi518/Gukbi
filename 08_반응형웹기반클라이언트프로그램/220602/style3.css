@@ -1,0 +1,31 @@
+table {
+  table-layout: auto;
+  width: 80%;
+  height: 200px;
+  border-collapse: collapse;
+  border-top: 5px solid blue;
+  border-bottom: 5px solid blue;
+  background-color: skyblue;
+  border-left: skyblue;
+  border-right: skyblue;
+}
+th {
+  border-bottom: 3px solid blue;
+}
+td {
+  width: calc(100% / 5);
+  text-align: center;
+  border: 1px dotted tomato;
+}
+.c0 {
+  border-left: 1px solid skyblue;
+}
+.c4 {
+  border-right: 1px solid skyblue;
+}
+tr:first-child {
+  background-color: lightgray;
+}
+tr:hover {
+  background-color: orange;
+}

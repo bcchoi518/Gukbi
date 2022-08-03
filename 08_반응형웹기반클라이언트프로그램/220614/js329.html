@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>js329.html</title>
+</head>
+
+<body>
+  <script>
+    document.write("전역 내장함수<hr>");
+    document.write("Number(true) : " + Number(true) + "<br>");
+    document.write("Number(false) : " + Number(false) + "<br>");
+    document.write("Number('50') : " + Number("50") + "<br>");
+    document.write("Number('  50') : " + Number("  50") + "<br>");
+    document.write("Number('50  ') : " + Number("50  ") + "<br>");
+    document.write("Number('50 80') : " + Number("50 80") + "<br>");
+    document.write("Number('June') : " + Number("June") + "<hr>");
+
+    document.write("parseInt(' 80 ') : " + parseInt("80") + "<br>");
+    document.write("parseInt('80.56') : " + parseInt("80.56") + "<br>");
+    document.write("parseInt('50 70 90') : " + parseInt("50 70 90") + "<br>");
+    document.write("parseInt('80점') : " + parseInt("80점") + "<br>");
+    document.write("parseInt('점수 80') : " + parseInt("점수 80") + "<hr>");
+
+    document.write("parseFloat(' 80 ') : " + parseFloat("80") + "<br>");
+    document.write("parseFloat('80.56') : " + parseFloat("80.56") + "<br>");
+    document.write("parseFloat('50 70 90') : " + parseFloat("50 70 90") + "<br>");
+    document.write("parseFloat('80점') : " + parseFloat("80점") + "<br>");
+    document.write("parseFloat('점수 80') : " + parseFloat("점수 80") + "<hr>");
+
+    document.write("수치 상수<hr>");
+    let x1 = Number.MAX_VALUE, x2 = Number.MIN_VALUE, x3 = Number.NaN;
+    let x4 = Number.NEGATIVE_INFINITY, x5 = Number.POSITIVE_INFINITY;
+    document.write("Number.MAX_VALUE : " + x1 + "<br>");
+    document.write("Number.MIN_VALUE : " + x2 + "<br>");
+    document.write("Number.NaN : " + x3 + "<br>");
+    document.write("Number.NEGATIVE_INFINITY : " + x4 + "<br>");
+    document.write("Number.POSITIVE_INFINITY : " + x5 + "<br>"); 
+  </script>
+</body>
+
+</html>

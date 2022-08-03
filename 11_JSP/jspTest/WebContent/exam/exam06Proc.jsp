@@ -56,4 +56,4 @@
 <hr>
 <%=human3 %>
 <hr>
-<%=array%> ~ <%=array[0]%> ~ <%=array[1]%>
+<%=array.length%> ~ <%=array[0]%> ~ <%=array[1]%>

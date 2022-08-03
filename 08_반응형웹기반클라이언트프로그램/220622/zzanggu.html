@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>zzanggu.html</title>
+</head>
+
+<body>
+  <canvas id="c1" width="600" height="400" style="border:1px solid gray;"></canvas>
+  <script>
+    let c = document.getElementById('c1');
+    /** @type{CanvasRenderingContext2D} */
+    let obj = c.getContext('2d');
+
+    obj.bezierCurveTo(110, 250, 0, 380, 300, 300);
+    obj.moveTo(295, 300);
+    obj.arc(300, 275, 30, 2, 1.3 * Math.PI, true);
+    obj.moveTo(100, 245);
+    obj.arc(200, 250, 100, 3, 2 * Math.PI, false);
+    obj.moveTo(114, 200);
+    obj.lineTo(260, 200);
+    obj.lineTo(285, 255);
+    obj.stroke();
+    obj.beginPath();
+    obj.moveTo(135, 240);
+    obj.arc(150, 240, 15, 3, 3 * Math.PI, false);
+    obj.fillStyle = 'black';
+    obj.fill();
+    obj.moveTo(205, 240);
+    obj.arc(220, 240, 15, 3, 3 * Math.PI, false);
+    obj.fillStyle = 'black';
+    obj.fill();
+    obj.stroke();
+    obj.beginPath();
+    obj.moveTo(143, 240);
+    obj.arc(150, 240, 8, 3, 3 * Math.PI, false);
+    obj.fillStyle = 'white';
+    obj.fill();
+    obj.moveTo(212, 240);
+    obj.arc(220, 240, 8, 3, 3 * Math.PI, false);
+    obj.fillStyle = 'white';
+    obj.fill();
+    obj.stroke();
+    obj.beginPath();
+    obj.moveTo(130, 310);
+    obj.arc(150, 310, 20, 3, 3 * Math.PI, false);
+    obj.stroke();
+    obj.closePath();
+    obj.beginPath();
+    obj.moveTo(135, 215);
+    obj.arcTo(150, 190, 250, 360, 25);
+    obj.moveTo(240, 225);
+    obj.arcTo(210, 190, 150, 360, 25);
+    obj.lineWidth = 10;
+    obj.stroke();
+  </script>
+</body>
+
+</html>

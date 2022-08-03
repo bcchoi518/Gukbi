@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>dropdown197.html</title>
+  <style>
+    .dropdown {
+      position: relative;
+      display: inline-block;
+    }
+
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: ghostwhite;
+    }
+
+    .dropdown:hover .dropdown-content {
+      display: block;
+    }
+
+    /* #dropdown1:hover .dropdown-content {
+      display: block;
+    }
+
+    #dropdown2:hover .dropdown-content {
+      display: block;
+    } */
+
+    .desc {
+      padding: 15px;
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+  <h2>dropdown Image</h2>
+  <div class="dropdown" id="dropdown1">
+    <img src="../img/image1.JPG" alt="인왕산" class="image1" width="100" height="60">
+    <div class="dropdown-content">
+      <img src="../img/image1.JPG" alt="인왕산길" width="300" height="200">
+      <div class="desc">아름다운 인왕산 길</div>
+    </div>
+  </div>
+  <div class="dropdown" id="dropdown2">
+    <img src="../img/image2.JPG" alt="남한산성" class="image1" width="100" height="60">
+    <div class="dropdown-content">
+      <img src="../img/image2.JPG" alt="아! 남한산성" width="300" height="200">
+      <div class="desc">아! 남한산성</div>
+    </div>
+  </div>
+</body>
+
+</html>

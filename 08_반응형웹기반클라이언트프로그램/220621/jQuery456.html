@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>jQuery456.html</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script>
+    $(function () {
+      $("div").css({
+        'background': 'skyblue',
+        'width': '100px',
+        'height': '100px',
+        'position': 'absolute'
+      });
+      $("#b1").click(function () {
+        $("div").animate({ left: '250px', opacity: '0.5', height: '150px', width: '150px' });
+      });
+      $("#b2").click(function () {
+        $("div").animate({ left: '250px', height: '+=150px', width: '+=150px' });
+      });
+      $("#b3").click(function () {
+        $("div").animate({ height: 'toggle' });
+      });
+      $("#b4").click(function () {
+        var div = $("div");
+        div.animate({ height: '300px', opacity: '0.4' }, "slow");
+        div.animate({ width: '300px', opacity: '0.8' }, "slow");
+        div.animate({ height: '100px', opacity: '0.4' }, "slow");
+        div.animate({ width: '100px', opacity: '0.8' }, "slow");
+      });
+    }); 
+  </script>
+</head>
+
+<body>
+  <button id="b1">Start Animation 1</button>
+  <button id="b2">Start Animation 2</button>
+  <button id="b3">Start Animation 3</button>
+  <button id="b4">Start Animation 4</button>
+  <hr>
+  <div></div>
+</body>
+
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>shadow214.html</title>
+  <style>
+    div {
+      background-color: orange;
+      width: 200px;
+      height: 70px;
+      margin: 30px;
+      line-height: 70px;
+      text-align: center;
+      display: inline-block;
+    }
+
+    #b1 {
+      box-shadow: 30px 20px;
+    }
+
+    #b2 {
+      box-shadow: 10px 10px;
+    }
+
+    #b3 {
+      box-shadow: -10px 10px;
+    }
+
+    #b4 {
+      box-shadow: 10px -10px;
+    }
+
+    #b5 {
+      box-shadow: -10px -10px
+    }
+
+    #b6 {
+      box-shadow: 10px 10px skyblue;
+    }
+
+    #b7 {
+      box-shadow: 10px 10px 5px;
+    }
+
+    #b8 {
+      box-shadow: 10px 10px 5px skyblue;
+    }
+
+    #b9 {
+      box-shadow: 5px 5px 10px black,
+        0 0 30px blue, 0 0 10px skyblue;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="b1">그림자 박스(기본)</div>
+  <div id="b2">그림자 박스(방향:우하)</div>
+  <div id="b3">그림자 박스(방향:좌하)</div>
+  <div id="b4">그림자 박스(방향:우상)</div>
+  <div id="b5">그림자 박스(방향:좌상)</div>
+  <div id="b6">그림자 박스(색상지정)</div>
+  <div id="b7">그림자 박스(번짐지정)</div>
+  <div id="b8">그림자 박스(색상/번짐)</div>
+  <div id="b9">그림자 박스(다중그림자)</div>
+</body>
+
+</html>

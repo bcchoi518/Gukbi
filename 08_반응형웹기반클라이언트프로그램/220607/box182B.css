@@ -1,0 +1,17 @@
+ul {
+  background-color: lightgray;
+  padding: 6px;
+}
+li {
+  display: inline;
+  padding: 10px;
+}
+a {
+  color: black;
+  text-decoration: none;
+  padding: 5px 10px;
+}
+a:hover {
+  background-color: gray;
+  color: white;
+}

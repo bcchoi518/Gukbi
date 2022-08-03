@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>canvas474.html</title>
+</head>
+
+<body>
+  <canvas id="c1" width="300" height="300" style="border:1px solid gray;" />
+  <script>
+    let c = document.getElementById("c1");
+    /** @type {CanvasRenderingContext2D} */
+    let obj = c.getContext("2d");
+
+    obj.beginPath(); // 사각형 그리기 
+    obj.rect(20, 20, 100, 80); obj.fillStyle = "gray";
+    obj.fill();
+
+    obj.shadowColor = "blue"; obj.shadowBlur = 20;
+    obj.shadowOffsetX = 15; obj.shadowOffsetY = 20;
+    obj.globalAlpha = 0.5;
+
+    obj.beginPath(); // 사각형 그리기 
+    obj.rect(150, 20, 100, 80); obj.fillStyle = "green";
+    obj.fill();
+
+    obj.beginPath(); // 원호 그리기
+    obj.arc(150, 200, 80, 0, 1.5 * Math.PI);
+    obj.fillStyle = "red";
+    obj.fill();
+  </script>
+</body>
+
+</html>

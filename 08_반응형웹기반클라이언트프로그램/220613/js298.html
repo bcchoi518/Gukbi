@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>js298.html</title>
+</head>
+
+<body>
+  <form name="form1">
+    이 름 : <input type="text" name="stuName" /> <br>
+    국어 성적 : <input type="text" name="kor" /> <br>
+    수학 성적 : <input type="text" name="math" />
+    <hr>
+    <button onclick="compute();"> 성적처리 결과 </button>
+  </form>
+  <script>
+    function compute() {
+      var total;
+      total = parseInt(form1['kor'].value) +
+        parseInt(form1['math'].value);
+      avg = total / 2;
+      alert(form1['stuName'].value
+        + " 학생의 평균성적은 " + avg + " 입니다");
+    }      
+  </script>
+</body>
+
+</html>

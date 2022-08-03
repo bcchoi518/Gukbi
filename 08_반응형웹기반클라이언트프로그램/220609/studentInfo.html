@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Info</title>
+  <script src="data.js"></script>
+  <style>
+    th {
+      width: 80px;
+    }
+
+    td {
+      width: 80px;
+      text-align: center;
+    }
+
+    caption {
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+  </style>
+</head>
+
+<body>
+  <h3>Q1) 파일 data.js를 외부 자바스크립트로 연결해서 각 학생들의 총점과 평균을 계산 한 후,<br> 학생 정보들(이름, 중간 및 기말시험 성적(middle, final, 총점, 평균))을 표 형식으로
+    출력하는 HTML 문서를 작성하라.</h3>
+  <table border="1">
+    <caption>학생 정보</caption>
+    <tr>
+      <th>이름</th>
+      <th>중간성적</th>
+      <th>기말성적</th>
+      <th>총점</th>
+      <th>평균</th>
+    </tr>
+    <script>
+      for (var i = 0; i < stu.length; i++) {
+        total = stu[i].middle + stu[i].final;
+        avg = total / 2;
+        document.write('<tr><td>' + stu[i].name + '</td><td>' + stu[i].middle + '</td><td>' + stu[i].final + '</td><td>' + total + '</td><td>' + avg + '</td></tr>');
+      }//end while
+    </script>
+  </table>
+  <hr>
+  <h3>Q2) [문제2]에서 평균 성적이 80점 이상인 학생들만 출력하도록 HTML 문서를 수정하라.</h3>
+  <table border="1">
+    <caption>학생 정보</caption>
+    <tr>
+      <th>이름</th>
+      <th>중간성적</th>
+      <th>기말성적</th>
+      <th>총점</th>
+      <th>평균</th>
+    </tr>
+    <script>
+      for (var i = 0; i < stu.length; i++) {
+        total = stu[i].middle + stu[i].final;
+        avg = total / 2;
+        if (avg > 80) {
+          document.write('<tr><td>' + stu[i].name + '</td><td>' + stu[i].middle + '</td><td>' + stu[i].final + '</td><td>' + total + '</td><td>' + avg + '</td></tr>');
+        }//end if
+      }//end while
+    </script>
+  </table>
+</body>
+
+</html>

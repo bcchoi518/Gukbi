@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SignUp</title>
+  <style>
+    .container {
+      width: 70vw;
+      height: 70vh;
+    }
+
+    form {
+      font-size: 2rem;
+    }
+
+    input {
+      width: 100%;
+      height: 5%;
+      font-size: 1.3rem;
+    }
+
+    input[type="submit"] {
+      margin-top: 10%;
+      height: 10%;
+    }
+
+    label {
+      font-size: 1.5rem;
+      width: 100%;
+    }
+  </style>
+</head>
+
+
+
+<body>
+  <div class="container">
+    <form>
+      <label for="id">ID</label>
+      <input type="text" name="id" id="id" required />
+      <label for="password">Password</label>
+      <input type="password" name="password" id="password" required />
+      <label for="passwordCheck">Password Check</label>
+      <input type="password" name="password" id="passwordCheck" required />
+      <label for="name">Name</label>
+      <input type="text" name="name" id="name" required />
+      <label for="birth">Birth</label>
+      <input type="date" name="birth" id="birth" style="text-align: center;" required />
+      <label for="email">E-Mail</label>
+      <input type="email" name="email" id="email" required />
+      <label for="phoneNumber">PhoneNumber</label>
+      <input type="tel" name="phoneNumber" id="phoneNumber" required />
+      <input type="submit" value="Sign Up">
+    </form>
+  </div>
+</body>
+
+</html>

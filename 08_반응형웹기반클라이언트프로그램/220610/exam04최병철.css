@@ -1,0 +1,80 @@
+body {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100vw;
+  height: 95vh;
+  margin: 0px;
+  padding: 0px;
+}
+aside {
+  flex: 3;
+  width: 35%;
+  height: 100%;
+  background-color: burlywood;
+  padding: 20px 40px;
+  margin: 0px;
+  min-width: fit-content;
+}
+article {
+  flex: 7;
+  width: 60%;
+  height: 100%;
+  margin: 0px;
+  padding: 20px;
+}
+table {
+  border-collapse: collapse;
+  margin-left: 30px;
+}
+caption {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+th {
+  background-color: beige;
+  padding: 5px;
+}
+td {
+  padding: 5px;
+}
+#profileImage {
+  width: 200px;
+}
+#profileName {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+#profileComment {
+  width: 220px;
+}
+#info {
+  margin-top: 50px;
+}
+#snsPart {
+  margin-top: 50px;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+.snsName {
+  display: inline;
+  margin: 0px 20px 0px 0px;
+}
+.sectionWrapper {
+  border-bottom: 2px dotted darkgray;
+}
+section {
+  margin: 30px 50px;
+}
+ul,
+li {
+  line-height: 2rem;
+}
+.sectionTitle {
+  margin-left: 25px;
+  font-size: 1.4rem;
+  font-weight: bold;
+}
+#introComment {
+  margin-left: 25px;
+}

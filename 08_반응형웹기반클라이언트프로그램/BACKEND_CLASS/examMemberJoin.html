@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>examMemberJoin</title>
+  <style>
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+  <h2>examMemberJoin</h2>
+
+  <!-- 
+  *입력
+  아이디
+  비밀번호
+  이름
+  전화번호
+  이메일
+  주소
+  성별 : 남자, 여자
+  관심분야 : 여행, 독서, 영화감상, 골프, 낚시, 음악감상, 볼링, 음주가무, 코딩
+  -->
+  <div id="inputWrapper">
+    <table border="1" id="table">
+      <tr>
+        <td>아이디</td>
+        <td><input type="text" name="id" id="id"></td>
+      </tr>
+      <tr>
+        <td>비밀번호</td>
+        <td><input type="password" name="passwd" id="passwd"></td>
+      </tr>
+      <tr>
+        <td>이름</td>
+        <td><input type="text" name="name" id="name"></td>
+      </tr>
+      <tr>
+        <td>전화번호</td>
+        <td><input type="tel" name="phone" id="phone"></td>
+      </tr>
+      <tr>
+        <td>이메일</td>
+        <td><input type="email" name="email" id="email"></td>
+      </tr>
+      <tr>
+        <td>주소</td>
+        <td><input type="text" name="address" id="address"></td>
+      </tr>
+      <tr>
+        <td>성별</td>
+        <td>
+          <input type="radio" name="gender" class="gender" id="male" value="남자" checked />남자
+          <input type="radio" name="gender" class="gender" id="female" value="여자" />여자
+        </td>
+      </tr>
+      <tr>
+        <td>관심분야</td>
+        <td>
+          <input type="checkbox" name="favorite" class="favorite" id="travel" value="여행" /><label
+            for="travel">여행</label>
+          <input type="checkbox" name="favorite" class="favorite" id="reading" value="독서" /><label
+            for="reading">독서</label>
+          <input type="checkbox" name="favorite" class="favorite" id="movie" value="영화감상" /><label
+            for="movie">영화감상</label>
+          <input type="checkbox" name="favorite" class="favorite" id="golf" value="골프" /><label for="golf">골프</label>
+          <input type="checkbox" name="favorite" class="favorite" id="fishing" value="낚시" /><label
+            for="fishing">낚시</label>
+          <input type="checkbox" name="favorite" class="favorite" id="music" value="음악감상" /><label
+            for="music">음악감상</label>
+          <input type="checkbox" name="favorite" class="favorite" id="bowling" value="볼링" /><label
+            for="bowling">볼링</label>
+          <input type="checkbox" name="favorite" class="favorite" id="drink" value="음주가무" /><label
+            for="drink">음주가무</label>
+          <input type="checkbox" name="favorite" class="favorite" id="coding" value="코딩" /><label
+            for="coding">코딩</label>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2"><button onclick="joinProc();">확인</button></td>
+      </tr>
+    </table>
+  </div>
+  <div id="wrapper" class="hidden">
+    아이디: <span id="spanId"></span><br>
+    이름: <span id="spanName"></span><br>
+    전화번호: <span id="spanPhone"></span><br>
+    이메일: <span id="spanEmail"></span><br>
+    주소: <span id="spanAddress"></span><br>
+    성별: <span id="spanGender"></span><br>
+    관심분야: <span id="spanSelected"></span><br>
+  </div>
+</body>
+
+</html>
+
+<script>
+  function joinProc() {
+    //DOM
+    const id = document.getElementById('id').value;
+    const name = document.getElementById('name').value;
+    const phone = document.getElementById('phone').value;
+    const email = document.getElementById('email').value;
+    const address = document.getElementById('address').value;
+    const genderArr = document.getElementsByClassName('gender');
+    const favoriteArr = document.getElementsByClassName('favorite');
+    let selected = [];
+    let gender = "";
+
+    if (genderArr[0].checked == true) {
+      gender = 남자;
+    } else {
+      gender = 여자;
+    }
+
+    let i = 0;
+    while (i < favoriteArr.length) {
+      if (favoriteArr[i].checked == true) {
+        selected.push(favoriteArr[i].value);
+      }
+      i++;
+    }
+
+    document.querySelector('#spanId').innerText = id;
+    document.querySelector('#spanName').innerText = name;
+    document.querySelector('#spanPhone').innerText = phone;
+    document.querySelector('#spanEmail').innerText = email;
+    document.querySelector('#spanAddress').innerText = address;
+    document.querySelector('#spanGender').innerText = gender;
+    document.querySelector('#spanSelected').innerText = selected.toString();
+
+    document.getElementById('table').classList.add('hidden');
+    document.getElementById('wrapper').classList.remove('hidden');
+  }
+</script>

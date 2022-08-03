@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>jQuery448.html</title>
+  <style>
+    img {
+      display: inline;
+      visibility: hidden;
+      width: 200px;
+      height: 500px;
+    }
+
+    div {
+      width: 100%;
+      height: 600px;
+    }
+  </style>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script>
+    $(function () {
+      $('#b1').click(function () {
+        // let obj1 = $('#p1 img:last');
+        // $('#p1 img:first-child').clone().insertAfter(obj1);
+        // $('#p1 img:first-child').remove();
+        let slides = $('img');
+        let cIdx = 0;
+        // eq = equivalent 동등한, 
+        slides.eq(cIdx).css('visibility', 'visible');
+        setInterval(showNextSlide, 100);
+
+        function showNextSlide() {
+          let nIdx = (cIdx + 1) % 7;
+          slides.eq(cIdx).css('visibility', 'hidden');
+          slides.eq(nIdx).css('visibility', 'visible');
+          cIdx = nIdx;
+        }
+      });
+    });        
+  </script>
+</head>
+
+<body>
+  <h3> 피겨선수의 회전 연속동작 </h3>
+  <hr>
+  <div id="p1">
+    <img src="../img/f7.png" />
+    <img src="../img/f6.png" />
+    <img src="../img/f5.png" />
+    <img src="../img/f4.png" />
+    <img src="../img/f3.png" />
+    <img src="../img/f2.png" />
+    <img src="../img/f1.png" />
+  </div>
+  <hr>
+  <button id="b1">Start</button>
+
+</body>
+
+</html>

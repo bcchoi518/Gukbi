@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+  <form name="scoreForm" method="post" action="sungjukProc.html">
+    <table border="0">
+      <caption style="font-size: 25px; font-weight: bold;">성적처리</caption>
+      <tr>
+        <td>이름: </td>
+        <td><input type="text" name="name" id="name" /></td>
+      </tr>
+      <tr>
+        <td>국어점수: </td>
+        <td><input type="text" name="kor" id="kor" /></td>
+      </tr>
+      <tr>
+        <td>영어점수: </td>
+        <td><input type="text" name="eng" id="eng" /></td>
+      </tr>
+      <tr>
+        <td>수학점수: </td>
+        <td><input type="text" name="math" id="math" /></td>
+      </tr>
+      <tr>
+        <td>과학점수: </td>
+        <td><input type="text" name="sci" id="sci" /></td>
+      </tr>
+      <tr>
+        <td>역사점수: </td>
+        <td><input type="text" name="his" id="his"></td>
+      </tr>
+      <tr>
+        <td colspan="2"> <input type="button" value="성적처리하기" id="btn" onclick="sum();" /></td>
+      </tr>
+      <tr class="hidden">
+        <td>총점: </td>
+        <td><input type="text" name="total" id="total" /></td>
+      </tr>
+      <tr class="hidden">
+        <td>평균: </td>
+        <td><input type="text" name="avg" id="avg" /></td>
+      </tr>
+    </table>
+  </form>
+
+  <script>
+    function sum() {
+      const f = document.scoreForm;
+      const name = f.name.value;
+      const kor = Number(f.kor.value);
+      const eng = Number(f.eng.value);
+      const math = Number(f.math.value);
+      const sci = Number(f.sci.value);
+      const his = Number(f.his.value);
+
+      const total = kor + eng + math + sci + his;
+      const avg = total / 5;
+
+      // alert(`${name}님의 총점은 ${total}점입니다.`);
+      f.total.value = total;
+      f.avg.value = avg;
+
+      const hidden = document.querySelectorAll('.hidden');
+      hidden.forEach((item) => {
+        item.classList.remove('hidden');
+      });
+
+      document.querySelector('#btn').parentElement.classList.add('hidden');
+
+      f.submit();
+    }
+  </script>
+</body>
+
+</html>

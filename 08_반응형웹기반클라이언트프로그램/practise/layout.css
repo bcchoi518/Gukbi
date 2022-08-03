@@ -1,0 +1,43 @@
+html {
+  width: 100vw;
+}
+header {
+  width: 100%;
+  height: 10vh;
+  background-color: pink;
+  font-size: 5vh;
+  text-align: center;
+}
+.main {
+  display: flex;
+  width: 100%;
+  height: 80vh;
+  flex-direction: row;
+  padding: 0px 0px;
+}
+nav {
+  flex: 2;
+  background-color: orange;
+  font-size: 5vh;
+  text-align: center;
+}
+section {
+  flex: 6;
+  background-color: skyblue;
+  font-size: 5vh;
+  text-align: center;
+}
+aside {
+  flex: 2;
+  background-color: tomato;
+  font-size: 5vh;
+  text-align: center;
+}
+
+footer {
+  width: 100%;
+  height: 10vh;
+  background-color: yellowgreen;
+  font-size: 5vh;
+  text-align: center;
+}

@@ -1,0 +1,82 @@
+main()
+- signIn()
+- logIn()
+------------------------------
+Movies
+- String title
+- int grade
+-------------------------------
+KidsMovies extends Movies
+- void KidsMovies()
+-------------------------------
+AdultMovies extends Movies
+- void showAllMovies()
+-------------------------------
+MenuSelect(Interface)
+final static int 
+- 1. watch
+- 2. search
+- 3. favorite
+- 4. setting
+- 5. exit
+--------------------------------
+MenuViewer
+Scanner sc = new Scanner(System.in);
+- 1.System.out.println("어쩌구")
+--------------------------------
+MoviesManager
+- HashSet<Movies> movieStorage = new HashSet<Movies>()
+- private Movies KidsMovies();
+- private Movies AdultMovies();
+- void allDisplay()
+- void searchMovies()
+- void showFavorites()
+--------------------------------
+UserManager
+- void signIn()
+- void logIn()
+- void updateAccount()
+- void showInfo()
+- void deleteAccount()
+-------------------------------
+Settings
+- 1. updateAccount()
+- 2. showInfo()
+- 3. deleteAccount()
+-------------------------------
+User
+Person(String name, String password, int age, int grade)
+- 1. signIn()
+Person(String name, String password)
+- 2. logIn()
+-------------------------------
+MenuSelect
+- void watch()
+  - void rate()
+  - void addFavorite()
+- void search()
+- void favorite()
+  - void showMyList()
+- void setting()
+-------------------------------
+Rate
+- int rate
+- void rating()
+--------------------------------
+AddFavorite
+Scanner sc = new Scanner(System.in)
+- void addFavorite()
+--------------------------------
+MyList
+- void showFavorite()
+--------------------------------
+
+
+
+
+
+
+
+
+
+

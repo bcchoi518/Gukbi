@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <script src="http://code.jquery.com/jquery-3.4.1.min.js"></script>
+</head>
+
+<body>
+
+  <h2>Shop List</h2>
+
+  <table border="0" align="center">
+    <tr>
+      <td style="padding: 20px 20px;">
+        <table border="1" align="center" width="80%">
+          <tr>
+            <td><a href="#" onClick="move('apple');"><img src="" width="100" height="100" id="img0_0"></a></td>
+          </tr>
+          <tr>
+            <td><span id="p0_0"></span></td>
+          </tr>
+          <tr>
+            <td><span id="m0_0"></span></td>
+          </tr>
+        </table>
+      </td>
+      <td style="padding: 20px 20px;">
+        <table border="1" align="center" width="80%">
+          <tr>
+            <td><a href="#" onClick="move('banana');"><img src="" width="100" height="100" id="img0_1"></a></td>
+          </tr>
+          <tr>
+            <td><span id="p0_1"></span></td>
+          </tr>
+          <tr>
+            <td><span id="m0_1"></span></td>
+          </tr>
+        </table>
+      </td>
+      <td style="padding: 20px 20px;">
+        <table border="1" align="center" width="80%">
+          <tr>
+            <td><a href="#" onClick="move('grape');"><img src="" width="100" height="100" id="img0_2"></a></td>
+          </tr>
+          <tr>
+            <td><span id="p0_2"></span></td>
+          </tr>
+          <tr>
+            <td><span id="m0_2"></span></td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+
+
+    <tr>
+      <td style="padding: 20px 20px;">
+        <table border="1" align="center" width="80%">
+          <tr>
+            <td><img src="" width="100" height="100" id="img1_0"></td>
+          </tr>
+          <tr>
+            <td><span id="p1_0"></span></td>
+          </tr>
+          <tr>
+            <td><span id="m1_0"></span></td>
+          </tr>
+        </table>
+      </td>
+      <td style="padding: 20px 20px;">
+        <table border="1" align="center" width="80%">
+          <tr>
+            <td><img src="" width="100" height="100" id="img1_1"></td>
+          </tr>
+          <tr>
+            <td><span id="p1_1"></span></td>
+          </tr>
+          <tr>
+            <td><span id="m1_1"></span></td>
+          </tr>
+        </table>
+      </td>
+      <td style="padding: 20px 20px;">
+        <table border="1" align="center" width="80%">
+          <tr>
+            <td><img src="" width="100" height="100" id="img1_2"></td>
+          </tr>
+          <tr>
+            <td><span id="p1_2"></span></td>
+          </tr>
+          <tr>
+            <td><span id="m1_2"></span></td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+
+
+    <tr>
+      <td style="padding: 20px 20px;">
+        <table border="1" align="center" width="80%">
+          <tr>
+            <td><img src="" width="100" height="100" id="img2_0"></td>
+          </tr>
+          <tr>
+            <td><span id="p2_0"></span></td>
+          </tr>
+          <tr>
+            <td><span id="m2_0"></span></td>
+          </tr>
+        </table>
+      </td>
+      <td style="padding: 20px 20px;">
+        <table border="1" align="center" width="80%">
+          <tr>
+            <td><img src="" width="100" height="100" id="img2_1"></td>
+          </tr>
+          <tr>
+            <td><span id="p2_1"></span></td>
+          </tr>
+          <tr>
+            <td><span id="m2_1"></span></td>
+          </tr>
+        </table>
+      </td>
+      <td style="padding: 20px 20px;">
+        <table border="1" align="center" width="80%">
+          <tr>
+            <td><img src="" width="100" height="100" id="img2_2"></td>
+          </tr>
+          <tr>
+            <td><span id="p2_2"></span></td>
+          </tr>
+          <tr>
+            <td><span id="m2_2"></span></td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+
+</body>
+
+</html>
+
+<script>
+  $(function () {
+    sijak();
+  });
+
+  function move(productName) {
+    var moveUrl = 'error.html';
+    if (productName == 'apple') {
+      moveUrl = 'examShopViewApple.html';
+    } else if (productName == 'banana') {
+      moveUrl = 'examShopViewBanana.html';
+    } else if (productName == 'grape') {
+      moveUrl = 'examShopViewGrape.html';
+    }
+    location.href = moveUrl;
+  }
+
+  function sijak() {
+    document.getElementById("img0_0").src = "../img/apple.jpg";
+    document.getElementById("img0_1").src = "../img/banana.jpg";
+    document.getElementById("img0_2").src = "../img/grape.jpg";
+    document.getElementById("img1_0").src = "../img/kiwi.jpg";
+    document.getElementById("img1_1").src = "../img/lemon.jpg";
+    document.getElementById("img1_2").src = "../img/peach.jpg";
+    document.getElementById("img2_0").src = "../img/pine.jpg";
+    document.getElementById("img2_1").src = "../img/strawberry.jpg";
+    document.getElementById("img2_2").src = "../img/tangerine.jpg";
+
+    document.getElementById("p0_0").innerHTML = "사과";
+    document.getElementById("p0_1").innerHTML = "<font style='color:red; font-weight: bold;'>바나나</font>";
+    document.getElementById("p0_2").innerHTML = "포도";
+
+    document.getElementById("p1_0").innerHTML = "키위";
+    document.getElementById("p1_1").innerHTML = "레몬";
+    document.getElementById("p1_2").innerHTML = "복숭아";
+
+    document.getElementById("p2_0").innerHTML = "파인애플";
+    document.getElementById("p2_1").innerHTML = "딸기";
+    document.getElementById("p2_2").innerHTML = "탄젠린";
+
+    document.getElementById("m0_0").innerHTML = "10000";
+    document.getElementById("m0_1").innerHTML = "20000";
+    document.getElementById("m0_2").innerHTML = "3000";
+
+    document.getElementById("m1_0").innerHTML = "15000";
+    document.getElementById("m1_1").innerHTML = "25000";
+    document.getElementById("m1_2").innerHTML = "35000";
+
+    document.getElementById("m2_0").innerHTML = "30000";
+    document.getElementById("m2_1").innerHTML = "35000";
+    document.getElementById("m2_2").innerHTML = "40000";
+  }
+</script>

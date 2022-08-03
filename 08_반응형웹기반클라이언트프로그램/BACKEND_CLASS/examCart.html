@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>examCart</title>
+</head>
+
+<body>
+  <h2>examCart</h2>
+
+  <form name="cartForm">
+    <table border="1" width="600px">
+      <tr>
+        <td>순번</td>
+        <td>주문번호</td>
+        <td>상품명</td>
+        <td>가격</td>
+        <td>수량</td>
+        <td>주문일</td>
+        <td>비고</td>
+      </tr>
+      <tr>
+        <td>5</td>
+        <td>cart_005</td>
+        <td>바나나</td>
+        <td>10000</td>
+        <td>10</td>
+        <td>2022-07-05</td>
+        <td>
+          <input type="text" name="cart_5" class="jumunBunho" value="cart_005">
+        </td>
+      </tr>
+      <tr>
+        <td>4</td>
+        <td>cart_004</td>
+        <td>키위</td>
+        <td>20000</td>
+        <td>5</td>
+        <td>2022-07-05</td>
+        <td>
+          <input type="text" name="cart_4" class="jumunBunho" value="cart_004">
+        </td>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td>cart_003</td>
+        <td>사과</td>
+        <td>7000</td>
+        <td>9</td>
+        <td>2022-07-05</td>
+        <td>
+          <input type="text" name="cart_3" class="jumunBunho" value="cart_003">
+        </td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>cart_002</td>
+        <td>파인애플</td>
+        <td>15000</td>
+        <td>5</td>
+        <td>2022-07-05</td>
+        <td>
+          <input type="text" name="cart_2" class="jumunBunho" value="cart_002">
+        </td>
+      </tr>
+      <tr>
+        <td>1</td>
+        <td>cart_001</td>
+        <td>복분자</td>
+        <td>30000</td>
+        <td>20</td>
+        <td>2022-07-05</td>
+        <td>
+          <input type="text" name="cart_1" class="jumunBunho" value="cart_001">
+        </td>
+      </tr>
+    </table>
+    <hr>
+    <input type="hidden" name="totalCounter" id="totalCounter" value="">
+    <button type="button" onclick="deleteCart();">장바구니 삭제</button>
+  </form>
+</body>
+
+</html>
+
+<script>
+  function deleteCart() {
+    const totalCounter = document.getElementsByClassName('jumunBunho').length;
+    document.getElementById('totalCounter').value = totalCounter;
+    // document.cartForm.totalCounter.value = totalCounter;
+
+    document.cartForm.action = "examCartProc.html";
+    document.cartForm.method = "post";
+    // document.cartForm.submit();
+  }
+</script>
