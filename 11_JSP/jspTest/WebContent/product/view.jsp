@@ -19,13 +19,13 @@
 		return;
 	}//end if
 	
-	String id = "";
-	String passwd = "";
-	String name = "";
-	String phone = "";
-	String email = "";
-	String address = "";
-	Date regiDate;
+	String productCode = "";
+	String productName = "";
+	int productPrice = 0;
+	String productContent = "";
+	String productCategory = "";
+	String vendor = "";
+	Date regiDate = null;
 	
 	Connection conn = null;
 	PreparedStatement pstmt = null;
@@ -37,17 +37,17 @@
 		conn = DriverManager.getConnection(dbUrl, dbId, dbPw);
 		System.out.println("오라클 접속 성공..");
 		//-------------------------------------------------------
-		String sql = "SELECT * FROM member WHERE id = ?";
+		String sql = "SELECT * FROM product WHERE productCode = ?";
 		pstmt = conn.prepareStatement(sql);
 		pstmt.setString(1, arg1);
 		rs = pstmt.executeQuery();
 		if (rs.next()) {
-			id = rs.getString("id");
-			passwd = rs.getString("passwd");
-			name = rs.getString("name");
-			phone = rs.getString("phone");
-			email = rs.getString("email");
-			address = rs.getString("address");
+			productCode = rs.getString("productCode");
+			productName = rs.getString("productName");
+			productPrice = rs.getInt("productPrice");
+			productContent = rs.getString("productContent");
+			productCategory = rs.getString("productCategory");
+			vendor = rs.getString("vendor");
 			regiDate = rs.getDate("regiDate");
 		}//end if
 		//-------------------------------------------------------
@@ -61,60 +61,66 @@
 		System.out.println("오라클 접속 해제..");
 	}//end try-catch-finally
 %>
-
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>회원삭제</title>
+<title>상품상세조회</title>
 </head>
 <body>
 	<table border="1" width="80%" align="center">
 		<tr>
 			<td height="100px" align="center">
 <!-- 		상단 메뉴 시작 -->
-<%@ include file ="../include/inc_menu.jsp" %>
+				<%@ include file ="../include/inc_menu.jsp" %>
 <!-- 		상단 메뉴 종료 -->
 			</td>
 		</tr>
 		<tr>
 			<td height="300px" align="center">
 <!-- 		본문 내용 시작 -->
-				<h2>회원정보수정</h2>
-				<form name="sakjeForm">
-				<input type="hidden" name="arg1" value="<%=id %>" />
-					<table border="1">
-						<tr>
-							<td>아이디</td>
-							<td><%=id %></td>
-						</tr>
-						<tr>
-							<td>비밀번호</td>
-							<td><input type="password"	name="passwd"></td>
-						</tr>
-						<tr>
-							<td>이름</td>
-							<td><%=name %></td>
-						</tr>
-						<tr>
-							<td>전화번호</td>
-							<td><%=phone %></td>
-						</tr>
-						<tr>
-							<td>이메일</td>
-							<td><%=email %></td>
-						</tr>
-						<tr>
-							<td>주소</td>
-							<td><%=address %></td>
-						</tr>
-						<tr>
-							<td colspan="2">
-							<button type="button" onClick="sakje();">삭제하기</button>
-							</td>
-						</tr>
-					</table>
-				</form>
+				<h2>상품상세조회</h2>
+				<table border="1" align="center" width="50%">
+					<tr>
+						<th>상품코드</th>
+						<td><%=productCode %></td>
+					</tr>
+					<tr>
+						<th>상품이름</th>
+						<td><%=productName %></td>
+					</tr>
+					<tr>
+						<th>상품가격</th>
+						<td><%=productPrice %></td>
+					</tr>
+					<tr>
+						<th>상품설명</th>
+						<td><%=productContent %></td>
+					</tr>
+					<tr>
+						<th>상품분류</th>
+						<td><%=productCategory %></td>
+					</tr>
+					<tr>
+						<th>제조사</th>
+						<td><%=vendor %></td>
+					</tr>
+					<tr>
+						<th>등록일</th>
+						<td><%=regiDate %></td>
+					</tr>
+				</table>
+				<div style="border: 0px solid blue; width: 50%; margin-top: 10px;" align="right">
+				|
+				<a href="#" onClick="move('list.jsp');">목록</a>
+				|
+				<a href="#" onClick="move('chuga.jsp');">등록</a>
+				|
+				<a href="#" onClick="move('sujung.jsp', '<%=arg1 %>');">수정</a>
+				|
+				<a href="#" onClick="move('sakje.jsp', '<%=arg1 %>');">삭제</a>
+				|
+				</div>
 <!-- 		본문 내용 종료 -->
 			</td>
 		</tr>
@@ -124,12 +130,14 @@
 			</td>
 		</tr>
 	</table>
-	<script>
-		function sakje() {
-			document.sakjeForm.action = "sakjeProc.jsp";
-			document.sakjeForm.method = "post";
-			document.sakjeForm.submit();
-		}//end join
+		<script>
+		function move(value1, value2) {
+			if (value2 != undefined) {
+				location.href = value1 + '?arg1=' + value2;
+			} else {
+				location.href = value1;
+			}//end if
+		}//end move
 	</script>
 </body>
 </html>

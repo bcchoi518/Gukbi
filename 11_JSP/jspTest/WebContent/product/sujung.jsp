@@ -1,9 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
+    
 <%@ page import="java.sql.Date"%>
-<%@ page import="java.sql.Connection" %>
 <%@ page import="java.sql.DriverManager" %>
+<%@ page import="java.sql.Connection" %>
 <%@ page import="java.sql.ResultSet" %>
 <%@ page import="java.sql.PreparedStatement" %> 
 
@@ -19,13 +19,13 @@
 		return;
 	}//end if
 	
-	String id = "";
-	String passwd = "";
-	String name = "";
-	String phone = "";
-	String email = "";
-	String address = "";
-	Date regiDate;
+	String productCode = "";
+	String productName = "";
+	int productPrice = 0;
+	String productContent = "";
+	String productCategory = "";
+	String vendor = "";
+	Date regiDate = null;
 	
 	Connection conn = null;
 	PreparedStatement pstmt = null;
@@ -37,17 +37,17 @@
 		conn = DriverManager.getConnection(dbUrl, dbId, dbPw);
 		System.out.println("오라클 접속 성공..");
 		//-------------------------------------------------------
-		String sql = "SELECT * FROM member WHERE id = ?";
+		String sql = "SELECT * FROM product WHERE productCode = ?";
 		pstmt = conn.prepareStatement(sql);
 		pstmt.setString(1, arg1);
 		rs = pstmt.executeQuery();
 		if (rs.next()) {
-			id = rs.getString("id");
-			passwd = rs.getString("passwd");
-			name = rs.getString("name");
-			phone = rs.getString("phone");
-			email = rs.getString("email");
-			address = rs.getString("address");
+			productCode = rs.getString("productCode");
+			productName = rs.getString("productName");
+			productPrice = rs.getInt("productPrice");
+			productContent = rs.getString("productContent");
+			productCategory = rs.getString("productCategory");
+			vendor = rs.getString("vendor");
 			regiDate = rs.getDate("regiDate");
 		}//end if
 		//-------------------------------------------------------
@@ -61,56 +61,51 @@
 		System.out.println("오라클 접속 해제..");
 	}//end try-catch-finally
 %>
-
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>회원삭제</title>
+<title>상품내용수정</title>
 </head>
 <body>
 	<table border="1" width="80%" align="center">
 		<tr>
 			<td height="100px" align="center">
 <!-- 		상단 메뉴 시작 -->
-<%@ include file ="../include/inc_menu.jsp" %>
+				<%@ include file ="../include/inc_menu.jsp" %>
 <!-- 		상단 메뉴 종료 -->
 			</td>
 		</tr>
 		<tr>
 			<td height="300px" align="center">
 <!-- 		본문 내용 시작 -->
-				<h2>회원정보수정</h2>
-				<form name="sakjeForm">
-				<input type="hidden" name="arg1" value="<%=id %>" />
-					<table border="1">
+				<h2>상품내용수정</h2>
+				<form name="sujungForm">
+					<input type="hidden" name="arg1" value="<%=productCode %>" />
+					<table border="1" align="center">
 						<tr>
-							<td>아이디</td>
-							<td><%=id %></td>
+							<th>상품이름</th>
+							<td><input type="text" name="productName" value="<%=productName %>"/></td>
 						</tr>
 						<tr>
-							<td>비밀번호</td>
-							<td><input type="password"	name="passwd"></td>
+							<th>상품가격</th>
+							<td><input type="text" name="productPrice" value="<%=productPrice %>"/></td>
 						</tr>
 						<tr>
-							<td>이름</td>
-							<td><%=name %></td>
+							<th>상품설명</th>
+							<td><textarea name="productContent" rows="3" cols="14" value="<%=productContent %>"></textarea></td>
 						</tr>
 						<tr>
-							<td>전화번호</td>
-							<td><%=phone %></td>
+							<th>상품분류</th>
+							<td><input type="text" name="productCategory" value="<%=productCategory %>"/></td>
 						</tr>
 						<tr>
-							<td>이메일</td>
-							<td><%=email %></td>
-						</tr>
-						<tr>
-							<td>주소</td>
-							<td><%=address %></td>
+							<th>제조사</th>
+							<td><input type="text" name="vendor" value="<%=vendor %>"/></td>
 						</tr>
 						<tr>
 							<td colspan="2">
-							<button type="button" onClick="sakje();">삭제하기</button>
+								<button type="button" onClick="sujung();">수정하기</button>
 							</td>
 						</tr>
 					</table>
@@ -125,11 +120,11 @@
 		</tr>
 	</table>
 	<script>
-		function sakje() {
-			document.sakjeForm.action = "sakjeProc.jsp";
-			document.sakjeForm.method = "post";
-			document.sakjeForm.submit();
-		}//end join
+		function sujung() {
+			document.insertForm.action = "sujungProc.jsp";
+			document.insertForm.method = "post";
+			document.insertForm.submit();
+		}//end move
 	</script>
 </body>
 </html>
