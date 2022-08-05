@@ -1,7 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
+<%@ include file = "_inc_top.jsp" %>
+
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
 <meta charset="UTF-8">
 <title>상품등록</title>
@@ -19,7 +22,7 @@
 			<td height="300px" align="center">
 <!-- 		본문 내용 시작 -->
 				<h2>상품등록</h2>
-				<form name="insertForm">
+				<form name="chugaForm">
 					<table border="1" align="center">
 						<tr>
 							<th>상품이름</th>
@@ -30,8 +33,8 @@
 							<td><input type="text" name="productPrice" /></td>
 						</tr>
 						<tr>
-							<th>상품설명</th>
-							<td><textarea name="productContent" rows="3" cols="14"></textarea></td>
+							<th>상품내용</th>
+							<td><textarea name="productContent" rows="3" cols="14" style="width:300px; height:100px;"></textarea></td>
 						</tr>
 						<tr>
 							<th>상품분류</th>
@@ -59,9 +62,9 @@
 	</table>
 	<script>
 		function insert() {
-			document.insertForm.action = "chugaProc.jsp";
-			document.insertForm.method = "post";
-			document.insertForm.submit();
+			document.chugaForm.action = "chugaProc.jsp";
+			document.chugaForm.method = "post";
+			document.chugaForm.submit();
 		}//end move
 	</script>
 </body>

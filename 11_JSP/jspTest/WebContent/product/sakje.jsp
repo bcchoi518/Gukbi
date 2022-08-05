@@ -1,17 +1,17 @@
+<%@page import="java.sql.DriverManager"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
-<%@ page import="java.sql.Date"%>
-<%@ page import="java.sql.Connection" %>
-<%@ page import="java.sql.DriverManager" %>
-<%@ page import="java.sql.ResultSet" %>
-<%@ page import="java.sql.PreparedStatement" %> 
+<%@page import="java.sql.Connection"%>
+<%@page import="java.sql.PreparedStatement"%>
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.sql.Date"%>
 
 <%@ include file = "../include/inc_dbInfo.jsp" %>
 <%@ include file = "_inc_top.jsp" %>
 
 <%
-	request.setCharacterEncoding("UTF-8");	
+	request.setCharacterEncoding("UTF-8");
 
 	String arg1_ = request.getParameter("arg1");
 	if (arg1_ == null || arg1_.trim().equals("")) {
@@ -35,7 +35,6 @@
 	PreparedStatement pstmt = null;
 	ResultSet rs = null;
 	
-	int result = 0;
 	try {
 		Class.forName(dbDriver);
 		conn = DriverManager.getConnection(dbUrl, dbId, dbPw);
@@ -54,23 +53,22 @@
 			vendor = rs.getString("vendor");
 			regiDate = rs.getDate("regiDate");
 		}//end if
-		//-------------------------------------------------------
 	} catch (Exception e) {
-	//	e.printStackTrace();
-		System.out.println("오라클 접속 실패..");
-	} finally {
-		if (rs != null) { rs.close(); }
-		if (pstmt != null) { pstmt.close(); }
-		if (conn != null) { conn.close(); }
-		System.out.println("오라클 접속 해제..");
-	}//end try-catch-finally
+		//	e.printStackTrace();
+			System.out.println("오라클 접속 실패..");
+		} finally {
+			if (rs != null) { rs.close(); }
+			if (pstmt != null) { pstmt.close(); }
+			if (conn != null) { conn.close(); }
+			System.out.println("오라클 접속 해제..");
+		}//end try-catch-finally
 	productContent = productContent.replace("\n", "<br>");
 %>
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
 <meta charset="UTF-8">
-<title>상품상세조회</title>
+<title>상품삭제</title>
 </head>
 <body>
 	<table border="1" width="80%" align="center">
@@ -84,48 +82,45 @@
 		<tr>
 			<td height="300px" align="center">
 <!-- 		본문 내용 시작 -->
-				<h2>상품상세조회</h2>
-				<table border="1" align="center" width="50%">
-					<tr>
-						<th>상품코드</th>
-						<td><%=productCode %></td>
-					</tr>
-					<tr>
-						<th>상품이름</th>
-						<td><%=productName %></td>
-					</tr>
-					<tr>
-						<th>상품가격</th>
-						<td><%=productPrice %></td>
-					</tr>
-					<tr>
-						<th>상품내용</th>
-						<td><%=productContent %></td>
-					</tr>
-					<tr>
-						<th>상품분류</th>
-						<td><%=productCategory %></td>
-					</tr>
-					<tr>
-						<th>제조사</th>
-						<td><%=vendor %></td>
-					</tr>
-					<tr>
-						<th>등록일</th>
-						<td><%=regiDate %></td>
-					</tr>
-				</table>
-				<div style="border: 0px solid blue; width: 50%; margin-top: 10px;" align="right">
-				|
-				<a href="#" onClick="move('list.jsp');">목록</a>
-				|
-				<a href="#" onClick="move('chuga.jsp');">등록</a>
-				|
-				<a href="#" onClick="move('sujung.jsp', '<%=arg1 %>');">수정</a>
-				|
-				<a href="#" onClick="move('sakje.jsp', '<%=arg1 %>');">삭제</a>
-				|
-				</div>
+				<h2>상품삭제</h2>
+				<form name="sakjeForm">
+					<input type="hidden" name="arg1" value="<%=productCode %>" />
+					<table border="1" align="center" width="50%">
+						<tr>
+							<th>상품코드</th>
+							<td><%=productCode %></td>
+						</tr>
+						<tr>
+							<th>상품이름</th>
+							<td><%=productName %></td>
+						</tr>
+						<tr>
+							<th>상품가격</th>
+							<td><%=productPrice %></td>
+						</tr>
+						<tr>
+							<th>상품내용</th>
+							<td><%=productContent %></td>
+						</tr>
+						<tr>
+							<th>상품분류</th>
+							<td><%=productCategory %></td>
+						</tr>
+						<tr>
+							<th>제조사</th>
+							<td><%=vendor %></td>
+						</tr>
+						<tr>
+							<th>등록일</th>
+							<td><%=regiDate %></td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<button type="button" onClick="sakje();">삭제하기</button>
+							</td>
+						</tr>
+					</table>
+				</form>
 <!-- 		본문 내용 종료 -->
 			</td>
 		</tr>
@@ -135,14 +130,12 @@
 			</td>
 		</tr>
 	</table>
-		<script>
-		function move(value1, value2) {
-			if (value2 != undefined) {
-				location.href = value1 + '?arg1=' + value2;
-			} else {
-				location.href = value1;
-			}//end if
-		}//end move
+	<script>
+		function sakje() {
+			document.sakjeForm.action = 'sakjeProc.jsp';
+			document.sakjeForm.method = 'post';
+			document.sakjeForm.submit();
+		}//end sakje
 	</script>
 </body>
 </html>

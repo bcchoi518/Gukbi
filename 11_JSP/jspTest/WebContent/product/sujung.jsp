@@ -8,16 +8,20 @@
 <%@ page import="java.sql.PreparedStatement" %> 
 
 <%@ include file = "../include/inc_dbInfo.jsp" %>
+<%@ include file = "_inc_top.jsp" %>
 
 <%
-	String arg1 = request.getParameter("arg1");
-	if (arg1 == null || arg1.trim().equals("")) {
+	request.setCharacterEncoding("UTF-8");
+
+	String arg1_ = request.getParameter("arg1");
+	if (arg1_ == null || arg1_.trim().equals("")) {
 		out.println("<script>");
 		out.println("alert('정상적인 접속이 아닙니다.');");
 		out.println("location.href='list.jsp';");
 		out.println("</script>");
 		return;
 	}//end if
+	int arg1 = Integer.parseInt(arg1_);
 	
 	String productCode = "";
 	String productName = "";
@@ -39,7 +43,7 @@
 		//-------------------------------------------------------
 		String sql = "SELECT * FROM product WHERE productCode = ?";
 		pstmt = conn.prepareStatement(sql);
-		pstmt.setString(1, arg1);
+		pstmt.setInt(1, arg1);
 		rs = pstmt.executeQuery();
 		if (rs.next()) {
 			productCode = rs.getString("productCode");
@@ -62,10 +66,10 @@
 	}//end try-catch-finally
 %>
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
 <meta charset="UTF-8">
-<title>상품내용수정</title>
+<title>상품정보수정</title>
 </head>
 <body>
 	<table border="1" width="80%" align="center">
@@ -79,7 +83,7 @@
 		<tr>
 			<td height="300px" align="center">
 <!-- 		본문 내용 시작 -->
-				<h2>상품내용수정</h2>
+				<h2>상품정보수정</h2>
 				<form name="sujungForm">
 					<input type="hidden" name="arg1" value="<%=productCode %>" />
 					<table border="1" align="center">
@@ -92,8 +96,8 @@
 							<td><input type="text" name="productPrice" value="<%=productPrice %>"/></td>
 						</tr>
 						<tr>
-							<th>상품설명</th>
-							<td><textarea name="productContent" rows="3" cols="14" value="<%=productContent %>"></textarea></td>
+							<th>상품내용</th>
+							<td><textarea name="productContent" style="width: 300px; height: 100px;"><%=productContent %></textarea></td>
 						</tr>
 						<tr>
 							<th>상품분류</th>
@@ -121,9 +125,9 @@
 	</table>
 	<script>
 		function sujung() {
-			document.insertForm.action = "sujungProc.jsp";
-			document.insertForm.method = "post";
-			document.insertForm.submit();
+			document.sujungForm.action = "sujungProc.jsp";
+			document.sujungForm.method = "post";
+			document.sujungForm.submit();
 		}//end move
 	</script>
 </body>

@@ -9,6 +9,7 @@
 <%@ page import="java.sql.PreparedStatement" %>
 
 <%@ include file = "../include/inc_dbInfo.jsp" %>
+<%@ include file = "_inc_top.jsp" %>
 
 <%
 	Connection conn = null;
