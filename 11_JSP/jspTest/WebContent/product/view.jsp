@@ -14,13 +14,20 @@
 	request.setCharacterEncoding("UTF-8");	
 
 	String arg1_ = request.getParameter("arg1");
-	if (arg1_ == null || arg1_.trim().equals("")) {
+	
+	String tmp = arg1_;
+	for (int i = 0; i < 10; i++) {
+		tmp = tmp.replace(i + "", "");
+	}//end for
+	
+	if (arg1_ == null || arg1_.trim().equals("") || tmp.length() > 0) {
 		out.println("<script>");
 		out.println("alert('정상적인 접속이 아닙니다.');");
 		out.println("location.href='list.jsp';");
 		out.println("</script>");
 		return;
 	}//end if
+	
 	int arg1 = Integer.parseInt(arg1_);
 	
 	int productCode = 0;

@@ -5,51 +5,64 @@
 	String path = request.getContextPath();
 	String url = request.getRequestURL().toString();
 	String uri = request.getRequestURI().toString();
+	String menuGubun = request.getParameter("menuGubun");
 	
-	String[] pgNameArray = url.split("/");
-	String pgName = pgNameArray[pgNameArray.length - 2];
+	String pgName = "";
+	if (menuGubun == null) {
+		String[] pgNameArray = url.split("/");
+		pgName = pgNameArray[pgNameArray.length - 2];
+	} else {
+		String[] menuGubunArray = menuGubun.split("_");
+		pgName = menuGubunArray[0];
+	}//end if
+	
 %>
 
 |
 <a href = "<%=path %>">Home</a>
 |
 <a href = "../member/list.jsp">
-<%
-	if (pgName.equals("member")) {
-%>
+<%	if (pgName.equals("member")) {	%>
 	<font style="color: red; font-weight: bold;">회원관리</font>
-<%
-	} else {
+<%	} else {
 		out.println("회원관리");
 	}//end if
 %>
 </a>
 |
 <a href = "../product/list.jsp">
-<%
-	if (pgName.equals("product")) {
-%>
+<%	if (pgName.equals("product")) {	%>
 	<font style="color: red; font-weight: bold;">상품관리</font>
-<%
-	} else {
+<%	} else {
 		out.println("상품관리");
 	}//end if
 %>
 </a>
 |
 <a href = "../useBean/chuga.jsp">
-<%
-	if (pgName.equals("useBean")) {
-%>
+<%	if (pgName.equals("useBean")) {	%>
 	<font style="color: red; font-weight: bold;">useBean</font>
-<%
-	} else {
+<%	} else {
 		out.println("useBean");
 	}//end if
 %>
 </a>
 |
-<a href = "../main/main.jsp?menuGubun=member2_list">회원관리2</a>
+<a href = "../main/main.jsp?menuGubun=member2_list">
+<%	if (pgName.equals("member2")) {	%>
+	<font style="color: red; font-weight: bold;">회원관리2</font>
+<%	} else {
+		out.println("회원관리2");
+	}//end if
+%>
+</a>
 |
-<a href = "../main/main.jsp?menuGubun=product2_list">상품관리2</a>
+<a href = "../main/main.jsp?menuGubun=product2_list">
+<%	if (pgName.equals("product2")) { %>
+	<font style="color: red; font-weight: bold;">상품관리2</font>
+<%	} else {
+		out.println("상품관리");
+	}//end if
+%>
+</a>
 |

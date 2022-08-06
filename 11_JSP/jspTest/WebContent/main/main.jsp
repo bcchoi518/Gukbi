@@ -2,13 +2,22 @@
     pageEncoding="UTF-8"%>
 <%
 	String menuGubun = request.getParameter("menuGubun");
+
+	if (menuGubun == null || menuGubun.trim().equals("")) {
+		out.println("<script>");
+		out.println("alert('정상적인 접속이 아닙니다.')");
+		out.println("location.href='../main/main.jsp?menuGubun=product2_list';");
+		out.println("</script>");
+		return;
+	}//end if
 %>
     
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>main</title>
+	<meta charset="UTF-8">
+	<title>main</title>
+	<script type="text/javascript" src="../product2/_script.js"></script>
 </head>
 <body>
 	<table border="1" width="80%" align="center">
