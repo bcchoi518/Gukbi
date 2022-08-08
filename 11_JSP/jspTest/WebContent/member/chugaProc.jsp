@@ -22,7 +22,7 @@
 // 		out.print("아이디 비정상..");
 // 		response.sendRedirect("chuga.jsp"); //페이지 이동
 		out.println("<script>");
-		out.println("alert('비밀번호를 입력하지 않았습니다.');");
+		out.println("alert('아이디를 입력하지 않았습니다.');");
 		out.println("location.href='chuga.jsp';");
 		out.println("</script>");
 %>

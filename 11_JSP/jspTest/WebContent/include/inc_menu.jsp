@@ -61,8 +61,16 @@
 <%	if (pgName.equals("product2")) { %>
 	<font style="color: red; font-weight: bold;">상품관리2</font>
 <%	} else {
-		out.println("상품관리");
+		out.println("상품관리2");
 	}//end if
 %>
 </a>
 |
+<a href = "../main/main.jsp?menuGubun=memberFile_list">
+<%	if (pgName.equals("memberFile")) {	%>
+	<font style="color: red; font-weight: bold;">회원관리(File)</font>
+<%	} else {
+		out.println("회원관리(File)");
+	}//end if
+%>
+</a>

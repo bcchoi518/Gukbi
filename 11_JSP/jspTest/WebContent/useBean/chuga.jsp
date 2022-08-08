@@ -1,6 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
+
+<%
+	String actionPage = "";
+// 	actionPage = "chugaProcUseBean.jsp";
+	actionPage = "chugaProcDto.jsp";
+%>
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -20,7 +26,7 @@
 			<td height="300px" align="center">
 <%--	본문 내용 시작	--%>
 				<h2>Test useBean</h2>
-				<form name="form" method="post" action="chugaProcUseBean.jsp">
+				<form name="form" method="post" action="<%=actionPage %>">
 				<table border="1" width="80%">
 					<tr>
 						<td>반장</td>
