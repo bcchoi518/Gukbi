@@ -3,12 +3,15 @@
     
 <%@ page import="memberBasic.MemberBasicDAO"%>
 <%@ page import="memberBasic.MemberBasicDTO"%>
-<%@ page import="java.util.ArrayList"%>
-    
+
 <%
+	request.setCharacterEncoding("UTF-8");
+	String arg1 = request.getParameter("arg1");
+	
 	MemberBasicDAO dao = new MemberBasicDAO();
-	ArrayList<MemberBasicDTO> list = new ArrayList<>();
-	list = dao.getSelectAll();
+	MemberBasicDTO dto = new MemberBasicDTO();
+	dto.setId(arg1);
+	dto = dao.getSelectOne(dto);
 %>
 <!DOCTYPE html>
 <html>
@@ -26,37 +29,42 @@
 		<tr>
 			<td height="300px" align="center">
 <!-- 본문 내용 시작 -->
-				<h2>회원목록</h2>
+				<h2>회원상세보기</h2>
 				<table border="1" width="70%">
 					<tr>
-						<th>순번</th>
 						<th>아이디</th>
-						<th>이름</th>
-						<th>연락처</th>
-						<th>이메일</th>
-						<th>등록일</th>
+						<td><%=dto.getId() %></td>
 					</tr>
-					<%
-						int totalCount = list.size(); 
-						for (MemberBasicDTO dto : list) {
-					%>
-						<tr>
-							<td><%=totalCount-- %></td>
-							<td><a href="#" onClick="move('view', '<%=dto.getId() %>')"><%=dto.getId() %></a></td>
-							<td><%=dto.getName() %></td>
-							<td><%=dto.getPhone() %></td>
-							<td><%=dto.getEmail() %></td>
-							<td><%=dto.getRegiDate() %></td>
-						</tr>
-					<%		
-						}//for
-					%>
+					<tr>
+						<th>이름</th>
+						<td><%=dto.getName() %></td>
+					</tr>
+					<tr>
+						<th>연락처</th>
+						<td><%=dto.getPhone() %></td>
+					</tr>
+					<tr>
+						<th>이메일</th>
+						<td><%=dto.getEmail() %></td>
+					</tr>
+					<tr>
+						<th>주민번호</th>
+						<td><%=dto.getJumin() %></td>
+					</tr>
+					<tr>
+						<th>주소</th>
+						<td><%="(" + dto.getJuso1() + ") " + dto.getJuso2() + " " + dto.getJuso3() + " " + dto.getJuso4()  %></td>
+					</tr>
 				</table>
 				<div style="width:70%; text-align:right; margin-top:10px;">
 				|
 				<a href="#" onClick="move('list')">목록</a>
 				|
 				<a href="#" onClick="move('chuga')">등록</a>
+				|
+				<a href="#" onClick="move('sujung','<%=arg1 %>')">수정</a>
+				|
+				<a href="#" onClick="move('sakje','<%=arg1 %>')">삭제</a>
 				|
 				</div>
 <!-- 본문 내용 끝 -->

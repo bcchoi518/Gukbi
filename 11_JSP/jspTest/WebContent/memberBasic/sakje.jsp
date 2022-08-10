@@ -1,5 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
+<%@ page import="memberBasic.MemberBasicDAO"%>
+<%@ page import="memberBasic.MemberBasicDTO"%>
+
+<%
+	request.setCharacterEncoding("UTF-8");
+	String arg1 = request.getParameter("arg1");
+	
+	MemberBasicDAO dao = new MemberBasicDAO();
+	MemberBasicDTO dto = new MemberBasicDTO();
+	dto.setId(arg1);
+	dto = dao.getSelectOne(dto);
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,59 +29,44 @@
 		<tr>
 			<td height="300px" align="center">
 <!-- 본문 내용 시작 -->
-				<h2>회원등록</h2>
-				<form name="chugaForm">
+				<h2>회원수정</h2>
+				<form name="sakjeForm">
+					<input type="hidden" name="arg1" value="<%=arg1 %>"/>
 					<table border="1">
 						<tr>
 							<th>아이디</th>
-							<td><input type="text" name="id" /></td>
+							<td><%=dto.getId() %></td>
 						</tr>
 						<tr>
 							<th>비밀번호</th>
 							<td><input type="password" name="passwd" /></td>
 						</tr>
 						<tr>
-							<th>비밀번호확인</th>
-							<td><input type="password" name="passwdChk" /></td>
-						</tr>
-						<tr>
 							<th>이름</th>
-							<td><input type="text" name="name" /></td>
+							<td><%=dto.getName() %></td>
 						</tr>
 						<tr>
 							<th>연락처</th>
-							<td><input type="text" name="phone" /></td>
+							<td><%=dto.getPhone() %></td>
 						</tr>
 						<tr>
 							<th>이메일</th>
-							<td><input type="text" name="email" /></td>
+							<td><%=dto.getEmail() %></td>
 						</tr>
 						<tr>
 							<th>주민번호</th>
 							<td>
-								<input type="text" name="jumin1" style="width:60px"/> 
+								<%=dto.getJumin().substring(0, 6)%> 
 								-
-								<input type="text" name="jumin2" style="width:60px"/>
+								<%=dto.getJumin().substring(6)%>
 							</td>
 						</tr>
 						<tr>
-							<th rowspan="3">주소</th>
-							<td>
-								<input type="text" name="juso1" id="sample6_postcode" placeholder="우편번호">
-								<button type="button" onclick="sample6_execDaumPostcode()">우편번호 찾기</button>
-						<tr>
-							<td>
-								<input type="text" name="juso2" id="sample6_address" placeholder="주소">
-							</td>
+							<th>주소</th>
+							<td><%="(" + dto.getJuso1() + ") " + dto.getJuso2() + " " + dto.getJuso3() + " " + dto.getJuso4()  %></td>
 						</tr>
 						<tr>
-							<td>
-								<input type="text" name="juso3" id="sample6_detailAddress" placeholder="상세주소">
-								<input type="text" name="juso4" id="sample6_extraAddress" placeholder="참고항목">
-							</td>
-						</tr>
-						<tr>
-							<td colspan="2"><button type="button" onClick="chuga()">가입하기</button></td>
+							<td colspan="2"><button type="button" onClick="sakje()">삭제하기</button></td>
 						</tr>
 					</table>
 				</form>
@@ -81,13 +79,13 @@
 		</tr>
 	</table>
 	<script>
-		function chuga() {
-			if (confirm('저장하시겠습니까?')) {
-				document.chugaForm.action = 'chugaProc.jsp';
-				document.chugaForm.method = 'post';
-				document.chugaForm.submit();
+		function sakje() {
+			if (confirm('삭제하시겠습니까?')) {
+				document.sakjeForm.action = 'sakjeProc.jsp';
+				document.sakjeForm.method = 'post';
+				document.sakjeForm.submit();
 			}//if
-		}//chuga
+		}//sakje
 	</script>
 	
 	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>

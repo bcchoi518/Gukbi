@@ -15,7 +15,9 @@
 		</tr>
 		<tr>
 			<td height="300px" align="center">
+<!-- 본문 내용 시작 -->
 				본문내용
+<!-- 본문 내용 끝 -->
 			</td>
 		<tr>
 			<td height="100px" align="center">
@@ -52,11 +54,11 @@
 		<tr>
 			<th>주소</th>
 			<td>
-				<input type="text" name="post_1" id="sample6_postcode" placeholder="우편번호">
-				<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
-				<input type="text" name="post_2" id="sample6_address" placeholder="주소"><br>
-				<input type="text" name="post_3" id="sample6_detailAddress" placeholder="상세주소">
-				<input type="text" name="post_4" id="sample6_extraAddress" placeholder="참고항목">
+				<input type="text" name="post_1" placeholder="우편번호">
+				<input type="button" onclick="post()" value="우편번호 찾기"><br>
+				<input type="text" name="post_2" placeholder="주소"><br>
+				<input type="text" name="post_3" placeholder="상세주소">
+				<input type="text" name="post_4" placeholder="참고항목">
 			</td>
 		</tr>
 		<tr>
