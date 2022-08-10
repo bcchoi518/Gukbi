@@ -3,12 +3,14 @@
 
 <%@ page import="java.nio.file.Paths"%>
 <%@ page import="java.nio.file.Files"%>
-<%@page import="java.util.List"%>
+<%@ page import="java.util.List"%>
+
+<%@ page import="config.Constants"%>
 
 <%@ include file = "../include/inc_dbInfo.jsp" %>
 
 <%
-	String attachPath = "D:/Developement/attach";
+	String attachPath = Constants.ATTACH_PATH;
 	String uploadPath = attachPath + request.getContextPath();
 	String uploadFile = uploadPath + "/member.txt";
 	List<String> list = Files.readAllLines(Paths.get(uploadFile));

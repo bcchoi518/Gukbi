@@ -6,6 +6,8 @@
 <%@ page import="java.io.FileWriter"%>
 <%@ page import="java.util.List"%>
 
+<%@ page import="config.Constants"%>
+
 <%
 	request.setCharacterEncoding("UTF-8");
 	
@@ -40,7 +42,7 @@
 		return;
 	}//end if
 	
-	String attachPath = "D:/Developement/attach";
+	String attachPath = Constants.ATTACH_PATH;
 	String uploadPath = attachPath + request.getContextPath();
 	String uploadFile = uploadPath + "/member.txt";
 	List<String> list = Files.readAllLines(Paths.get(uploadFile));

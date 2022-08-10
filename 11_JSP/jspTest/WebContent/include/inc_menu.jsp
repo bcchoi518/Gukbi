@@ -74,3 +74,7 @@
 	}//end if
 %>
 </a>
+|
+<%-- <a href = "../main/main.jsp?menuGubun=memberBasic_list"> --%>
+<a href = "../memberBasic/list.jsp">회원관리(Basic)</a>
+|

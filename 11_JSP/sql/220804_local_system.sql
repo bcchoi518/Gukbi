@@ -1,12 +1,8 @@
-create user jspTest identified by 1234
-default tablespace jspTest;
+CREATE TABLESPACE jspTest
+DATAFILE 'C:/cbc/oradata/jspTest.dbf'
+SIZE 50m AUTOEXTEND ON NEXT 10m MAXSIZE UNLIMITED;
 
+CREATE USER jspTest IDENTIFIED BY 1234
+DEFAULT TABLESPACE jspTest;
 
-grant connect, resource to jspTest;
-
-
-create tablespace jspTest
-datafile 'D:/Developement/oradata/jspTest.dbf' size 50m 
-AUTOEXTEND on 
-next 10m 
-maxsize unlimited;   
+GRANT CONNECT, RESOURCE TO jspTest;

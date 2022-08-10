@@ -5,6 +5,8 @@
 <%@ page import="java.io.FileWriter"%>
 <%@ page import="java.time.LocalDateTime"%>
 
+<%@ page import="config.Constants"%>
+
 <%
 	request.setCharacterEncoding("UTF-8");
 	
@@ -84,7 +86,7 @@
 	data += address + ",";
 	data += regiDate + "\n";
 	
-	String attachPath = "D:/Developement/attach";
+	String attachPath = Constants.ATTACH_PATH;
 	String uploadPath = attachPath + request.getContextPath();
 	String uploadFile = uploadPath + "/member.txt";
 	

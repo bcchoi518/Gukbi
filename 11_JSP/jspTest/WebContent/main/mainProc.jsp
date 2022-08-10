@@ -16,4 +16,5 @@
 	
 	String includePage = "../" + menuGubun.replace("_", "/") + ".jsp";
 %>
-<jsp:include page="<%=includePage %>" flush="true"></jsp:include>
+
+	<jsp:include page="<%=includePage %>" flush="true"></jsp:include>
