@@ -15,9 +15,9 @@
 			</td>
 		</tr>
 		<tr>
-			<td height="300px" align="center">
+			<td align="center" style="padding-bottom: 20px">
 <!-- 본문 내용 시작 -->
-				<jsp:include page="sakje_sub.jsp"></jsp:include>
+				<jsp:include page="sujung_sub.jsp"></jsp:include>
 <!-- 본문 내용 끝 -->
 			</td>
 		<tr>

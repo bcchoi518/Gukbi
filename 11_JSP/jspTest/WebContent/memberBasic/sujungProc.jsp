@@ -6,28 +6,43 @@
 
 <%
 	request.setCharacterEncoding("UTF-8");
-	String arg1 = request.getParameter("arg1");
+	String no_ = request.getParameter("no");
+
+	int failCounter = 0;
+	if (no_ == null || no_.trim().equals("")) {
+		failCounter++;
+	}//if
+	
+	int no = 0;
+	try {
+		no = Integer.parseInt(no_);
+	} catch (Exception e) {
+// 		e.printStackTrace();
+		no = 0;
+		failCounter++;
+	}//try-catch
+	
+	if (failCounter > 0) {
+		out.println("<script>");
+		out.println("alert('정상적인 접속이 아닙니다.');");
+		out.println("location.href='list.jsp';");
+		out.println("</script>");
+		return;
+	}//if
 	
 	String passwd = request.getParameter("passwd");
 	String phone = request.getParameter("phone");
 	String email = request.getParameter("email");
-	String jumin1 = request.getParameter("jumin1");
-	String jumin2 = request.getParameter("jumin2");
-	String juso1 = request.getParameter("juso1");
-	String juso2 = request.getParameter("juso2");
-	String juso3 = request.getParameter("juso3");
-	String juso4 = request.getParameter("juso4");
+	String juso1 = request.getParameter("post1");
+	String juso2 = request.getParameter("post2");
+	String juso3 = request.getParameter("post3");
+	String juso4 = request.getParameter("post4");
 	
-	int failCounter = 0;
 	if (passwd == null || passwd.trim().equals("")) {
 		failCounter++;
 	} else if (phone == null || phone.trim().equals("")) {
 		failCounter++;
 	} else if (email == null || email.trim().equals("")) {
-		failCounter++;
-	} else if (jumin1 == null || jumin1.trim().equals("")) {
-		failCounter++;
-	} else if (jumin2 == null || jumin2.trim().equals("")) {
 		failCounter++;
 	} else if (juso1 == null || juso1.trim().equals("")) {
 		failCounter++;
@@ -36,43 +51,36 @@
 	} else if (juso3 == null || juso3.trim().equals("")) {
 		failCounter++;
 	} else if (juso4 == null || juso4.trim().equals("")) {
-		juso4 = "";
-	}//if
-	
-	if (jumin1.trim().length() != 6 || jumin2.trim().length() != 7) {
-		failCounter++;
+		juso4 = "-";
 	}//if
 	
 	if (failCounter > 0) {
 		out.println("<script>");
 		out.println("alert('입력한 값이 정확하지 않습니다.');");
-		out.println("location.href='sujung.jsp?arg1=" + arg1 + "';");
+		out.println("location.href='sujung.jsp?no=" + no + "';");
 		out.println("</script>");
 		return;
 	}//if
 	
-	String jumin = jumin1 + jumin2;
-	
 	MemberBasicDAO dao = new MemberBasicDAO();
-	MemberBasicDTO dto = new MemberBasicDTO();
+	MemberBasicDTO arguDto = new MemberBasicDTO();
 	
-	dto.setId(arg1);
-	dto.setPasswd(passwd);
-	dto.setPhone(phone);
-	dto.setEmail(email);
-	dto.setJumin(jumin);
-	dto.setJuso1(juso1);
-	dto.setJuso2(juso2);
-	dto.setJuso3(juso3);
-	dto.setJuso4(juso4);
+	arguDto.setNo(no);
+	arguDto.setPasswd(passwd);
+	arguDto.setPhone(phone);
+	arguDto.setEmail(email);
+	arguDto.setJuso1(juso1);
+	arguDto.setJuso2(juso2);
+	arguDto.setJuso3(juso3);
+	arguDto.setJuso4(juso4);
 	
-	int result = dao.setUpdate(dto);
+	int result = dao.setUpdate(arguDto);
 	
-	String ment = "수정 중 오류가 발생했습니다.";
-	String moveUrl = "sujung.jsp?arg1=" + arg1;
+	String ment = "수정 처리중 오류가 발생했습니다.";
+	String moveUrl = "sujung.jsp?no=" + no;
 	if (result > 0) {
 		ment = "정상적으로 수정되었습니다.";
-		moveUrl = "view.jsp?arg1=" + arg1;
+		moveUrl = "view.jsp?no=" + no;
 	}//if
 	
 	out.println("<script>");

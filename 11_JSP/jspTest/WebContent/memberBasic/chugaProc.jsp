@@ -44,7 +44,7 @@
 	} else if (juso3 == null || juso3.trim().equals("")) {
 		failCounter++;
 	} else if (juso4 == null || juso4.trim().equals("")) {
-		juso4 = "";
+		juso4 = "-";
 	}//if
 	
 	if (!passwd.equals(passwdChk)) {
@@ -78,7 +78,7 @@
 	MemberBasicDAO dao = new MemberBasicDAO();
 	int result = dao.setInsert(dto);
 	
-	String ment = "등록 중 오류가 발생했습니다.";
+	String ment = "등록 처리중 오류가 발생했습니다.";
 	String moveUrl = "chuga.jsp";
 	if (result > 0) {
 		ment = "정상적으로 등록되었습니다.";
