@@ -78,5 +78,11 @@
 <%-- <a href = "../main/main.jsp?menuGubun=memberBasic_list"> --%>
 <a href = "../memberBasic/list.jsp">회원관리(Basic)</a>
 |
-<a href = "../book/list.jsp">도서관리</a>
+<a href = "../book/list.jsp">도서관리(Book)</a>
+|
+<a href = "../bookAuthor/list.jsp">저자관리(Book)</a>
+|
+<a href = "../bookProfile/list.jsp">분류관리(Book)</a>
+|
+<a href = "../bookInfo/list.jsp">도서정보관리(Book)</a>
 |

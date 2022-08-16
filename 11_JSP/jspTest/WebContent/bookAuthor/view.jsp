@@ -16,7 +16,7 @@
 		<tr>
 			<td align="center" style="padding-bottom: 30px">
 <!-- 본문 내용 시작 -->
-				본문내용
+				뷰
 <!-- 본문 내용 끝 -->
 			</td>
 		<tr>
