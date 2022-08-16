@@ -8,10 +8,10 @@
 	String infoNo_ = request.getParameter("infoNo");
 	int infoNo = Integer.parseInt(infoNo_);
 	
-	BookInfoDAO dao = new BookInfoDAO();
+	BookInfoDAO infoDao = new BookInfoDAO();
 	BookInfoDTO infoArguDto = new BookInfoDTO();
 	infoArguDto.setInfoNo(infoNo);
-	BookInfoDTO infoResultDto = dao.getSelectOne(infoArguDto);
+	BookInfoDTO infoResultDto = infoDao.getSelectOne(infoArguDto);
 %>
 
 <h2>도서정보삭제</h2>

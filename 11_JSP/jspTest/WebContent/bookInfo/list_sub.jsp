@@ -7,9 +7,9 @@
 <%@page import="bookInfo.model.dto.BookInfoDTO"%>
 
 <%
-	BookInfoDAO dao = new BookInfoDAO();
-	ArrayList<BookInfoDTO> list = dao.getSelectAll();
-	int totalRecode = list.size();
+	BookInfoDAO infoDao = new BookInfoDAO();
+	ArrayList<BookInfoDTO> infoList = infoDao.getSelectAll();
+	int totalRecode = infoList.size();
 %>
 
 <h2>도서정보목록</h2>
@@ -28,14 +28,14 @@
 				<td colspan="6" height="200px" align="center">등록된 내용이 없습니다.</td>
 			</tr>
 	<% }//if %>
-	<% for (BookInfoDTO resultDto : list) {	%>
+	<% for (BookInfoDTO infoResultDto : infoList) {	%>
 		<tr>
 			<td><%=totalRecode-- %></td>
-			<td><a href="#" onClick="move('view.jsp','<%=resultDto.getInfoNo() %>')"><%=resultDto.getSubject() %></a></td>
-			<td><%=resultDto.getCreated() %></td>
-			<td><%=resultDto.getAuthor() %></td>
-			<td><%=resultDto.getProfile() %></td>
-			<td><%=resultDto.getRegiDate() %></td>
+			<td><a href="#" onClick="move('view.jsp','<%=infoResultDto.getInfoNo() %>')"><%=infoResultDto.getSubject() %></a></td>
+			<td><%=infoResultDto.getCreated() %></td>
+			<td><%=infoResultDto.getAuthor() %></td>
+			<td><%=infoResultDto.getProfile() %></td>
+			<td><%=infoResultDto.getRegiDate() %></td>
 		</tr>
 	<% }//for %>
 </table>

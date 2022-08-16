@@ -26,8 +26,9 @@
 	infoArguDto.setAuthorNo(authorNo);
 	infoArguDto.setCreated(created);
 	infoArguDto.setProfileNo(profileNo);
-	BookInfoDAO dao = new BookInfoDAO();
-	int result = dao.setUpdate(infoArguDto);
+	
+	BookInfoDAO infoDao = new BookInfoDAO();
+	int result = infoDao.setUpdate(infoArguDto);
 	
 	if (result > 0) {
 		out.println("<script>");

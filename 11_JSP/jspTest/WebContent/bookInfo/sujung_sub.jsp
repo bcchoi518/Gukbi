@@ -19,10 +19,10 @@
 	int authorNo = Integer.parseInt(authorNo_);
 	int profileNo = Integer.parseInt(profileNo_);
 	
-	BookInfoDAO dao = new BookInfoDAO();
+	BookInfoDAO infoDao = new BookInfoDAO();
 	BookInfoDTO infoArguDto = new BookInfoDTO();
 	infoArguDto.setInfoNo(infoNo);
-	BookInfoDTO infoResultDto = dao.getSelectOne(infoArguDto);
+	BookInfoDTO infoResultDto = infoDao.getSelectOne(infoArguDto);
 	
 	BookAuthorDAO authorDao = new BookAuthorDAO();
 	ArrayList<BookAuthorDTO> authorList = authorDao.getSelectAll();

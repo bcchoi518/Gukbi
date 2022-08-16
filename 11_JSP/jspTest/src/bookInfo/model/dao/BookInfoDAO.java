@@ -29,14 +29,14 @@ public class BookInfoDAO {
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
 				BookInfoDTO resultDto = new BookInfoDTO();
-				resultDto.setInfoNo(rs.getInt(1));
-				resultDto.setSubject(rs.getString(2));
-				resultDto.setCreated(rs.getDate(3));
-				resultDto.setAuthor(rs.getString(4));
-				resultDto.setProfile(rs.getString(5));
-				resultDto.setRegiDate(rs.getDate(6));
-				resultDto.setAuthorNo(rs.getInt(7));
-				resultDto.setProfileNo(rs.getInt(8));
+				resultDto.setInfoNo(rs.getInt("infoNo"));
+				resultDto.setSubject(rs.getString("subject"));
+				resultDto.setCreated(rs.getDate("created"));
+				resultDto.setAuthor(rs.getString("author"));
+				resultDto.setProfile(rs.getString("profile"));
+				resultDto.setRegiDate(rs.getDate("regiDate"));
+				resultDto.setAuthorNo(rs.getInt("authorNo"));
+				resultDto.setProfileNo(rs.getInt("profileNo"));
 				list.add(resultDto);
 			}//while
 		} catch (Exception e) {
@@ -59,14 +59,14 @@ public class BookInfoDAO {
 			pstmt.setInt(1, paramDto.getInfoNo());
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
-				resultDto.setInfoNo(rs.getInt(1));
-				resultDto.setSubject(rs.getString(2));
-				resultDto.setCreated(rs.getDate(3));
-				resultDto.setAuthor(rs.getString(4));
-				resultDto.setProfile(rs.getString(5));
-				resultDto.setRegiDate(rs.getDate(6));
-				resultDto.setAuthorNo(rs.getInt(7));
-				resultDto.setProfileNo(rs.getInt(8));
+				resultDto.setInfoNo(rs.getInt("infoNo"));
+				resultDto.setSubject(rs.getString("subject"));
+				resultDto.setCreated(rs.getDate("created"));
+				resultDto.setAuthor(rs.getString("author"));
+				resultDto.setProfile(rs.getString("profile"));
+				resultDto.setRegiDate(rs.getDate("regiDate"));
+				resultDto.setAuthorNo(rs.getInt("authorNo"));
+				resultDto.setProfileNo(rs.getInt("profileNo"));
 			}//if
 		} catch (Exception e) {
 //			e.printStackTrace();
