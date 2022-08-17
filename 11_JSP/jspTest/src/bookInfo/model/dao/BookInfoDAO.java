@@ -21,10 +21,10 @@ public class BookInfoDAO {
 		ArrayList<BookInfoDTO> list = new ArrayList<>();
 		conn = DB.dbConn();
 		try {
-			String sql = "SELECT i.infoNo, i.subject, i.created, a.author, p.profile, i.regiDate, i.authorNo, i.profileNo "
-						+ "FROM "+ tableName_1 +" i, "+ tableName_2 +" a, "+ tableName_3 +" p "
-						+ "WHERE i.authorNo = a.authorNo AND i.profileNo = p.profileNo "
-						+ "ORDER BY infoNo DESC";
+			String sql = "SELECT bi.infoNo, bi.subject, bi.created, ba.author, bp.profile, bi.regiDate, bi.authorNo, bi.profileNo "
+						+ "FROM "+ tableName_1 +" bi, "+ tableName_2 +" ba, "+ tableName_3 +" bp "
+						+ "WHERE bi.authorNo = ba.authorNo AND bi.profileNo = bp.profileNo "
+						+ "ORDER BY bi.infoNo DESC";
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
@@ -51,10 +51,10 @@ public class BookInfoDAO {
 		BookInfoDTO resultDto = new BookInfoDTO();
 		conn = DB.dbConn();
 		try {
-			String sql = "SELECT i.infoNo, i.subject, i.created, a.author, p.profile, i.regiDate, i.authorNo, i.profileNo "
-					+ "FROM "+ tableName_1 +" i, "+ tableName_2 +" a, "+ tableName_3 +" p "
-					+ "WHERE i.authorNo = a.authorNo AND i.profileNo = p.profileNo AND i.infoNo = ?"
-					+ "ORDER BY infoNo DESC";
+			String sql = "SELECT bi.infoNo, bi.subject, bi.created, ba.author, bp.profile, bi.regiDate, bi.authorNo, bi.profileNo "
+					+ "FROM "+ tableName_1 +" bi, "+ tableName_2 +" ba, "+ tableName_3 +" bp "
+					+ "WHERE bi.authorNo = ba.authorNo AND bi.profileNo = bp.profileNo AND bi.infoNo = ?"
+					+ "ORDER BY bi.infoNo DESC";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, paramDto.getInfoNo());
 			rs = pstmt.executeQuery();

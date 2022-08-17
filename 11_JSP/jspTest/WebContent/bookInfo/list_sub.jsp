@@ -33,8 +33,8 @@
 			<td><%=totalRecode-- %></td>
 			<td><a href="#" onClick="move('view.jsp','<%=infoResultDto.getInfoNo() %>')"><%=infoResultDto.getSubject() %></a></td>
 			<td><%=infoResultDto.getCreated() %></td>
-			<td><%=infoResultDto.getAuthor() %></td>
-			<td><%=infoResultDto.getProfile() %></td>
+			<td><%=infoResultDto.getAuthor() %> (<%=infoResultDto.getAuthorNo() %>)</td>
+			<td><%=infoResultDto.getProfile() %> (<%=infoResultDto.getProfileNo() %>)</td>
 			<td><%=infoResultDto.getRegiDate() %></td>
 		</tr>
 	<% }//for %>

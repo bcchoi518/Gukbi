@@ -86,3 +86,11 @@
 |
 <a href = "../bookInfo/list.jsp">도서정보관리(Book)</a>
 |
+<br>
+|
+<a href = "../haksaMember/list.jsp">학사관리(Member)</a>
+|
+<a href = "../haksaSihum/list.jsp">학사관리(Sihum)</a>
+|
+<a href = "../haksaSungjuk/list.jsp">학사관리(Sungjuk)</a>
+|

@@ -29,11 +29,11 @@
 		</tr>
 		<tr>
 			<th>저자</th>
-			<td><%=infoResultDto.getAuthor() %></td>
+			<td><%=infoResultDto.getAuthor() %> (<%=infoResultDto.getAuthorNo() %>)</td>
 		</tr>
 		<tr>
 			<th>분류</th>
-			<td><%=infoResultDto.getProfile() %></td>
+			<td><%=infoResultDto.getProfile() %> (<%=infoResultDto.getProfileNo() %>)</td>
 		</tr>
 		<tr>
 			<th>등록일</th>
