@@ -24,32 +24,55 @@
 <h2>회원상세보기</h2>
 <table border="0" align="center">
 	<tr>
-		<td>아이디 : </td>
-		<td><%=memberResultDto.getId() %></td>
+		<td class="entryName">아이디 : </td>
+		<td colspan="3"><%=memberResultDto.getId() %></td>
 	</tr>
 	<tr>
-		<td>이름 : </td>
-		<td><%=memberResultDto.getName() %></td>
+		<td class="entryName">이름 : </td>
+		<td colspan="3"><%=memberResultDto.getName() %></td>
 	</tr>
 	<tr>
-		<td>연락처 : </td>
-		<td><%=memberResultDto.getPhone() %></td>
+		<td class="entryName">연락처 : </td>
+		<td colspan="3"><%=memberResultDto.getPhone() %></td>
 	</tr>
 	<tr>
-		<td>이메일 : </td>
-		<td><%=memberResultDto.getEmail() %></td>
+		<td class="entryName">이메일 : </td>
+		<td colspan="3"><%=memberResultDto.getEmail() %></td>
 	</tr>
 	<tr>
-		<td>주민번호 : </td>
-		<td><%=memberResultDto.getJumin().substring(0, 8) %>******</td>
+		<td class="entryName">주민번호 : </td>
+		<td colspan="3"><%=memberResultDto.getJumin().substring(0, 8) %>******</td>
 	</tr>
 	<tr>
-		<td>주소 : </td>
-		<td>(<%=memberResultDto.getJuso1() %>) <%=memberResultDto.getJuso2() %> <%=memberResultDto.getJuso3() %> <%=memberResultDto.getJuso4() %></td>
+		<td class="entryName">주소 : </td>
+		<td colspan="3">(<%=memberResultDto.getJuso1() %>) <%=memberResultDto.getJuso2() %> <%=memberResultDto.getJuso3() %> <%=memberResultDto.getJuso4() %></td>
 	</tr>
 	<tr>
-		<td>회원등급 : </td>
-		<td><%=memberResultDto.getGrade() %></td>
+		<td class="entryName">회원등급 : </td>
+		<td colspan="3"><%=memberResultDto.getGrade() %></td>
+	</tr>
+	<tr>
+		<td class="entryName">첨부파일 : </td>
+		<%
+			if (memberResultDto.getAttachInfo() == null || memberResultDto.getAttachInfo().equals("-")) {
+				out.println("&nbsp;");
+			} else {
+				String[] imsiArray = memberResultDto.getAttachInfo().split(",");
+				for (int j = 0; j < imsiArray.length; j++) {
+					String[] imsiArray2 = imsiArray[j].split("[|]");
+					
+					String imsiImgPath = "";
+					imsiImgPath += request.getContextPath();
+					imsiImgPath += "/attach";
+					imsiImgPath += request.getContextPath();
+					imsiImgPath += "/member/";
+					imsiImgPath += imsiArray2[1];
+					out.println("<td>");
+					out.println("<img src=\""+ imsiImgPath + "\" width=\"50\" height=\"50\"><br>"+ imsiArray2[0] + "("+ imsiArray2[3] +")");
+					out.println("</td>");
+				}//for
+			}//if
+		%>
 	</tr>
 </table>
 <div style="border: 0px solid red; padding-top:20px; width:80%; text-align:right;">

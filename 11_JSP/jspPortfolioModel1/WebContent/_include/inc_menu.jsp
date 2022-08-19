@@ -3,7 +3,7 @@
     
 <%@ include file = "../_include/inc_header.jsp" %>
 
-<table border="0" align="center" width="90%">
+<table border="0" align="center" width="90%" id="menuTable">
 	<tr>
 		<td colspan="11" style="padding-top:10px; text-align:right">
 			OOO님 환영합니다.
@@ -47,7 +47,7 @@
 </table>
 <script>
 	function menuSelecter() {
-		$('#<%=folderName %>').css('background-color', 'lightgray');
+		$('#<%=folderName %>').css({'color':'white','background-color':'#57cc99', 'border-radius':'20px', 'font-weight':'bold'});
 	}//applyBgColor
 	menuSelecter();
 </script>

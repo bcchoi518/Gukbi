@@ -6,6 +6,10 @@
 
 <%@page import="java.io.File"%>
 <%@page import="java.util.Enumeration"%>
+<%@page import="java.util.UUID"%>
+
+<%@page import="member.model.dto.MemberDTO"%>
+<%@page import="member.model.dao.MemberDAO"%>
 
 <%
 	request.setCharacterEncoding("UTF-8");
@@ -56,22 +60,70 @@
 			String fileType = "";
 			String fileSize = "";
 			String fileExtName = ""; // .png .jpg .jpeg .gif
+			String newFileName = "";
 			
 			// form 태그에서 <input type="file" name="[지정된이름]" />을 가져온다
 			tagName = (String) files.nextElement();
 			// input file name에 해당하는 실제 파일을 가져옴
 			File fileObj = multi.getFile(tagName);
-			
+			String imsiResult = "";
 			if (fileObj != null) { // 해당 tagName에 파일을 첨부했으면...
 				fileOriginalName = multi.getOriginalFileName(tagName);
 				fileSavedName = multi.getFilesystemName(tagName);
 				fileType = multi.getContentType(tagName);
 				fileSize = String.valueOf(fileObj.length());
-				fileExtName = fileSavedName.substring(fileSavedName.lastIndexOf("."));
+				fileExtName = fileSavedName.substring(fileSavedName.lastIndexOf(".") + 1);
+				
+				newFileName = UUID.randomUUID().toString() + "." + fileExtName; //새로 생성할 파일이름..
+				String oldFilePath = uploadPath + "/" + fileSavedName;	//기존에 저정된 파일..
+				String newFilePath = uploadPath + "/" + newFileName;	//기존에 저장된 파일을 여기이름으로 바꿔서 저장..
+				File f1 = new File(oldFilePath);
+				if (f1.exists()) {
+					File newFile = new File(newFilePath);
+					f1.renameTo(newFile);
+					fileSavedName = newFileName;
+				}//if
+				
+				if (!attachInfo.trim().equals("")) {
+					attachInfo += ",";
+				}//if
+				attachInfo += fileOriginalName + "|";
+				attachInfo += fileSavedName + "|";
+				attachInfo += fileType + "|";
+				attachInfo += fileSize;
 			}//if
-			out.println(fileExtName);
 		}//while
+		out.println(attachInfo);
+		out.println("<br>");
 	} catch (Exception e) {
 		e.printStackTrace();	
 	}//try-catch
+	
+	MemberDTO memberArguDto = new MemberDTO();
+	memberArguDto.setId(id);
+	memberArguDto.setPasswd(passwd);
+	memberArguDto.setName(name);
+	memberArguDto.setPhone(phone);
+	memberArguDto.setEmail(email);
+	memberArguDto.setJumin(jumin);
+	memberArguDto.setJuso1(juso1);
+	memberArguDto.setJuso2(juso2);
+	memberArguDto.setJuso3(juso3);
+	memberArguDto.setJuso4(juso4);
+	memberArguDto.setGrade(grade);
+	memberArguDto.setAttachInfo(attachInfo);
+	
+	MemberDAO memberDao = new MemberDAO();
+	int result = memberDao.setInsert(memberArguDto);
+	
+	if (result > 0) {
+		out.println("<script>");
+		out.println("location.href='main.jsp?menuGubun=member_list';");
+		out.println("</script>");
+	} else {
+		out.println("<script>");
+		out.println("alert('등록 중 오류가 발생했습니다.');");
+		out.println("location.href='main.jsp?menuGubun=member_attachChuga';");
+		out.println("</script>");
+	}//if
 %>

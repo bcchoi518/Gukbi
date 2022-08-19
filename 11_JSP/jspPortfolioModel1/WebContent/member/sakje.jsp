@@ -25,35 +25,35 @@
 	<input type="hidden" name="no" value="<%=memberResultDto.getNo() %>" />
 	<table border="0" align="center"> 
 		<tr>
-			<td>아이디 : </td>
+			<td class="entryName">아이디 : </td>
 			<td><%=memberResultDto.getId() %></td>
 		</tr>
 		<tr>
-			<td>비밀번호 : </td>
+			<td class="entryName">비밀번호 : </td>
 			<td><input type="password" name="passwd" /></td>
 		</tr>
 		<tr>
-			<td>이름 : </td>
+			<td class="entryName">이름 : </td>
 			<td><%=memberResultDto.getName() %></td>
 		</tr>
 		<tr>
-			<td>연락처 : </td>
+			<td class="entryName">연락처 : </td>
 			<td><%=memberResultDto.getPhone() %></td>
 		</tr>
 		<tr>
-			<td>이메일 : </td>
+			<td class="entryName">이메일 : </td>
 			<td><%=memberResultDto.getEmail() %></td>
 		</tr>
 		<tr>
-			<td>주민번호 : </td>
-			<td><%=memberResultDto.getJumin() %></td>
+			<td class="entryName">주민번호 : </td>
+			<td><%=memberResultDto.getJumin().substring(0, 8) %>******</td>
 		</tr>
 		<tr>
-			<td>주소 : </td>
+			<td class="entryName">주소 : </td>
 			<td>(<%=memberResultDto.getJuso1() %>) <%=memberResultDto.getJuso2() %> <%=memberResultDto.getJuso3() %> <%=memberResultDto.getJuso4() %></td>
 		</tr>
 		<tr>
-			<td>회원등급 : </td>
+			<td class="entryName">회원등급 : </td>
 			<td><%=memberResultDto.getGrade() %></td>
 		</tr>
 		<tr align="center" height="50px">

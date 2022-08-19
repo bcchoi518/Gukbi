@@ -37,6 +37,7 @@ public class MemberDAO {
 				memberDto.setJuso4(rs.getString("juso4"));
 				memberDto.setGrade(rs.getString("grade"));
 				memberDto.setRegiDate(rs.getDate("regiDate"));
+				memberDto.setAttachInfo(rs.getString("attachInfo"));
 				memberList.add(memberDto);
 			}//while
 		} catch (Exception e) {
@@ -69,6 +70,7 @@ public class MemberDAO {
 				memberDto.setJuso4(rs.getString("juso4"));
 				memberDto.setGrade(rs.getString("grade"));
 				memberDto.setRegiDate(rs.getDate("regiDate"));
+				memberDto.setAttachInfo(rs.getString("attachInfo"));
 			}//while
 		} catch (Exception e) {
 //			e.printStackTrace();
@@ -79,10 +81,13 @@ public class MemberDAO {
 	}//getSelectOne
 	
 	public int setInsert(MemberDTO paramDto) {
+		if (paramDto.getAttachInfo() == null) {
+			paramDto.setAttachInfo("-");
+		}//if
 		int result = 0;
 		conn = DB.dbConn();
 		try {
-			String sql = "INSERT INTO "+ tableName_1 +" (no, id, passwd, name, phone, email, jumin, juso1, juso2, juso3, juso4, grade, regiDate) VALUES (seq_member.NEXTVAL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, SYSDATE)";
+			String sql = "INSERT INTO "+ tableName_1 +" VALUES (seq_member.NEXTVAL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, SYSDATE, ?)";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, paramDto.getId());
 			pstmt.setString(2, paramDto.getPasswd());
@@ -95,6 +100,7 @@ public class MemberDAO {
 			pstmt.setString(9, paramDto.getJuso3());
 			pstmt.setString(10, paramDto.getJuso4());
 			pstmt.setString(11, paramDto.getGrade());
+			pstmt.setString(12, paramDto.getAttachInfo());
 			result = pstmt.executeUpdate();
 		} catch (Exception e) {
 //			e.printStackTrace();

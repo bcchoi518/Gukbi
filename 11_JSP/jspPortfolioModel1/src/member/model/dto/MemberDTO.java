@@ -16,6 +16,7 @@ public class MemberDTO {
     private String juso4;
     private String grade;
     private Date regiDate;
+    private String attachInfo;
     
 	public int getNo() {
 		return no;
@@ -94,5 +95,11 @@ public class MemberDTO {
 	}
 	public void setRegiDate(Date regiDate) {
 		this.regiDate = regiDate;
+	}
+	public String getAttachInfo() {
+		return attachInfo;
+	}
+	public void setAttachInfo(String attachInfo) {
+		this.attachInfo = attachInfo;
 	}
 }//MemberDTO
