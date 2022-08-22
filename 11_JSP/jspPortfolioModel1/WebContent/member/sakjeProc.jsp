@@ -9,6 +9,7 @@
 
 	String no_ = request.getParameter("no");
 	String passwd = request.getParameter("passwd");
+// 	String attachInfo = request.getParameter("attachInfo");
 	
 	int no = Integer.parseInt(no_);
 	
@@ -17,6 +18,11 @@
 	memberArguDto.setPasswd(passwd);
 	
 	MemberDAO memberDao = new MemberDAO();
+	
+	MemberDTO imsiDto = new MemberDTO();
+	MemberDTO resultDto = memberDao.getSelectOne(imsiDto);
+	String attachInfo = resultDto.getAttachInfo();
+	
 	int result = memberDao.setDelete(memberArguDto);
 	
 	String imsiMsg = "삭제 중 오류가 발생했습니다.";
@@ -24,6 +30,22 @@
 	if (result > 0) {
 		imsiMsg = "삭제 성공..";
 		imsiUrl = "main.jsp?menuGubun=member_list";
+		
+		//파일 삭제 처리..
+		String attachPath = "C:/cbc/attach";
+		String uploadPath = attachPath + request.getContextPath() + "/member";
+		
+		String[] imsiArray01 = attachInfo.split(",");
+		for (int i = 0; i < imsiArray01.length; i++) {
+			String[] imsiArray02 = imsiArray01[i].split("[|]");
+			String uploadFile = uploadPath + "/" + imsiArray02[1];
+			java.io.File f = new java.io.File(uploadFile);
+			if (f.delete()) {
+				//파일 삭제 성공..
+			} else {
+				//파일 삭제 실패..
+			}//if
+		}//for
 	}//if
 	
 	out.println("<script>");

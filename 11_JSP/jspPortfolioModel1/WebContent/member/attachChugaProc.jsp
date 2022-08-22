@@ -66,6 +66,7 @@
 			tagName = (String) files.nextElement();
 			// input file name에 해당하는 실제 파일을 가져옴
 			File fileObj = multi.getFile(tagName);
+			
 			String imsiResult = "";
 			if (fileObj != null) { // 해당 tagName에 파일을 첨부했으면...
 				fileOriginalName = multi.getOriginalFileName(tagName);
@@ -73,6 +74,34 @@
 				fileType = multi.getContentType(tagName);
 				fileSize = String.valueOf(fileObj.length());
 				fileExtName = fileSavedName.substring(fileSavedName.lastIndexOf(".") + 1);
+				
+				int errorImgCounter = 0;
+				if (fileExtName.toLowerCase().equals("png")) {
+					
+				} else if (fileExtName.toLowerCase().equals("jpg")) {
+					
+				} else if (fileExtName.toLowerCase().equals("jpeg")) {
+					
+				} else if (fileExtName.toLowerCase().equals("gif")) {
+					
+				} else {
+					errorImgCounter++;
+				}//if
+				
+				if (errorImgCounter > 0) {
+					String deleteFilePath = uploadPath + "/" + fileSavedName;
+					java.io.File f = new java.io.File(deleteFilePath);
+					if (f.delete()) {
+						//파일 삭제 성공..
+					} else {
+						//파일 삭제 실패..
+					}//if
+					
+					fileOriginalName = "";
+					fileSavedName = "";
+					fileType = "";
+					fileSize = "";
+				}//if
 				
 				newFileName = UUID.randomUUID().toString() + "." + fileExtName; //새로 생성할 파일이름..
 				String oldFilePath = uploadPath + "/" + fileSavedName;	//기존에 저정된 파일..

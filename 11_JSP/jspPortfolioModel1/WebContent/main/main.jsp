@@ -16,6 +16,7 @@
 	table {
 		border-collapse: collapse;
 		background-color: #80ed99;
+		width: 80%;
 	}
 	a {
 		text-decoration: none;

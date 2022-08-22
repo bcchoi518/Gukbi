@@ -66,6 +66,30 @@
 				<input type="radio" name="grade" value="일반회원" <% if (memberResultDto.getGrade().equals("일반회원")) {out.println("checked");} %> /> 일반회원 &nbsp;
 			</td>
 		</tr>
+		<tr>
+			<td class="entryName">사진첨부 : </td>
+			<td>
+				<%
+					if (memberResultDto.getAttachInfo() == null || memberResultDto.getAttachInfo().equals("-")) {
+						out.println("&nbsp;");
+					} else {
+						String[] imsiArray = memberResultDto.getAttachInfo().split(",");
+						for (int j = 0; j < imsiArray.length; j++) {
+							String[] imsiArray2 = imsiArray[j].split("[|]");
+							
+							String imsiImgPath = "";
+							imsiImgPath += request.getContextPath();
+							imsiImgPath += "/attach";
+							imsiImgPath += request.getContextPath();
+							imsiImgPath += "/member/";
+							imsiImgPath += imsiArray2[1];
+							
+							out.println("<img src=\""+ imsiImgPath + "\" width=\"50\" height=\"50\"><br>"+ imsiArray2[0] + "("+ imsiArray2[3] +") <br>");
+						}//for
+					}//if
+				%>
+			</td>
+		</tr>
 		<tr align="center" height="50px">
 			<td colspan="2">
 				<button type="button" onClick="sujung()">수정하기</button>

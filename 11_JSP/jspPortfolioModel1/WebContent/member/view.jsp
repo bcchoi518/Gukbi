@@ -54,7 +54,7 @@
 	<tr>
 		<td class="entryName">첨부파일 : </td>
 		<%
-			if (memberResultDto.getAttachInfo() == null || memberResultDto.getAttachInfo().equals("-")) {
+			if (memberResultDto.getAttachInfo() == null || memberResultDto.getAttachInfo().equals("") || memberResultDto.getAttachInfo().equals("-")) {
 				out.println("&nbsp;");
 			} else {
 				String[] imsiArray = memberResultDto.getAttachInfo().split(",");
@@ -82,6 +82,8 @@
 <a href="#" onClick="move('member_chuga')">등록</a>
 |
 <a href="#" onClick="move('member_sujung','<%=no %>')">수정</a>
+|
+<a href="#" onClick="move('member_sujungAttach','<%=no %>')">수정(attach)</a>
 |
 <a href="#" onClick="move('member_sakje','<%=no %>')">삭제</a>
 |

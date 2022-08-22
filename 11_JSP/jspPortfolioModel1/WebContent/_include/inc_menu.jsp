@@ -20,7 +20,7 @@
 			<a href="<%=path %>/main/main.jsp?menuGubun=memo_list">메모장</a>
 		</td>
 		<td align="center" style="padding: 10px" id="menu2">
-			메뉴2
+			<a href="<%=path %>/main/main.jsp?menuGubun=guestBook_list">방명록</a>
 		</td>
 		<td align="center" style="padding: 10px" id="menu3">
 			메뉴3

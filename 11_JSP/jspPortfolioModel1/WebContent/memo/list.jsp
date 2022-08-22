@@ -1,4 +1,123 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
-<h2>memo/list.jsp</h2>
+<%@page import="java.util.ArrayList"%>
+
+<%@ page import="memo.model.dao.MemoDAO"%>
+<%@ page import="memo.model.dto.MemoDTO"%>
+
+<%
+	MemoDAO memoDao = new MemoDAO();
+	ArrayList<MemoDTO> memoList = memoDao.getSelectAll();
+	
+	int totalRecord = memoList.size();
+%>
+
+<h2>메모목록</h2>
+
+<form name="frm">
+	<fieldset style="border:0px solid blue; width:100%; margin: 10px 0px 20px 0px">
+		<input type="hidden" name="no" id="no" />
+		<input type="hidden" name="procGubun" id="procGubun" value="memo_chugaProc" />
+		<table border="1" width="100%" align="center">
+			<tr>
+				<td>작성자 : </td>
+				<td><input type="text" name="writer" id="writer"/></td>
+			</tr>
+			<tr>
+				<td>메모내용 : </td>
+				<td><textarea name="content" id="content" rows="8" cols="100"></textarea></td>
+			</tr>
+			<tr>
+				<td colspan="2">
+					<button type="button" id="btnSave" onClick="frmSubmit()">등록하기</button> &nbsp;
+					<button type="button" onClick="location.href='main.jsp?menuGubun=memo_list'">목록으로</button>
+				</td>
+			</tr>
+		</table>
+	</fieldset>
+</form>
+<script>
+	function frmSubmit() {
+		if (confirm('처리할까요?')) {
+			const procGubun = document.frm.procGubun.value;
+			document.frm.action = 'mainProc.jsp?menuGubun=' + procGubun;
+			document.frm.method = 'post'
+			document.frm.submit();
+		}//if
+	}//frmSubmit
+</script>
+
+<table border="1" align="center" style="text-align: center;">
+	<tr>
+		<th>순번</th>
+		<th>작성자</th>
+		<th>내용</th>
+		<th>등록일</th>
+		<th>비고</th>
+	</tr>
+	<%
+		if (totalRecord == 0) {
+			out.println("<tr>");
+			out.println("<td colspan=\"4\" height=\"100px\" style=\"text-align:center;\">저장된 정보가 없습니다.</td>");
+			out.println("</tr>");
+		}//if
+	%>
+	<%
+		int num = totalRecord;
+		for (int i = 0; i < memoList.size(); i++) {
+			MemoDTO resultMemoDto = memoList.get(i);
+	%>
+		<tr>
+			<td><%=num-- %></td>
+			<td><a href="#" onClick="move('memo_view','<%=resultMemoDto.getNo() %>')"><%=resultMemoDto.getWriter() %></a></td>
+			<td style="text-align:left">
+				<%=resultMemoDto.getContent() %>
+				<input type="hidden" id="no_<%=resultMemoDto.getNo() %>" value="<%=resultMemoDto.getNo() %>" />
+				<input type="hidden" id="writer_<%=resultMemoDto.getNo() %>" value="<%=resultMemoDto.getWriter() %>" />
+				<input type="hidden" id="content_<%=resultMemoDto.getNo() %>" value="<%=resultMemoDto.getContent() %>" />
+			</td>
+			<td><%=resultMemoDto.getRegiDate() %></td>
+			<td>
+				<a href="#" onClick="suntaek('<%=resultMemoDto.getNo() %>','memo_sujungProc')">[수정]</a>
+				/
+				<a href="#" onClick="suntaek('<%=resultMemoDto.getNo() %>','memo_sakjeProc')">[삭제]</a>
+			</td>
+		</tr>
+	<%		
+		}//for
+	%>
+</table>
+<div style="border: 0px solid red; padding-top:20px; width:80%; text-align:right;">
+|
+<a href="#" onClick="move('memo_list')">목록</a>
+|
+<a href="#" onClick="move('memo_chuga')">등록</a>
+|
+</div>
+<script>
+	function suntaek(value1, value2) {
+		let jsNo = $('#no_' + value1).val();
+		let jsWriter = $('#writer_' + value1).val();
+		let jsContent = $('#content_' + value1).val();
+		
+		$('#no').val(jsNo);
+		$('#writer').val(jsWriter);
+		$('#content').val(jsContent);
+		$('#procGubun').val(value2);
+		
+		if (value2 == 'memo_sujungProc') {
+			$('#btnSave').text('수정하기');
+		} else if (value2 == 'memo_sakjeProc') {
+			$('#btnSave').text('삭제하기');
+		}//if
+	}//suntaek
+	
+	function move(value1, value2) {
+		if (value2 != undefined) {
+			location.href = 'main.jsp?menuGubun=' + value1 + '&no=' + value2;
+		} else {
+			location.href = 'main.jsp?menuGubun=' + value1;
+		}//if
+	}//move
+</script>
