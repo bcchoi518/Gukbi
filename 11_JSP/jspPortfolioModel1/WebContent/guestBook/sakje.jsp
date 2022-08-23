@@ -15,13 +15,13 @@
 	GuestBookDTO resultGuestBookDto = guestBookDao.getSelectOne(arguGuestBookDto);
 	
 	if (resultGuestBookDto.getNo() <= 0) {
-		out.println("<script> alert('존재하지 않는 회원입니다.'); location.href='main.jsp?menuGubun=guestBook_list'; </script>");
+		out.println("<script> alert('존재하지 않는 방명록입니다.'); location.href='main.jsp?menuGubun=guestBook_list'; </script>");
 		return;
 	}//if
 %>
 
-<h2>회원삭제</h2>
-<form name="sakjeForm">
+<h2>방명록삭제</h2>
+<form name="frm">
 	<input type="hidden" name="no" value="<%=resultGuestBookDto.getNo() %>" />
 	<table border="0" align="center"> 
 		<tr>
@@ -46,18 +46,18 @@
 	</tr>
 		<tr align="center" height="50px">
 			<td colspan="2">
-				<button type="button" onClick="sakje()">삭제하기</button>
+				<button type="button" onClick="formSubmit()">삭제하기</button>
 				<button type="button" onClick="location.href='../main/main.jsp?menuGubun=guestBook_list';">목록으로</button>
 			</td>
 		</tr>
 	</table>
 </form>
 <script>
-	function sakje() {
+	function formSubmit() {
 		if (confirm('삭제할까요?')) {
-			document.sakjeForm.action = "mainProc.jsp?menuGubun=guestBook_sakjeProc";
-			document.sakjeForm.method = "post";
-			document.sakjeForm.submit();
+			document.frm.action = "mainProc.jsp?menuGubun=guestBook_sakjeProc";
+			document.frm.method = "post";
+			document.frm.submit();
 		}//if
-	}//sakje
+	}//formSubmit
 </script>

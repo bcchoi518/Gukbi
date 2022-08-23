@@ -3,12 +3,28 @@
 
 <%@page import="java.util.ArrayList"%>
 
+<%@page import="config.Util"%>
 <%@ page import="memo.model.dao.MemoDAO"%>
 <%@ page import="memo.model.dto.MemoDTO"%>
 
 <%
+	request.setCharacterEncoding("UTF-8");
+
+	String searchGubun = request.getParameter("searchGubun");
+	String searchData = request.getParameter("searchData");
+	
+	Util util = new Util();
+	searchGubun = util.getNullBlankCheck(searchGubun, ""); 
+	searchData = util.getNullBlankCheck(searchData, ""); 
+	searchData = util.getCheckString(searchData);
+	
+	if (searchGubun.equals("") || searchData.equals("")) {
+		searchGubun = "";
+		searchData = "";
+	}//if
+			
 	MemoDAO memoDao = new MemoDAO();
-	ArrayList<MemoDTO> memoList = memoDao.getSelectAll();
+	ArrayList<MemoDTO> memoList = memoDao.getSelectAll(searchGubun, searchData);
 	
 	int totalRecord = memoList.size();
 %>
@@ -19,17 +35,17 @@
 	<fieldset style="border:0px solid blue; width:100%; margin: 10px 0px 20px 0px">
 		<input type="hidden" name="no" id="no" />
 		<input type="hidden" name="procGubun" id="procGubun" value="memo_chugaProc" />
-		<table border="1" width="100%" align="center">
+		<table border="0" width="100%" align="center">
 			<tr>
-				<td>작성자 : </td>
+				<td class="entryName">작성자 : </td>
 				<td><input type="text" name="writer" id="writer"/></td>
 			</tr>
 			<tr>
-				<td>메모내용 : </td>
+				<td class="entryName">메모내용 : </td>
 				<td><textarea name="content" id="content" rows="8" cols="100"></textarea></td>
 			</tr>
 			<tr>
-				<td colspan="2">
+				<td colspan="2" align="center">
 					<button type="button" id="btnSave" onClick="frmSubmit()">등록하기</button> &nbsp;
 					<button type="button" onClick="location.href='main.jsp?menuGubun=memo_list'">목록으로</button>
 				</td>
@@ -50,6 +66,22 @@
 
 <table border="1" align="center" style="text-align: center;">
 	<tr>
+		<td colspan="5" align="right">
+			<form name="searchForm">
+				<select name="searchGubun">
+					<option value="">-- 선택 --</option>
+					<option value="writer" <% if (searchGubun.equals("writer")) { out.println("selected"); } %>>작성자</option>
+					<option value="content" <% if (searchGubun.equals("content")) { out.println("selected"); } %>>내용</option>
+					<option value="writer_content" <% if (searchGubun.equals("writer_content")) { out.println("selected"); } %>>작성자+내용</option>
+				</select>
+				&nbsp;
+				<input type="text" name="searchData" value="<%=searchData %>"/>
+				&nbsp;
+				<button type="button" onClick="search()">검색</button>
+			</form>
+		</td>
+	</tr>
+	<tr>
 		<th>순번</th>
 		<th>작성자</th>
 		<th>내용</th>
@@ -59,7 +91,7 @@
 	<%
 		if (totalRecord == 0) {
 			out.println("<tr>");
-			out.println("<td colspan=\"4\" height=\"100px\" style=\"text-align:center;\">저장된 정보가 없습니다.</td>");
+			out.println("<td colspan=\"5\" height=\"100px\" style=\"text-align:center;\">저장된 정보가 없습니다.</td>");
 			out.println("</tr>");
 		}//if
 	%>
@@ -120,4 +152,10 @@
 			location.href = 'main.jsp?menuGubun=' + value1;
 		}//if
 	}//move
+	
+	function search() {
+		document.searchForm.action = 'mainProc.jsp?menuGubun=memo_listSearch';
+		document.searchForm.method = 'post';
+		document.searchForm.submit();
+	}//search
 </script>

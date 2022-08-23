@@ -2,15 +2,21 @@
     pageEncoding="UTF-8"%>
     
 <%@ include file = "../_include/inc_header.jsp" %>
+<%@ include file = "../_include/inc_sessionChk.jsp" %>
 
 <table border="0" align="center" width="90%" id="menuTable">
 	<tr>
 		<td colspan="11" style="padding-top:10px; text-align:right">
-			OOO님 환영합니다.
+		<% if (sessionNo == 0) { %>
+			<a href="main.jsp?menuGubun=noLogin_login">[로그인]</a>
+		<% } else { %>
+			<%=sessionName %> (<%=sessionGrade %>)님 환영합니다. 
+			<a href="main.jsp?menuGubun=noLogin_logout">[로그아웃]</a>
+		<% }//if %>
 		</td>
 	</tr>
 	<tr>
-		<td align="center" style="padding: 10px" id="home">
+		<td align="center" style="padding: 10px" id="dashBoard">
 			<a href="<%=path %>">Home</a>
 		</td>
 		<td align="center" style="padding: 10px" id="member">
@@ -19,11 +25,11 @@
 		<td align="center" style="padding: 10px" id="memo">
 			<a href="<%=path %>/main/main.jsp?menuGubun=memo_list">메모장</a>
 		</td>
-		<td align="center" style="padding: 10px" id="menu2">
+		<td align="center" style="padding: 10px" id="guestBook">
 			<a href="<%=path %>/main/main.jsp?menuGubun=guestBook_list">방명록</a>
 		</td>
-		<td align="center" style="padding: 10px" id="menu3">
-			메뉴3
+		<td align="center" style="padding: 10px" id="boardBasic">
+			<a href="<%=path %>/main/main.jsp?menuGubun=boardBasic_list">게시판(B)</a>
 		</td>
 		<td align="center" style="padding: 10px" id="menu4">
 			메뉴4

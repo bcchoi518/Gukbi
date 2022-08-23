@@ -24,12 +24,34 @@ public class GuestBookDAO {
 		return tableName;
 	}//tableNameChecker
 	
-	public ArrayList<GuestBookDTO> getSelectAll() {
+	public ArrayList<GuestBookDTO> getSelectAll(String searchGubun, String searchData) {
 		ArrayList<GuestBookDTO> guestBookList = new ArrayList<>();
 		conn = DB.dbConn();
 		try {
-			String sql = "SELECT * FROM "+ tableNameChecker(tableName) +" ORDER BY no DESC";
+			String sql = "SELECT * FROM "+ tableNameChecker(tableName) +" WHERE 1 = 1";
+			
+			if (searchGubun.equals("name")) {
+				sql += " AND name LIKE ? ";
+			} else if (searchGubun.equals("content")) {
+				sql += " AND content LIKE ? ";
+			} else if (searchGubun.equals("name_content")) {
+				// 연산자는 가까운거 혹은 좁은것이 우선시 된다
+				sql += " AND (name LIKE ? OR content LIKE ?) ";
+			}//if
+			
+			sql += "ORDER BY no DESC";
+			
 			pstmt = conn.prepareStatement(sql);
+			
+			if (searchGubun.equals("name")) {
+				pstmt.setString(1, '%' + searchData + '%');
+			} else if (searchGubun.equals("content")) {
+				pstmt.setString(1, '%' + searchData + '%');
+			} else if (searchGubun.equals("name_content")) {
+				pstmt.setString(1, '%' + searchData + '%');
+				pstmt.setString(2, '%' + searchData + '%');
+			}//if
+			
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
 				GuestBookDTO guestBookDto = new GuestBookDTO();
@@ -39,6 +61,7 @@ public class GuestBookDAO {
 				guestBookDto.setPasswd(rs.getString("passwd"));
 				guestBookDto.setContent(rs.getString("content"));
 				guestBookDto.setRegiDate(rs.getDate("regiDate"));
+				guestBookDto.setMemberNo(rs.getInt("memberNo"));
 				guestBookList.add(guestBookDto);
 			}//while
 		} catch (Exception e) {
@@ -64,7 +87,8 @@ public class GuestBookDAO {
 				guestBookDto.setPasswd(rs.getString("passwd"));
 				guestBookDto.setContent(rs.getString("content"));
 				guestBookDto.setRegiDate(rs.getDate("regiDate"));
-			}//while
+				guestBookDto.setMemberNo(rs.getInt("memberNo"));
+			}//if
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -77,12 +101,13 @@ public class GuestBookDAO {
 		int result = 0;
 		conn = DB.dbConn();
 		try {
-			String sql = "INSERT INTO "+ tableNameChecker(tableName) +" VALUES (seq_guestBook.NEXTVAL, ?, ?, ?, ?, SYSDATE)";
+			String sql = "INSERT INTO "+ tableNameChecker(tableName) +" VALUES (seq_guestBook.NEXTVAL, ?, ?, ?, ?, SYSDATE, ?)";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, paramDto.getName());
 			pstmt.setString(2, paramDto.getEmail());
 			pstmt.setString(3, paramDto.getPasswd());
 			pstmt.setString(4, paramDto.getContent());
+			pstmt.setInt(5, paramDto.getMemberNo());
 			result = pstmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();

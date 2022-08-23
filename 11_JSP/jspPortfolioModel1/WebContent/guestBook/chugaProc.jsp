@@ -1,8 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
-<%@page import="config.Util"%>
 
+<%@ include file = "../_include/inc_sessionChk.jsp" %>
+    
+<%@ page import="config.Util"%>
 <%@ page import="guestBook.model.dao.GuestBookDAO"%>
 <%@ page import="guestBook.model.dto.GuestBookDTO"%>
 
@@ -18,10 +19,8 @@
 	
 	name = util.getNullBlankCheck(name, "-");
 	name = util.getCheckString(name);
-	
 	email = util.getNullBlankCheck(email, "-");
 	email = util.getCheckString(email);
-	
 	content = util.getNullBlankCheck(content, "-");
 	content = util.getCheckString(content);
 	
@@ -30,6 +29,7 @@
 	arguGuestBookDto.setPasswd(passwd);
 	arguGuestBookDto.setEmail(email);
 	arguGuestBookDto.setContent(content);
+	arguGuestBookDto.setMemberNo(sessionNo);
 	
 	GuestBookDAO guestBookDao = new GuestBookDAO();
 	int result = guestBookDao.setInsert(arguGuestBookDto);

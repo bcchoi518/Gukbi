@@ -1,0 +1,24 @@
+-- °Ô½ÃÆÇ(B)
+CREATE TABLE boardBasic (
+    no NUMBER NOT NULL,
+    writer VARCHAR2(50) NOT NULL,
+    subject VARCHAR2(50) NOT NULL,
+    content CLOB NOT NULL,
+    email VARCHAR2(50) NOT NULL,
+    passwd VARCHAR2(50) NOT NULL,
+    refNo NUMBER NOT NULL,
+    stopNo NUMBER NOT NULL,
+    levelNo NUMBER NOT NULL,
+    hit NUMBER NOT NULL,
+    regiDate DATE NOT NULL,
+    PRIMARY KEY (no)
+);
+
+CREATE SEQUENCE seq_boardBasic START WITH 1 INCREMENT BY 1 NOMAXVALUE NOCACHE;
+
+-- 
+desc guestBook;
+
+ALTER TABLE guestBook ADD memberNo NUMBER DEFAULT '0';
+
+SELECT * FROM GUESTBOOK;

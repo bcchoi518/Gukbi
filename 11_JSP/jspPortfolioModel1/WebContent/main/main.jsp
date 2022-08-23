@@ -23,6 +23,13 @@
 	}
 	td {
 		padding: 10px;
+		min-width: 30px;
+		max-width: 400px;
+	}
+	#list_content {
+		overflow: hidden;
+		white-space: nowrap;
+		text-overflow: ellipsis; 
 	}
 	.entryName {
 		text-align: right;

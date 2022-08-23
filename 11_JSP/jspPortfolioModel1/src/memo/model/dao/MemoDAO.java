@@ -24,12 +24,32 @@ public class MemoDAO {
 		return tableName;
 	}//tableNameChecker
 	
-	public ArrayList<MemoDTO> getSelectAll() {
+	public ArrayList<MemoDTO> getSelectAll(String searchGubun, String searchData) {
 		ArrayList<MemoDTO> memoList = new ArrayList<>();
 		conn = DB.dbConn();
 		try {
-			String sql = "SELECT * FROM "+ tableNameChecker(tableName) +" ORDER BY no DESC";
+			String sql = "SELECT * FROM "+ tableNameChecker(tableName) +" WHERE 1 = 1";
+			
+			if (searchGubun.equals("writer")) {
+				sql += " AND writer LIKE ? ";
+			} else if (searchGubun.equals("content")) {
+				sql += " AND content LIKE ? ";
+			} else if (searchGubun.equals("writer_content")) {
+				sql += " AND (writer LIKE ? OR content LIKE ?) ";
+			}//if
+			
+			sql += "ORDER BY no DESC";
 			pstmt = conn.prepareStatement(sql);
+			
+			if (searchGubun.equals("writer")) {
+				pstmt.setString(1, '%'+searchData+'%');
+			} else if (searchGubun.equals("content")) {
+				pstmt.setString(1, '%'+searchData+'%');
+			} else if (searchGubun.equals("writer_content")) {
+				pstmt.setString(1, '%'+searchData+'%');
+				pstmt.setString(2, '%'+searchData+'%');
+			}//if
+			
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
 				MemoDTO memoDto = new MemoDTO();

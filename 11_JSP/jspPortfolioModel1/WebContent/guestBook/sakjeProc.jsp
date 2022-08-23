@@ -17,6 +17,16 @@
 	arguGuestBookDto.setPasswd(passwd);
 	
 	GuestBookDAO guestBookDao = new GuestBookDAO();
+	
+	GuestBookDTO returnGuestBookDto = guestBookDao.getSelectOne(arguGuestBookDto);
+	if (!passwd.equals(returnGuestBookDto.getPasswd())) {
+		out.println("<script>");
+		out.println("alert('입력한 비밀번호가 다릅니다.');");
+		out.println("location.href='main.jsp?menuGubun=guestBook_sujung&no="+ no +"';");
+		out.println("</script>");
+		return;
+	}//if
+	
 	int result = guestBookDao.setDelete(arguGuestBookDto);
 	
 	String imsiMsg = "삭제 중 오류가 발생했습니다.";

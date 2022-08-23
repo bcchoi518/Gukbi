@@ -15,12 +15,12 @@
 	GuestBookDTO guestBookResultDto = guestBookDao.getSelectOne(guestBookArguDto);
 	
 	if (guestBookResultDto.getNo() <= 0) {
-		out.println("<script> alert('존재하지 않는 회원입니다.'); location.href='main.jsp?menuGubun=guestBook_list'; </script>");
+		out.println("<script> alert('존재하지 않는 방명록입니다.'); location.href='main.jsp?menuGubun=guestBook_list'; </script>");
 		return;
 	}//if
 %>
 
-<h2>회원수정</h2>
+<h2>방명록수정</h2>
 <form name="frm">
 	<input type="hidden" name="no" value="<%=guestBookResultDto.getNo() %>" />
 	<table border="0" align="center"> 

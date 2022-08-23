@@ -14,14 +14,24 @@
 
 	int no = Integer.parseInt(no_);
 	
-	GuestBookDTO guestBookArguDto = new GuestBookDTO();
-	guestBookArguDto.setNo(no);
-	guestBookArguDto.setPasswd(passwd);
-	guestBookArguDto.setEmail(email);
-	guestBookArguDto.setContent(content);
+	GuestBookDTO arguGuestBookDto = new GuestBookDTO();
+	arguGuestBookDto.setNo(no);
+	arguGuestBookDto.setPasswd(passwd);
+	arguGuestBookDto.setEmail(email);
+	arguGuestBookDto.setContent(content);
 	
 	GuestBookDAO guestBookDao = new GuestBookDAO();
-	int result = guestBookDao.setUpdate(guestBookArguDto);
+	
+	GuestBookDTO returnGuestBookDto = guestBookDao.getSelectOne(arguGuestBookDto);
+	if (!passwd.equals(returnGuestBookDto.getPasswd())) {
+		out.println("<script>");
+		out.println("alert('입력한 비밀번호가 다릅니다.');");
+		out.println("location.href='main.jsp?menuGubun=guestBook_sujung&no="+ no +"';");
+		out.println("</script>");
+		return;
+	}//if
+	
+	int result = guestBookDao.setUpdate(arguGuestBookDto);
 	
 	if (result > 0) {
 		out.println("<script>");

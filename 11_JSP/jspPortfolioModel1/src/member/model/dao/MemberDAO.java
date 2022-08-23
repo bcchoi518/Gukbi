@@ -15,12 +15,52 @@ public class MemberDAO {
 	
 	String tableName_1 = "member";
 	
-	public ArrayList<MemberDTO> getSelectAll() {
+	public String tableNameChecker(String tableName) {
+		if (tableName == null) {
+			return null;
+		}//if
+		
+		tableName = tableName.replace(" ", "").replace(";", "");
+		
+		return tableName;
+	}//tableNameChecker
+	
+	public ArrayList<MemberDTO> getSelectAll(String searchGubun, String searchData) {
 		ArrayList<MemberDTO> memberList = new ArrayList<>();
 		conn = DB.dbConn();
 		try {
-			String sql = "SELECT * FROM "+ tableName_1 +" ORDER BY no DESC";
+			String sql = "SELECT * FROM "+ tableNameChecker(tableName_1) +" WHERE 1 = 1";
+			
+			if (searchGubun.equals("id")) {
+				sql += " AND id LIKE ? ";
+			} else if (searchGubun.equals("name")) {
+				sql += " AND name LIKE ? ";
+			} else if (searchGubun.equals("phone")) {
+				sql += " AND phone LIKE ? ";
+			} else if (searchGubun.equals("jumin")) {
+				sql += " AND jumin LIKE ? ";
+			} else if (searchGubun.equals("id_name_phone_jumin")) {
+				sql += " AND (id LIKE ? OR name LIKE ? OR phone LIKE ? OR jumin LIKE ?) ";
+			}//if
+			
+			sql += "ORDER BY no DESC";
 			pstmt = conn.prepareStatement(sql);
+			
+			if (searchGubun.equals("id")) {
+				pstmt.setString(1, '%' + searchData + '%');
+			} else if (searchGubun.equals("name")) {
+				pstmt.setString(1, '%' + searchData + '%');
+			} else if (searchGubun.equals("phone")) {
+				pstmt.setString(1, '%' + searchData + '%');
+			} else if (searchGubun.equals("jumin")) {
+				pstmt.setString(1, '%' + searchData + '%');
+			} else if (searchGubun.equals("id_name_phone_jumin")) {
+				pstmt.setString(1, '%' + searchData + '%');
+				pstmt.setString(2, '%' + searchData + '%');
+				pstmt.setString(3, '%' + searchData + '%');
+				pstmt.setString(4, '%' + searchData + '%');
+			}//if
+			
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
 				MemberDTO memberDto = new MemberDTO();
@@ -52,7 +92,7 @@ public class MemberDAO {
 		MemberDTO memberDto = new MemberDTO();
 		conn = DB.dbConn();
 		try {
-			String sql = "SELECT * FROM "+ tableName_1 +" WHERE no = ?";
+			String sql = "SELECT * FROM "+ tableNameChecker(tableName_1) +" WHERE no = ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, paramDto.getNo());
 			rs = pstmt.executeQuery();
@@ -80,6 +120,28 @@ public class MemberDAO {
 		return memberDto;
 	}//getSelectOne
 	
+	public MemberDTO getLogin(MemberDTO paramDto) {
+		MemberDTO memberDto = new MemberDTO();
+		conn = DB.dbConn();
+		try {
+			String sql = "SELECT no, name, grade FROM "+ tableNameChecker(tableName_1) +" WHERE id = ? AND passwd = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, paramDto.getId());
+			pstmt.setString(2, paramDto.getPasswd());
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				memberDto.setNo(rs.getInt("no"));
+				memberDto.setName(rs.getString("name"));
+				memberDto.setGrade(rs.getString("grade"));
+			}//if
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DB.dbConnClose(rs, pstmt, conn);
+		}//try-catch-finally
+		return memberDto;
+	}//getLogin
+	
 	public int setInsert(MemberDTO paramDto) {
 		if (paramDto.getAttachInfo() == null) {
 			paramDto.setAttachInfo("-");
@@ -87,7 +149,7 @@ public class MemberDAO {
 		int result = 0;
 		conn = DB.dbConn();
 		try {
-			String sql = "INSERT INTO "+ tableName_1 +" VALUES (seq_member.NEXTVAL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, SYSDATE, ?)";
+			String sql = "INSERT INTO "+ tableNameChecker(tableName_1) +" VALUES (seq_member.NEXTVAL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, SYSDATE, ?)";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, paramDto.getId());
 			pstmt.setString(2, paramDto.getPasswd());
@@ -114,7 +176,7 @@ public class MemberDAO {
 		int result = 0;
 		conn = DB.dbConn();
 		try {
-			String sql = "UPDATE "+ tableName_1 +" SET phone = ?, email = ?, juso1 = ?, juso2 = ?, juso3 = ?, juso4 = ?, grade = ? WHERE no = ? AND passwd = ?";
+			String sql = "UPDATE "+ tableNameChecker(tableName_1) +" SET phone = ?, email = ?, juso1 = ?, juso2 = ?, juso3 = ?, juso4 = ?, grade = ? WHERE no = ? AND passwd = ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, paramDto.getPhone());
 			pstmt.setString(2, paramDto.getEmail());
@@ -138,7 +200,7 @@ public class MemberDAO {
 		int result = 0;
 		conn = DB.dbConn();
 		try {
-			String sql = "DELETE FROM "+ tableName_1 +" WHERE no = ? AND passwd = ?";
+			String sql = "DELETE FROM "+ tableNameChecker(tableName_1) +" WHERE no = ? AND passwd = ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, paramDto.getNo());
 			pstmt.setString(2, paramDto.getPasswd());

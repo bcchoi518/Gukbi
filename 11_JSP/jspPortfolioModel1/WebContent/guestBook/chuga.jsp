@@ -1,20 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
+<%@ include file = "../_include/inc_sessionChk.jsp" %>
+
 <h2>방명록등록</h2>
 <form name="frm">
 	<table border="0" align="center"> 
 		<tr>
 			<td class="entryName">이름 : </td>
-			<td><input type="text" name="name" /></td>
-		</tr>
-		<tr>
-			<td class="entryName">비밀번호 : </td>
-			<td><input type="password" name="passwd" /></td>
+			<td><input type="text" name="name" value="<%=sessionName %>"/></td>
 		</tr>
 		<tr>
 			<td class="entryName">이메일 : </td>
 			<td><input type="text" name="email" /></td>
+		</tr>
+		<tr>
+			<td class="entryName">비밀번호 : </td>
+			<td><input type="password" name="passwd" /></td>
 		</tr>
 		<tr>
 			<td class="entryName">방명록 내용 : </td>

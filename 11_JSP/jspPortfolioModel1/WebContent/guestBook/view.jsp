@@ -16,12 +16,12 @@
 	
 	//예외처리 중요하니까 모든 가능성을 생각하자
 	if (resultGuestBookDto.getNo() <= 0) {
-		out.println("<script> alert('존재하지 않는 회원입니다.'); location.href='main.jsp?menuGubun=guestBook_list'; </script>");
+		out.println("<script> alert('존재하지 않는 방명록입니다.'); location.href='main.jsp?menuGubun=guestBook_list'; </script>");
 		return;
 	}//if
 %>
 
-<h2>회원상세보기</h2>
+<h2>방명록상세보기</h2>
 <table border="0" align="center">
 	<tr>
 		<td class="entryName">이름 : </td>
@@ -51,20 +51,19 @@
 <a href="#" onClick="move('guestBook_sakje','<%=no %>')">삭제</a>
 |
 </div>
-<form name="dataForm">
+<form name="dataTransferForm">
 	<input type="hidden" name="menuGubun" />
 	<input type="hidden" name="no" />
 </form>
 <script>
 	function move(value1, value2) {
 		if (value2 != undefined) {
-			document.dataForm.no.value = value2;
+			document.dataTransferForm.no.value = value2;
 		}//if
+		document.dataTransferForm.menuGubun.value = value1;
 		
-		document.dataForm.menuGubun.value = value1;
-		
-		document.dataForm.action = 'main.jsp';
-		document.dataForm.method = 'post';
-		document.dataForm.submit();
+		document.dataTransferForm.action = 'main.jsp';
+		document.dataTransferForm.method = 'post';
+		document.dataTransferForm.submit();
 	}//move
 </script>

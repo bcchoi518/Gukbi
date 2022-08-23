@@ -3,13 +3,13 @@
 
 <h2>메모등록</h2>
 <form name="frm">
-	<table border="1" width="80%" align="center">
+	<table border="0" width="80%" align="center">
 		<tr>
-			<td>작성자 : </td>
+			<td class="entryName">작성자 : </td>
 			<td><input type="text" name="writer" /></td>
 		</tr>
 		<tr>
-			<td>메모내용 : </td>
+			<td class="entryName">메모내용 : </td>
 			<td><textarea name="content" rows="15" cols="100"></textarea></td>
 		</tr>
 		<tr>

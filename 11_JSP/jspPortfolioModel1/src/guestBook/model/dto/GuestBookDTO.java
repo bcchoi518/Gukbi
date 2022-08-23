@@ -9,7 +9,14 @@ public class GuestBookDTO {
     private String passwd;
     private String content;
     private Date regiDate;
+    private int memberNo;
     
+	public int getMemberNo() {
+		return memberNo;
+	}
+	public void setMemberNo(int memberNo) {
+		this.memberNo = memberNo;
+	}
 	public int getNo() {
 		return no;
 	}
