@@ -1,11 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
-<%@page import="java.util.ArrayList"%>
+<%@ include file = "_inc_top.jsp" %>
+ 
+<%@ page import="java.util.ArrayList"%>
 
-<%@page import="config.Util"%>
-<%@page import="member.model.dto.MemberDTO"%>
-<%@page import="member.model.dao.MemberDAO"%>
+<%@ page import="config.Util"%>
+<%@ page import="member.model.dto.MemberDTO"%>
+<%@ page import="member.model.dao.MemberDAO"%>
 
 <%
 	request.setCharacterEncoding("UTF-8");
@@ -25,14 +27,16 @@
 
 	MemberDAO memberDao = new MemberDAO();
 	ArrayList<MemberDTO> memberList = memberDao.getSelectAll(searchGubun, searchData);
+	
+	int totalRecord = memberList.size();
 %>
 
 <h2>회원목록</h2>
 <div style="border: 0px solid red; padding:0px; width:80%; text-align:left;">
 <% if (searchGubun.equals("") || searchData.equals("")) { %>
-* 전체목록 (<%=memberList.size() %>건)
+* 전체목록 (<%=totalRecord %>건)
 <% } else { %>
-* 검색어 <%=searchData %>으/로 검색된 결과 (<%=memberList.size() %>건)
+* 검색어 <%=searchData %>으/로 검색된 결과 (<%=totalRecord %>건)
 <% }//if %>
 </div>
 <table border="1" width="80%" style="text-align: center;">
@@ -46,6 +50,13 @@
 		<th>등급</th>
 		<th>등록일</th>
 	</tr>
+	<%
+		if (totalRecord == 0) {
+			out.println("<tr>");
+			out.println("<td colspan=\"8\" height=\"100px\" style=\"text-align:center;\">저장된 정보가 없습니다.</td>");
+			out.println("</tr>");
+		}//if
+	%>
 	<%
 		for (MemberDTO memberResultDto : memberList) {
 	%>

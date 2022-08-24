@@ -20,11 +20,11 @@
 	<input type="hidden" name="no" value="<%=resultMemoDto.getNo() %>" />
 	<table border="1" width="80%" align="center">
 		<tr>
-			<td>작성자 : </td>
+			<td class="entryName">작성자 : </td>
 			<td><%=resultMemoDto.getWriter() %></td>
 		</tr>
 		<tr>
-			<td>메모내용 : </td>
+			<td class="entryName">메모내용 : </td>
 			<td><%=resultMemoDto.getContent().replace("\n", "<br>") %></td>
 		</tr>
 		<tr>

@@ -6,11 +6,11 @@
 <form name="loginForm">
 	<table border="1">
 		<tr>
-			<td>아이디</td>
+			<td class="entryName">아이디</td>
 			<td><input type="text" name="id" /></td>
 		</tr>
 		<tr>
-			<td>비밀번호</td>
+			<td class="entryName">비밀번호</td>
 			<td><input type="password" name="passwd" /></td>
 		</tr>
 		<tr>

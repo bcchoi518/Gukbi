@@ -1,70 +1,70 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
+<%@ include file = "_inc_top.jsp" %>
+
 <%@page import="java.util.ArrayList"%>
 
 <%@page import="config.Util"%>
-<%@page import="guestBook.model.dto.GuestBookDTO"%>
-<%@page import="guestBook.model.dao.GuestBookDAO"%>
+<%@page import="boardBasic.model.dto.BoardBasicDTO"%>
+<%@page import="boardBasic.model.dao.BoardBasicDAO"%>
 
 <%
 	request.setCharacterEncoding("UTF-8");
-	String searchGubun = request.getParameter("searchGubun");
-	String searchData = request.getParameter("searchData");
+// 	String searchGubun = request.getParameter("searchGubun");
+// 	String searchData = request.getParameter("searchData");
 	
-	Util util = new Util();
-	searchGubun = util.getNullBlankCheck(searchGubun, "");
-	searchData = util.getNullBlankCheck(searchData, "");
-	searchData = util.getCheckString(searchData);
+// 	Util util = new Util();
+// 	searchGubun = util.getNullBlankCheck(searchGubun, "");
+// 	searchData = util.getNullBlankCheck(searchData, "");
+// 	searchData = util.getCheckString(searchData);
 	
-	if (searchGubun.equals("") || searchData.equals("")) {
-		searchGubun = "";
-		searchData = "";
-	}//if
+// 	if (searchGubun.equals("") || searchData.equals("")) {
+// 		searchGubun = "";
+// 		searchData = "";
+// 	}//if
 	
-	GuestBookDAO guestBookDao = new GuestBookDAO();
-	ArrayList<GuestBookDTO> guestBookList = guestBookDao.getSelectAll(searchGubun, searchData);
+	BoardBasicDAO boardBasicDao = new BoardBasicDAO();
+	ArrayList<BoardBasicDTO> boardBasicList = boardBasicDao.getSelectAll();
 	
-	int totalRecord = guestBookList.size();
+	int totalRecord = boardBasicList.size();
 %>
 
-<h2>방명록목록</h2>
+<h2>게시글목록</h2>
 <div style="border: 0px solid red; padding:0px; width:80%; text-align:left;">
-<% if (searchGubun.equals("") || searchData.equals("")) { %>
+<%-- <% if (searchGubun.equals("") || searchData.equals("")) { %> --%>
 * 전체목록 (<%=totalRecord %>건)
-<% } else { %>
-* 검색어 "<%=searchData %>"으/로 검색된 목록 (<%=totalRecord %>건)
-<% }//if %>
+<%-- <% } else { %> --%>
+<%-- * 검색어 "<%=searchData %>"으/로 검색된 목록 (<%=totalRecord %>건) --%>
+<%-- <% }//if %> --%>
 </div>
 <table border="1" width="80%" style="text-align: center;">
 	<tr>
 		<th>순번</th>
-		<th>이름</th>
-		<th>이메일</th>
-		<th>방명록내용</th>
-		<th>등록일</th>
-		<th>실작성자</th>
+		<th>제목</th>
+		<th>작성자</th>
+		<th>작성일</th>
+		<th>조회수</th>
 	</tr>
 	<%
 		if (totalRecord == 0) {
 			out.println("<tr>");
-			out.println("<td colspan=\"6\" height=\"100px\" style=\"text-align:center;\">저장된 정보가 없습니다.</td>");
+			out.println("<td colspan=\"5\" height=\"100px\" style=\"text-align:center;\">저장된 정보가 없습니다.</td>");
 			out.println("</tr>");
 		}//if
 	%>
 	<%
-		for (GuestBookDTO resultGuestBookDto : guestBookList) {
+		for (BoardBasicDTO resultBoardBasicDto : boardBasicList) {
 	%>
 		<tr>
-			<td><%=resultGuestBookDto.getNo() %></td>
-			<td><a href="#" onClick="move('guestBook_view','<%=resultGuestBookDto.getNo() %>')"><%=resultGuestBookDto.getName() %></a></td>
-			<td><%=resultGuestBookDto.getEmail() %></td>
-			<td style="text-align:left;"><div id="list_content"><%=resultGuestBookDto.getContent() %></div></td>
-			<td><%=resultGuestBookDto.getRegiDate() %></td>
-			<td><%=resultGuestBookDto.getMemberNo() %></td>
+			<td><%=resultBoardBasicDto.getNo() %></td>
+			<td><a href="#" onClick="move('boardBasic_view','<%=resultBoardBasicDto.getNo() %>')"><%=resultBoardBasicDto.getSubject() %></a></td>
+			<td><%=resultBoardBasicDto.getWriter() %></td>
+			<td><%=resultBoardBasicDto.getRegiDate() %></td>
+			<td><%=resultBoardBasicDto.getHit() %></td>
 		</tr>
 	<% }//for %>
-	
+<%-- 	
 	<tr>
 		<td colspan="6" align="center" style="padding:20px 0px">
 			<form name="searchForm">
@@ -82,19 +82,20 @@
 			
 			<script>
 				function search() {
-					document.searchForm.action = 'mainProc.jsp?menuGubun=guestBook_listSearch';
+					document.searchForm.action = 'mainProc.jsp?menuGubun=boardBasic_listSearch';
 					document.searchForm.method = 'post';
 					document.searchForm.submit();
 				}//search
 			</script>
 		</td>
 	</tr>
+--%>
 </table>
 <div style="border: 0px solid red; padding-top:20px; width:80%; text-align:right;">
 |
-<a href="#" onClick="move('guestBook_list')">목록</a>
+<a href="#" onClick="move('boardBasic_list')">목록</a>
 |
-<a href="#" onClick="move('guestBook_chuga')">등록</a>
+<a href="#" onClick="move('boardBasic_chuga')">등록</a>
 |
 </div>
 <form name="dataTransferForm">

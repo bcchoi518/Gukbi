@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
+<%@ include file = "_inc_top.jsp" %>
+
 <h2>회원등록(attach)</h2>
 <form name="chugaForm">
 	<table border="0" align="center"> 

@@ -12,9 +12,9 @@
 	guestBookArguDto.setNo(no);
 	
 	GuestBookDAO guestBookDao = new GuestBookDAO();
-	GuestBookDTO guestBookResultDto = guestBookDao.getSelectOne(guestBookArguDto);
+	GuestBookDTO resultGuestBookDto = guestBookDao.getSelectOne(guestBookArguDto);
 	
-	if (guestBookResultDto.getNo() <= 0) {
+	if (resultGuestBookDto.getNo() <= 0) {
 		out.println("<script> alert('존재하지 않는 방명록입니다.'); location.href='main.jsp?menuGubun=guestBook_list'; </script>");
 		return;
 	}//if
@@ -22,11 +22,11 @@
 
 <h2>방명록수정</h2>
 <form name="frm">
-	<input type="hidden" name="no" value="<%=guestBookResultDto.getNo() %>" />
+	<input type="hidden" name="no" value="<%=resultGuestBookDto.getNo() %>" />
 	<table border="0" align="center"> 
 		<tr>
 			<td class="entryName">이름 : </td>
-			<td><%=guestBookResultDto.getName() %></td>
+			<td><%=resultGuestBookDto.getName() %></td>
 		</tr>
 		<tr>
 			<td class="entryName">비밀번호 : </td>
@@ -34,11 +34,11 @@
 		</tr>
 		<tr>
 			<td class="entryName">이메일 : </td>
-			<td><input type="text" name="email" value="<%=guestBookResultDto.getEmail() %>"/></td>
+			<td><input type="text" name="email" value="<%=resultGuestBookDto.getEmail() %>"/></td>
 		</tr>
 		<tr>
 			<td>방명록내용 : </td>
-			<td><textarea name="content" rows="15" cols="100"><%=guestBookResultDto.getContent() %></textarea></td>
+			<td><textarea name="content" rows="15" cols="100"><%=resultGuestBookDto.getContent() %></textarea></td>
 		</tr>
 		<tr align="center" height="50px">
 			<td colspan="2">
