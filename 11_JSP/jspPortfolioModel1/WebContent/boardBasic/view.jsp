@@ -12,6 +12,7 @@
 	arguBoardBasicDto.setNo(no);
 	
 	BoardBasicDAO boardBasicDao = new BoardBasicDAO();
+	boardBasicDao.setUpdateHit(arguBoardBasicDto);
 	BoardBasicDTO resultBoardBasicDto = boardBasicDao.getSelectOne(arguBoardBasicDto);
 	
 	//예외처리 중요하니까 모든 가능성을 생각하자
@@ -19,13 +20,9 @@
 		out.println("<script> alert('존재하지 않는 정보입니다.'); location.href='main.jsp?menuGubun=boardBasic_list'; </script>");
 		return;
 	}//if
-	
-	int hit = resultBoardBasicDto.getHit() + 1;
-	arguBoardBasicDto.setHit(hit);
-	int resultHit = boardBasicDao.setHitUpdate(arguBoardBasicDto);
 %>
 
-<h2>게시판(B)상세보기</h2>
+<h2>게시글상세보기</h2>
 <table border="0" align="center">
 	<tr>
 		<td class="entryName">no : </td>
@@ -65,7 +62,7 @@
 	</tr>
 	<tr>
 		<td class="entryName">조회수 : </td>
-		<td><%=hit %></td>
+		<td><%=resultBoardBasicDto.getHit() %></td>
 	</tr>
 	<tr>
 		<td class="entryName">등록일 : </td>
@@ -81,6 +78,8 @@
 <a href="#" onClick="move('boardBasic_sujung','<%=no %>')">수정</a>
 |
 <a href="#" onClick="move('boardBasic_sakje','<%=no %>')">삭제</a>
+|
+<a href="#" onClick="move('boardBasic_reply','<%=no %>')">답글</a>
 |
 </div>
 <form name="dataTransferForm">

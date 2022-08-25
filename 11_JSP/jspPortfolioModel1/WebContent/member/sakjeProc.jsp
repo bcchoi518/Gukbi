@@ -22,6 +22,7 @@
 	MemberDAO memberDao = new MemberDAO();
 	
 	MemberDTO imsiDto = new MemberDTO();
+	imsiDto.setNo(no);
 	MemberDTO resultDto = memberDao.getSelectOne(imsiDto);
 	String attachInfo = resultDto.getAttachInfo();
 	
@@ -33,21 +34,23 @@
 		imsiMsg = "삭제 성공..";
 		imsiUrl = "main.jsp?menuGubun=member_list";
 		
-		//파일 삭제 처리..
-		String attachPath = "C:/cbc/attach";
-		String uploadPath = attachPath + request.getContextPath() + "/member";
-		
-		String[] imsiArray01 = attachInfo.split(",");
-		for (int i = 0; i < imsiArray01.length; i++) {
-			String[] imsiArray02 = imsiArray01[i].split("[|]");
-			String uploadFile = uploadPath + "/" + imsiArray02[1];
-			java.io.File f = new java.io.File(uploadFile);
-			if (f.delete()) {
-				//파일 삭제 성공..
-			} else {
-				//파일 삭제 실패..
-			}//if
-		}//for
+		if (!attachInfo.equals("-")) {
+			//파일 삭제 처리..
+			String attachPath = "C:/cbc/attach";
+			String uploadPath = attachPath + request.getContextPath() + "/member";
+			
+			String[] imsiArray01 = attachInfo.split(",");
+			for (int i = 0; i < imsiArray01.length; i++) {
+				String[] imsiArray02 = imsiArray01[i].split("[|]");
+				String uploadFile = uploadPath + "/" + imsiArray02[1];
+				java.io.File f = new java.io.File(uploadFile);
+				if (f.delete()) {
+					//파일 삭제 성공..
+				} else {
+					//파일 삭제 실패..
+				}//if
+			}//for
+		}//if
 	}//if
 	
 	out.println("<script>");

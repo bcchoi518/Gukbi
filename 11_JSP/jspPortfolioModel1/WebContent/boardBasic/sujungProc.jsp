@@ -29,8 +29,6 @@
 	email = util.getCheckString(email);
 	content = util.getNullBlankCheck(content, "-");
 	content = util.getCheckString(content);
-	passwd = util.getNullBlankCheck(passwd, "-");
-	passwd = util.getCheckString(passwd);
 	
 	BoardBasicDTO arguBoardBasicDto = new BoardBasicDTO();
 	arguBoardBasicDto.setNo(no);
@@ -39,9 +37,6 @@
 	arguBoardBasicDto.setContent(content);
 	arguBoardBasicDto.setEmail(email);
 	arguBoardBasicDto.setPasswd(passwd);
-	arguBoardBasicDto.setRefNo(0);
-	arguBoardBasicDto.setStepNo(0);
-	arguBoardBasicDto.setLevelNo(0);
 	
 	BoardBasicDAO boardBasicDao = new BoardBasicDAO();
 	

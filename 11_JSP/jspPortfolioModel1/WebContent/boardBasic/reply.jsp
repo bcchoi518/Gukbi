@@ -3,7 +3,10 @@
     
 <%@ include file = "../_include/inc_sessionChk.jsp" %>
 <%@ include file = "_inc_top.jsp" %>
-<%@page import="config.Util"%>
+
+<%@ page import="config.Util"%>
+<%@ page import="boardBasic.model.dao.BoardBasicDAO"%>
+<%@ page import="boardBasic.model.dto.BoardBasicDTO"%>
 
 <%
 	String no_ = request.getParameter("no");
@@ -11,9 +14,20 @@
 	Util util = new Util();
 	no_ = util.getNullBlankCheck(no_, "0");
 	int no = Integer.parseInt(no_);
+	
+	BoardBasicDTO boardBasicArguDto = new BoardBasicDTO();
+	boardBasicArguDto.setNo(no);
+	
+	BoardBasicDAO boardBasicDao = new BoardBasicDAO();
+	BoardBasicDTO resultBoardBasicDto = boardBasicDao.getSelectOne(boardBasicArguDto);
+	
+	if (resultBoardBasicDto.getNo() <= 0) {
+		out.println("<script> alert('존재하지 않는 정보입니다.'); location.href='main.jsp?menuGubun=boardBasic_list'; </script>");
+		return;
+	}//if
 %>
 
-<h2>게시글등록</h2>
+<h2>답변글등록</h2>
 <form name="frm">
 	<input type="hidden" name="no" value="<%=no %>" />
 	<table border="0" align="center"> 
@@ -24,11 +38,11 @@
 		<tr>
 		<tr>
 			<td class="entryName">제목 : </td>
-			<td><input type="text" name="subject" /></td>
+			<td><input type="text" name="subject" value="<%=resultBoardBasicDto.getSubject() %>"/></td>
 		</tr>
 		<tr>
 			<td class="entryName">내용 : </td>
-			<td><textarea name="content" rows="15" cols="100"></textarea></td>
+			<td><textarea name="content" rows="15" cols="100"><%=resultBoardBasicDto.getContent() %></textarea></td>
 		</tr>
 		<tr>
 			<td class="entryName">이메일 : </td>
@@ -49,7 +63,7 @@
 <script>
 	function formSubmit() {
 		if (confirm('저장할까요?')) {
-			document.frm.action = "mainProc.jsp?menuGubun=boardBasic_chugaProc";
+			document.frm.action = "mainProc.jsp?menuGubun=boardBasic_replyProc";
 			document.frm.method = "post";
 			document.frm.submit();
 		}//if

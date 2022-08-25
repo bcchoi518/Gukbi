@@ -1,7 +1,6 @@
 package boardBasic.model.dao;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -29,7 +28,7 @@ public class BoardBasicDAO {
 		ArrayList<BoardBasicDTO> boardBasicList = new ArrayList<>();
 		conn = DB.dbConn();
 		try {
-			String sql = "SELECT no, subject, writer, regiDate, hit FROM "+ tableNameChecker(tableName) +" ORDER BY no DESC";
+			String sql = "SELECT no, subject, writer, regiDate, hit, stepNo FROM "+ tableNameChecker(tableName) +" ORDER BY refNo DESC, levelNo ASC";
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
@@ -39,6 +38,7 @@ public class BoardBasicDAO {
 				boardBasicDto.setWriter(rs.getString("writer"));
 				boardBasicDto.setRegiDate(rs.getDate("regiDate"));
 				boardBasicDto.setHit(rs.getInt("hit"));
+				boardBasicDto.setStepNo(rs.getInt("stepNo"));
 				boardBasicList.add(boardBasicDto);
 			}//while
 		} catch (Exception e) {
@@ -95,7 +95,25 @@ public class BoardBasicDAO {
 			DB.dbConnClose(rs, pstmt, conn);
 		}//try-catch-finally
 		return result;
-	}//getSelectSequence
+	}//getMaxNum
+
+	public int getMaxRefNo() {
+		int result = 0;
+		conn = DB.dbConn();
+		try {
+			String sql = "SELECT NVL(max(refNo),0) refNo FROM boardbasic";
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				result = rs.getInt("refNo");
+			}//if
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DB.dbConnClose(rs, pstmt, conn);
+		}//try-catch-finally
+		return result;
+	}//getMaxRefNo
 	
 	public int setInsert(BoardBasicDTO paramDto) {
 		int result = 0;
@@ -126,17 +144,14 @@ public class BoardBasicDAO {
 		int result = 0;
 		conn = DB.dbConn();
 		try {
-			String sql = "UPDATE "+ tableNameChecker(tableName) +" SET writer = ?, subject = ?, content = ?, email = ?, refNo = ?, stepNo = ?, levelNo = ? WHERE no = ? AND passwd = ?";
+			String sql = "UPDATE "+ tableNameChecker(tableName) +" SET writer = ?, subject = ?, content = ?, email = ? WHERE no = ? AND passwd = ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, paramDto.getWriter());
 			pstmt.setString(2, paramDto.getSubject());
 			pstmt.setString(3, paramDto.getContent());
 			pstmt.setString(4, paramDto.getEmail());
-			pstmt.setInt(5, paramDto.getRefNo());
-			pstmt.setInt(6, paramDto.getStepNo());
-			pstmt.setInt(7, paramDto.getLevelNo());
-			pstmt.setInt(8, paramDto.getNo());
-			pstmt.setString(9, paramDto.getPasswd());
+			pstmt.setInt(5, paramDto.getNo());
+			pstmt.setString(6, paramDto.getPasswd());
 			result = pstmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -146,22 +161,34 @@ public class BoardBasicDAO {
 		return result;
 	}//setUpdate
 	
-	public int setHitUpdate(BoardBasicDTO paramDto) {
-		int result = 0;
+	public void setUpdateHit(BoardBasicDTO paramDto) {
 		conn = DB.dbConn();
 		try {
-			String sql = "UPDATE "+ tableNameChecker(tableName) +" SET hit = ? WHERE no = ?";
+			String sql = "UPDATE "+ tableNameChecker(tableName) +" SET hit = (hit + 1) WHERE no = ?";
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, paramDto.getHit());
-			pstmt.setInt(2, paramDto.getNo());
-			result = pstmt.executeUpdate();
+			pstmt.setInt(1, paramDto.getNo());
+			pstmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			DB.dbConnClose(rs, pstmt, conn);
 		}//try-catch-finally
-		return result;
 	}//setHitUpdate
+
+	public void setUpdateReLevel(BoardBasicDTO paramDto) {
+		conn = DB.dbConn();
+		try {
+			String sql = "UPDATE boardBasic SET levelNo = (levelNo + 1) WHERE refNo = ? AND levelNo > ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, paramDto.getRefNo());
+			pstmt.setInt(2, paramDto.getLevelNo());
+			pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DB.dbConnClose(rs, pstmt, conn);
+		}//try-catch-finally
+	}//setUpdateReLevel
 	
 	public int setDelete(BoardBasicDTO paramDto) {
 		int result = 0;

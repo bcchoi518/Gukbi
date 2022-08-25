@@ -11,12 +11,12 @@
 <%
 	request.setCharacterEncoding("UTF-8");
 	
+	String no_ = request.getParameter("no");
 	String writer = request.getParameter("writer");
 	String subject = request.getParameter("subject");
 	String content = request.getParameter("content");
 	String email = request.getParameter("email");
 	String passwd = request.getParameter("passwd");
-	String no_ = request.getParameter("no");
 	
 	Util util = new Util();
 	no_ = util.getNullBlankCheck(no_, "0");
@@ -56,7 +56,7 @@
 		//stepNo: 부모글의 stepNo + 1
 		stepNo = returnDto.getStepNo() + 1;
 		//levelNo: refNo가 같은 부모글 중에서 levelNo보다 큰 값들은 1씩 증가시키고 levelNo + 1
-		boardBasicDao.setUpdateLevelNo(returnDto);
+		boardBasicDao.setUpdateReLevel(returnDto);
 		levelNo = returnDto.getLevelNo() + 1;
 	}//if
 	
@@ -81,8 +81,8 @@
 		out.println("</script>");
 	} else {
 		out.println("<script>");
-		out.println("alert('등록 중 오류가 발생했습니다.');");
-		out.println("location.href='main.jsp?menuGubun=boardBasic_chuga';");
+		out.println("alert('답변글 처리 중 오류가 발생했습니다.');");
+		out.println("location.href='main.jsp?menuGubun=boardBasic_reply&no="+ no +"';");
 		out.println("</script>");
 	}//if
 %>

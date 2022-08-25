@@ -31,24 +31,20 @@
 			<td><%=resultBoardBasicDto.getWriter() %></td>
 		</tr>
 		<tr>
+			<td class="entryName">제목 : </td>
+			<td><%=resultBoardBasicDto.getSubject() %></td>
+		</tr>
+		<tr>
+			<td class="entryName">내용 : </td>
+			<td><%=resultBoardBasicDto.getContent().replace("\n", "<br>") %></td>
+		</tr>
+		<tr>
 			<td class="entryName">이메일 : </td>
 			<td><%=resultBoardBasicDto.getEmail() %></td>
 		</tr>
 		<tr>
 			<td class="entryName">비밀번호 : </td>
 			<td><input type="password" name="passwd" /></td>
-		</tr>
-		<tr>
-			<td class="entryName">제목 : </td>
-			<td><%=resultBoardBasicDto.getSubject() %></td>
-		</tr>
-		<tr>
-			<td class="entryName">내용 : </td>
-			<td><%=resultBoardBasicDto.getContent() %></td>
-		</tr>
-		<tr>
-			<td class="entryName">등록일 : </td>
-			<td><%=resultBoardBasicDto.getRegiDate() %></td>
 		</tr>
 		<tr align="center" height="50px">
 			<td colspan="2">

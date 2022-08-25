@@ -24,10 +24,12 @@
 	if (!passwd.equals(returnBoardBasicDto.getPasswd())) {
 		out.println("<script>");
 		out.println("alert('입력한 비밀번호가 다릅니다.');");
-		out.println("location.href='main.jsp?menuGubun=boardBasic_sujung&no="+ no +"';");
+		out.println("location.href='main.jsp?menuGubun=boardBasic_sakje&no="+ no +"';");
 		out.println("</script>");
 		return;
 	}//if
+	
+	
 	
 	int result = boardBasicDao.setDelete(arguBoardBasicDto);
 	

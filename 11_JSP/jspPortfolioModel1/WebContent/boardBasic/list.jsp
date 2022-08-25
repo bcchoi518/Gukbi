@@ -23,7 +23,7 @@
 // 		searchGubun = "";
 // 		searchData = "";
 // 	}//if
-	
+
 	BoardBasicDAO boardBasicDao = new BoardBasicDAO();
 	ArrayList<BoardBasicDTO> boardBasicList = boardBasicDao.getSelectAll();
 	
@@ -58,7 +58,16 @@
 	%>
 		<tr>
 			<td><%=resultBoardBasicDto.getNo() %></td>
-			<td><a href="#" onClick="move('boardBasic_view','<%=resultBoardBasicDto.getNo() %>')"><%=resultBoardBasicDto.getSubject() %></a></td>
+			<% 
+				String reply = "";
+				for (int i = 1; i < resultBoardBasicDto.getStepNo(); i++) {
+					reply += "&nbsp;&nbsp;&nbsp;";
+					if (i == resultBoardBasicDto.getStepNo() - 1) {
+						reply += "└[RE]:";
+					}//if
+				}//for
+			%>
+			<td style="text-align:left"><a href="#" onClick="move('boardBasic_view','<%=resultBoardBasicDto.getNo() %>')"><%=reply %><%=resultBoardBasicDto.getSubject() %></a></td>
 			<td><%=resultBoardBasicDto.getWriter() %></td>
 			<td><%=resultBoardBasicDto.getRegiDate() %></td>
 			<td><%=resultBoardBasicDto.getHit() %></td>
