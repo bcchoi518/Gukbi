@@ -45,6 +45,9 @@
 		<th>작성자</th>
 		<th>작성일</th>
 		<th>조회수</th>
+		<th>실작성자</th>
+		<th>IP</th>
+		<th>부모No</th>
 	</tr>
 	<%
 		if (totalRecord == 0) {
@@ -60,17 +63,40 @@
 			<td><%=resultBoardBasicDto.getNo() %></td>
 			<% 
 				String reply = "";
+				String subject = resultBoardBasicDto.getSubject();
+				if (subject.length() > 5) {
+						subject = subject.substring(0, 6) + "...";
+				}//if
+				
 				for (int i = 1; i < resultBoardBasicDto.getStepNo(); i++) {
 					reply += "&nbsp;&nbsp;&nbsp;";
 					if (i == resultBoardBasicDto.getStepNo() - 1) {
-						reply += "└[RE]:";
+						reply += "[RE]:";
 					}//if
 				}//for
 			%>
-			<td style="text-align:left"><a href="#" onClick="move('boardBasic_view','<%=resultBoardBasicDto.getNo() %>')"><%=reply %><%=resultBoardBasicDto.getSubject() %></a></td>
+			<td style="text-align:left">
+				<% if (sessionChk.equals("O")) { %>
+					<a href="#" onClick="move('boardBasic_view','<%=resultBoardBasicDto.getNo() %>')"><%=reply %><%=subject %></a>
+				<% } else { %>
+					<%=reply %><%=subject %>
+				<% }//if %>
+			</td>
 			<td><%=resultBoardBasicDto.getWriter() %></td>
 			<td><%=resultBoardBasicDto.getRegiDate() %></td>
 			<td><%=resultBoardBasicDto.getHit() %></td>
+			<td>
+			<%=resultBoardBasicDto.getMemberNo() %>
+			<% 
+				if (resultBoardBasicDto.getMemberNo() > 0) {
+					out.println("(회원)");
+				} else {
+					out.println("(비회원)");
+				}//if
+			%>
+			</td>
+			<td><%=resultBoardBasicDto.getIp() %></td>
+			<td><%=resultBoardBasicDto.getParentNo() %></td>
 		</tr>
 	<% }//for %>
 <%-- 	
@@ -104,8 +130,10 @@
 |
 <a href="#" onClick="move('boardBasic_list')">목록</a>
 |
+<% if (sessionChk.equals("O")) { %>
 <a href="#" onClick="move('boardBasic_chuga')">등록</a>
 |
+<% }//if %>
 </div>
 <form name="dataTransferForm">
 	<input type="hidden" name="menuGubun" />

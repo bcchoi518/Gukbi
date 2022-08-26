@@ -31,8 +31,8 @@
 		<td align="center" style="padding: 10px" id="boardBasic">
 			<a href="<%=path %>/main/main.jsp?menuGubun=boardBasic_list">게시판(B)</a>
 		</td>
-		<td align="center" style="padding: 10px" id="menu4">
-			메뉴4
+		<td align="center" style="padding: 10px" id="board">
+			<a href="<%=path %>/main/main.jsp?menuGubun=board_list">게시판</a>
 		</td>
 		<td align="center" style="padding: 10px" id="menu5">
 			메뉴5

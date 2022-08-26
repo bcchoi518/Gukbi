@@ -29,12 +29,11 @@
 		return;
 	}//if
 	
-	
-	
 	int result = boardBasicDao.setDelete(arguBoardBasicDto);
 	
 	String imsiMsg = "삭제 중 오류가 발생했습니다.";
 	String imsiUrl = "main.jsp?menuGubun=boardBasic_sakje&no=" + no;
+	
 	if (result > 0) {
 		imsiMsg = "삭제 성공..";
 		imsiUrl = "main.jsp?menuGubun=boardBasic_list";

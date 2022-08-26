@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
+
+<%@ include file = "_inc_top.jsp" %>    
+
 <%@ page import="boardBasic.model.dao.BoardBasicDAO"%>
 <%@ page import="boardBasic.model.dto.BoardBasicDTO"%>
 
@@ -79,7 +81,7 @@
 |
 <a href="#" onClick="move('boardBasic_sakje','<%=no %>')">삭제</a>
 |
-<a href="#" onClick="move('boardBasic_reply','<%=no %>')">답글</a>
+<a href="#" onClick="move('boardBasic_chuga','<%=no %>')">답변글</a>
 |
 </div>
 <form name="dataTransferForm">

@@ -1,9 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
-<%@ include file = "../_include/inc_sessionChk.jsp" %>
+<%@ page import="config.Util"%>
+<%@ page import="boardBasic.model.dto.BoardBasicDTO"%>
+<%@ page import="boardBasic.model.dao.BoardBasicDAO"%>
+
 <%@ include file = "_inc_top.jsp" %>
-<%@page import="config.Util"%>
 
 <%
 	String no_ = request.getParameter("no");
@@ -11,9 +13,26 @@
 	Util util = new Util();
 	no_ = util.getNullBlankCheck(no_, "0");
 	int no = Integer.parseInt(no_);
+	
+	String imsiTitle = "";
+	String subject = "";
+	String content = "";
+	if (no > 0) {
+		BoardBasicDTO arguBoardBasicDto = new BoardBasicDTO();
+		arguBoardBasicDto.setNo(no);
+		
+		BoardBasicDAO arguBoardBasicDao = new BoardBasicDAO();
+		BoardBasicDTO resultBoardBasicDto = arguBoardBasicDao.getSelectOne(arguBoardBasicDto);
+		
+		imsiTitle = "답변글등록";
+		subject = resultBoardBasicDto.getSubject();
+		content = resultBoardBasicDto.getContent();
+	} else {
+		imsiTitle = "게시글등록";
+	}//if
 %>
 
-<h2>게시글등록</h2>
+<h2><%=imsiTitle %></h2>
 <form name="frm">
 	<input type="hidden" name="no" value="<%=no %>" />
 	<table border="0" align="center"> 
@@ -24,11 +43,11 @@
 		<tr>
 		<tr>
 			<td class="entryName">제목 : </td>
-			<td><input type="text" name="subject" /></td>
+			<td><input type="text" name="subject" value="<%=subject %>"/></td>
 		</tr>
 		<tr>
 			<td class="entryName">내용 : </td>
-			<td><textarea name="content" rows="15" cols="100"></textarea></td>
+			<td><textarea name="content" rows="15" cols="100"><%=content.replace("\n", "<br>") %></textarea></td>
 		</tr>
 		<tr>
 			<td class="entryName">이메일 : </td>

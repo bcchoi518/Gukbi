@@ -12,23 +12,12 @@ public class BoardBasicDAO {
 	Connection conn = null;
 	PreparedStatement pstmt = null;
 	ResultSet rs = null;
-	String tableName = "boardBasic";
-	
-	public String tableNameChecker(String tableName) {
-		if (tableName == null) {
-			return null;
-		}//if
-		
-		tableName = tableName.replace(" ", "").replace(";", "");
-		
-		return tableName;
-	}//tableNameChecker
 	
 	public ArrayList<BoardBasicDTO> getSelectAll() {
 		ArrayList<BoardBasicDTO> boardBasicList = new ArrayList<>();
 		conn = DB.dbConn();
 		try {
-			String sql = "SELECT no, subject, writer, regiDate, hit, stepNo FROM "+ tableNameChecker(tableName) +" ORDER BY refNo DESC, levelNo ASC";
+			String sql = "SELECT no, subject, writer, regiDate, hit, stepNo, memberNo, ip, parentNo FROM boardBasic ORDER BY refNo DESC, levelNo ASC";
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
@@ -39,6 +28,9 @@ public class BoardBasicDAO {
 				boardBasicDto.setRegiDate(rs.getDate("regiDate"));
 				boardBasicDto.setHit(rs.getInt("hit"));
 				boardBasicDto.setStepNo(rs.getInt("stepNo"));
+				boardBasicDto.setMemberNo(rs.getInt("memberNo"));
+				boardBasicDto.setIp(rs.getString("ip"));
+				boardBasicDto.setParentNo(rs.getInt("parentNo"));
 				boardBasicList.add(boardBasicDto);
 			}//while
 		} catch (Exception e) {
@@ -53,7 +45,7 @@ public class BoardBasicDAO {
 		BoardBasicDTO boardBasicDto = new BoardBasicDTO();
 		conn = DB.dbConn();
 		try {
-			String sql = "SELECT * FROM "+ tableNameChecker(tableName) +" WHERE no = ?";
+			String sql = "SELECT * FROM boardBasic WHERE no = ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, paramDto.getNo());
 			rs = pstmt.executeQuery();
@@ -70,6 +62,9 @@ public class BoardBasicDAO {
 				boardBasicDto.setLevelNo(rs.getInt("levelNo"));
 				boardBasicDto.setHit(rs.getInt("hit"));
 				boardBasicDto.setRegiDate(rs.getDate("regiDate"));
+				boardBasicDto.setMemberNo(rs.getInt("memberNo"));
+				boardBasicDto.setIp(rs.getString("ip"));
+				boardBasicDto.setParentNo(rs.getInt("parentNo"));
 			}//if
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -119,7 +114,7 @@ public class BoardBasicDAO {
 		int result = 0;
 		conn = DB.dbConn();
 		try {
-			String sql = "INSERT INTO "+ tableNameChecker(tableName) +" VALUES (seq_boardBasic.NEXTVAL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, SYSDATE)";
+			String sql = "INSERT INTO boardBasic VALUES (seq_boardBasic.NEXTVAL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, SYSDATE, ?, ?, ?)";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, paramDto.getNum());
 			pstmt.setString(2, paramDto.getWriter());
@@ -131,6 +126,9 @@ public class BoardBasicDAO {
 			pstmt.setInt(8, paramDto.getStepNo());
 			pstmt.setInt(9, paramDto.getLevelNo());
 			pstmt.setInt(10, paramDto.getHit());
+			pstmt.setInt(11, paramDto.getMemberNo());
+			pstmt.setString(12, paramDto.getIp());
+			pstmt.setInt(13, paramDto.getParentNo());
 			result = pstmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -144,7 +142,7 @@ public class BoardBasicDAO {
 		int result = 0;
 		conn = DB.dbConn();
 		try {
-			String sql = "UPDATE "+ tableNameChecker(tableName) +" SET writer = ?, subject = ?, content = ?, email = ? WHERE no = ? AND passwd = ?";
+			String sql = "UPDATE boardBasic SET writer = ?, subject = ?, content = ?, email = ? WHERE no = ? AND passwd = ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, paramDto.getWriter());
 			pstmt.setString(2, paramDto.getSubject());
@@ -164,7 +162,7 @@ public class BoardBasicDAO {
 	public void setUpdateHit(BoardBasicDTO paramDto) {
 		conn = DB.dbConn();
 		try {
-			String sql = "UPDATE "+ tableNameChecker(tableName) +" SET hit = (hit + 1) WHERE no = ?";
+			String sql = "UPDATE boardBasic SET hit = (hit + 1) WHERE no = ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, paramDto.getNo());
 			pstmt.executeUpdate();
@@ -194,7 +192,7 @@ public class BoardBasicDAO {
 		int result = 0;
 		conn = DB.dbConn();
 		try {
-			String sql = "DELETE FROM "+ tableNameChecker(tableName) +" WHERE no = ? AND passwd = ?";
+			String sql = "DELETE FROM boardBasic WHERE no = ? AND passwd = ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, paramDto.getNo());
 			pstmt.setString(2, paramDto.getPasswd());

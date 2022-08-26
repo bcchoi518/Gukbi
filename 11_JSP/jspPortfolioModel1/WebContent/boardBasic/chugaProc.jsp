@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
-<%@ include file = "../_include/inc_sessionChk.jsp" %>
 <%@ include file = "_inc_top.jsp" %>
     
 <%@ page import="config.Util"%>
@@ -11,21 +10,19 @@
 <%
 	request.setCharacterEncoding("UTF-8");
 	
+	String no_ = request.getParameter("no");
 	String writer = request.getParameter("writer");
 	String subject = request.getParameter("subject");
 	String content = request.getParameter("content");
 	String email = request.getParameter("email");
 	String passwd = request.getParameter("passwd");
-	String no_ = request.getParameter("no");
 	
 	Util util = new Util();
 	no_ = util.getNullBlankCheck(no_, "0");
 	int no = Integer.parseInt(no_);
 	int num = 0;
-	int refNo = 0;
-	int stepNo = 0;
-	int levelNo = 0;
 	int hit = 0;
+	int memberNo = sessionNo;
 	
 	writer = util.getNullBlankCheck(writer, "-");
 	writer = util.getCheckString(writer);
@@ -38,26 +35,29 @@
 	passwd = util.getNullBlankCheck(passwd, "-");
 	passwd = util.getCheckString(passwd);
 
+	BoardBasicDAO boardBasicDao = new BoardBasicDAO();
+	//새글일때
+	//refNo: refNo의 최대값 + 1
+	//stepNo: 1
+	//levelNo: 1
+	int refNo = boardBasicDao.getMaxRefNo() + 1;
+	int stepNo = 1;
+	int levelNo = 1;
+	int parentNo = 0;
+	
 	BoardBasicDTO arguBoardBasicDto = new BoardBasicDTO();
 	arguBoardBasicDto.setNo(no);
 	
-	BoardBasicDAO boardBasicDao = new BoardBasicDAO();
-	BoardBasicDTO returnDto = boardBasicDao.getSelectOne(arguBoardBasicDto);
-	if (returnDto.getNo() == 0) {//새글일때
-		//refNo: refNo의 최대값 + 1
-		refNo = boardBasicDao.getMaxRefNo() + 1;
-		//stepNo: 1
-		stepNo = 1;
-		//levelNo: 1
-		levelNo = 1;
-	} else {//답글일때
+	if (no > 0) {//답글일때
+		BoardBasicDTO returnDto = boardBasicDao.getSelectOne(arguBoardBasicDto);
 		//refNo: 부모글의 refNo
 		refNo = returnDto.getRefNo();
 		//stepNo: 부모글의 stepNo + 1
 		stepNo = returnDto.getStepNo() + 1;
 		//levelNo: refNo가 같은 부모글 중에서 levelNo보다 큰 값들은 1씩 증가시키고 levelNo + 1
-		boardBasicDao.setUpdateLevelNo(returnDto);
+		boardBasicDao.setUpdateReLevel(returnDto);
 		levelNo = returnDto.getLevelNo() + 1;
+		parentNo = no;
 	}//if
 	
 	num = boardBasicDao.getMaxNum() + 1;
@@ -72,6 +72,9 @@
 	arguBoardBasicDto.setStepNo(stepNo);
 	arguBoardBasicDto.setLevelNo(levelNo);
 	arguBoardBasicDto.setHit(hit);
+	arguBoardBasicDto.setMemberNo(memberNo);
+	arguBoardBasicDto.setIp(ip);
+	arguBoardBasicDto.setParentNo(parentNo);
 	
 	int result = boardBasicDao.setInsert(arguBoardBasicDto);
 	
