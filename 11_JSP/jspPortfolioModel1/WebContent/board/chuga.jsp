@@ -2,14 +2,11 @@
     pageEncoding="UTF-8"%>
     
 <%@ include file = "_inc_top.jsp" %>
-    
-<%
 
-%>
-
-<h2>글쓰기</h2>
+<h2><%=pageTitle %></h2>
 
 <form name="DirForm">
+	<input type="hidden" name="no" value="<%=resultBoardDto.getNo() %>" />
 	<table border="1">
 		<tr>
 			<td class="entryName">작성자</td>
@@ -25,24 +22,24 @@
 		</tr>
 		<tr>
 			<td class="entryName">제목</td>
-			<td><input type="text" name="subject" id="subject" value="" /></td>
+			<td><input type="text" name="subject" id="subject" value="<%=pageSubject %>" /></td>
 		</tr>
 		<tr>
 			<td class="entryName">내용</td>
-			<td><textarea name="content" id="content" style="width:300px; height:100px;" ></textarea></td>
+			<td><textarea name="content" id="content" style="width:300px; height:100px;" ><%=pageContent %></textarea></td>
 		</tr>
 		<tr>
 			<td class="entryName">공지글</td>
 			<td>
-				<input type="radio" name="noticeGubun1" id="noticeGubun1" value="T" /> 공지글 &nbsp;
-				<input type="radio" name="noticeGubun2" id="noticeGubun2" value="F" checked/> 공지글아님 &nbsp;
+				<input type="radio" name="noticeGubun" id="noticeGubun1" value="T" /> 공지글 &nbsp;
+				<input type="radio" name="noticeGubun" id="noticeGubun2" value="F" checked/> 공지글아님 &nbsp;
 			</td>
 		</tr>
 		<tr>
 			<td class="entryName">비밀글</td>
 			<td>
-				<input type="radio" name="secretGubun1" id="secretGubun1" value="T" /> 비밀글 &nbsp;
-				<input type="radio" name="secretGubun2" id="secretGubun2" value="F" checked/> 비밀글아님 &nbsp;
+				<input type="radio" name="secretGubun" id="secretGubun1" value="T"  /> 비밀글 &nbsp;
+				<input type="radio" name="secretGubun" id="secretGubun2" value="F" checked/> 비밀글아님 &nbsp;
 			</td>
 		</tr>
 		<tr>

@@ -13,14 +13,36 @@ public class BoardDAO {
 	PreparedStatement pstmt = null;
 	ResultSet rs = null;
 	
-	public ArrayList<BoardDTO> getSelectAll() {
+	public ArrayList<BoardDTO> getSelectAll(String searchGubun, String searchData) {
 		ArrayList<BoardDTO> boardList = new ArrayList<>();
 		conn = DB.dbConn();
 		try {
 			String sql = "SELECT * "
 					   + "FROM board "
-					   + "ORDER BY refNo DESC, levelNo ASC";
+					   + "WHERE 1=1 ";
+					   
+			   if (searchGubun.equals("writer")) {
+				   sql += "AND writer LIKE ? ";
+			   } else if (searchGubun.equals("subject")) {
+				   sql += "AND subject LIKE ? ";
+			   } else if (searchGubun.equals("content")) {
+				   sql += "AND content LIKE ? ";
+			   } else if (searchGubun.equals("subject_content")) {
+				   sql += "AND (subject LIKE ? OR content LIKE ?) ";
+			   }//if
+					   
+				   sql += "ORDER BY noticeNo DESC, refNo DESC, levelNo ASC";
 			pstmt = conn.prepareStatement(sql);
+			   if (searchGubun.equals("writer")) {
+				   pstmt.setString(1, '%'+searchData+'%');
+			   } else if (searchGubun.equals("subject")) {
+				   pstmt.setString(1, '%'+searchData+'%');
+			   } else if (searchGubun.equals("content")) {
+				   pstmt.setString(1, '%'+searchData+'%');
+			   } else if (searchGubun.equals("subject_content")) {
+				   pstmt.setString(1, '%'+searchData+'%');
+				   pstmt.setString(2, '%'+searchData+'%');
+			   }//if
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
 				BoardDTO boardDto = new BoardDTO();
@@ -90,15 +112,15 @@ public class BoardDAO {
 		return boardDto;
 	}//getSelectOne
 	
-	public int getMaxNum() {
+	public int getMaxNumRefNo(String gubun) {
 		int result = 0;
 		conn = DB.dbConn();
 		try {
-			String sql = "SELECT NVL(max(num),0) max FROM board";
+			String sql = "SELECT NVL(MAX("+ gubun +"),0) maxValue FROM board";
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
-				result = rs.getInt("max");
+				result = rs.getInt("maxValue");
 			}//if
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -106,32 +128,14 @@ public class BoardDAO {
 			DB.dbConnClose(rs, pstmt, conn);
 		}//try-catch-finally
 		return result;
-	}//getMaxNum
+	}//getMaxNumRefNo
 
-	public int getMaxRefNo() {
-		int result = 0;
-		conn = DB.dbConn();
-		try {
-			String sql = "SELECT NVL(max(refNo),0) refNo FROM board";
-			pstmt = conn.prepareStatement(sql);
-			rs = pstmt.executeQuery();
-			if (rs.next()) {
-				result = rs.getInt("refNo");
-			}//if
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			DB.dbConnClose(rs, pstmt, conn);
-		}//try-catch-finally
-		return result;
-	}//getMaxRefNo
-	
 	public int setInsert(BoardDTO paramDto) {
 		int result = 0;
 		conn = DB.dbConn();
 		try {
 			String sql = "INSERT INTO board "
-					   + "VALUES (seq_board.NEXTVAL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? SYSDATE, ?)";
+					   + "VALUES (seq_board.NEXTVAL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, SYSDATE, ?)";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, paramDto.getNum());
 			pstmt.setString(2, paramDto.getTbl());

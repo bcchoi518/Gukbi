@@ -34,6 +34,9 @@
 	.entryName {
 		text-align: right;
 	}
+	:focus {
+		outline: none;
+	}
 </style>
 </head>
 <body>
