@@ -37,6 +37,19 @@
 	:focus {
 		outline: none;
 	}
+	.pageBtn {
+	 	width:30px;
+	 	height:30px;
+	 	border: 1px solid #57cc99;
+	 	border-radius: 50%;
+	 	background-color:#80ed99;
+	}
+	.pageBtn:hover {
+		border: 1px solid red;
+	}
+	.selected {
+		background-color: #57cc99;
+	}
 </style>
 </head>
 <body>
@@ -53,7 +66,7 @@
 <!-- 본문 내용 끝 -->
 			</td>
 		<tr>
-			<td height="100px" align="center" style="gackground-color:#22577a">
+			<td height="100px" align="center">
 				<jsp:include page="/_include/inc_copyright.jsp"></jsp:include>
 			</td>
 		</tr>

@@ -53,11 +53,11 @@
 		return;
 	}//if
 	
-	int num = boardDao.getMaxNumRefNo("num") + 1;
+	int num = boardDao.getMaxValue("num") + 1;
 	String tbl = "-";
 	
 	//새글..
-	int refNo = boardDao.getMaxNumRefNo("refNo") + 1;
+	int refNo = boardDao.getMaxValue("refNo") + 1;
 	int stepNo = 1;
 	int levelNo = 1;
 	int parentNo = 0;
@@ -76,7 +76,7 @@
 	
 	int noticeNo = 0;
 	if (noticeGubun.trim().equals("T")) {//공지글이면..
-		noticeNo = boardDao.getMaxNumRefNo("noticeNo") + 1;
+		noticeNo = boardDao.getMaxValue("noticeNo") + 1;
 	}//if
 
 	String attachInfo = "-";
@@ -98,7 +98,7 @@
 	arguBoardDto.setNoticeNo(noticeNo);
 	arguBoardDto.setSecretGubun(secretGubun);
 	arguBoardDto.setAttachInfo(attachInfo);
-	
+
 	int result = boardDao.setInsert(arguBoardDto);
 	
 	String ment = "";

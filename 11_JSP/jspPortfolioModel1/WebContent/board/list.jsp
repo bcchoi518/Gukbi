@@ -2,30 +2,50 @@
     pageEncoding="UTF-8"%>
 
 <%@ include file = "_inc_top.jsp" %>
+<%@ include file = "_inc_script.jsp" %>
 
 <%
+	String pageNumber_ = request.getParameter("pageNumber"); 
+	String searchValue = "O";
 	String searchGubun = request.getParameter("searchGubun");
 	String searchData = request.getParameter("searchData");
 	
 	Util util = new Util();
+	pageNumber_ = util.getNullBlankCheck(pageNumber_, "1");
 	searchGubun = util.getNullBlankCheck(searchGubun, "");
 	searchData = util.getNullBlankCheck(searchData, "");
 	searchData = util.getCheckString(searchData);
 	
+	int pageNumber = Integer.parseInt(pageNumber_);
+	
 	if (searchGubun.equals("") || searchData.equals("")) {
+		searchValue = "X";
 		searchGubun = "";
 		searchData = "";
 	}//if
 	
-	ArrayList<BoardDTO> boardList = boardDao.getSelectAll(searchGubun, searchData);
+	int totalRecord = boardDao.getTotalRecord(searchGubun, searchData);
+	int pageSize = 10; // 한페이지에 나타낼 레코드 갯수
+	int blockSize = 10;
+	
+	int block = (pageNumber - 1) / pageSize;
+	int jj = totalRecord - pageSize * (pageNumber - 1); //단순히 화면에 보여주는 일련번호
+	
+	double totalPageDou = Math.ceil(totalRecord / (double)pageSize);
+	int totalPage = (int)totalPageDou;
+	
+	int startRecord = pageSize * (pageNumber - 1) + 1;
+	int lastRecord = pageSize * pageNumber;
+
+	ArrayList<BoardDTO> boardList = boardDao.getSelectAll(searchGubun, searchData, startRecord, lastRecord);
 %>
 
 <h2>게시글 목록</h2>
-<div style="border: 0px solid red; width:80%; text-align:left;">
-<% if (searchGubun.equals("")) { %>
-* 전체 조회 결과 (<%=boardList.size() %>건)
+<div style="border:0px solid red; width:80%; padding:5px 0px; text-align:left;">
+<% if (searchValue.equals("O")) { %>
+	검색어 "<%=searchData %>" (으)로 검색된 목록 : <%=totalRecord %>건
 <% } else { %>
-* 검색어 "<%=searchData %>" 으/로 검색한 결과 (<%=boardList.size() %>건)
+	전체 목록 : <%=totalRecord %>건
 <% }//if %>
 </div>
 <table border="1" width="80%">
@@ -47,11 +67,20 @@
 	</tr>
 	
 	<% 
-		for (int i = 0; i < boardList.size(); i++) { 
+		for (int i = 0; i < boardList.size(); i++) {
 			resultBoardDto = boardList.get(i);
 	%>
 			<tr>
-				<td><%=resultBoardDto.getNo() %></td>
+				<td>
+					<% 
+						if (resultBoardDto.getNoticeNo() > 0) {
+							out.println("[공지]"); 
+						} else {
+							out.println(jj--); 
+							out.println(resultBoardDto.getNo()); 
+						}//if
+					%>
+				</td>
 				<td>
 					<%
 						String blankValue = "";
@@ -64,8 +93,8 @@
 							imsiSubject += "[Re]:";
 						}//if
 						
-						if (resultBoardDto.getNoticeNo() > 0) {
-							imsiSubject += "[공지]";
+						if (resultBoardDto.getSecretGubun().equals("T")) {
+							imsiSubject += "&#128274;";
 						}//if
 						
 						imsiSubject += resultBoardDto.getSubject();
@@ -75,7 +104,7 @@
 						}//if
 
 					%>
-					<%=blankValue %><a href="#" onclick="move('board_view','<%=resultBoardDto.getNo() %>')"><%=imsiSubject %></a>
+					<%=blankValue %><a href="#" onclick="move('board_view','<%=resultBoardDto.getNo() %>','<%=searchGubun %>','<%=searchData %>')"><%=imsiSubject %></a>
 				</td>
 				<td><%=resultBoardDto.getWriter() %></td>
 				<td><%=resultBoardDto.getRegiDate() %></td>
@@ -92,42 +121,57 @@
 			</tr>
 	<% }//if %>
 </table>
+	
 <div style="border: 0px solid red; padding-top:20px; width:80%; text-align:right;">
 |
-<a href="#" onClick="move('board_list')">목록</a>
+<a href="#" onClick="move('board_list','','<%=searchGubun %>','<%=searchData %>')">목록</a>
 |
-<a href="#" onClick="move('board_chuga')">등록</a>
+<a href="#" onClick="move('board_chuga','','<%=searchGubun %>','<%=searchData %>')">등록</a>
 |
+</div>
+
+<div>
+	<button class="pageBtn">&lt;&lt;</button>
+	<button class="pageBtn">&lt;</button>
+
+		<button class="pageBtn selected" onclick="pageSelect()">1</button>
+	<%	
+		for (int i = 2; i <= totalPage; i++) {
+	%>
+			<button class="pageBtn" onclick="pageSelect()"><%=i %></button>
+	<% }//for %>
+	<button class="pageBtn">&gt;</button>
+	<button class="pageBtn">&gt;&gt;</button>
 </div>
 
 <div style="border: 0px solid red; padding-top:20px; width:80%;">
-<form name="searchForm" style="padding:0px;">
-	<div style="margin:0px; padding:0px; display:flex; justify-content: center;">
-		<select name="searchGubun" style="border:0px; padding:0px 10px; height:30px; border-radius:10px 0px 0px 10px;">
-			<option value="">-- 선택 --</option>
-			<option value="writer">작성자</option>
-			<option value="subject">제목</option>
-			<option value="content">내용</option>
-			<option value="subject_content">제목+내용</option>
-		</select>
-		<input type="text" name="searchData" style="border:0px; margin:0px; padding:0px; height:30px; width:200px;"/>
-		<button type="button" onclick="search()" style="border:0px; border-radius:0px 10px 10px 0px; margin:0px; padding:0px 10px; height:30px; font-size:1rem;">검색</button>
-	</div>
-</form>
+	<form name="searchForm" style="padding:0px;">
+		<div style="margin:0px; padding:0px; display:flex; justify-content: center;">
+			<select name="searchGubun" style="border:0px; padding:0px 10px; height:30px; border-radius:10px 0px 0px 10px;">
+				<option value="">-- 선택 --</option>
+				<option value="writer" <% if (searchGubun.equals("writer")) { out.println("selected"); } %>>작성자</option>
+				<option value="subject" <% if (searchGubun.equals("subject")) { out.println("selected"); } %>>제목</option>
+				<option value="content" <% if (searchGubun.equals("content")) { out.println("selected"); } %>>내용</option>
+				<option value="writer_subject_content" <% if (searchGubun.equals("writer_subject_content")) { out.println("selected"); } %>>작성자+제목+내용</option>
+			</select>
+			<input type="text" name="searchData" value="<%=searchData %>" style="border:0px; margin:0px; padding:0px; height:30px; width:200px;"/>
+			<button type="button" onclick="search()" style="border:0px; border-radius:0px 10px 10px 0px; margin:0px; padding:0px 10px; height:30px; font-size:1rem;">검색</button>
+		</div>
+	</form>
 </div>
 
 <script>
-	function move(value1, value2) {
-		let linkAddr = 'main.jsp?menuGubun='+ value1;
-		if (value2 != undefined) {
-			linkAddr += '&no=' + value2;
-		}//if
-		location.href = linkAddr;
-	}//move
+	$('.pageBtn').click(function () {
+		
+	});
 	
 	function search() {
-		document.searchForm.action = 'main.jsp?menuGubun=board_list';
+		document.searchForm.action = 'main.jsp?menuGubun=board_listSearch';
 		document.searchForm.method = 'post';
 		document.searchForm.submit();
 	}//search
+	
+	function pageSelect() {
+		
+	}//pageSelect
 </script>

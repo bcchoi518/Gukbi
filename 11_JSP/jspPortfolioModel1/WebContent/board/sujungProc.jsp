@@ -60,7 +60,7 @@
 		if (boxNoticeNo > 0) {//기존 글이 공지글..
 			noticeNo = resultBoardDto.getNoticeNo();
 		} else {
-			noticeNo = boardDao.getMaxNumRefNo("noticeNo") + 1;
+			noticeNo = boardDao.getMaxValue("noticeNo") + 1;
 		}//if
 	}//if
 	

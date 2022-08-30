@@ -13,36 +13,51 @@ public class BoardDAO {
 	PreparedStatement pstmt = null;
 	ResultSet rs = null;
 	
-	public ArrayList<BoardDTO> getSelectAll(String searchGubun, String searchData) {
+	public ArrayList<BoardDTO> getSelectAll(String searchGubun, String searchData, int startRecord, int lastRecord) {
+		String searchValue = "O";
+		if (searchGubun == null || searchGubun.trim().equals("")) { searchGubun = ""; }
+		if (searchData == null || searchData.trim().equals("")) { searchData = ""; }
+		if (searchGubun.trim().equals("") || searchData.trim().equals("")) { 
+			searchValue = "X";
+			searchGubun = "";
+			searchData = ""; 
+		}//if
+		
 		ArrayList<BoardDTO> boardList = new ArrayList<>();
 		conn = DB.dbConn();
 		try {
-			String sql = "SELECT * "
-					   + "FROM board "
-					   + "WHERE 1=1 ";
+			String basicSql = "SELECT * FROM board WHERE 1=1 ";
+			
+			if (searchValue.equals("O")) {
+				if (searchGubun.equals("writer_subject_content")) {
+					basicSql += "AND (writer LIKE ? OR subject LIKE ? OR content LIKE ?) ";
+				} else {
+					basicSql += "AND "+ searchGubun +" LIKE ? ";
+				}//if
+			}//if
 					   
-			   if (searchGubun.equals("writer")) {
-				   sql += "AND writer LIKE ? ";
-			   } else if (searchGubun.equals("subject")) {
-				   sql += "AND subject LIKE ? ";
-			   } else if (searchGubun.equals("content")) {
-				   sql += "AND content LIKE ? ";
-			   } else if (searchGubun.equals("subject_content")) {
-				   sql += "AND (subject LIKE ? OR content LIKE ?) ";
-			   }//if
-					   
-				   sql += "ORDER BY noticeNo DESC, refNo DESC, levelNo ASC";
+			basicSql += "ORDER BY noticeNo DESC, refNo DESC, levelNo ASC";
+			String rowSql = "SELECT rownum rowNumber, sortResult.* FROM ("+basicSql+") sortResult";
+			String sql = "SELECT * FROM ("+rowSql+") WHERE rowNumber BETWEEN ? AND ?";
 			pstmt = conn.prepareStatement(sql);
-			   if (searchGubun.equals("writer")) {
-				   pstmt.setString(1, '%'+searchData+'%');
-			   } else if (searchGubun.equals("subject")) {
-				   pstmt.setString(1, '%'+searchData+'%');
-			   } else if (searchGubun.equals("content")) {
-				   pstmt.setString(1, '%'+searchData+'%');
-			   } else if (searchGubun.equals("subject_content")) {
-				   pstmt.setString(1, '%'+searchData+'%');
-				   pstmt.setString(2, '%'+searchData+'%');
-			   }//if
+			
+			if (searchValue.equals("O")) {
+				if (searchGubun.equals("writer_subject_content")) {
+					pstmt.setString(1, '%'+ searchData +'%');
+					pstmt.setString(2, '%'+ searchData +'%');
+					pstmt.setString(3, '%'+ searchData +'%');
+					pstmt.setInt(4, startRecord);
+					pstmt.setInt(5, lastRecord);
+				} else {
+					pstmt.setString(1, '%'+ searchData +'%');
+					pstmt.setInt(2, startRecord);
+					pstmt.setInt(3, lastRecord);
+				}//if
+			} else {
+				pstmt.setInt(1, startRecord);
+				pstmt.setInt(2, lastRecord);
+			}//if
+
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
 				BoardDTO boardDto = new BoardDTO();
@@ -112,7 +127,73 @@ public class BoardDAO {
 		return boardDto;
 	}//getSelectOne
 	
-	public int getMaxNumRefNo(String gubun) {
+	public int getCheckReply(BoardDTO paramDto) {
+		int result = 0;
+		conn = DB.dbConn();
+		try {
+			String sql = "SELECT COUNT(*) count FROM board WHERE parentNo = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, paramDto.getNo());
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				result = rs.getInt("count");
+			}//if
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DB.dbConnClose(rs, pstmt, conn);
+		}//try-catch-finally
+		return result;
+	}//getCheckReply
+	
+	public int getTotalRecord(String searchGubun, String searchData) {
+		String searchValue = "O";
+		if (searchGubun == null || searchGubun.trim().equals("")) { searchGubun = ""; }
+		if (searchData == null || searchData.trim().equals("")) { searchData = ""; }
+		if (searchGubun.trim().equals("") || searchData.trim().equals("")) { 
+			searchValue = "X";
+			searchGubun = "";
+			searchData = ""; 
+		}//if
+		
+		int result = 0;
+		conn = DB.dbConn();
+		try {
+			String sql = "SELECT COUNT(*) recordCounter FROM board ";
+			
+			if (searchValue.equals("O")) {
+				if (searchGubun.equals("writer_subject_content")) {
+					sql += "WHERE (writer LIKE ? OR subject LIKE ? OR content LIKE ?)";
+				} else {
+					sql += "WHERE "+ searchGubun +" LIKE ?";
+				}//if
+			}//if
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			if (searchValue.equals("O")) {
+				if (searchGubun.equals("writer_subject_content")) {
+					pstmt.setString(1, '%'+ searchData +'%');
+					pstmt.setString(2, '%'+ searchData +'%');
+					pstmt.setString(3, '%'+ searchData +'%');
+				} else {
+					pstmt.setString(1, '%'+ searchData +'%');
+				}//if
+			}//if
+			
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				result = rs.getInt("recordCounter");
+			}//if
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DB.dbConnClose(rs, pstmt, conn);
+		}//try-catch-finally
+		return result;
+	}//getTotalRecord
+	
+	public int getMaxValue(String gubun) {
 		int result = 0;
 		conn = DB.dbConn();
 		try {

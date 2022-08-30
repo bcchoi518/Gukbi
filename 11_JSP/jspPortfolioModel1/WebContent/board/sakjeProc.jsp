@@ -25,11 +25,20 @@
 	arguBoardDto.setNo(resultBoardDto.getNo());
 	arguBoardDto.setPasswd(passwd);
 	
-	int result = boardDao.setDelete(arguBoardDto);
+	int resultReply = boardDao.getCheckReply(arguBoardDto);
+	int result = 0;
 	
+	if (resultReply <= 0) {
+		result = boardDao.setDelete(arguBoardDto);
+	}//if 
+
 	String ment = "";
 	String addr = "";
-	if (result > 0) {
+	
+	if (resultReply > 0) {
+		ment = "답글이 존재하여 삭제가 되지 않았습니다.";
+		addr = "main.jsp?menuGubun=board_list";
+	} else if (result > 0) {
 		ment = "";
 		addr = "main.jsp?menuGubun=board_list";
 	} else {

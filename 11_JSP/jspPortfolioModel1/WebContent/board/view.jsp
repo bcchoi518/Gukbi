@@ -2,12 +2,20 @@
     pageEncoding="UTF-8"%>
     
 <%@ include file = "_inc_top.jsp" %>
+<%@ include file = "_inc_script.jsp" %>
 
-<%	
-	//예외처리 중요하니까 모든 가능성을 생각하자
-	if (resultBoardDto.getNo() <= 0) {
-		out.println("<script> alert('존재하지 않는 정보입니다.'); location.href='main.jsp?menuGubun=board_list'; </script>");
-		return;
+<%
+	String searchGubun = request.getParameter("searchGubun");
+	String searchData = request.getParameter("searchData");
+	
+	Util util = new Util();
+	searchGubun = util.getNullBlankCheck(searchGubun, "");
+	searchData = util.getNullBlankCheck(searchData, "");
+	searchData = util.getCheckString(searchData);
+	
+	if (searchGubun.equals("") || searchData.equals("")) {
+		searchGubun = "";
+		searchData = "";
 	}//if
 %>
 
@@ -88,24 +96,16 @@
 </table>
 <div style="border: 0px solid red; padding-top:20px; width:80%; text-align:right;">
 |
-<a href="#" onClick="move('board_list')">목록</a>
+<a href="#" onClick="move('board_list')">전체목록</a>
 |
-<a href="#" onClick="move('board_chuga')">등록</a>
+<a href="#" onClick="move('board_list','','<%=searchGubun %>','<%=searchData %>')">목록</a>
 |
-<a href="#" onClick="move('board_chuga','<%=resultBoardDto.getNo() %>')">답변</a>
+<a href="#" onClick="move('board_chuga','','<%=searchGubun %>','<%=searchData %>')">등록</a>
 |
-<a href="#" onClick="move('board_sujung','<%=resultBoardDto.getNo() %>')">수정</a>
+<a href="#" onClick="move('board_chuga','<%=resultBoardDto.getNo() %>','<%=searchGubun %>','<%=searchData %>')">답변</a>
 |
-<a href="#" onClick="move('board_sakje','<%=resultBoardDto.getNo() %>')">삭제</a>
+<a href="#" onClick="move('board_sujung','<%=resultBoardDto.getNo() %>','<%=searchGubun %>','<%=searchData %>')">수정</a>
+|
+<a href="#" onClick="move('board_sakje','<%=resultBoardDto.getNo() %>','<%=searchGubun %>','<%=searchData %>')">삭제</a>
 |
 </div>
-
-<script>
-	function move(value1, value2) {
-		let linkAddr = 'main.jsp?menuGubun='+ value1;
-		if (value2 != undefined) {
-			linkAddr += '&no=' + value2;
-		}//if
-		location.href = linkAddr;
-	}//move
-</script>
