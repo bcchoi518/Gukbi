@@ -25,14 +25,15 @@
 	}//if
 	
 	int totalRecord = boardDao.getTotalRecord(searchGubun, searchData);
-	int pageSize = 10; // 한페이지에 나타낼 레코드 갯수
+	int pageSize = 1; // 한페이지에 나타낼 레코드 갯수
 	int blockSize = 10;
-	
-	int block = (pageNumber - 1) / pageSize;
+
+	int block = (pageNumber - 1) / blockSize;
 	int jj = totalRecord - pageSize * (pageNumber - 1); //단순히 화면에 보여주는 일련번호
-	
 	double totalPageDou = Math.ceil(totalRecord / (double)pageSize);
 	int totalPage = (int)totalPageDou;
+	double maxBlockDou = Math.ceil(totalPage / (double)blockSize);
+	int maxBlock = (int)maxBlockDou;
 	
 	int startRecord = pageSize * (pageNumber - 1) + 1;
 	int lastRecord = pageSize * pageNumber;
@@ -131,17 +132,21 @@
 </div>
 
 <div>
-	<button class="pageBtn">&lt;&lt;</button>
-	<button class="pageBtn">&lt;</button>
+	<button class="pageBtn" id="">&lt;&lt;</button>
+	<button class="pageBtn" onclick="blockSelect('previous','<%=block %>','<%=searchGubun %>','<%=searchData %>')">&lt;</button>
 
-		<button class="pageBtn selected" onclick="pageSelect()">1</button>
 	<%	
-		for (int i = 2; i <= totalPage; i++) {
+		for (int i = block * 10 + 1; i <= totalPage; i++) {
 	%>
-			<button class="pageBtn" onclick="pageSelect()"><%=i %></button>
-	<% }//for %>
-	<button class="pageBtn">&gt;</button>
-	<button class="pageBtn">&gt;&gt;</button>
+			<button class="pageBtn" onclick="pageSelect('<%=i %>','<%=searchGubun %>','<%=searchData %>')"><%=i %></button>
+	<% 
+			if (i % blockSize == 0) {
+				break;
+			}//if
+		}//for 
+	%>
+	<button class="pageBtn" onclick="blockSelect('next','<%=block %>','<%=searchGubun %>','<%=searchData %>')">&gt;</button>
+	<button class="pageBtn" id="">&gt;&gt;</button>
 </div>
 
 <div style="border: 0px solid red; padding-top:20px; width:80%;">
@@ -161,17 +166,36 @@
 </div>
 
 <script>
-	$('.pageBtn').click(function () {
-		
-	});
-	
 	function search() {
 		document.searchForm.action = 'main.jsp?menuGubun=board_listSearch';
 		document.searchForm.method = 'post';
 		document.searchForm.submit();
 	}//search
 	
-	function pageSelect() {
-		
+	function pageSelect(value1, value2, value3) {
+		linkAddr = 'main.jsp?menuGubun=board_list&pageNumber=' + value1;
+		if (value2.trim().length > 0) {
+			linkAddr += '&searchGubun=' + value2;
+		}//if
+		if (value3.trim().length > 0) {
+			linkAddr += '&searchData=' + value3;
+		}//if
+		location.href = linkAddr;
 	}//pageSelect
+	
+	function blockSelect(value1, value2, value3, value4) {
+		if (value1 == 'next' && value2 < <%=maxBlock %>) {
+			value2 = (value2 + 1) * 10 + 1;
+		} else if (value1 == 'previous' && value2 > 0) {
+			value2 = (value2 - 1) * 10 + 1;
+		}//if
+		linkAddr = 'main.jsp?menuGubun=board_list&pageNumber=' + value2;
+		if (value3.trim().length > 0) {
+			linkAddr += '&searchGubun=' + value3;
+		}//if
+		if (value4.trim().length > 0) {
+			linkAddr += '&searchData=' + value4;
+		}//if
+		location.href = linkAddr;
+	}//blockSelect
 </script>
