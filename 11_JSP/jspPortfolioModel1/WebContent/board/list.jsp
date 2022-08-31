@@ -25,15 +25,13 @@
 	}//if
 	
 	int totalRecord = boardDao.getTotalRecord(searchGubun, searchData);
-	int pageSize = 1; // 한페이지에 나타낼 레코드 갯수
+	int pageSize = 5; // 한페이지에 나타낼 레코드 갯수
 	int blockSize = 10;
 
 	int block = (pageNumber - 1) / blockSize;
 	int jj = totalRecord - pageSize * (pageNumber - 1); //단순히 화면에 보여주는 일련번호
 	double totalPageDou = Math.ceil(totalRecord / (double)pageSize);
 	int totalPage = (int)totalPageDou;
-	double maxBlockDou = Math.ceil(totalPage / (double)blockSize);
-	int maxBlock = (int)maxBlockDou;
 	
 	int startRecord = pageSize * (pageNumber - 1) + 1;
 	int lastRecord = pageSize * pageNumber;
@@ -48,6 +46,7 @@
 <% } else { %>
 	전체 목록 : <%=totalRecord %>건
 <% }//if %>
+(<%=pageNumber %> / <%=totalPage %>)
 </div>
 <table border="1" width="80%">
 	<tr>
@@ -125,29 +124,69 @@
 	
 <div style="border: 0px solid red; padding-top:20px; width:80%; text-align:right;">
 |
+<a href="#" onClick="move('board_list')">전체목록</a>
+|
 <a href="#" onClick="move('board_list','','<%=searchGubun %>','<%=searchData %>')">목록</a>
 |
 <a href="#" onClick="move('board_chuga','','<%=searchGubun %>','<%=searchData %>')">등록</a>
 |
 </div>
 
-<div>
-	<button class="pageBtn" id="">&lt;&lt;</button>
-	<button class="pageBtn" onclick="blockSelect('previous','<%=block %>','<%=searchGubun %>','<%=searchData %>')">&lt;</button>
-
-	<%	
-		for (int i = block * 10 + 1; i <= totalPage; i++) {
-	%>
-			<button class="pageBtn" onclick="pageSelect('<%=i %>','<%=searchGubun %>','<%=searchData %>')"><%=i %></button>
-	<% 
-			if (i % blockSize == 0) {
-				break;
+<!-- pager start -->
+<div style="border: 0px solid red; padding:10px 0px; width:80%; align="center">
+<%
+	int totalBlock = totalPage / blockSize;
+	double value1 = (double)totalBlock;
+	double value2 = totalPage / blockSize;
+	if (value1 - value2 == 0) {
+		totalBlock = totalBlock - 1;
+	}//if
+%>
+	<button class="pageBtn" onclick="goPage('<%=menuGubun %>','1','<%=searchGubun %>','<%=searchData %>')">&lt;&lt;</button>
+<%
+	if (block > 0) {
+		int imsiPage = (block - 1) * blockSize + 1;
+%>
+		<button class="pageBtn" onclick="goPage('<%=menuGubun %>','<%=imsiPage %>','<%=searchGubun %>','<%=searchData %>')">&lt;</button>
+<% 
+	} else {
+%>
+	<button class="pageBtn" >&lt;</button>
+<%
+	}//if
+%>
+<%
+	for (int goPage=1; goPage <= blockSize; goPage++) {
+		int imsiValue = block * blockSize + goPage;
+		if (totalPage - imsiValue >= 0) {
+			if (imsiValue == pageNumber) {
+%>
+				<button class="pageBtn <% if (pageNumber == imsiValue) { out.println("selected"); } %>" ><%=imsiValue %></button>
+<%
+			} else {
+%>
+				<button class="pageBtn" onclick="goPage('<%=menuGubun %>','<%=imsiValue %>','<%=searchGubun %>','<%=searchData %>')"><%=imsiValue %></button>
+<%
 			}//if
-		}//for 
-	%>
-	<button class="pageBtn" onclick="blockSelect('next','<%=block %>','<%=searchGubun %>','<%=searchData %>')">&gt;</button>
-	<button class="pageBtn" id="">&gt;&gt;</button>
+		}//if
+	}//for
+%>
+<%
+	if (block - totalBlock <= 0) {
+		int yyy = (block + 1) * blockSize + 1;
+		//int zzz = block + 1;
+%>
+		<button class="pageBtn" onclick="goPage('<%=menuGubun %>','<%=yyy %>','<%=searchGubun %>','<%=searchData %>')" >&gt;</button>
+<%
+	} else {
+%>
+		<button class="pageBtn" >&gt;</button>
+<%		
+	}//if
+%>
+<button class="pageBtn" onclick="goPage('<%=menuGubun %>','<%=totalPage %>','<%=searchGubun %>','<%=searchData %>')" >&gt;&gt;</button>
 </div>
+<!-- pager end -->
 
 <div style="border: 0px solid red; padding-top:20px; width:80%;">
 	<form name="searchForm" style="padding:0px;">
@@ -172,30 +211,8 @@
 		document.searchForm.submit();
 	}//search
 	
-	function pageSelect(value1, value2, value3) {
-		linkAddr = 'main.jsp?menuGubun=board_list&pageNumber=' + value1;
-		if (value2.trim().length > 0) {
-			linkAddr += '&searchGubun=' + value2;
-		}//if
-		if (value3.trim().length > 0) {
-			linkAddr += '&searchData=' + value3;
-		}//if
+	function goPage(value1, value2, value3, value4) {
+		const linkAddr = 'main.jsp?menuGubun=' + value1 + '&pageNumber=' + value2 + '&searchGubun=' + value3 + '&searchData=' + value4;
 		location.href = linkAddr;
-	}//pageSelect
-	
-	function blockSelect(value1, value2, value3, value4) {
-		if (value1 == 'next' && value2 < <%=maxBlock %>) {
-			value2 = (value2 + 1) * 10 + 1;
-		} else if (value1 == 'previous' && value2 > 0) {
-			value2 = (value2 - 1) * 10 + 1;
-		}//if
-		linkAddr = 'main.jsp?menuGubun=board_list&pageNumber=' + value2;
-		if (value3.trim().length > 0) {
-			linkAddr += '&searchGubun=' + value3;
-		}//if
-		if (value4.trim().length > 0) {
-			linkAddr += '&searchData=' + value4;
-		}//if
-		location.href = linkAddr;
-	}//blockSelect
+	}//goPage
 </script>

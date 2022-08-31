@@ -21,8 +21,6 @@
 	int maxUpload = 1024 * 1024 * 100;
 	String encoding = "UTF-8";
 	
-	request.setCharacterEncoding(encoding);
-	
 	// MultipartRequest 인스턴스 생성 (cos.jar의 라이브러리)
 	MultipartRequest multi = new MultipartRequest(
 		request,
@@ -103,6 +101,7 @@
 					fileSavedName = "";
 					fileType = "";
 					fileSize = "";
+					continue;
 				}//if
 				
 				newFileName = UUID.randomUUID().toString() + "." + fileExtName; //새로 생성할 파일이름..

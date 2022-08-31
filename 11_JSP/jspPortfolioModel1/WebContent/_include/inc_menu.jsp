@@ -34,14 +34,14 @@
 		<td align="center" style="padding: 10px" id="board">
 			<a href="<%=path %>/main/main.jsp?menuGubun=board_list">게시판</a>
 		</td>
-		<td align="center" style="padding: 10px" id="menu5">
-			메뉴5
+		<td align="center" style="padding: 10px" id="shopProduct">
+			<a href="<%=path %>/main/main.jsp?menuGubun=shopProduct_list">몰(product)</a>
 		</td>
-		<td align="center" style="padding: 10px" id="menu6">
-			메뉴6
+		<td align="center" style="padding: 10px" id="shopVendor">
+			<a href="<%=path %>/main/main.jsp?menuGubun=shopVendor_list">몰(vendor)</a>
 		</td>
-		<td align="center" style="padding: 10px" id="menu7">
-			메뉴7
+		<td align="center" style="padding: 10px" id="shopMall">
+			<a href="<%=path %>/main/main.jsp?menuGubun=shopMall_list">몰(Mall)</a>
 		</td>
 		<td align="center" style="padding: 10px" id="menu8">
 			메뉴8

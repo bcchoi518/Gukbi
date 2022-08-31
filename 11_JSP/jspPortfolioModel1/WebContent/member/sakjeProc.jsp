@@ -19,10 +19,10 @@
 	memberArguDto.setNo(no);
 	memberArguDto.setPasswd(passwd);
 	
-	MemberDAO memberDao = new MemberDAO();
-	
 	MemberDTO imsiDto = new MemberDTO();
 	imsiDto.setNo(no);
+	
+	MemberDAO memberDao = new MemberDAO();
 	MemberDTO resultDto = memberDao.getSelectOne(imsiDto);
 	String attachInfo = resultDto.getAttachInfo();
 	
