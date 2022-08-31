@@ -17,7 +17,6 @@
 	String productPrice_ = multipartRequest.getParameter("productPrice");
 	String vendorCode_ = multipartRequest.getParameter("vendorCode");
 	
-	Util util = new Util();
 	productName = util.getNullBlankCheck(productName, "");
 	productName = util.getCheckString(productName);
 	

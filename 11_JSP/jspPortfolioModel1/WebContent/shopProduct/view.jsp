@@ -6,7 +6,6 @@
 <%
 	String productCode_ = request.getParameter("productCode");
 	
-	Util util = new Util();
 	productCode_ = util.getNullBlankCheck(productCode_, "0");
 	
 	int productCode = Integer.parseInt(productCode_);

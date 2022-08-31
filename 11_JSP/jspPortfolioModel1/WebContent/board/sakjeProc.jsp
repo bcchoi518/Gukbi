@@ -6,7 +6,6 @@
 <%
 	String passwd = request.getParameter("passwd");
 
-	Util util = new Util();
 	int failCounter = 0;
 	passwd = util.getNullBlankCheck(passwd, "");
 	passwd = util.getCheckString(passwd);

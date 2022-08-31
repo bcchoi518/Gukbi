@@ -9,7 +9,6 @@
 	String productPrice_ = request.getParameter("productPrice");
 	String vendorCode_ = request.getParameter("vendorCode");
 	
-	Util util = new Util();
 	productCode_ = util.getNullBlankCheck(productCode_, "0");
 	
 	productName = util.getNullBlankCheck(productName, "");

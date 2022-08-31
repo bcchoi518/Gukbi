@@ -12,7 +12,6 @@
 	String noticeGubun = request.getParameter("noticeGubun");
 	String secretGubun = request.getParameter("secretGubun");
 	
-	Util util = new Util();
 	int failCounter = 0;
 	email = util.getNullBlankCheck(email, "");
 	email = util.getCheckString(email);

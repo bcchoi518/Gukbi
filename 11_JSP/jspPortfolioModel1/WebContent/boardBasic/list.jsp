@@ -11,18 +11,18 @@
 
 <%
 	request.setCharacterEncoding("UTF-8");
-// 	String searchGubun = request.getParameter("searchGubun");
-// 	String searchData = request.getParameter("searchData");
+	String searchGubun = request.getParameter("searchGubun");
+	String searchData = request.getParameter("searchData");
 	
-// 	Util util = new Util();
-// 	searchGubun = util.getNullBlankCheck(searchGubun, "");
-// 	searchData = util.getNullBlankCheck(searchData, "");
-// 	searchData = util.getCheckString(searchData);
+	Util util = new Util();
+	searchGubun = util.getNullBlankCheck(searchGubun, "");
+	searchData = util.getNullBlankCheck(searchData, "");
+	searchData = util.getCheckString(searchData);
 	
-// 	if (searchGubun.equals("") || searchData.equals("")) {
-// 		searchGubun = "";
-// 		searchData = "";
-// 	}//if
+	if (searchGubun.equals("") || searchData.equals("")) {
+		searchGubun = "";
+		searchData = "";
+	}//if
 
 	BoardBasicDAO boardBasicDao = new BoardBasicDAO();
 	ArrayList<BoardBasicDTO> boardBasicList = boardBasicDao.getSelectAll();
@@ -32,11 +32,11 @@
 
 <h2>게시글목록</h2>
 <div style="border: 0px solid red; padding:0px; width:80%; text-align:left;">
-<%-- <% if (searchGubun.equals("") || searchData.equals("")) { %> --%>
+<% if (searchGubun.equals("") || searchData.equals("")) { %>
 * 전체목록 (<%=totalRecord %>건)
-<%-- <% } else { %> --%>
-<%-- * 검색어 "<%=searchData %>"으/로 검색된 목록 (<%=totalRecord %>건) --%>
-<%-- <% }//if %> --%>
+<% } else { %>
+* 검색어 "<%=searchData %>"으/로 검색된 목록 (<%=totalRecord %>건)
+<% }//if %>
 </div>
 <table border="1" width="80%" style="text-align: center;">
 	<tr>
@@ -52,7 +52,7 @@
 	<%
 		if (totalRecord == 0) {
 			out.println("<tr>");
-			out.println("<td colspan=\"5\" height=\"100px\" style=\"text-align:center;\">저장된 정보가 없습니다.</td>");
+			out.println("<td colspan=\"8\" height=\"100px\" style=\"text-align:center;\">저장된 정보가 없습니다.</td>");
 			out.println("</tr>");
 		}//if
 	%>
@@ -99,32 +99,6 @@
 			<td><%=resultBoardBasicDto.getParentNo() %></td>
 		</tr>
 	<% }//for %>
-<%-- 	
-	<tr>
-		<td colspan="6" align="center" style="padding:20px 0px">
-			<form name="searchForm">
-				<select name="searchGubun">
-					<option value="" <% if (searchGubun.equals("")) { out.println("selected"); } %>>-- 선택 --</option>
-					<option value="name" <% if (searchGubun.equals("name")) { out.println("selected"); } %>>이름</option>
-					<option value="content" <% if (searchGubun.equals("content")) { out.println("selected"); } %>>내용</option>
-					<option value="name_content" <% if (searchGubun.equals("name_content")) { out.println("selected"); } %>>이름+내용</option>
-				</select>
-				&nbsp;
-				<input type="text" name="searchData" value="<%=searchData %>"/>
-				&nbsp;
-				<button type="button" onClick="search()">검색하기</button>
-			</form>
-			
-			<script>
-				function search() {
-					document.searchForm.action = 'mainProc.jsp?menuGubun=boardBasic_listSearch';
-					document.searchForm.method = 'post';
-					document.searchForm.submit();
-				}//search
-			</script>
-		</td>
-	</tr>
---%>
 </table>
 <div style="border: 0px solid red; padding-top:20px; width:80%; text-align:right;">
 |
@@ -135,6 +109,25 @@
 |
 <% }//if %>
 </div>
+
+<!-- search start -->
+<div style="border: 0px solid red; width:80%;">
+	<form name="searchForm" style="padding:0px;">
+		<div style="margin:0px; padding:0px; display:flex; justify-content: center;">
+			<select name="searchGubun" style="border:0px; padding:0px 10px; height:30px; border-radius:10px 0px 0px 10px;">
+				<option value="">-- 선택 --</option>
+				<option value="writer" <% if (searchGubun.equals("writer")) { out.println("selected"); } %>>작성자</option>
+				<option value="subject" <% if (searchGubun.equals("subject")) { out.println("selected"); } %>>제목</option>
+				<option value="content" <% if (searchGubun.equals("content")) { out.println("selected"); } %>>내용</option>
+				<option value="writer_subject_content" <% if (searchGubun.equals("writer_subject_content")) { out.println("selected"); } %>>작성자+제목+내용</option>
+			</select>
+			<input type="text" name="searchData" value="<%=searchData %>" style="border:0px; margin:0px; padding:0px; height:30px; width:200px;"/>
+			<button type="button" onclick="search()" style="border:0px; border-radius:0px 10px 10px 0px; margin:0px; padding:0px 10px; height:30px; font-size:1rem;">검색</button>
+		</div>
+	</form>
+</div>
+<!-- search end -->
+
 <form name="dataTransferForm">
 	<input type="hidden" name="menuGubun" />
 	<input type="hidden" name="no" />

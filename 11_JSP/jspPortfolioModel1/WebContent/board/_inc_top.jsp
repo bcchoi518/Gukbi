@@ -14,6 +14,7 @@
 	BoardDTO arguBoardDto = new BoardDTO();
 	BoardDTO resultBoardDto = new BoardDTO();
 	BoardDAO boardDao = new BoardDAO();
+	Util util = new Util();
 	
 	String pageTitle = "";
 	String pageSubject = "";

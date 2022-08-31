@@ -8,7 +8,6 @@
 	String searchGubun = request.getParameter("searchGubun");
 	String searchData = request.getParameter("searchData");
 	
-	Util util = new Util();
 	searchGubun = util.getNullBlankCheck(searchGubun, "");
 	searchData = util.getNullBlankCheck(searchData, "");
 	searchData = util.getCheckString(searchData);
@@ -96,16 +95,16 @@
 </table>
 <div style="border: 0px solid red; padding-top:20px; width:80%; text-align:right;">
 |
-<a href="#" onClick="move('board_list')">전체목록</a>
+<a href="#" onClick="goPage('board_list')">전체목록</a>
 |
-<a href="#" onClick="move('board_list','','<%=searchGubun %>','<%=searchData %>')">목록</a>
+<a href="#" onClick="goPage('board_list','','<%=searchGubun %>','<%=searchData %>')">목록</a>
 |
-<a href="#" onClick="move('board_chuga','','<%=searchGubun %>','<%=searchData %>')">등록</a>
+<a href="#" onClick="goPage('board_chuga','','<%=searchGubun %>','<%=searchData %>')">등록</a>
 |
-<a href="#" onClick="move('board_chuga','<%=resultBoardDto.getNo() %>','<%=searchGubun %>','<%=searchData %>')">답변</a>
+<a href="#" onClick="goPage('board_chuga','','<%=searchGubun %>','<%=searchData %>','<%=resultBoardDto.getNo() %>')">답변</a>
 |
-<a href="#" onClick="move('board_sujung','<%=resultBoardDto.getNo() %>','<%=searchGubun %>','<%=searchData %>')">수정</a>
+<a href="#" onClick="goPage('board_sujung','','<%=searchGubun %>','<%=searchData %>','<%=resultBoardDto.getNo() %>')">수정</a>
 |
-<a href="#" onClick="move('board_sakje','<%=resultBoardDto.getNo() %>','<%=searchGubun %>','<%=searchData %>')">삭제</a>
+<a href="#" onClick="goPage('board_sakje','','<%=searchGubun %>','<%=searchData %>','<%=resultBoardDto.getNo() %>')">삭제</a>
 |
 </div>

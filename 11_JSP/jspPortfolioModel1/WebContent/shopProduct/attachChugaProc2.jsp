@@ -27,7 +27,6 @@
 	String vendorCode_ = multipartRequest.getParameter("vendorCode");
 	String attachCounter_ = multipartRequest.getParameter("attachCounter");
 
-	Util util = new Util();
 	productPrice_ = util.getNullBlankCheck(productPrice_, "0");
 	vendorCode_ = util.getNullBlankCheck(vendorCode_, "0");
 	attachCounter_ = util.getNullBlankCheck(attachCounter_, "0");

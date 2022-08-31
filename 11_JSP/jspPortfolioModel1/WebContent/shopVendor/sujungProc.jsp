@@ -7,7 +7,6 @@
 	String vendorCode_ = request.getParameter("vendorCode");
 	String vendorName = request.getParameter("vendorName");
 
-	Util util = new Util();
 	vendorCode_ = util.getNullBlankCheck(vendorCode_, "0");
 	vendorName = util.getNullBlankCheck(vendorName, "");
 	vendorName = util.getCheckString(vendorName);

@@ -91,25 +91,8 @@
 			<td><%=memberResultDto.getRegiDate() %></td>
 		</tr>
 	<% }//for %>
-	<tr>
-		<td colspan="8" style="padding: 20px 0px;">
-			<form name="searchForm">
-				<select name="searchGubun">
-					<option value="">-- 선택 --</option>
-					<option value="id" <% if (searchGubun.equals("id")) { out.println("selected"); } %>>아이디</option>
-					<option value="name" <% if (searchGubun.equals("name")) { out.println("selected"); } %>>이름</option>
-					<option value="phone" <% if (searchGubun.equals("phone")) { out.println("selected"); } %>>연락처</option>
-					<option value="jumin" <% if (searchGubun.equals("jumin")) { out.println("selected"); } %>>주민번호</option>
-					<option value="id_name_phone_jumin" <% if (searchGubun.equals("id_name_phone_jumin")) { out.println("selected"); } %>>아이디+이름+연락처+주민번호</option>
-				</select>
-				&nbsp;
-				<input type="text" name="searchData" value="<%=searchData %>"/>
-				&nbsp;		
-				<button type="button" onClick="search()">검색하기</button>
-			</form>
-		</td>
-	</tr>
 </table>
+
 <div style="border: 0px solid red; padding-top:20px; width:80%; text-align:right;">
 |
 <a href="#" onClick="move('member_list')">목록</a>
@@ -119,6 +102,25 @@
 <a href="#" onClick="move('member_attachChuga')">등록(attach)</a>
 |
 </div>
+
+<!-- search start -->
+<div style="border: 0px solid red; width:80%;">
+	<form name="searchForm" style="padding:0px;">
+		<div style="margin:0px; padding:0px; display:flex; justify-content: center;">
+			<select name="searchGubun" style="border:0px; padding:0px 10px; height:30px; border-radius:10px 0px 0px 10px;">
+				<option value="">-- 선택 --</option>
+				<option value="id" <% if (searchGubun.equals("id")) { out.println("selected"); } %>>아이디</option>
+				<option value="name" <% if (searchGubun.equals("name")) { out.println("selected"); } %>>이름</option>
+				<option value="phone" <% if (searchGubun.equals("phone")) { out.println("selected"); } %>>연락처</option>
+				<option value="jumin" <% if (searchGubun.equals("jumin")) { out.println("selected"); } %>>주민번호</option>
+				<option value="id_name_phone_jumin" <% if (searchGubun.equals("id_name_phone_jumin")) { out.println("selected"); } %>>아이디+이름+연락처+주민번호</option>
+			</select>
+			<input type="text" name="searchData" value="<%=searchData %>" style="border:0px; margin:0px; padding:0px; height:30px; width:200px;"/>
+			<button type="button" onclick="search()" style="border:0px; border-radius:0px 10px 10px 0px; margin:0px; padding:0px 10px; height:30px; font-size:1rem;">검색</button>
+		</div>
+	</form>
+</div>
+<!-- search end -->
 <script>
 	function search() {
 		document.searchForm.action = 'mainProc.jsp?menuGubun=member_listSearch';

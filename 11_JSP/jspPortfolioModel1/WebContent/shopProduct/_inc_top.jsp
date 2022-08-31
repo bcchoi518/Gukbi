@@ -21,8 +21,12 @@
 <%@ include file = "../_include/inc_sessionChk.jsp" %>
 
 <%
-	String attachPath = "C:/cbc/attach";
+//attach start
+	String attachPath = "D:/Developement/attach";
 	String uploadPath = attachPath + request.getContextPath() + "/shopProduct";
 	int maxUpload = 1024 * 1024 * 10;
 	String encoding = "UTF-8";
+//attach end
+	
+	Util util = new Util();
 %>

@@ -2,10 +2,10 @@
     pageEncoding="UTF-8"%>
 
 <script>
-	function move(value1, value2, value3, value4) {
-		let linkAddr = 'main.jsp?menuGubun='+ value1;
+	function goPage(value1, value2, value3, value4, value5) {
+		let linkAddr = 'main.jsp?menuGubun=' + value1;
 		if (value2 != undefined) {
-			linkAddr += '&no=' + value2;
+			linkAddr += '&pageNumber=' + value2;
 		}//if
 		if (value3 != undefined) {
 			linkAddr += '&searchGubun=' + value3;
@@ -13,6 +13,9 @@
 		if (value4 != undefined) {
 			linkAddr += '&searchData=' + value4;
 		}//if
+		if (value5 != undefined) {
+			linkAddr += '&no=' + value5;
+		}//if
 		location.href = linkAddr;
-	}//move
+	}//goPage
 </script>

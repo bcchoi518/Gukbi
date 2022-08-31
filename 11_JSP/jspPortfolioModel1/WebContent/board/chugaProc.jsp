@@ -14,7 +14,6 @@
 	String noticeGubun = request.getParameter("noticeGubun");
 	String secretGubun = request.getParameter("secretGubun");
 	
-	Util util = new Util();
 	int failCounter = 0;
 	writer = util.getNullBlankCheck(writer, "");
 	writer = util.getCheckString(writer);

@@ -64,32 +64,8 @@
 			<td><%=resultGuestBookDto.getMemberNo() %></td>
 		</tr>
 	<% }//for %>
-	
-	<tr>
-		<td colspan="6" align="center" style="padding:20px 0px">
-			<form name="searchForm">
-				<select name="searchGubun">
-					<option value="" <% if (searchGubun.equals("")) { out.println("selected"); } %>>-- 선택 --</option>
-					<option value="name" <% if (searchGubun.equals("name")) { out.println("selected"); } %>>이름</option>
-					<option value="content" <% if (searchGubun.equals("content")) { out.println("selected"); } %>>내용</option>
-					<option value="name_content" <% if (searchGubun.equals("name_content")) { out.println("selected"); } %>>이름+내용</option>
-				</select>
-				&nbsp;
-				<input type="text" name="searchData" value="<%=searchData %>"/>
-				&nbsp;
-				<button type="button" onClick="search()">검색하기</button>
-			</form>
-			
-			<script>
-				function search() {
-					document.searchForm.action = 'mainProc.jsp?menuGubun=guestBook_listSearch';
-					document.searchForm.method = 'post';
-					document.searchForm.submit();
-				}//search
-			</script>
-		</td>
-	</tr>
 </table>
+
 <div style="border: 0px solid red; padding-top:20px; width:80%; text-align:right;">
 |
 <a href="#" onClick="move('guestBook_list')">목록</a>
@@ -97,11 +73,35 @@
 <a href="#" onClick="move('guestBook_chuga')">등록</a>
 |
 </div>
+
+<!-- search start -->
+<div style="border: 0px solid red; width:80%;">
+	<form name="searchForm" style="padding:0px;">
+		<div style="margin:0px; padding:0px; display:flex; justify-content: center;">
+			<select name="searchGubun" style="border:0px; padding:0px 10px; height:30px; border-radius:10px 0px 0px 10px;">
+				<option value="">-- 선택 --</option>
+				<option value="name" <% if (searchGubun.equals("name")) { out.println("selected"); } %>>이름</option>
+				<option value="content" <% if (searchGubun.equals("content")) { out.println("selected"); } %>>내용</option>
+				<option value="name_content" <% if (searchGubun.equals("name_content")) { out.println("selected"); } %>>이름+내용</option>
+			</select>
+			<input type="text" name="searchData" value="<%=searchData %>" style="border:0px; margin:0px; padding:0px; height:30px; width:200px;"/>
+			<button type="button" onclick="search()" style="border:0px; border-radius:0px 10px 10px 0px; margin:0px; padding:0px 10px; height:30px; font-size:1rem;">검색</button>
+		</div>
+	</form>
+</div>
+<!-- search end -->
+
 <form name="dataTransferForm">
 	<input type="hidden" name="menuGubun" />
 	<input type="hidden" name="no" />
 </form>
 <script>
+	function search() {
+		document.searchForm.action = 'mainProc.jsp?menuGubun=guestBook_listSearch';
+		document.searchForm.method = 'post';
+		document.searchForm.submit();
+	}//search
+	
 	function move(value1, value2) {
 		if (value2 != undefined) {
 			document.dataTransferForm.no.value = value2;

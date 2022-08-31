@@ -8,5 +8,5 @@
 <%@ page import="shopVendor.model.dto.ShopVendorDTO"%>
 
 <%
-	
+	Util util = new Util();
 %>

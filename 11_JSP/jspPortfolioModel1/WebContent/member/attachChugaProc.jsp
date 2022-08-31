@@ -16,7 +16,7 @@
 <%
 	request.setCharacterEncoding("UTF-8");
 
-	String attachPath = "C:/cbc/attach";
+	String attachPath = "D:/Developement/attach";
 	String uploadPath = attachPath + request.getContextPath() + "/member";
 	int maxUpload = 1024 * 1024 * 100;
 	String encoding = "UTF-8";

@@ -6,7 +6,6 @@
 <%
 	String vendorCode_ = request.getParameter("vendorCode");
 	
-	Util util = new Util();
 	vendorCode_ = util.getNullBlankCheck(vendorCode_, "0");
 	
 	int vendorCode = Integer.parseInt(vendorCode_);

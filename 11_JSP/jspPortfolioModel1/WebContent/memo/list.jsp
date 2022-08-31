@@ -37,12 +37,12 @@
 		<input type="hidden" name="procGubun" id="procGubun" value="memo_chugaProc" />
 		<table border="0" width="100%" align="center">
 			<tr>
-				<td class="entryName">작성자 : </td>
+				<td class="entryName" width="80px">작성자 : </td>
 				<td><input type="text" name="writer" id="writer"/></td>
 			</tr>
 			<tr>
 				<td class="entryName">메모내용 : </td>
-				<td><textarea name="content" id="content" rows="8" cols="100"></textarea></td>
+				<td><textarea name="content" id="content" rows="3" cols="100"></textarea></td>
 			</tr>
 			<tr>
 				<td colspan="2" align="center">
@@ -65,22 +65,6 @@
 </script>
 
 <table border="1" align="center" style="text-align: center;">
-	<tr>
-		<td colspan="5" align="right">
-			<form name="searchForm">
-				<select name="searchGubun">
-					<option value="">-- 선택 --</option>
-					<option value="writer" <% if (searchGubun.equals("writer")) { out.println("selected"); } %>>작성자</option>
-					<option value="content" <% if (searchGubun.equals("content")) { out.println("selected"); } %>>내용</option>
-					<option value="writer_content" <% if (searchGubun.equals("writer_content")) { out.println("selected"); } %>>작성자+내용</option>
-				</select>
-				&nbsp;
-				<input type="text" name="searchData" value="<%=searchData %>"/>
-				&nbsp;
-				<button type="button" onClick="search()">검색</button>
-			</form>
-		</td>
-	</tr>
 	<tr>
 		<th>순번</th>
 		<th>작성자</th>
@@ -127,6 +111,24 @@
 <a href="#" onClick="move('memo_chuga')">등록</a>
 |
 </div>
+
+<!-- search start -->
+<div style="border: 0px solid red; width:80%;">
+	<form name="searchForm" style="padding:0px;">
+		<div style="margin:0px; padding:0px; display:flex; justify-content: center;">
+			<select name="searchGubun" style="border:0px; padding:0px 10px; height:30px; border-radius:10px 0px 0px 10px;">
+				<option value="">-- 선택 --</option>
+				<option value="writer" <% if (searchGubun.equals("writer")) { out.println("selected"); } %>>작성자</option>
+				<option value="content" <% if (searchGubun.equals("content")) { out.println("selected"); } %>>내용</option>
+				<option value="writer_content" <% if (searchGubun.equals("writer_content")) { out.println("selected"); } %>>작성자+내용</option>
+			</select>
+			<input type="text" name="searchData" value="<%=searchData %>" style="border:0px; margin:0px; padding:0px; height:30px; width:200px;"/>
+			<button type="button" onclick="search()" style="border:0px; border-radius:0px 10px 10px 0px; margin:0px; padding:0px 10px; height:30px; font-size:1rem;">검색</button>
+		</div>
+	</form>
+</div>
+<!-- search end -->
+
 <script>
 	function suntaek(value1, value2) {
 		let jsNo = $('#no_' + value1).val();

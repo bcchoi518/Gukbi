@@ -5,24 +5,26 @@
 <%@ include file = "_inc_script.jsp" %>
 
 <%
-	String pageNumber_ = request.getParameter("pageNumber"); 
+//search start
 	String searchValue = "O";
 	String searchGubun = request.getParameter("searchGubun");
 	String searchData = request.getParameter("searchData");
 	
-	Util util = new Util();
-	pageNumber_ = util.getNullBlankCheck(pageNumber_, "1");
 	searchGubun = util.getNullBlankCheck(searchGubun, "");
 	searchData = util.getNullBlankCheck(searchData, "");
 	searchData = util.getCheckString(searchData);
-	
-	int pageNumber = Integer.parseInt(pageNumber_);
 	
 	if (searchGubun.equals("") || searchData.equals("")) {
 		searchValue = "X";
 		searchGubun = "";
 		searchData = "";
 	}//if
+//search end
+//pager start
+	String pageNumber_ = request.getParameter("pageNumber"); 
+	pageNumber_ = util.getNullBlankCheck(pageNumber_, "1");
+	
+	int pageNumber = Integer.parseInt(pageNumber_);
 	
 	int totalRecord = boardDao.getTotalRecord(searchGubun, searchData);
 	int pageSize = 5; // 한페이지에 나타낼 레코드 갯수
@@ -35,7 +37,7 @@
 	
 	int startRecord = pageSize * (pageNumber - 1) + 1;
 	int lastRecord = pageSize * pageNumber;
-
+//pager end
 	ArrayList<BoardDTO> boardList = boardDao.getSelectAll(searchGubun, searchData, startRecord, lastRecord);
 %>
 
@@ -104,7 +106,7 @@
 						}//if
 
 					%>
-					<%=blankValue %><a href="#" onclick="move('board_view','<%=resultBoardDto.getNo() %>','<%=searchGubun %>','<%=searchData %>')"><%=imsiSubject %></a>
+					<%=blankValue %><a href="#" onclick="goPage('board_view','','<%=searchGubun %>','<%=searchData %>','<%=resultBoardDto.getNo() %>')"><%=imsiSubject %></a>
 				</td>
 				<td><%=resultBoardDto.getWriter() %></td>
 				<td><%=resultBoardDto.getRegiDate() %></td>
@@ -124,16 +126,16 @@
 	
 <div style="border: 0px solid red; padding-top:20px; width:80%; text-align:right;">
 |
-<a href="#" onClick="move('board_list')">전체목록</a>
+<a href="#" onClick="goPage('board_list')">전체목록</a>
 |
-<a href="#" onClick="move('board_list','','<%=searchGubun %>','<%=searchData %>')">목록</a>
+<a href="#" onClick="goPage('board_list','','<%=searchGubun %>','<%=searchData %>')">목록</a>
 |
-<a href="#" onClick="move('board_chuga','','<%=searchGubun %>','<%=searchData %>')">등록</a>
+<a href="#" onClick="goPage('board_chuga','','<%=searchGubun %>','<%=searchData %>')">등록</a>
 |
 </div>
 
 <!-- pager start -->
-<div style="border: 0px solid red; padding:10px 0px; width:80%; align="center">
+<div style="border: 0px solid red; padding:10px 0px; width:80%;" align="center">
 <%
 	int totalBlock = totalPage / blockSize;
 	double value1 = (double)totalBlock;
@@ -187,8 +189,8 @@
 <button class="pageBtn" onclick="goPage('<%=menuGubun %>','<%=totalPage %>','<%=searchGubun %>','<%=searchData %>')" >&gt;&gt;</button>
 </div>
 <!-- pager end -->
-
-<div style="border: 0px solid red; padding-top:20px; width:80%;">
+<!-- search start -->
+<div style="border: 0px solid red; width:80%;">
 	<form name="searchForm" style="padding:0px;">
 		<div style="margin:0px; padding:0px; display:flex; justify-content: center;">
 			<select name="searchGubun" style="border:0px; padding:0px 10px; height:30px; border-radius:10px 0px 0px 10px;">
@@ -203,16 +205,11 @@
 		</div>
 	</form>
 </div>
-
+<!-- search end -->
 <script>
 	function search() {
 		document.searchForm.action = 'main.jsp?menuGubun=board_listSearch';
 		document.searchForm.method = 'post';
 		document.searchForm.submit();
 	}//search
-	
-	function goPage(value1, value2, value3, value4) {
-		const linkAddr = 'main.jsp?menuGubun=' + value1 + '&pageNumber=' + value2 + '&searchGubun=' + value3 + '&searchData=' + value4;
-		location.href = linkAddr;
-	}//goPage
 </script>

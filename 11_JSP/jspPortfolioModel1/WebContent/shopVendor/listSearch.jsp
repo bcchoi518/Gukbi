@@ -18,7 +18,7 @@
 %>
 <script>
 	function linkMove(value1, value2) {
-		location.href = 'main.jsp?menuGubun=board_list&searchGubun='+ value1 +'&searchData='+ value2;
+		location.href = 'main.jsp?menuGubun=shopVendor_list&searchGubun='+ value1 +'&searchData='+ value2;
 	}//linkMove
 	linkMove('<%=searchGubun %>','<%=searchData %>');
 </script>
