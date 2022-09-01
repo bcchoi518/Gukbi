@@ -3,11 +3,11 @@
 
 <%@ include file = "_inc_top.jsp" %>
 
-<h2>상품 등록</h2>
+<h2>상품 등록(while)</h2>
 <form name="inputForm">
 	<table border="1">
 		<tr>
-			<td>상품명</td>	
+			<td>상품명</td>
 			<td><input type="text" name="productName" /></td>	
 		</tr>
 		<tr>
@@ -38,7 +38,7 @@
 				<input type="file" name="attachFile1" class="fileUp"/><br>
 				<input type="file" name="attachFile2" class="fileUp"/><br>
 				<input type="file" name="attachFile3" class="fileUp"/><br>
-				<input type="hidden" name="attachCounter" />
+				<input type="hidden" name="attachCounter" value="0"/>
 			</td>	
 		</tr>
 		<tr>
@@ -55,7 +55,7 @@
 		if (confirm('등록할까요?')) {
 			document.inputForm.attachCounter.value = document.getElementsByClassName('fileUp').length;
 			document.inputForm.enctype = 'multipart/form-data';
-			document.inputForm.action = 'mainProc.jsp?menuGubun=shopProduct_attachChugaProc3';
+			document.inputForm.action = 'mainProc.jsp?menuGubun=shopProduct_attachChugaWhileProc';
 			document.inputForm.method = 'post';
 			document.inputForm.submit();
 		}//if

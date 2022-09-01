@@ -50,14 +50,41 @@
 		<tr>
 			<td>상품이미지</td>	
 			<td>
-				<input type="file" name="attachFile1" /><br>
-				<input type="file" name="attachFile2" /><br>
-				<input type="file" name="attachFile3" /><br>
-				<input type="hidden" name="attachCounter" />
+				<input type="file" name="attachFile1" class="fileUp"/><br>
+				<input type="file" name="attachFile2" class="fileUp"/><br>
+				<input type="file" name="attachFile3" class="fileUp"/><br>
+				<input type="hidden" name="attachCounter"/>
+				<input type="hidden" name="dbAttachInfo" value="<%=resultShopProductDto.getAttachInfo() %>"/>
+			</td>
+		</tr>
+		<tr>
+			<td>첨부파일</td>	
+			<td>
+			<%
+				if (resultShopProductDto.getAttachInfo() == null || resultShopProductDto.getAttachInfo().equals("-")) {
+					out.println("첨부파일 없음");
+				} else {
+					String[] attachArray = resultShopProductDto.getAttachInfo().split(",");
+					for (int j = 0; j < attachArray.length; j++) {
+						if (!attachArray[j].equals("-|-|0|-|-")) {
+							String[] imsiArray2 = attachArray[j].split("[|]");
+							
+							String imsiImgPath = "";
+							imsiImgPath += request.getContextPath();
+							imsiImgPath += "/attach";
+							imsiImgPath += request.getContextPath();
+							imsiImgPath += "/shopProduct/";
+							imsiImgPath += imsiArray2[1];
+							
+							out.println("<img src=\""+ imsiImgPath + "\" width=\"70\" height=\"70\">");
+	 					}//if
+					}//for
+				}//if
+			%>
 			</td>	
 		</tr>
 		<tr>
-			<td>
+			<td colspan="2">
 				<button type="button" onclick="formSubmit()">수정하기</button>
 				<button type="button" onclick="location.href='main.jsp?menuGubun=shopProduct_list';">목록으로</button>
 			</td>	
@@ -68,7 +95,9 @@
 <script>
 	function formSubmit() {
 		if (confirm('수정할까요?')) {
-			document.inputForm.action = 'mainProc.jsp?menuGubun=shopProduct_sujungProc';
+			document.inputForm.attachCounter.value = document.getElementsByClassName('fileUp').length;
+			document.inputForm.enctype = 'multipart/form-data';
+			document.inputForm.action = 'mainProc.jsp?menuGubun=shopProduct_attachSujungProc';
 			document.inputForm.method = 'post';
 			document.inputForm.submit();
 		}//if

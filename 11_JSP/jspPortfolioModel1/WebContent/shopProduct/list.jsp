@@ -53,18 +53,23 @@
 				out.println("&nbsp;");
 			} else {
 				String[] attachArray = resultShopProductDto.getAttachInfo().split(",");
-// 				for (int j = 0; j < attachArray.length; j++) {
-					String[] imsiArray2 = attachArray[0].split("[|]");
-					
-					String imsiImgPath = "";
-					imsiImgPath += request.getContextPath();
-					imsiImgPath += "/attach";
-					imsiImgPath += request.getContextPath();
-					imsiImgPath += "/shopProduct/";
-					imsiImgPath += imsiArray2[1];
-					
-					out.println("<img src=\""+ imsiImgPath + "\" width=\"70\" height=\"70\">");
-// 				}//for
+ 				for (int j = 0; j < attachArray.length; j++) {
+ 					if (!attachArray[j].equals("-|-|0|-|-")) {
+ 						String[] imsiArray2 = attachArray[j].split("[|]");
+ 						
+ 						String imsiImgPath = "";
+ 						imsiImgPath += request.getContextPath();
+ 						imsiImgPath += "/attach";
+ 						imsiImgPath += request.getContextPath();
+ 						imsiImgPath += "/shopProduct/";
+ 						imsiImgPath += imsiArray2[1];
+ 						
+ 						out.println("<img src=\""+ imsiImgPath + "\" width=\"70\" height=\"70\">");
+ 					}//if
+ 					if (j == 0) {
+ 						break;
+ 					}//if
+ 				}//for
 			}//if
 		%>
 		</td>
@@ -83,6 +88,8 @@
 <a href="#" onclick="move('shopProduct_list')">목록</a>
 |
 <a href="#" onclick="move('shopProduct_attachChuga')">등록</a>
+|
+<a href="#" onclick="move('shopProduct_attachChugaWhile')">등록(while)</a>
 |
 </div>
 

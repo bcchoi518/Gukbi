@@ -34,23 +34,74 @@
 	int productPrice = Integer.parseInt(productPrice_);
 	int vendorCode = Integer.parseInt(vendorCode_);
 	int attachCounter = Integer.parseInt(attachCounter_);
-	String attachInfo = "";
-
+// 	String attachInfo = "";
+	
+	String[] array = new String[attachCounter];
 	for (int i = 1; i <= attachCounter; i++) {
-		String originalName = multipartRequest.getOriginalFileName("attachFile" + i);
-		String savedName = multipartRequest.getFilesystemName("attachFile" + i);
-		String fileType = multipartRequest.getContentType("attachFile" + i);
+		String originalName = "-";
+		String saveName = "-";
+		long fileSize = 0;
+		String fileType = "-";
+		String mimeType = "-"; //Tika 라이브러리 필요함
 		
-		if (originalName == null || savedName == null || fileType == null) {
-			originalName = "-";
-			savedName = "-";
-			fileType = "-";
+		String tagName = "attachFile" + i;
+		File file1 = multipartRequest.getFile(tagName);
+		if (file1 != null) {
+			originalName = multipartRequest.getOriginalFileName(tagName);
+			saveName = multipartRequest.getFilesystemName(tagName);
+			fileSize = file1.length();
+			fileType = multipartRequest.getContentType(tagName);
+			Tika tika = new Tika();
+			mimeType = tika.detect(file1);
+			
+			if (fileType.equals(mimeType)) {//첨부파일 정상
+				String ext = saveName.substring(saveName.lastIndexOf("."));
+				String newFileName = UUID.randomUUID().toString() + ext; //실제 저장될 새로운 파일이름..
+
+				File newFile = new File(uploadPath + "/" + newFileName);
+				file1.renameTo(newFile); // saveName -> newFileName
+				
+				saveName = newFileName; // saveName -> newFileName
+			} else {//첨부파일 비정상
+				File deleteFile = new File(uploadPath + "/" + saveName);
+				if (deleteFile.exists()) {
+					deleteFile.delete();
+				}//if
+				
+				originalName = "-";
+				saveName = "-";
+				fileSize = 0;
+				fileType = "-";
+				mimeType = "-";
+			}//if
 		}//if
 		
-		attachInfo += "," + originalName + "|" + savedName + "|" + fileType;
+		String imsiOneFileInfo = "";
+		imsiOneFileInfo += originalName + "|";
+		imsiOneFileInfo += saveName + "|";
+		imsiOneFileInfo += fileSize + "|";
+		imsiOneFileInfo += fileType + "|";
+		imsiOneFileInfo += mimeType;
+		
+		array[i-1] = imsiOneFileInfo;
+		
+// 		if (!attachInfo.equals("")) {
+// 			attachInfo += ",";
+// 		}//if
+// 		attachInfo += imsiOneFileInfo;
 	}//for
-	attachInfo = attachInfo.substring(1);
 
+	String attachInfo = "";
+	
+	for (int i = 0; i < array.length; i++) {
+		if (!attachInfo.equals("")) {
+			attachInfo += ",";
+		}//if
+		attachInfo += array[i];
+	}//for
+	
+	out.println(attachInfo);
+/*			
 	ShopProductDTO arguShopProductDto = new ShopProductDTO();
 	arguShopProductDto.setProductName(productName);
 	arguShopProductDto.setProductPrice(productPrice);
@@ -68,5 +119,5 @@
 	}//if
 	out.println("location.href = 'main.jsp?menuGubun=" + resultPage + "';");
 	out.println("</script>");
-
+*/
 %>

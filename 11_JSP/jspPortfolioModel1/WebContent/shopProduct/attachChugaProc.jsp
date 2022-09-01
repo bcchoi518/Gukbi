@@ -5,7 +5,7 @@
 
 <%
 	File isDir = new File(uploadPath);
-	if (isDir.exists()) {
+	if (!isDir.exists()) {
 		try {
 			isDir.mkdirs();	
 		} catch (Exception e) {
@@ -75,7 +75,7 @@
 	out.println("<script>");
 	if (result <= 0) {
 		out.println("alert('등록 처리 중 오류가 발생했습니다.');");
-		resultPage = "shopProduct_chuga";
+		resultPage = "shopProduct_attachChuga";
 	}//if
 	out.println("location.href = 'main.jsp?menuGubun=" + resultPage + "';");
 	out.println("</script>");

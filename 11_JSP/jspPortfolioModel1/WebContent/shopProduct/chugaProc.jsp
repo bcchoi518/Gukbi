@@ -31,7 +31,7 @@
 	
 	String attachInfo = "";
 	try {
-		Enumeration<String> files = multipartRequest.getFileNames();
+		Enumeration files = multipartRequest.getFileNames();
 		while (files.hasMoreElements()) {
 			String tagName = "";
 			String fileOriginalName = "";
@@ -41,7 +41,7 @@
 			String fileExtName = ""; // .png .jpg .jpeg .gif
 			String newFileName = "";
 			
-			tagName = files.nextElement();
+			tagName = (String) files.nextElement();
 			File fileObj = multipartRequest.getFile(tagName);
 			
 			if (fileObj != null) {

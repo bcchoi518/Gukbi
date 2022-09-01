@@ -29,20 +29,22 @@
 			<td>
 			<%
 				if (resultShopProductDto.getAttachInfo() == null || resultShopProductDto.getAttachInfo().equals("-")) {
-					out.println("&nbsp;");
+					out.println("첨부파일 없음");
 				} else {
 					String[] attachArray = resultShopProductDto.getAttachInfo().split(",");
 					for (int j = 0; j < attachArray.length; j++) {
-						String[] imsiArray2 = attachArray[j].split("[|]");
-						
-						String imsiImgPath = "";
-						imsiImgPath += request.getContextPath();
-						imsiImgPath += "/attach";
-						imsiImgPath += request.getContextPath();
-						imsiImgPath += "/shopProduct/";
-						imsiImgPath += imsiArray2[1];
-						
-						out.println("<img src=\""+ imsiImgPath + "\" width=\"70\" height=\"70\">");
+						if (!attachArray[j].equals("-|-|0|-|-")) {
+							String[] imsiArray2 = attachArray[j].split("[|]");
+							
+							String imsiImgPath = "";
+							imsiImgPath += request.getContextPath();
+							imsiImgPath += "/attach";
+							imsiImgPath += request.getContextPath();
+							imsiImgPath += "/shopProduct/";
+							imsiImgPath += imsiArray2[1];
+							
+							out.println("<img src=\""+ imsiImgPath + "\" width=\"70\" height=\"70\">");
+	 					}//if
 					}//for
 				}//if
 			%>
@@ -73,7 +75,7 @@
 |
 <a href="#" onclick="move('shopProduct_chuga')">등록</a>
 |
-<a href="#" onclick="move('shopProduct_sujung','<%=resultShopProductDto.getProductCode() %>')">수정</a>
+<a href="#" onclick="move('shopProduct_attachSujung','<%=resultShopProductDto.getProductCode() %>')">수정</a>
 |
 <a href="#" onclick="move('shopProduct_sakje','<%=resultShopProductDto.getProductCode() %>')">삭제</a>
 |

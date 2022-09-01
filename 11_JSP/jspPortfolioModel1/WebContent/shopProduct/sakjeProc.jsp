@@ -5,6 +5,7 @@
 
 <%
 	String productCode_ = request.getParameter("productCode");
+	String dbAttachInfo = request.getParameter("dbAttachInfo");
 
 	productCode_ = util.getNullBlankCheck(productCode_, "0");
 
@@ -26,11 +27,9 @@
 			for (int i = 0; i < imsiArray01.length; i++) {
 				String[] imsiArray02 = imsiArray01[i].split("[|]");
 				String uploadFile = uploadPath + "/" + imsiArray02[1];
-				java.io.File f = new java.io.File(uploadFile);
-				if (f.delete()) {
-					//파일 삭제 성공..
-				} else {
-					//파일 삭제 실패..
+				java.io.File deletefile = new java.io.File(uploadFile);
+				if (deletefile.exists()) {
+					deletefile.delete();		
 				}//if
 			}//for
 		}//if
