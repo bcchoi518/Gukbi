@@ -31,4 +31,9 @@
 	String fileName = imsiArray[1];
 	
 	String includePage = "../" + folderName + "/" + fileName + ".jsp";
+	
+	String imgDisplayPath = "";
+	imgDisplayPath += request.getContextPath();
+	imgDisplayPath += "/attach";
+	imgDisplayPath += request.getContextPath();
 %>

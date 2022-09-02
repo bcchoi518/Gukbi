@@ -65,17 +65,42 @@
 	</tr>
 	<tr>
 		<td colspan="2" style="padding:20px">
-			<select name="jumunSu">
+			<select name="jumunSu" id="jumunSu">
 				<option value="0">-- 선택 --</option>
 				<% for (int i = 1; i <= 20; i++) { %>
 					<option value="<%=i %>"><%=i %></option>
 				<% }//for %>
 			</select>
 			&nbsp;
-			<button type="button">장바구니담기</button>
-			<button type="button">바로구매</button>
-			<button type="button">계속쇼핑</button>
-			<button type="button">장바구니보기</button>
+			<button type="button" onclick="btnProc('saveCart')">장바구니담기</button>
+			<button type="button" onclick="btnProc('gumae')">바로구매</button>
+			<button type="button" onclick="btnProc('shopping')">계속쇼핑</button>
+			<button type="button" onclick="btnProc('viewCart')">장바구니보기</button>
 		</td>
 	</tr>
 </table>
+
+<form name="imsiForm">
+	<input type="hidden" name="productCode" value="<%=productCode %>"/>
+	<input type="hidden" name="amount" />
+</form>
+
+<script>
+	function btnProc(value1) {
+		if (value1 == 'saveCart') {
+			if (confirm('장바구니에 담을까요?')) {
+				document.imsiForm.amount.value = document.querySelector('#jumunSu').value;
+				
+				document.imsiForm.action = 'mainProc.jsp?menuGubun=shopMall_cartChugaProc';
+				document.imsiForm.method = 'post';
+				document.imsiForm.submit();
+			}//if
+		} else if (value1 == 'gumae') {
+			alert(value1);
+		} else if (value1 == 'shopping') {
+			location.href = 'main.jsp?menuGubun=shopMall_list';
+		} else if (value1 == 'viewCart') {
+			location.href = 'main.jsp?menuGubun=shopCart_list';
+		}//if
+	}//btnProc
+</script>

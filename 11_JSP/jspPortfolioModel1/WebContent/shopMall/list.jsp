@@ -15,7 +15,7 @@
 	
 	int rowCounter = 0;
 	if (imsiNa > 0) {
-	    rowCounter = imsiMok+1;
+	    rowCounter = imsiMok + 1;
 	} else {
 	    rowCounter = imsiMok;
 	}//if
