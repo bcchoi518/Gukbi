@@ -12,42 +12,54 @@ public class MemoDAO {
 	Connection conn = null;
 	PreparedStatement pstmt = null;
 	ResultSet rs = null;
-	String tableName = "memo";
 	
-	public String tableNameChecker(String tableName) {
-		if (tableName == null) {
+	public String fieldNameChecker(String fieldName) {
+		if (fieldName == null) {
 			return null;
 		}//if
 		
-		tableName = tableName.replace(" ", "").replace(";", "");
+		fieldName = fieldName.replace(" ", "").replace(";", "");
 		
-		return tableName;
-	}//tableNameChecker
+		return fieldName;
+	}//fieldNameChecker
 	
-	public ArrayList<MemoDTO> getSelectAll(String searchGubun, String searchData) {
+	public ArrayList<MemoDTO> getSelectAll(String searchGubun, String searchData, int startRecord, int lastRecord) {
+		String searchValue = "O";
+		if (searchGubun.trim().equals("") || searchData.trim().equals("")) { 
+			searchValue = "X";
+		}//if
 		ArrayList<MemoDTO> memoList = new ArrayList<>();
 		conn = DB.dbConn();
 		try {
-			String sql = "SELECT * FROM "+ tableNameChecker(tableName) +" WHERE 1 = 1";
+			String basicSql = "SELECT * FROM memo WHERE 1 = 1";
 			
-			if (searchGubun.equals("writer")) {
-				sql += " AND writer LIKE ? ";
-			} else if (searchGubun.equals("content")) {
-				sql += " AND content LIKE ? ";
-			} else if (searchGubun.equals("writer_content")) {
-				sql += " AND (writer LIKE ? OR content LIKE ?) ";
+			if (searchValue.equals("O")) {
+				if (searchGubun.equals("writer_content")) {
+					basicSql += " AND (writer LIKE ? OR content LIKE ?) ";
+				} else {
+					basicSql += " AND "+ fieldNameChecker(searchGubun) +" LIKE ? ";
+				}//if
 			}//if
 			
-			sql += "ORDER BY no DESC";
+			basicSql += "ORDER BY no DESC";
+			String rowSql = "SELECT rownum rowNumber, sortResult.* FROM ("+ basicSql +") sortResult";
+			String sql = "SELECT * FROM ("+ rowSql +") WHERE rowNumber BETWEEN ? AND ?";
 			pstmt = conn.prepareStatement(sql);
 			
-			if (searchGubun.equals("writer")) {
-				pstmt.setString(1, '%'+searchData+'%');
-			} else if (searchGubun.equals("content")) {
-				pstmt.setString(1, '%'+searchData+'%');
-			} else if (searchGubun.equals("writer_content")) {
-				pstmt.setString(1, '%'+searchData+'%');
-				pstmt.setString(2, '%'+searchData+'%');
+			if (searchValue.equals("O")) {
+				if (searchGubun.equals("writer_content")) {
+					pstmt.setString(1, '%'+searchData+'%');
+					pstmt.setString(2, '%'+searchData+'%');
+					pstmt.setInt(3, startRecord);
+					pstmt.setInt(4, lastRecord);
+				} else {
+					pstmt.setString(1, '%'+searchData+'%');
+					pstmt.setInt(2, startRecord);
+					pstmt.setInt(3, lastRecord);
+				}//if
+			} else {
+				pstmt.setInt(1, startRecord);
+				pstmt.setInt(2, lastRecord);
 			}//if
 			
 			rs = pstmt.executeQuery();
@@ -71,7 +83,7 @@ public class MemoDAO {
 		MemoDTO memoDto = new MemoDTO();
 		conn = DB.dbConn();
 		try {
-			String sql = "SELECT * FROM "+ tableNameChecker(tableName) +" WHERE no = ?";
+			String sql = "SELECT * FROM memo WHERE no = ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, paramDto.getNo());
 			rs = pstmt.executeQuery();
@@ -93,7 +105,7 @@ public class MemoDAO {
 		int result = 0;
 		conn = DB.dbConn();
 		try {
-			String sql = "INSERT INTO "+ tableNameChecker(tableName) +" VALUES (seq_memo.NEXTVAL, ?, ?, SYSDATE)";
+			String sql = "INSERT INTO memo VALUES (seq_memo.NEXTVAL, ?, ?, SYSDATE)";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, paramDto.getWriter());
 			pstmt.setString(2, paramDto.getContent());
@@ -110,7 +122,7 @@ public class MemoDAO {
 		int result = 0;
 		conn = DB.dbConn();
 		try {
-			String sql = "UPDATE "+ tableNameChecker(tableName) +" SET writer = ?, content = ? WHERE no = ?";
+			String sql = "UPDATE memo SET writer = ?, content = ? WHERE no = ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, paramDto.getWriter());
 			pstmt.setString(2, paramDto.getContent());
@@ -128,7 +140,7 @@ public class MemoDAO {
 		int result = 0;
 		conn = DB.dbConn();
 		try {
-			String sql = "DELETE FROM "+ tableNameChecker(tableName) +" WHERE no = ?";
+			String sql = "DELETE FROM memo WHERE no = ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, paramDto.getNo());
 			result = pstmt.executeUpdate();
@@ -139,4 +151,46 @@ public class MemoDAO {
 		}//try-catch-finally
 		return result;
 	}//setDelete
+	
+	public int getTotalRecord(String searchGubun, String searchData) {
+		String searchValue = "O";
+		if (searchGubun.trim().equals("") || searchData.trim().equals("")) { 
+			searchValue = "X";
+		}//if
+		int result = 0;
+		conn = DB.dbConn();
+		try {
+			String sql = "SELECT COUNT(*) recordCounter FROM memo ";
+			
+			if (searchValue.equals("O")) {
+				if (searchGubun.equals("writer_content")) {
+					sql += " WHERE (writer LIKE ? OR content LIKE ?) ";
+				} else {
+					sql += " WHERE "+ fieldNameChecker(searchGubun) +" LIKE ? ";
+				}//if
+			}//if
+			
+			sql += "ORDER BY no DESC";
+			pstmt = conn.prepareStatement(sql);
+			
+			if (searchValue.equals("O")) {
+				if (searchGubun.equals("writer_content")) {
+					pstmt.setString(1, '%'+searchData+'%');
+					pstmt.setString(2, '%'+searchData+'%');
+				} else {
+					pstmt.setString(1, '%'+searchData+'%');
+				}//if
+			}//if
+			
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				result = rs.getInt("recordCounter");
+			}//while
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DB.dbConnClose(rs, pstmt, conn);
+		}//try-catch-finally
+		return result;
+	}//getTotalRecord
 }//MemoDAO

@@ -12,44 +12,55 @@ public class GuestBookDAO {
 	Connection conn = null;
 	PreparedStatement pstmt = null;
 	ResultSet rs = null;
-	String tableName = "guestBook";
 	
-	public String tableNameChecker(String tableName) {
-		if (tableName == null) {
+	public String fieldNameChecker(String fieldName) {
+		if (fieldName == null) {
 			return null;
 		}//if
 		
-		tableName = tableName.replace(" ", "").replace(";", "");
+		fieldName = fieldName.replace(" ", "").replace(";", "");
 		
-		return tableName;
-	}//tableNameChecker
+		return fieldName;
+	}//fieldNameChecker
 	
-	public ArrayList<GuestBookDTO> getSelectAll(String searchGubun, String searchData) {
+	public ArrayList<GuestBookDTO> getSelectAll(String searchGubun, String searchData, int startRecord, int lastRecord) {
+		String searchValue = "O";
+		if (searchGubun.trim().equals("") || searchData.trim().equals("")) { 
+			searchValue = "X";
+		}//if
 		ArrayList<GuestBookDTO> guestBookList = new ArrayList<>();
 		conn = DB.dbConn();
 		try {
-			String sql = "SELECT * FROM "+ tableNameChecker(tableName) +" WHERE 1 = 1";
+			String basicSql = "SELECT * FROM guestBook WHERE 1 = 1";
 			
-			if (searchGubun.equals("name")) {
-				sql += " AND name LIKE ? ";
-			} else if (searchGubun.equals("content")) {
-				sql += " AND content LIKE ? ";
-			} else if (searchGubun.equals("name_content")) {
-				// 연산자는 가까운거 혹은 좁은것이 우선시 된다
-				sql += " AND (name LIKE ? OR content LIKE ?) ";
+			if (searchValue.equals("O")) {
+				if (searchGubun.equals("name_content")) {
+					// 연산자는 가까운거 혹은 좁은것이 우선시 된다
+					basicSql += " AND (name LIKE ? OR content LIKE ?) ";
+				} else {
+					basicSql += " AND "+ fieldNameChecker(searchGubun) +" LIKE ? ";
+				}//if
 			}//if
 			
-			sql += "ORDER BY no DESC";
+			basicSql += "ORDER BY no DESC";
+			String rowSql = "SELECT rownum rowNumber, sortResult.* FROM ("+basicSql+") sortResult";
+			String sql = "SELECT * FROM ("+rowSql+") WHERE rowNumber BETWEEN ? AND ?";
 			
 			pstmt = conn.prepareStatement(sql);
-			
-			if (searchGubun.equals("name")) {
-				pstmt.setString(1, '%' + searchData + '%');
-			} else if (searchGubun.equals("content")) {
-				pstmt.setString(1, '%' + searchData + '%');
-			} else if (searchGubun.equals("name_content")) {
-				pstmt.setString(1, '%' + searchData + '%');
-				pstmt.setString(2, '%' + searchData + '%');
+			if (searchValue.equals("O")) {
+				if (searchGubun.equals("name_content")) {
+					pstmt.setString(1, '%' + searchData + '%');
+					pstmt.setString(2, '%' + searchData + '%');
+					pstmt.setInt(3, startRecord);
+					pstmt.setInt(4, lastRecord);
+				} else {
+					pstmt.setString(1, '%' + searchData + '%');
+					pstmt.setInt(2, startRecord);
+					pstmt.setInt(3, lastRecord);
+				}//if
+			} else {
+				pstmt.setInt(1, startRecord);
+				pstmt.setInt(2, lastRecord);
 			}//if
 			
 			rs = pstmt.executeQuery();
@@ -76,7 +87,7 @@ public class GuestBookDAO {
 		GuestBookDTO guestBookDto = new GuestBookDTO();
 		conn = DB.dbConn();
 		try {
-			String sql = "SELECT * FROM "+ tableNameChecker(tableName) +" WHERE no = ?";
+			String sql = "SELECT * FROM guestBook WHERE no = ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, paramDto.getNo());
 			rs = pstmt.executeQuery();
@@ -101,7 +112,7 @@ public class GuestBookDAO {
 		int result = 0;
 		conn = DB.dbConn();
 		try {
-			String sql = "INSERT INTO "+ tableNameChecker(tableName) +" VALUES (seq_guestBook.NEXTVAL, ?, ?, ?, ?, SYSDATE, ?)";
+			String sql = "INSERT INTO guestBook VALUES (seq_guestBook.NEXTVAL, ?, ?, ?, ?, SYSDATE, ?)";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, paramDto.getName());
 			pstmt.setString(2, paramDto.getEmail());
@@ -121,7 +132,7 @@ public class GuestBookDAO {
 		int result = 0;
 		conn = DB.dbConn();
 		try {
-			String sql = "UPDATE "+ tableNameChecker(tableName) +" SET email = ?, content = ? WHERE no = ? AND passwd = ?";
+			String sql = "UPDATE guestBook SET email = ?, content = ? WHERE no = ? AND passwd = ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, paramDto.getEmail());
 			pstmt.setString(2, paramDto.getContent());
@@ -140,7 +151,7 @@ public class GuestBookDAO {
 		int result = 0;
 		conn = DB.dbConn();
 		try {
-			String sql = "DELETE FROM "+ tableNameChecker(tableName) +" WHERE no = ? AND passwd = ?";
+			String sql = "DELETE FROM guestBook WHERE no = ? AND passwd = ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, paramDto.getNo());
 			pstmt.setString(2, paramDto.getPasswd());
@@ -152,4 +163,46 @@ public class GuestBookDAO {
 		}//try-catch-finally
 		return result;
 	}//setDelete
+
+	public int getTotalRecord(String searchGubun, String searchData) {
+		String searchValue = "O";
+		if (searchGubun.trim().equals("") || searchData.trim().equals("")) { 
+			searchValue = "X";
+		}//if
+		int result = 0;
+		conn = DB.dbConn();
+		try {
+			String sql = "SELECT COUNT(*) recordCounter FROM guestBook";
+			
+			if (searchValue.equals("O")) {
+				if (searchGubun.equals("name_content")) {
+					// 연산자는 가까운거 혹은 좁은것이 우선시 된다
+					sql += " WHERE (name LIKE ? OR content LIKE ?) ";
+				} else {
+					sql += " WHERE "+ fieldNameChecker(searchGubun) +" LIKE ? ";
+				}//if
+			}//if
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			if (searchValue.equals("O")) {
+				if (searchGubun.equals("name_content")) {
+					pstmt.setString(1, '%'+ searchData +'%');
+					pstmt.setString(2, '%'+ searchData +'%');
+				} else {
+					pstmt.setString(1, '%'+ searchData +'%');
+				}//if
+			}//if
+			
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				result = rs.getInt("recordCounter");
+			}//if
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DB.dbConnClose(rs, pstmt, conn);
+		}//try-catch-finally
+		return result;
+	}//getTotalRecord
 }//GuestBookDAO

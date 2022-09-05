@@ -1,5 +1,7 @@
 package config;
 
+import java.util.regex.Pattern;
+
 public class Util {
 	// 모듈: (서로 다른 모듈) 결합도는 낮게.., 응집도는 높게..
 	public String getNullBlankCheck(String str, String defaultStr) {
@@ -20,4 +22,8 @@ public class Util {
 		result = result.replace("'", "&apos;");
 		return result;
 	}//getCheckString
+	
+	public boolean isNumber(String str) {
+		return Pattern.matches("^[0-9]+$", str);
+	}//isNumber
 }//Util

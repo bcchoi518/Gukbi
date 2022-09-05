@@ -1,32 +1,52 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
-<%@page import="java.util.ArrayList"%>
+<%@ page import="java.util.ArrayList"%>
 
-<%@page import="config.Util"%>
+<%@ page import="config.Util"%>
 <%@ page import="memo.model.dao.MemoDAO"%>
 <%@ page import="memo.model.dto.MemoDTO"%>
 
-<%
-	request.setCharacterEncoding("UTF-8");
+<%@ include file = "_inc_top.jsp" %>
+<%@ include file = "_inc_script.jsp" %>
 
+<%
+//search start
+	String searchValue = "O";
 	String searchGubun = request.getParameter("searchGubun");
 	String searchData = request.getParameter("searchData");
 	
 	Util util = new Util();
-	searchGubun = util.getNullBlankCheck(searchGubun, ""); 
-	searchData = util.getNullBlankCheck(searchData, ""); 
+	searchGubun = util.getNullBlankCheck(searchGubun, "");
+	searchData = util.getNullBlankCheck(searchData, "");
 	searchData = util.getCheckString(searchData);
 	
 	if (searchGubun.equals("") || searchData.equals("")) {
+		searchValue = "X";
 		searchGubun = "";
 		searchData = "";
 	}//if
-			
+//search end
 	MemoDAO memoDao = new MemoDAO();
-	ArrayList<MemoDTO> memoList = memoDao.getSelectAll(searchGubun, searchData);
+//pager start
+	String pageNumber_ = request.getParameter("pageNumber"); 
+	pageNumber_ = util.getNullBlankCheck(pageNumber_, "1");
 	
-	int totalRecord = memoList.size();
+	int pageNumber = Integer.parseInt(pageNumber_);
+	
+	int totalRecord = memoDao.getTotalRecord(searchGubun, searchData);
+	int pageSize = 5; // 한페이지에 나타낼 레코드 갯수
+	int blockSize = 10;
+
+	int block = (pageNumber - 1) / blockSize;
+	int jj = totalRecord - pageSize * (pageNumber - 1); //단순히 화면에 보여주는 일련번호
+	double totalPageDou = Math.ceil(totalRecord / (double)pageSize);
+	int totalPage = (int)totalPageDou;
+	
+	int startRecord = pageSize * (pageNumber - 1) + 1;
+	int lastRecord = pageSize * pageNumber;
+//pager end	
+	ArrayList<MemoDTO> memoList = memoDao.getSelectAll(searchGubun, searchData, startRecord, lastRecord);
 %>
 
 <h2>메모목록</h2>
@@ -111,7 +131,61 @@
 <a href="#" onClick="move('memo_chuga')">등록</a>
 |
 </div>
-
+<!-- pager start -->
+<div style="border: 0px solid red; padding:10px 0px; width:80%;" align="center">
+<%
+	int totalBlock = totalPage / blockSize;
+	double value1 = (double)totalBlock;
+	double value2 = totalPage / blockSize;
+	if (value1 - value2 == 0) {
+		totalBlock = totalBlock - 1;
+	}//if
+%>
+	<button class="pageBtn" onclick="goPage('<%=menuGubun %>','1','<%=searchGubun %>','<%=searchData %>')">&lt;&lt;</button>
+<%
+	if (block > 0) {
+		int imsiPage = (block - 1) * blockSize + 1;
+%>
+		<button class="pageBtn" onclick="goPage('<%=menuGubun %>','<%=imsiPage %>','<%=searchGubun %>','<%=searchData %>')">&lt;</button>
+<% 
+	} else {
+%>
+	<button class="pageBtn" >&lt;</button>
+<%
+	}//if
+%>
+<%
+	for (int goPage=1; goPage <= blockSize; goPage++) {
+		int imsiValue = block * blockSize + goPage;
+		if (totalPage - imsiValue >= 0) {
+			if (imsiValue == pageNumber) {
+%>
+				<button class="pageBtn <% if (pageNumber == imsiValue) { out.println("selected"); } %>" ><%=imsiValue %></button>
+<%
+			} else {
+%>
+				<button class="pageBtn" onclick="goPage('<%=menuGubun %>','<%=imsiValue %>','<%=searchGubun %>','<%=searchData %>')"><%=imsiValue %></button>
+<%
+			}//if
+		}//if
+	}//for
+%>
+<%
+	if (block - totalBlock <= 0) {
+		int yyy = (block + 1) * blockSize + 1;
+		//int zzz = block + 1;
+%>
+		<button class="pageBtn" onclick="goPage('<%=menuGubun %>','<%=yyy %>','<%=searchGubun %>','<%=searchData %>')" >&gt;</button>
+<%
+	} else {
+%>
+		<button class="pageBtn" >&gt;</button>
+<%		
+	}//if
+%>
+<button class="pageBtn" onclick="goPage('<%=menuGubun %>','<%=totalPage %>','<%=searchGubun %>','<%=searchData %>')" >&gt;&gt;</button>
+</div>
+<!-- pager end -->
 <!-- search start -->
 <div style="border: 0px solid red; width:80%;">
 	<form name="searchForm" style="padding:0px;">
@@ -154,10 +228,4 @@
 			location.href = 'main.jsp?menuGubun=' + value1;
 		}//if
 	}//move
-	
-	function search() {
-		document.searchForm.action = 'mainProc.jsp?menuGubun=memo_listSearch';
-		document.searchForm.method = 'post';
-		document.searchForm.submit();
-	}//search
 </script>

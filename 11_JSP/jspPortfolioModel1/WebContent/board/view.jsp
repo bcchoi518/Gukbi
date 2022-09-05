@@ -4,20 +4,6 @@
 <%@ include file = "_inc_top.jsp" %>
 <%@ include file = "_inc_script.jsp" %>
 
-<%
-	String searchGubun = request.getParameter("searchGubun");
-	String searchData = request.getParameter("searchData");
-	
-	searchGubun = util.getNullBlankCheck(searchGubun, "");
-	searchData = util.getNullBlankCheck(searchData, "");
-	searchData = util.getCheckString(searchData);
-	
-	if (searchGubun.equals("") || searchData.equals("")) {
-		searchGubun = "";
-		searchData = "";
-	}//if
-%>
-
 <h2>게시글 상세보기</h2>
 <table border="0" align="center">
 	<tr>

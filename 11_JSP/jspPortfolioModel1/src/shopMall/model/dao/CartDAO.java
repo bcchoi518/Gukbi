@@ -13,6 +13,31 @@ public class CartDAO {
 	PreparedStatement pstmt = null;
 	ResultSet rs = null;
 	
+	public ArrayList<CartDTO> getSelectCartProductGroup() {
+		ArrayList<CartDTO> list = new ArrayList<>();
+		conn = DB.dbConn();
+		try {
+			String sql = "";
+			sql += "SELECT p.productName productName, SUM(c.amount * p.productPrice) buyMoney ";
+			sql += "FROM cart c INNER JOIN product p ON c.productCode = p.productCode ";
+			sql += "GROUP BY p.productName ";
+			sql += "ORDER BY productName ASC";
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				CartDTO cartDto = new CartDTO();
+				cartDto.setProductName(rs.getString("productName"));
+				cartDto.setBuyMoney(rs.getInt("buyMoney"));
+				list.add(cartDto);
+			}//if
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DB.dbConnClose(rs, pstmt, conn);
+		}//try-catch-finally
+		return list;
+	}//getSelectCartProductGroup
+	
 	public ArrayList<CartDTO> getSelectAll() {
 		ArrayList<CartDTO> cartList = new ArrayList<>();
 		conn = DB.dbConn();

@@ -11,6 +11,7 @@ public class CartDTO {
     private String productName;
     private int productPrice;
     private String productInfo;
+    private int buyMoney;
     
 	public int getCartNo() {
 		return cartNo;
@@ -59,5 +60,11 @@ public class CartDTO {
 	}
 	public void setProductInfo(String productInfo) {
 		this.productInfo = productInfo;
+	}
+	public int getBuyMoney() {
+		return buyMoney;
+	}
+	public void setBuyMoney(int buyMoney) {
+		this.buyMoney = buyMoney;
 	}
 }//CartDTO

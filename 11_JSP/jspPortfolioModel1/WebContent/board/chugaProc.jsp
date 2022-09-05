@@ -4,8 +4,6 @@
 <%@ include file = "_inc_top.jsp" %>
 
 <%
-	request.setCharacterEncoding("UTF-8");
-
 	String writer = request.getParameter("writer");
 	String email = request.getParameter("email");
 	String passwd = request.getParameter("passwd");
@@ -47,7 +45,7 @@
 	if (failCounter > 0) {
 		out.println("<script>");
 		out.println("alert('입력한 값이 정확하지않습니다.');");
-		out.println("location.href='main.jsp?menuGubun=board_chuga';");
+		out.println("location.href='main.jsp?menuGubun=board_chuga&searchGubun=" + searchGubun + "&searchData=" + searchData + "';");
 		out.println("</script>");
 		return;
 	}//if
@@ -100,22 +98,12 @@
 
 	int result = boardDao.setInsert(arguBoardDto);
 	
-	String ment = "";
-	String addr = "";
-	if (result > 0) {
-		ment = "";
-		addr = "main.jsp?menuGubun=board_list";
-	} else {
-		ment = "등록 중 오류가 발생했습니다.";
-		addr = "main.jsp?menuGubun=board_chuga";
-	}//if
-	
+	String resultPage = "board_list&searchGubun=" + searchGubun + "&searchData=" + searchData;
 	out.println("<script>");
-	if (result > 0) {
-		
-	} else {
-		out.println("alert('"+ ment +"');");
+	if (result <= 0) {
+		out.println("alert('등록 처리 중 오류가 발생했습니다.');");
+		resultPage = "board_chuga&searchGubun=" + searchGubun + "&searchData=" + searchData;
 	}//if
-	out.println("location.href='"+ addr +"';");
+	out.println("location.href = 'main.jsp?menuGubun=" + resultPage + "';");
 	out.println("</script>");
 %>

@@ -6,8 +6,6 @@
 <%@page import="config.Util"%>
 
 <%
-	request.setCharacterEncoding("UTF-8");
-
 	String searchGubun = request.getParameter("searchGubun");
 	String searchData = request.getParameter("searchData");
 	

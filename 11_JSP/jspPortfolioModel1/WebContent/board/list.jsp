@@ -5,21 +5,6 @@
 <%@ include file = "_inc_script.jsp" %>
 
 <%
-//search start
-	String searchValue = "O";
-	String searchGubun = request.getParameter("searchGubun");
-	String searchData = request.getParameter("searchData");
-	
-	searchGubun = util.getNullBlankCheck(searchGubun, "");
-	searchData = util.getNullBlankCheck(searchData, "");
-	searchData = util.getCheckString(searchData);
-	
-	if (searchGubun.equals("") || searchData.equals("")) {
-		searchValue = "X";
-		searchGubun = "";
-		searchData = "";
-	}//if
-//search end
 //pager start
 	String pageNumber_ = request.getParameter("pageNumber"); 
 	pageNumber_ = util.getNullBlankCheck(pageNumber_, "1");
@@ -206,10 +191,3 @@
 	</form>
 </div>
 <!-- search end -->
-<script>
-	function search() {
-		document.searchForm.action = 'main.jsp?menuGubun=board_listSearch';
-		document.searchForm.method = 'post';
-		document.searchForm.submit();
-	}//search
-</script>

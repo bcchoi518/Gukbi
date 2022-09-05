@@ -13,12 +13,59 @@ public class BoardBasicDAO {
 	PreparedStatement pstmt = null;
 	ResultSet rs = null;
 	
-	public ArrayList<BoardBasicDTO> getSelectAll() {
+	public String fieldNameChecker(String fieldName) {
+		if (fieldName == null) {
+			return null;
+		}//if
+		
+		fieldName = fieldName.replace(" ", "").replace(";", "");
+		
+		return fieldName;
+	}//fieldNameChecker
+	
+	public ArrayList<BoardBasicDTO> getSelectAll(String searchGubun, String searchData, int startRecord, int lastRecord) {
+		String searchValue = "O";
+		if (searchGubun.trim().equals("") || searchData.trim().equals("")) { 
+			searchValue = "X";
+		}//if
 		ArrayList<BoardBasicDTO> boardBasicList = new ArrayList<>();
 		conn = DB.dbConn();
 		try {
-			String sql = "SELECT no, subject, writer, regiDate, hit, stepNo, memberNo, ip, parentNo FROM boardBasic ORDER BY refNo DESC, levelNo ASC";
+			String basicSql = "";
+			basicSql += "SELECT no, subject, writer, regiDate, hit, stepNo, memberNo, ip, parentNo ";
+			basicSql += "FROM boardBasic ";
+			basicSql += "WHERE 1 = 1 ";
+		   
+		    if (searchValue.equals("O")) {
+		    	if (searchGubun.equals("writer_subject_content")) {
+		    		basicSql += "AND (writer LIKE ? OR subject LIKE ? OR content LIKE ?) ";
+		    	} else {
+		    		basicSql += "AND "+ fieldNameChecker(searchGubun) +" LIKE ?";
+		    	}//if
+		    }//if
+				   
+		    basicSql += "ORDER BY refNo DESC, levelNo ASC";
+		    String rowSql = "SELECT rownum rowNumber, sortResult.* FROM ("+basicSql+") sortResult";
+			String sql = "SELECT * FROM ("+rowSql+") WHERE rowNumber BETWEEN ? AND ?";   
 			pstmt = conn.prepareStatement(sql);
+			
+			if (searchValue.equals("O")) {
+				if (searchGubun.equals("writer_subject_content")) {
+					pstmt.setString(1, '%'+ searchData +'%');
+					pstmt.setString(2, '%'+ searchData +'%');
+					pstmt.setString(3, '%'+ searchData +'%');
+					pstmt.setInt(4, startRecord);
+					pstmt.setInt(5, lastRecord);
+				} else {
+					pstmt.setString(1, '%'+ searchData +'%');
+					pstmt.setInt(2, startRecord);
+					pstmt.setInt(3, lastRecord);
+				}//if
+			} else {
+				pstmt.setInt(1, startRecord);
+				pstmt.setInt(2, lastRecord);
+			}//if
+			
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
 				BoardBasicDTO boardBasicDto = new BoardBasicDTO();
@@ -73,6 +120,49 @@ public class BoardBasicDAO {
 		}//try-catch-finally
 		return boardBasicDto;
 	}//getSelectOne
+	
+	public int getTotalRecord(String searchGubun, String searchData) {
+		String searchValue = "O";
+		if (searchGubun.trim().equals("") || searchData.trim().equals("")) { 
+			searchValue = "X";
+		}//if
+		
+		int result = 0;
+		conn = DB.dbConn();
+		try {
+			String sql = "SELECT COUNT(*) recordCounter FROM boardBasic ";
+			
+			if (searchValue.equals("O")) {
+				if (searchGubun.equals("writer_subject_content")) {
+					sql += "WHERE (writer LIKE ? OR subject LIKE ? OR content LIKE ?)";
+				} else {
+					sql += "WHERE "+ fieldNameChecker(searchGubun) +" LIKE ?";
+				}//if
+			}//if
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			if (searchValue.equals("O")) {
+				if (searchGubun.equals("writer_subject_content")) {
+					pstmt.setString(1, '%'+ searchData +'%');
+					pstmt.setString(2, '%'+ searchData +'%');
+					pstmt.setString(3, '%'+ searchData +'%');
+				} else {
+					pstmt.setString(1, '%'+ searchData +'%');
+				}//if
+			}//if
+			
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				result = rs.getInt("recordCounter");
+			}//if
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DB.dbConnClose(rs, pstmt, conn);
+		}//try-catch-finally
+		return result;
+	}//getTotalRecord
 	
 	public int getMaxNum() {
 		int result = 0;

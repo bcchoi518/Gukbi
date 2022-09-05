@@ -2,12 +2,6 @@
     pageEncoding="UTF-8"%>
 
 <script>
-	function search() {
-		document.searchForm.action = 'main.jsp?menuGubun=board_listSearch';
-		document.searchForm.method = 'post';
-		document.searchForm.submit();
-	}//search
-
 	function goPage(value1, value2, value3, value4, value5) {
 		let linkAddr = 'main.jsp?menuGubun=' + value1;
 		if (value2 != undefined) {

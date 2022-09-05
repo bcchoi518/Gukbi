@@ -45,10 +45,12 @@
 		<tr>
 			<td colspan="2">
 				<button type="button" onClick="save()" >저장하기</button>
-				<button type="button" onClick="location.href='main.jsp?menuGubun=board_list';" >목록으로</button>
+				<button type="button" onClick="location.href='main.jsp?menuGubun=board_list&searchGubun=<%=searchGubun %>&searchData=<%=searchData %>';" >목록으로</button>
 			</td>
 		</tr>
 	</table>
+	<input type="hidden" name="searchGubun" value="<%=searchGubun %>" />
+	<input type="hidden" name="searchData" value="<%=searchData %>" />
 </form>
 
 <script>

@@ -22,12 +22,11 @@
 
 	if (fileName.equals("chuga") || fileName.equals("chugaProc") || fileName.equals("view") || fileName.equals("sujung") || fileName.equals("sujungProc") || fileName.equals("sakje") || fileName.equals("sakjeProc")) {
 		String no_ = request.getParameter("no");
-		if (no_ == null || no_.trim().equals("")) {
+		if (no_ == null || no_.trim().equals("") || !util.isNumber(no_)) {
 			no_ = "0";
 		}//if
 				
 		int no = Integer.parseInt(no_);
-		
 		arguBoardDto.setNo(no);
 		
 		if (fileName.equals("view")) {
@@ -45,4 +44,20 @@
 			}//if
 		}//if
 	}//if
+	
+	//search start
+		String searchValue = "O";
+		String searchGubun = request.getParameter("searchGubun");
+		String searchData = request.getParameter("searchData");
+		
+		searchGubun = util.getNullBlankCheck(searchGubun, "");
+		searchData = util.getNullBlankCheck(searchData, "");
+		searchData = util.getCheckString(searchData);
+		
+		if (searchGubun.equals("") || searchData.equals("")) {
+			searchValue = "X";
+			searchGubun = "";
+			searchData = "";
+		}//if
+	//search end
 %>

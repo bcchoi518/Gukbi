@@ -13,6 +13,16 @@ public class BoardDAO {
 	PreparedStatement pstmt = null;
 	ResultSet rs = null;
 	
+	public String fieldNameChecker(String fieldName) {
+		if (fieldName == null) {
+			return null;
+		}//if
+		
+		fieldName = fieldName.replace(" ", "").replace(";", "");
+		
+		return fieldName;
+	}//fieldNameChecker
+	
 	public ArrayList<BoardDTO> getSelectAll(String searchGubun, String searchData, int startRecord, int lastRecord) {
 		String searchValue = "O";
 		if (searchGubun == null || searchGubun.trim().equals("")) { searchGubun = ""; }
@@ -32,7 +42,7 @@ public class BoardDAO {
 				if (searchGubun.equals("writer_subject_content")) {
 					basicSql += "AND (writer LIKE ? OR subject LIKE ? OR content LIKE ?) ";
 				} else {
-					basicSql += "AND "+ searchGubun +" LIKE ? ";
+					basicSql += "AND "+ fieldNameChecker(searchGubun) +" LIKE ? ";
 				}//if
 			}//if
 					   
@@ -165,7 +175,7 @@ public class BoardDAO {
 				if (searchGubun.equals("writer_subject_content")) {
 					sql += "WHERE (writer LIKE ? OR subject LIKE ? OR content LIKE ?)";
 				} else {
-					sql += "WHERE "+ searchGubun +" LIKE ?";
+					sql += "WHERE "+ fieldNameChecker(searchGubun) +" LIKE ?";
 				}//if
 			}//if
 			
@@ -197,7 +207,7 @@ public class BoardDAO {
 		int result = 0;
 		conn = DB.dbConn();
 		try {
-			String sql = "SELECT NVL(MAX("+ gubun +"),0) maxValue FROM board";
+			String sql = "SELECT NVL(MAX("+ fieldNameChecker(gubun) +"),0) maxValue FROM board";
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
