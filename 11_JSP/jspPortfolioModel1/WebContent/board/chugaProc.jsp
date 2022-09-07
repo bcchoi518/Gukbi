@@ -98,11 +98,11 @@
 
 	int result = boardDao.setInsert(arguBoardDto);
 	
-	String resultPage = "board_list&searchGubun=" + searchGubun + "&searchData=" + searchData;
+	String resultPage = "board_list";
 	out.println("<script>");
 	if (result <= 0) {
 		out.println("alert('등록 처리 중 오류가 발생했습니다.');");
-		resultPage = "board_chuga&searchGubun=" + searchGubun + "&searchData=" + searchData;
+		resultPage = "board_chuga&no=" + resultBoardDto.getNo();
 	}//if
 	out.println("location.href = 'main.jsp?menuGubun=" + resultPage + "';");
 	out.println("</script>");

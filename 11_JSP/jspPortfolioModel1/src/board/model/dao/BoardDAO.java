@@ -23,14 +23,14 @@ public class BoardDAO {
 		return fieldName;
 	}//fieldNameChecker
 	
-	public ArrayList<BoardDTO> getSelectAll(String searchGubun, String searchData, int startRecord, int lastRecord) {
+	public ArrayList<BoardDTO> getSelectAll(BoardDTO paramDto) {
 		String searchValue = "O";
-		if (searchGubun == null || searchGubun.trim().equals("")) { searchGubun = ""; }
-		if (searchData == null || searchData.trim().equals("")) { searchData = ""; }
-		if (searchGubun.trim().equals("") || searchData.trim().equals("")) { 
+		if (paramDto.getSearchGubun() == null || paramDto.getSearchGubun().trim().equals("")) { paramDto.setSearchGubun(""); }
+		if (paramDto.getSearchData() == null || paramDto.getSearchData().trim().equals("")) { paramDto.setSearchData(""); }
+		if (paramDto.getSearchGubun().trim().equals("") || paramDto.getSearchData().trim().equals("")) { 
 			searchValue = "X";
-			searchGubun = "";
-			searchData = ""; 
+			paramDto.setSearchGubun("");
+			paramDto.setSearchData("");
 		}//if
 		
 		ArrayList<BoardDTO> boardList = new ArrayList<>();
@@ -39,34 +39,30 @@ public class BoardDAO {
 			String basicSql = "SELECT * FROM board WHERE 1=1 ";
 			
 			if (searchValue.equals("O")) {
-				if (searchGubun.equals("writer_subject_content")) {
+				if (paramDto.getSearchGubun().equals("writer_subject_content")) {
 					basicSql += "AND (writer LIKE ? OR subject LIKE ? OR content LIKE ?) ";
 				} else {
-					basicSql += "AND "+ fieldNameChecker(searchGubun) +" LIKE ? ";
+					basicSql += "AND "+ fieldNameChecker(paramDto.getSearchGubun()) +" LIKE ? ";
 				}//if
 			}//if
-					   
+
 			basicSql += "ORDER BY noticeNo DESC, refNo DESC, levelNo ASC";
 			String rowSql = "SELECT rownum rowNumber, sortResult.* FROM ("+basicSql+") sortResult";
 			String sql = "SELECT * FROM ("+rowSql+") WHERE rowNumber BETWEEN ? AND ?";
 			pstmt = conn.prepareStatement(sql);
-			
+
+			int k = 0;
 			if (searchValue.equals("O")) {
-				if (searchGubun.equals("writer_subject_content")) {
-					pstmt.setString(1, '%'+ searchData +'%');
-					pstmt.setString(2, '%'+ searchData +'%');
-					pstmt.setString(3, '%'+ searchData +'%');
-					pstmt.setInt(4, startRecord);
-					pstmt.setInt(5, lastRecord);
+				if (paramDto.getSearchGubun().equals("writer_subject_content")) {
+					pstmt.setString(++k, '%'+ paramDto.getSearchData() +'%');
+					pstmt.setString(++k, '%'+ paramDto.getSearchData() +'%');
+					pstmt.setString(++k, '%'+ paramDto.getSearchData() +'%');
 				} else {
-					pstmt.setString(1, '%'+ searchData +'%');
-					pstmt.setInt(2, startRecord);
-					pstmt.setInt(3, lastRecord);
+					pstmt.setString(++k, '%'+ paramDto.getSearchData() +'%');
 				}//if
-			} else {
-				pstmt.setInt(1, startRecord);
-				pstmt.setInt(2, lastRecord);
 			}//if
+			pstmt.setInt(++k, paramDto.getStartRecord());
+			pstmt.setInt(++k, paramDto.getLastRecord());
 
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
@@ -101,12 +97,48 @@ public class BoardDAO {
 	}//getSelectAll
 	
 	public BoardDTO getSelectOne(BoardDTO paramDto) {
+		String searchValue = "O";
+		if (paramDto.getSearchGubun() == null || paramDto.getSearchGubun().trim().equals("")) { paramDto.setSearchGubun(""); }
+		if (paramDto.getSearchData() == null || paramDto.getSearchData().trim().equals("")) { paramDto.setSearchData(""); }
+		if (paramDto.getSearchGubun().trim().equals("") || paramDto.getSearchData().trim().equals("")) { 
+			searchValue = "X";
+			paramDto.setSearchGubun("");
+			paramDto.setSearchData("");
+		}//if
 		BoardDTO boardDto = new BoardDTO();
 		conn = DB.dbConn();
 		try {
-			String sql = "SELECT * FROM board WHERE no = ?";
+			String subQuery = "SELECT b.*, ";
+			subQuery += "LAG(no) OVER (ORDER BY noticeNo DESC, refNo DESC, levelNo ASC) preNo, ";
+			subQuery += "LAG(subject) OVER (ORDER BY noticeNo DESC, refNo DESC, levelNo ASC) preSubject, ";
+			subQuery += "LEAD(no) OVER (ORDER BY noticeNo DESC, refNo DESC, levelNo ASC) nxtNo, ";
+			subQuery += "LEAD(subject) OVER (ORDER BY noticeNo DESC, refNo DESC, levelNo ASC) nxtSubject ";
+			subQuery += "FROM board b ";
+			subQuery += "WHERE 1 = 1 ";
+			if (searchValue.equals("O")) {
+				if (paramDto.getSearchGubun().equals("writer_subject_content")) {
+					subQuery += "AND (writer LIKE ? OR subject LIKE ? OR content LIKE ?) ";
+				} else {
+					subQuery += "AND "+ fieldNameChecker(paramDto.getSearchGubun()) +" LIKE ? ";
+				}//if
+			}//if
+			subQuery += "ORDER BY noticeNo DESC, refNo DESC, levelNo ASC";
+			
+			String sql = "SELECT * FROM ("+ subQuery +") WHERE no = ?";
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, paramDto.getNo());
+			
+			int k = 0;
+			if (searchValue.equals("O")) {
+				if (paramDto.getSearchGubun().equals("writer_subject_content")) {
+					pstmt.setString(++k, '%'+ paramDto.getSearchData() +'%');
+					pstmt.setString(++k, '%'+ paramDto.getSearchData() +'%');
+					pstmt.setString(++k, '%'+ paramDto.getSearchData() +'%');
+				} else {
+					pstmt.setString(++k, '%'+ paramDto.getSearchData() +'%');
+				}//if
+			}//if
+			pstmt.setInt(++k, paramDto.getNo());
+			
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
 				boardDto.setNo(rs.getInt("no"));
@@ -128,6 +160,10 @@ public class BoardDAO {
 				boardDto.setSecretGubun(rs.getString("secretGubun"));
 				boardDto.setRegiDate(rs.getDate("regiDate"));
 				boardDto.setAttachInfo(rs.getString("attachInfo"));
+				boardDto.setPreNo(rs.getInt("preNo"));
+				boardDto.setPreSubject(rs.getString("preSubject"));
+				boardDto.setNxtNo(rs.getInt("nxtNo"));
+				boardDto.setNxtSubject(rs.getString("nxtSubject"));
 			}//if
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -156,14 +192,14 @@ public class BoardDAO {
 		return result;
 	}//getCheckReply
 	
-	public int getTotalRecord(String searchGubun, String searchData) {
+	public int getTotalRecord(BoardDTO paramDto) {
 		String searchValue = "O";
-		if (searchGubun == null || searchGubun.trim().equals("")) { searchGubun = ""; }
-		if (searchData == null || searchData.trim().equals("")) { searchData = ""; }
-		if (searchGubun.trim().equals("") || searchData.trim().equals("")) { 
+		if (paramDto.getSearchGubun() == null || paramDto.getSearchGubun().trim().equals("")) { paramDto.setSearchGubun(""); }
+		if (paramDto.getSearchData() == null || paramDto.getSearchData().trim().equals("")) { paramDto.setSearchData(""); }
+		if (paramDto.getSearchGubun().trim().equals("") || paramDto.getSearchData().trim().equals("")) { 
 			searchValue = "X";
-			searchGubun = "";
-			searchData = ""; 
+			paramDto.setSearchGubun("");
+			paramDto.setSearchData("");
 		}//if
 		
 		int result = 0;
@@ -172,22 +208,22 @@ public class BoardDAO {
 			String sql = "SELECT COUNT(*) recordCounter FROM board ";
 			
 			if (searchValue.equals("O")) {
-				if (searchGubun.equals("writer_subject_content")) {
+				if (paramDto.getSearchGubun().equals("writer_subject_content")) {
 					sql += "WHERE (writer LIKE ? OR subject LIKE ? OR content LIKE ?)";
 				} else {
-					sql += "WHERE "+ fieldNameChecker(searchGubun) +" LIKE ?";
+					sql += "WHERE "+ fieldNameChecker(paramDto.getSearchGubun()) +" LIKE ?";
 				}//if
 			}//if
 			
 			pstmt = conn.prepareStatement(sql);
 			
 			if (searchValue.equals("O")) {
-				if (searchGubun.equals("writer_subject_content")) {
-					pstmt.setString(1, '%'+ searchData +'%');
-					pstmt.setString(2, '%'+ searchData +'%');
-					pstmt.setString(3, '%'+ searchData +'%');
+				if (paramDto.getSearchGubun().equals("writer_subject_content")) {
+					pstmt.setString(1, '%'+ paramDto.getSearchData() +'%');
+					pstmt.setString(2, '%'+ paramDto.getSearchData() +'%');
+					pstmt.setString(3, '%'+ paramDto.getSearchData() +'%');
 				} else {
-					pstmt.setString(1, '%'+ searchData +'%');
+					pstmt.setString(1, '%'+ paramDto.getSearchData() +'%');
 				}//if
 			}//if
 			

@@ -7,6 +7,8 @@
 
 <form name="DirForm">
 	<input type="hidden" name="no" value="<%=resultBoardDto.getNo() %>" />
+	<input type="hidden" name="searchGubun" value="<%=searchGubun %>" />
+	<input type="hidden" name="searchData" value="<%=searchData %>" />
 	<table border="1">
 		<tr>
 			<td class="entryName">작성자</td>
@@ -31,7 +33,7 @@
 		<tr>
 			<td class="entryName">공지글</td>
 			<td>
-				<input type="text" name="noticeNo" value="<%=resultBoardDto.getNoticeNo() %>" /><br>
+				<input type="hidden" name="noticeNo" value="<%=resultBoardDto.getNoticeNo() %>" />
 				<% if (resultBoardDto.getNoticeNo() > 0) { %>
 					<input type="radio" name="noticeGubun" id="noticeGubun1" value="T" checked/> 공지글 &nbsp;
 					<input type="radio" name="noticeGubun" id="noticeGubun2" value="F" /> 공지글아님 &nbsp;
@@ -55,8 +57,6 @@
 			</td>
 		</tr>
 	</table>
-	<input type="hidden" name="searchGubun" value="<%=searchGubun %>" />
-	<input type="hidden" name="searchData" value="<%=searchData %>" />
 </form>
 
 <script>

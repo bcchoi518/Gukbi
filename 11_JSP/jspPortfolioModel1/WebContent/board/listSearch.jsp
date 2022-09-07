@@ -2,10 +2,8 @@
     pageEncoding="UTF-8"%>
 
 <%@ include file = "_inc_top.jsp" %>
+<%@ include file = "_inc_script.jsp" %>
 
 <script>
-	function linkMove(value1, value2) {
-		location.href = 'main.jsp?menuGubun=board_list&searchGubun='+ value1 +'&searchData='+ value2;
-	}//linkMove
-	linkMove('<%=searchGubun %>','<%=searchData %>');
+	goPage('board_list', '', '<%=searchGubun %>','<%=searchData %>');
 </script>

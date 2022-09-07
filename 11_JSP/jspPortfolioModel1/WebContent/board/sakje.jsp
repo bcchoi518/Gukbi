@@ -7,6 +7,8 @@
 
 <form name="DirForm">
 	<input type="hidden" name="no" value="<%=resultBoardDto.getNo() %>" />
+	<input type="hidden" name="searchGubun" value="<%=searchGubun %>" />
+	<input type="hidden" name="searchData" value="<%=searchData %>" />
 	<table border="1">
 		<tr>
 			<td class="entryName">작성자</td>
@@ -55,8 +57,6 @@
 			</td>
 		</tr>
 	</table>
-	<input type="hidden" name="searchGubun" value="<%=searchGubun %>" />
-	<input type="hidden" name="searchData" value="<%=searchData %>" />
 </form>
 
 <script>

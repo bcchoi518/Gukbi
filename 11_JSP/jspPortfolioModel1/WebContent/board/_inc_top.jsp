@@ -16,48 +16,40 @@
 	BoardDAO boardDao = new BoardDAO();
 	Util util = new Util();
 	
-	String pageTitle = "";
-	String pageSubject = "";
-	String pageContent = "";
-
+	//search start
+	String searchValue = "O";
+	String searchGubun = request.getParameter("searchGubun");
+	String searchData = request.getParameter("searchData");
+	
+	searchGubun = util.getNullBlankCheck(searchGubun, "");
+	searchData = util.getNullBlankCheck(searchData, "");
+	searchData = util.getCheckString(searchData);
+	
+	if (searchGubun.equals("") || searchData.equals("")) {
+		searchValue = "X";
+		searchGubun = "";
+		searchData = "";
+	}//if
+	arguBoardDto.setSearchGubun(searchGubun);
+	arguBoardDto.setSearchData(searchData);
+	//search end
+	
 	if (fileName.equals("chuga") || fileName.equals("chugaProc") || fileName.equals("view") || fileName.equals("sujung") || fileName.equals("sujungProc") || fileName.equals("sakje") || fileName.equals("sakjeProc")) {
 		String no_ = request.getParameter("no");
 		if (no_ == null || no_.trim().equals("") || !util.isNumber(no_)) {
 			no_ = "0";
 		}//if
-				
+
 		int no = Integer.parseInt(no_);
 		arguBoardDto.setNo(no);
-		
-		if (fileName.equals("view")) {
-			boardDao.setUpdateHit(arguBoardDto);
-		}//if
 
 		resultBoardDto = boardDao.getSelectOne(arguBoardDto);
 		
-		if (fileName.equals("chuga")) {
-			pageTitle = "글쓰기";
-			if (resultBoardDto.getNo() > 0) {
-				pageTitle = "답변쓰기";
-				pageSubject = resultBoardDto.getSubject();
-				pageContent = resultBoardDto.getContent();
+		if (no > 0) {//일부러 이상한 값을 입력한 경우를 잡아내자
+			if (resultBoardDto.getNo() <= 0) {
+				out.println("<script> alert('잘못된 접근입니다.'); location.href='main.jsp?menuGubun=board_list'; </script>");
+				return;
 			}//if
 		}//if
 	}//if
-	
-	//search start
-		String searchValue = "O";
-		String searchGubun = request.getParameter("searchGubun");
-		String searchData = request.getParameter("searchData");
-		
-		searchGubun = util.getNullBlankCheck(searchGubun, "");
-		searchData = util.getNullBlankCheck(searchData, "");
-		searchData = util.getCheckString(searchData);
-		
-		if (searchGubun.equals("") || searchData.equals("")) {
-			searchValue = "X";
-			searchGubun = "";
-			searchData = "";
-		}//if
-	//search end
 %>

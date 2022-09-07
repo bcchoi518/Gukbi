@@ -11,7 +11,7 @@
 	
 	int pageNumber = Integer.parseInt(pageNumber_);
 	
-	int totalRecord = boardDao.getTotalRecord(searchGubun, searchData);
+	int totalRecord = boardDao.getTotalRecord(arguBoardDto);
 	int pageSize = 5; // 한페이지에 나타낼 레코드 갯수
 	int blockSize = 10;
 
@@ -23,7 +23,9 @@
 	int startRecord = pageSize * (pageNumber - 1) + 1;
 	int lastRecord = pageSize * pageNumber;
 //pager end
-	ArrayList<BoardDTO> boardList = boardDao.getSelectAll(searchGubun, searchData, startRecord, lastRecord);
+	arguBoardDto.setStartRecord(startRecord);
+	arguBoardDto.setLastRecord(lastRecord);
+	ArrayList<BoardDTO> boardList = boardDao.getSelectAll(arguBoardDto);
 %>
 
 <h2>게시글 목록</h2>
