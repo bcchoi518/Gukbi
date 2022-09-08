@@ -6,17 +6,12 @@
 
 <%
 //pager start
-	String pageNumber_ = request.getParameter("pageNumber"); 
-	pageNumber_ = util.getNullBlankCheck(pageNumber_, "1");
-	
-	int pageNumber = Integer.parseInt(pageNumber_);
-	
 	int totalRecord = boardDao.getTotalRecord(arguBoardDto);
 	int pageSize = 5; // 한페이지에 나타낼 레코드 갯수
 	int blockSize = 10;
 
-	int block = (pageNumber - 1) / blockSize;
-	int jj = totalRecord - pageSize * (pageNumber - 1); //단순히 화면에 보여주는 일련번호
+	int block = (pageNumber - 1) / blockSize; // 현재 선택된 block
+	int displayIdx = totalRecord - pageSize * (pageNumber - 1); //단순히 화면에 보여주는 일련번호
 	double totalPageDou = Math.ceil(totalRecord / (double)pageSize);
 	int totalPage = (int)totalPageDou;
 	
@@ -65,7 +60,7 @@
 						if (resultBoardDto.getNoticeNo() > 0) {
 							out.println("[공지]"); 
 						} else {
-							out.println(jj--); 
+							out.println(displayIdx--); 
 							out.println(resultBoardDto.getNo()); 
 						}//if
 					%>
@@ -93,7 +88,7 @@
 						}//if
 
 					%>
-					<%=blankValue %><a href="#" onclick="goPage('board_view','','<%=searchGubun %>','<%=searchData %>','<%=resultBoardDto.getNo() %>')"><%=imsiSubject %></a>
+					<%=blankValue %><a href="#" onclick="goPage('board_view','<%=pageNumber %>','<%=searchGubun %>','<%=searchData %>','<%=resultBoardDto.getNo() %>')"><%=imsiSubject %></a>
 				</td>
 				<td><%=resultBoardDto.getWriter() %></td>
 				<td><%=resultBoardDto.getRegiDate() %></td>
@@ -115,9 +110,9 @@
 |
 <a href="#" onClick="goPage('board_list')">전체목록</a>
 |
-<a href="#" onClick="goPage('board_list','','<%=searchGubun %>','<%=searchData %>')">목록</a>
+<a href="#" onClick="goPage('board_list','1','<%=searchGubun %>','<%=searchData %>')">목록</a>
 |
-<a href="#" onClick="goPage('board_chuga','','<%=searchGubun %>','<%=searchData %>')">등록</a>
+<a href="#" onClick="goPage('board_chuga','<%=pageNumber %>','<%=searchGubun %>','<%=searchData %>')">등록</a>
 |
 </div>
 
@@ -161,7 +156,7 @@
 	}//for
 %>
 <%
-	if (block - totalBlock <= 0) {
+	if (block - totalBlock <= 0) {//선택된 블록이 마지막 블록이 아니라면
 		int yyy = (block + 1) * blockSize + 1;
 		//int zzz = block + 1;
 %>

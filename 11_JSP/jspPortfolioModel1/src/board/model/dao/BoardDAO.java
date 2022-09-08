@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
+import board.model.dto.BoardCommentDTO;
 import board.model.dto.BoardDTO;
 import config.DB;
 
@@ -360,4 +361,89 @@ public class BoardDAO {
 		}//try-catch-finally
 		return result;
 	}//setDelete
+	
+	public ArrayList<BoardCommentDTO> getCommentSelectAll(BoardCommentDTO paramDto) {
+		ArrayList<BoardCommentDTO> commentList = new ArrayList<>();
+		conn = DB.dbConn();
+		try {
+			String sql = "SELECT * FROM boardComment WHERE boardNo = ? ORDER BY commentNo DESC";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, paramDto.getBoardNo());
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				BoardCommentDTO boardCommentDto = new BoardCommentDTO();
+				boardCommentDto.setCommentNo(rs.getInt("commentNo"));
+				boardCommentDto.setBoardNo(rs.getInt("boardNo"));
+				boardCommentDto.setWriter(rs.getString("writer"));
+				boardCommentDto.setContent(rs.getString("content"));
+				boardCommentDto.setPasswd(rs.getString("passwd"));
+				boardCommentDto.setMemberNo(rs.getInt("memberNo"));
+				boardCommentDto.setIp(rs.getString("ip"));
+				boardCommentDto.setRegiDate(rs.getDate("regiDate"));
+				commentList.add(boardCommentDto);
+			}//while
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DB.dbConnClose(rs, pstmt, conn);
+		}//try-catch-finally
+		return commentList;
+	}//getCommentSelectAll
+	
+	public int setCommentInsert(BoardCommentDTO paramDto) {
+		int result = 0;
+		conn = DB.dbConn();
+		try {
+			String sql = "INSERT INTO boardComment VALUES (seq_boardComment.NEXTVAL, ?, ?, ?, ?, ?, ?, SYSDATE)";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, paramDto.getBoardNo());
+			pstmt.setString(2, paramDto.getWriter());
+			pstmt.setString(3, paramDto.getContent());
+			pstmt.setString(4, paramDto.getPasswd());
+			pstmt.setInt(5, paramDto.getMemberNo());
+			pstmt.setString(6, paramDto.getIp());
+			result = pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DB.dbConnClose(rs, pstmt, conn);
+		}//try-catch-finally
+		return result;
+	}//setCommentInsert
+	
+	public int setCommentUpdate(BoardCommentDTO paramDto) {
+		int result = 0;
+		conn = DB.dbConn();
+		try {
+			String sql = "UPDATE boardComment SET writer = ?, content = ? WHERE commentNo = ? AND passwd = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, paramDto.getWriter());
+			pstmt.setString(2, paramDto.getContent());
+			pstmt.setInt(3, paramDto.getCommentNo());
+			pstmt.setString(4, paramDto.getPasswd());
+			result = pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DB.dbConnClose(rs, pstmt, conn);
+		}//try-catch-finally
+		return result;
+	}//setCommentUpdate
+	
+	public int setCommentDelete(BoardCommentDTO paramDto) {
+		int result = 0;
+		conn = DB.dbConn();
+		try {
+			String sql = "DELETE FROM boardComment WHERE commentNo = ? AND passwd = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, paramDto.getCommentNo());
+			pstmt.setString(2, paramDto.getPasswd());
+			result = pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DB.dbConnClose(rs, pstmt, conn);
+		}//try-catch-finally
+		return result;
+	}//setCommentDelete
 }//BoardDAO

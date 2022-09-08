@@ -31,14 +31,15 @@
 		result = boardDao.setDelete(arguBoardDto);
 	}//if 
 
-	String resultPage = "board_list&searchGubun=" + searchGubun + "&searchData=" + searchData;
+	String imsiQueryString = "searchGubun="+ searchGubun +"&searchData="+ searchData;
+	String resultPage = "board_list";
 	out.println("<script>");
 	if (resultReply > 0) {
 		out.println("alert('답글이 존재하여 삭제가 되지 않았습니다.');");
  	} else if (result <= 0) {
 		out.println("alert('삭제 처리 중 오류가 발생했습니다.');");
-		resultPage = "board_sakje&no="+ resultBoardDto.getNo() + "&searchGubun=" + searchGubun + "&searchData=" + searchData;
+		resultPage = "board_sakje&no="+ resultBoardDto.getNo() + "&pageNumber="+ pageNumber;
 	}//if
-	out.println("location.href = 'main.jsp?menuGubun=" + resultPage + "';");
+	out.println("location.href = 'main.jsp?menuGubun=" + resultPage + "&"+ imsiQueryString +"';");
 	out.println("</script>");
 %>

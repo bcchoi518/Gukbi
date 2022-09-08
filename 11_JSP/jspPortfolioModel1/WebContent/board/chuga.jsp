@@ -17,6 +17,7 @@
 
 <form name="DirForm">
 	<input type="hidden" name="no" value="<%=resultBoardDto.getNo() %>" />
+	<input type="hidden" name="pageNumber" value="<%=pageNumber %>" />
 	<input type="hidden" name="searchGubun" value="<%=searchGubun %>" />
 	<input type="hidden" name="searchData" value="<%=searchData %>" />
 	<table border="1">

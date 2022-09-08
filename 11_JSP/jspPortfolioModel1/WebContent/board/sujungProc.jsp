@@ -77,12 +77,13 @@
 	
 	int result = boardDao.setUpdate(arguBoardDto);
 	
-	String resultPage = "board_view&no="+ resultBoardDto.getNo() + "&searchGubun=" + searchGubun + "&searchData=" + searchData;
+	String imsiQueryString = "no="+ resultBoardDto.getNo() + "&pageNumber="+ pageNumber +"&searchGubun="+ searchGubun +"&searchData="+ searchData;
+	String resultPage = "board_view";
 	out.println("<script>");
 	if (result <= 0) {
 		out.println("alert('수정 처리 중 오류가 발생했습니다.');");
-		resultPage = "board_sujung&no="+ resultBoardDto.getNo() + "&searchGubun=" + searchGubun + "&searchData=" + searchData;
+		resultPage = "board_sujung";
 	}//if
-	out.println("location.href = 'main.jsp?menuGubun=" + resultPage + "';");
+	out.println("location.href = 'main.jsp?menuGubun=" + resultPage + "&"+ imsiQueryString +"';");
 	out.println("</script>");
 %>

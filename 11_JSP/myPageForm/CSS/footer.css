@@ -1,0 +1,12 @@
+.footerbar {
+  color: var(--text-color);
+  background-color: var(--footer-background-color);
+  text-align: center;
+  padding: 20px;
+}
+
+@media screen and (max-width: 768px) {
+  .footerbar {
+    padding: 10px;
+  }
+}

@@ -135,7 +135,7 @@
 				<td width="100px"  class="entryName">이전글</td>
 				<td>
 					<% if (resultBoardDto.getPreNo() > 0) { %>
-						<a href="#" onClick="goPage('board_view','','<%=searchGubun %>','<%=searchData %>','<%=resultBoardDto.getPreNo() %>')"><%=resultBoardDto.getPreSubject() %></a>
+						<a href="#" onClick="goPage('board_view','<%=pageNumber %>','<%=searchGubun %>','<%=searchData %>','<%=resultBoardDto.getPreNo() %>')"><%=resultBoardDto.getPreSubject() %></a>
 					<% } else { %>
 						이전글이 없습니다.
 					<% }//if %>
@@ -145,7 +145,7 @@
 				<td class="entryName">다음글</td>
 				<td>
 					<% if (resultBoardDto.getNxtNo() > 0) { %>
-						<a href="#" onClick="goPage('board_view','','<%=searchGubun %>','<%=searchData %>','<%=resultBoardDto.getNxtNo() %>')"><%=resultBoardDto.getNxtSubject() %></a>
+						<a href="#" onClick="goPage('board_view','<%=pageNumber %>','<%=searchGubun %>','<%=searchData %>','<%=resultBoardDto.getNxtNo() %>')"><%=resultBoardDto.getNxtSubject() %></a>
 					<% } else { %>
 						다음글이 없습니다.
 					<% }//if %>
@@ -158,14 +158,39 @@
 |
 <a href="#" onClick="goPage('board_list')">전체목록</a>
 |
-<a href="#" onClick="goPage('board_list','','<%=searchGubun %>','<%=searchData %>')">목록</a>
+<a href="#" onClick="goPage('board_list','1','<%=searchGubun %>','<%=searchData %>')">목록</a>
 |
-<a href="#" onClick="goPage('board_chuga','','<%=searchGubun %>','<%=searchData %>')">등록</a>
+<a href="#" onClick="goPage('board_chuga','<%=pageNumber %>','<%=searchGubun %>','<%=searchData %>')">등록</a>
 |
-<a href="#" onClick="goPage('board_chuga','','<%=searchGubun %>','<%=searchData %>','<%=resultBoardDto.getNo() %>')">답변</a>
+<a href="#" onClick="goPage('board_chuga','<%=pageNumber %>','<%=searchGubun %>','<%=searchData %>','<%=resultBoardDto.getNo() %>')">답변</a>
 |
-<a href="#" onClick="goPage('board_sujung','','<%=searchGubun %>','<%=searchData %>','<%=resultBoardDto.getNo() %>')">수정</a>
+<a href="#" onClick="goPage('board_sujung','<%=pageNumber %>','<%=searchGubun %>','<%=searchData %>','<%=resultBoardDto.getNo() %>')">수정</a>
 |
-<a href="#" onClick="goPage('board_sakje','','<%=searchGubun %>','<%=searchData %>','<%=resultBoardDto.getNo() %>')">삭제</a>
+<a href="#" onClick="goPage('board_sakje','<%=pageNumber %>','<%=searchGubun %>','<%=searchData %>','<%=resultBoardDto.getNo() %>')">삭제</a>
 |
 </div>
+
+<% if (imsiPage.equals("viewPage")) { %>
+	<a name="comment"></a>
+	<div id="commentResult" style="border: 0px solid red; margin: 10px 0px; width: 80%" align="center"></div>
+
+	<script>
+		$(document).ready(function () {
+			commentList();
+		});
+		function commentList() {
+			const param = {
+					'no' : <%=resultBoardDto.getNo() %>
+			}
+			const url = '../board/commentList.jsp';
+			$.ajax({
+				type: 'post',
+				data: param,
+				url: url,
+				success: function(data) {
+					$('#commentResult').html(data);
+				}
+			});
+		}//commentList
+	</script>
+<% }//if %>

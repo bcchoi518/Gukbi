@@ -1,0 +1,33 @@
+:root {
+  --text-color: #f0f4f5;
+  --nav-background-color: #616161;
+  --aside-background-color: #607d8b;
+  --section-background-color: #bdbdbd;
+  --footer-background-color: #616161;
+  --accent-color: #ffa500;
+}
+
+body {
+  margin: 0;
+  height: 100vh;
+  font-family: 'Source Sans Pro';
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(20%, auto));
+  grid-auto-rows: 0.5fr 9fr 0.5fr;
+}
+
+.navbar {
+  grid-column: 1 / span 5;
+}
+
+.asidebar {
+  grid-column: 1;
+}
+
+.section {
+  grid-column: 2 / span 4;
+}
+
+.footerbar {
+  grid-column: 1 / span 5;
+}

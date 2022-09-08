@@ -16,6 +16,10 @@
 	BoardDAO boardDao = new BoardDAO();
 	Util util = new Util();
 	
+	String pageNumber_ = request.getParameter("pageNumber"); 
+	pageNumber_ = util.getNullBlankCheck(pageNumber_, "1");
+	int pageNumber = Integer.parseInt(pageNumber_);
+	
 	//search start
 	String searchValue = "O";
 	String searchGubun = request.getParameter("searchGubun");

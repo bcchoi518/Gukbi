@@ -104,6 +104,9 @@
 		out.println("alert('등록 처리 중 오류가 발생했습니다.');");
 		resultPage = "board_chuga&no=" + resultBoardDto.getNo();
 	}//if
+	if (resultBoardDto.getNo() > 0) {//답변글
+		resultPage += "&pageNumber=" + pageNumber;
+	}//if
 	out.println("location.href = 'main.jsp?menuGubun=" + resultPage + "';");
 	out.println("</script>");
 %>

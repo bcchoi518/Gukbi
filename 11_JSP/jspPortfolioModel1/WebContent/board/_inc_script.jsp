@@ -7,7 +7,7 @@
 		document.searchForm.method = 'post';
 		document.searchForm.submit();
 	}//search
-
+	
 	function goPage(value1, value2, value3, value4, value5) {
 		let linkAddr = 'main.jsp?menuGubun=' + value1;
 		if (value2 != undefined) {
