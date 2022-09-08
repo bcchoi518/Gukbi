@@ -1,0 +1,4 @@
+.article {
+  background-color: var(--article-background-color);
+  height: 100%;
+}

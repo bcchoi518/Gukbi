@@ -1,0 +1,50 @@
+.article {
+  background-color: var(--article-background-color);
+  height: 100%;
+  padding: 50px;
+}
+
+.article a {
+	color: black;
+}
+
+.article h2 {
+	text-align: center;
+	font-size: 24px;
+	font-weight: bold;
+}
+
+.article table {
+	margin: 0 auto;
+	width: 80%;
+}
+
+.article td, .article th {
+	vertical-align: middle;
+	padding: 10px;
+	border-bottom: 1px solid black;
+}
+
+.article th {
+	font-weight: bold;
+}
+
+.article div {
+	margin: 0 auto;
+}
+
+.pageBtn {
+ 	width:30px;
+ 	height:30px;
+ 	border: 1px solid #005b88;
+ 	border-radius: 50%;
+ 	background-color:#bdbdbd;
+}
+
+.pageBtn:hover {
+	border: 1px solid #005b88;
+}
+
+.selected {
+	background-color: #005b88;
+}
