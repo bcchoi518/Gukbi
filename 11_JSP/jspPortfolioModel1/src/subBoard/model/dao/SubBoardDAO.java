@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
+import board.model.dto.BoardCommentDTO;
 import config.DB;
 import subBoard.model.dto.SubBoardCommentDTO;
 import subBoard.model.dto.SubBoardDTO;
@@ -388,6 +389,42 @@ public class SubBoardDAO {
 		} finally {
 			DB.dbConnClose(rs, pstmt, conn);
 		}	
+		return result;
+	}
+	
+	public int setCommentUpdate(SubBoardCommentDTO paramDto) {
+		int result = 0;
+		conn = DB.dbConn();
+		try {
+			String sql = "UPDATE boardComment SET writer = ?, content = ? WHERE commentNo = ? AND passwd = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, paramDto.getWriter());
+			pstmt.setString(2, paramDto.getContent());
+			pstmt.setInt(3, paramDto.getCommentNo());
+			pstmt.setString(4, paramDto.getPasswd());
+			result = pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DB.dbConnClose(rs, pstmt, conn);
+		}
+		return result;
+	}
+	
+	public int setCommentDelete(SubBoardCommentDTO paramDto) {
+		int result = 0;
+		conn = DB.dbConn();
+		try {
+			String sql = "DELETE FROM boardComment WHERE commentNo = ? AND passwd = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, paramDto.getCommentNo());
+			pstmt.setString(2, paramDto.getPasswd());
+			result = pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DB.dbConnClose(rs, pstmt, conn);
+		}
 		return result;
 	}
 }

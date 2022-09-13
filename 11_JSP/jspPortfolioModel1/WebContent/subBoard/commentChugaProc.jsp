@@ -39,6 +39,6 @@
 	} else if (procGubun.equals("sujung")) {
 		result = subBoardDao.setCommentUpdate(subBoardCommentDto);
 	} else if (procGubun.equals("sakje")) {
-		result = subBoardDao.setCommentelete(subBoardCommentDto);
+		result = subBoardDao.setCommentDelete(subBoardCommentDto);
 	}
 %>

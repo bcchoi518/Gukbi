@@ -16,11 +16,13 @@
 	String writer = request.getParameter("writer");	
 	String passwd = request.getParameter("passwd");	
 	String content = request.getParameter("content");	
+	
 	Util util = new Util();
-	commentNo_ = util.getNullBlankCheck(commentNo_, "0");
 	no_ = util.getNullBlankCheck(no_, "0");
 	int no = Integer.parseInt(no_);
+	commentNo_ = util.getNullBlankCheck(commentNo_, "0");
 	int commentNo = Integer.parseInt(commentNo_);
+	
 	int memberNo = sessionNo;
 // 	String ip = "";
 	
@@ -36,11 +38,13 @@
 	BoardDAO boardDao = new BoardDAO();
 	
 	int result = 0;
-	if (procGubun.equals("chuga")) {
+	if (procGubun.equals("chugaProc")) {
 		result = boardDao.setCommentInsert(arguBoardCommentDto);
-	} else if (procGubun.equals("sujung")) {
-		
-	} else if (procGubun.equals("sakje")) {
-		
+	} else if (procGubun.equals("sujungProc")) {
+		result = boardDao.setCommentUpdate(arguBoardCommentDto);
+	} else if (procGubun.equals("sakjeProc")) {
+		result = boardDao.setCommentDelete(arguBoardCommentDto);
 	}//if
+	
+	out.println(result);
 %>

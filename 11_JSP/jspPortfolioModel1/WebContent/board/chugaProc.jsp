@@ -51,7 +51,6 @@
 	}//if
 	
 	int num = boardDao.getMaxValue("num") + 1;
-	String tbl = "-";
 	
 	//새글..
 	int refNo = boardDao.getMaxValue("refNo") + 1;
@@ -107,6 +106,6 @@
 	if (resultBoardDto.getNo() > 0) {//답변글
 		resultPage += "&pageNumber=" + pageNumber;
 	}//if
-	out.println("location.href = 'main.jsp?menuGubun=" + resultPage + "';");
+	out.println("location.href = 'main.jsp?menuGubun=" + resultPage + "&tbl="+ tbl +"';");
 	out.println("</script>");
 %>

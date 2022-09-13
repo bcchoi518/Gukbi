@@ -16,7 +16,7 @@
 	if (failCounter > 0) {
 		out.println("<script>");
 		out.println("alert('입력한 값이 정확하지않습니다.');");
-		out.println("location.href='main.jsp?menuGubun=board_list&searchGubun=" + searchGubun + "&searchData=" + searchData + "';");
+		out.println("location.href='main.jsp?menuGubun=board_list&tbl="+ tbl +"&searchGubun=" + searchGubun + "&searchData=" + searchData + "';");
 		out.println("</script>");
 		return;
 	}//if
@@ -31,7 +31,6 @@
 		result = boardDao.setDelete(arguBoardDto);
 	}//if 
 
-	String imsiQueryString = "searchGubun="+ searchGubun +"&searchData="+ searchData;
 	String resultPage = "board_list";
 	out.println("<script>");
 	if (resultReply > 0) {

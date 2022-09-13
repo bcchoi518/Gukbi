@@ -13,11 +13,12 @@
 		pageContent = resultBoardDto.getContent();
 	}//if
 %>
-<h2><%=pageTitle %></h2>
+<h2><%=imsiBoardTitle %> <%=pageTitle %></h2>
 
 <form name="DirForm">
 	<input type="hidden" name="no" value="<%=resultBoardDto.getNo() %>" />
 	<input type="hidden" name="pageNumber" value="<%=pageNumber %>" />
+	<input type="hidden" name="tbl" value="<%=tbl %>" />
 	<input type="hidden" name="searchGubun" value="<%=searchGubun %>" />
 	<input type="hidden" name="searchData" value="<%=searchData %>" />
 	<table border="1">
@@ -58,7 +59,7 @@
 		<tr>
 			<td colspan="2">
 				<button type="button" onClick="save()" >저장하기</button>
-				<button type="button" onClick="location.href='main.jsp?menuGubun=board_list&searchGubun=<%=searchGubun %>&searchData=<%=searchData %>';" >목록으로</button>
+				<button type="button" onClick="location.href='main.jsp?menuGubun=board_list&tbl=<%=tbl %>&searchGubun=<%=searchGubun %>&searchData=<%=searchData %>';" >목록으로</button>
 			</td>
 		</tr>
 	</table>

@@ -6,7 +6,7 @@
 
 <table border="0" align="center" width="90%" id="menuTable">
 	<tr>
-		<td colspan="11" style="padding-top:10px; text-align:right">
+		<td colspan="12" style="padding-top:10px; text-align:right">
 		<% if (sessionNo == 0) { %>
 			<a href="main.jsp?menuGubun=noLogin_login">[로그인]</a>
 		<% } else { %>
@@ -31,9 +31,6 @@
 		<td align="center" style="padding: 10px" id="boardBasic">
 			<a href="<%=path %>/main/main.jsp?menuGubun=boardBasic_list">게시판(B)</a>
 		</td>
-		<td align="center" style="padding: 10px" id="board">
-			<a href="<%=path %>/main/main.jsp?menuGubun=board_list">게시판</a>
-		</td>
 		<td align="center" style="padding: 10px" id="shopProduct">
 			<a href="<%=path %>/main/main.jsp?menuGubun=shopProduct_list">몰(product)</a>
 		</td>
@@ -49,11 +46,30 @@
 		<td align="center" style="padding: 10px" id="chart">
 			<a href="<%=path %>/main/main.jsp?menuGubun=chart_list">챠트</a>
 		</td>
+		<td align="center" style="padding: 10px" id="freeboard">
+			<a href="<%=path %>/main/main.jsp?menuGubun=board_list&tbl=freeboard">자유게시판</a>
+		</td>
+		<td align="center" style="padding: 10px" id="onebyone">
+			<a href="<%=path %>/main/main.jsp?menuGubun=board_list&tbl=onebyone">1:1게시판</a>
+		</td>
+		<td align="center" style="padding: 10px" id="qna">
+			<a href="<%=path %>/main/main.jsp?menuGubun=board_list&tbl=qna">Q&A게시판</a>
+		</td>
+		<td align="center" style="padding: 10px" id="boardChk">
+			<a href="<%=path %>/main/main.jsp?menuGubun=boardChk_list">게시판(M)</a>
+		</td>
 	</tr>
 </table>
 <script>
 	function menuSelecter() {
-		$('#<%=folderName %>').css({'color':'white','background-color':'#57cc99', 'border-radius':'20px', 'font-weight':'bold'});
+		<%
+			String imsiFolderName = folderName;
+			if (folderName.equals("board")) {
+				String tbl = request.getParameter("tbl");
+				imsiFolderName = tbl;
+			}//if
+		%>
+		$('#<%=imsiFolderName %>').css({'color':'white','background-color':'#57cc99', 'border-radius':'20px', 'font-weight':'bold'});
 	}//applyBgColor
 	menuSelecter();
 </script>

@@ -13,7 +13,7 @@
 	int block = (pageNumber - 1) / blockSize; // 현재 선택된 block
 	int displayIdx = totalRecord - pageSize * (pageNumber - 1); //단순히 화면에 보여주는 일련번호
 	double totalPageDou = Math.ceil(totalRecord / (double)pageSize);
-	int totalPage = (int)totalPageDou;
+	int totalPage = totalPageDou == 0 ? 1 : (int)totalPageDou;
 	
 	int startRecord = pageSize * (pageNumber - 1) + 1;
 	int lastRecord = pageSize * pageNumber;
@@ -23,7 +23,7 @@
 	ArrayList<BoardDTO> boardList = boardDao.getSelectAll(arguBoardDto);
 %>
 
-<h2>게시글 목록</h2>
+<h2><%=imsiBoardTitle %> 목록</h2>
 <div style="border:0px solid red; width:80%; padding:5px 0px; text-align:left;">
 <% if (searchValue.equals("O")) { %>
 	검색어 "<%=searchData %>" (으)로 검색된 목록 : <%=totalRecord %>건
@@ -49,7 +49,13 @@
 		<th>공지글</th>
 		<th>비밀글</th>
 	</tr>
-	
+	<%
+		if (totalRecord == 0) {
+			out.println("<tr>");
+			out.println("<td colspan=\"14\" height=\"100px\" style=\"text-align:center;\">저장된 정보가 없습니다.</td>");
+			out.println("</tr>");
+		}//if
+	%>
 	<% 
 		for (int i = 0; i < boardList.size(); i++) {
 			resultBoardDto = boardList.get(i);
@@ -88,7 +94,7 @@
 						}//if
 
 					%>
-					<%=blankValue %><a href="#" onclick="goPage('board_view','<%=pageNumber %>','<%=searchGubun %>','<%=searchData %>','<%=resultBoardDto.getNo() %>')"><%=imsiSubject %></a>
+					<%=blankValue %><a href="#" onclick="goPage('board_view','<%=pageNumber %>','<%=resultBoardDto.getNo() %>')"><%=imsiSubject %></a>
 				</td>
 				<td><%=resultBoardDto.getWriter() %></td>
 				<td><%=resultBoardDto.getRegiDate() %></td>
@@ -108,11 +114,11 @@
 	
 <div style="border: 0px solid red; padding-top:20px; width:80%; text-align:right;">
 |
-<a href="#" onClick="goPage('board_list')">전체목록</a>
+<a href="main.jsp?menuGubun=board_list&tbl=<%=tbl %>">전체목록</a>
 |
-<a href="#" onClick="goPage('board_list','1','<%=searchGubun %>','<%=searchData %>')">목록</a>
+<a href="#" onClick="goPage('board_list','1')">목록</a>
 |
-<a href="#" onClick="goPage('board_chuga','<%=pageNumber %>','<%=searchGubun %>','<%=searchData %>')">등록</a>
+<a href="#" onClick="goPage('board_chuga','<%=pageNumber %>')">등록</a>
 |
 </div>
 
@@ -126,12 +132,12 @@
 		totalBlock = totalBlock - 1;
 	}//if
 %>
-	<button class="pageBtn" onclick="goPage('<%=menuGubun %>','1','<%=searchGubun %>','<%=searchData %>')">&lt;&lt;</button>
+	<button class="pageBtn" onclick="goPage('<%=menuGubun %>','1')">&lt;&lt;</button>
 <%
 	if (block > 0) {
 		int imsiPage = (block - 1) * blockSize + 1;
 %>
-		<button class="pageBtn" onclick="goPage('<%=menuGubun %>','<%=imsiPage %>','<%=searchGubun %>','<%=searchData %>')">&lt;</button>
+		<button class="pageBtn" onclick="goPage('<%=menuGubun %>','<%=imsiPage %>')">&lt;</button>
 <% 
 	} else {
 %>
@@ -149,7 +155,7 @@
 <%
 			} else {
 %>
-				<button class="pageBtn" onclick="goPage('<%=menuGubun %>','<%=imsiValue %>','<%=searchGubun %>','<%=searchData %>')"><%=imsiValue %></button>
+				<button class="pageBtn" onclick="goPage('<%=menuGubun %>','<%=imsiValue %>')"><%=imsiValue %></button>
 <%
 			}//if
 		}//if
@@ -160,7 +166,7 @@
 		int yyy = (block + 1) * blockSize + 1;
 		//int zzz = block + 1;
 %>
-		<button class="pageBtn" onclick="goPage('<%=menuGubun %>','<%=yyy %>','<%=searchGubun %>','<%=searchData %>')" >&gt;</button>
+		<button class="pageBtn" onclick="goPage('<%=menuGubun %>','<%=yyy %>')" >&gt;</button>
 <%
 	} else {
 %>
@@ -168,12 +174,13 @@
 <%		
 	}//if
 %>
-<button class="pageBtn" onclick="goPage('<%=menuGubun %>','<%=totalPage %>','<%=searchGubun %>','<%=searchData %>')" >&gt;&gt;</button>
+<button class="pageBtn" onclick="goPage('<%=menuGubun %>','<%=totalPage %>')" >&gt;&gt;</button>
 </div>
 <!-- pager end -->
 <!-- search start -->
 <div style="border: 0px solid red; width:80%;">
 	<form name="searchForm" style="padding:0px;">
+		<input type="hidden" name="tbl" value="<%=tbl %>" />
 		<div style="margin:0px; padding:0px; display:flex; justify-content: center;">
 			<select name="searchGubun" style="border:0px; padding:0px 10px; height:30px; border-radius:10px 0px 0px 10px;">
 				<option value="">-- 선택 --</option>
@@ -188,3 +195,21 @@
 	</form>
 </div>
 <!-- search end -->
+<script>
+	function search() {
+		document.searchForm.action = 'main.jsp?menuGubun=board_listSearch';
+		document.searchForm.method = 'post';
+		document.searchForm.submit();
+	}//search
+	
+	function goPage(value1, value2, value3) {
+		let linkAddr = 'main.jsp?menuGubun=' + value1;
+		if (value2 != undefined) {
+			linkAddr += '&pageNumber=' + value2;
+		}//if
+		if (value3 != undefined) {
+			linkAddr += '&no=' + value3;
+		}//if
+		location.href = linkAddr + '&<%=imsiQueryString %>';
+	}//goPage
+</script>

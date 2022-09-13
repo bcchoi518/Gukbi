@@ -25,13 +25,14 @@
 <table border="0" style="width:100%" align="center">
 	<tr>
 		<td style="padding:20px 0px">
-			<span id="procGubun" style="display:"></span><br>
+			<span id="procGubun" style="display:">chugaProc</span><br>
 			<span id="no" style="display:;"><%=no %></span><br>
 			<span id="commentNo" style="display:"></span><br>
 			이름: <input type="text" name="commentWriter" id="commentWriter" size="10" value="" />
 			비밀번호: <input type="password" name="commentPasswd" id="commentPasswd" size="10" value="" /><br>
 			댓글: <input type="text" name="commentContent" id="commentContent" size="100" value="" />
-				 <button type="button" id="btnCommentSave">확인</button>
+				 <button type="button" id="btnCommentSave">등록하기</button>
+				 <button type="button" id="btnCommentReset">초기화</button>
 		</td>
 	</tr>
 </table>
@@ -44,9 +45,9 @@
 				<tr>
 					<td><%=resultBoardCommentDto.getWriter() %> &nbsp; <%=resultBoardCommentDto.getRegiDate() %></td>
 					<td align="right">
-						<a href="#comment" onclick="commentSave('sujung','<%=resultBoardCommentDto.getCommentNo() %>','<%=resultBoardCommentDto.getWriter() %>', '<%=resultBoardCommentDto.getContent() %>')">[수정]</a>
+						<a href="#comment" onclick="suntaek('sujungProc','<%=resultBoardCommentDto.getCommentNo() %>','<%=resultBoardCommentDto.getWriter() %>', '<%=resultBoardCommentDto.getContent() %>', '수정하기')">[수정]</a>
 						/
-						<a href="#comment" onclick="commentSave('sakje','<%=resultBoardCommentDto.getCommentNo() %>','<%=resultBoardCommentDto.getWriter() %>', '<%=resultBoardCommentDto.getContent() %>')">[삭제]</a>
+						<a href="#comment" onclick="suntaek('sakjeProc','<%=resultBoardCommentDto.getCommentNo() %>','<%=resultBoardCommentDto.getWriter() %>', '<%=resultBoardCommentDto.getContent() %>', '삭제하기')">[삭제]</a>
 					</td>
 				</tr>
 				<tr>
@@ -61,48 +62,58 @@
 	<% }//for %>
 </table>
 
+<input type="hidden" id="result" />
+
 <script>
 	$(document).ready(function () {
 		$('#btnCommentSave').click(function () {
-			commentSave('','','','');
+			commentSave();
+		});
+		$('#btnCommentReset').click(function () {
+			commentReset();
 		});
 	});
 	
-	function commentSave(value1, value2, value3, value4) {
+	function commentSave() {
+		const param = {
+			'procGubun' : $('#procGubun').text(),
+			'no' : $('#no').text(),
+			'commentNo' : $('#commentNo').text(),
+			'writer' : $('#commentWriter').val(),
+			'passwd' : $('#commentPasswd').val(),
+			'content' : $('#commentContent').val()
+		}
+		const url = '../board/commentChugaProc.jsp';
+		$.ajax({
+			type: 'post',
+			data: param,
+			url: url,
+			success: function(data) {
+				$('#result').val(data);
+				if ($('#result').val() == 1) {
+					alert('성공');
+				} else {
+					alert('실패');
+				}//if
+				commentList();
+			}
+		});
+	}//commentSave
+	
+	function suntaek(value1, value2, value3, value4, value5) {
 		$('#procGubun').text(value1);
 		$('#commentNo').text(value2);
 		$('#commentWriter').val(value3);
 		$('#commentContent').val(value4);
-		
-		if ($('#procGubun').text() == 'sujung') {
-			$('#btnCommentSave').text('수정');
-		} else if ($('#procGubun').text() == 'sakje') {
-			$('#btnCommentSave').text('삭제');
-		} else {
-			$('#procGubun').text('chuga');
-			$('#btnCommentSave').text('확인');
-		}//if
-		
-// 		const param = {
-// 			'procGubun' : $('#procGubun').text(),
-// 			'no' : $('#no').text(),
-// 			'commentNo' : $('#commentNo').text(),
-// 			'writer' : $('#commentWriter').val(),
-// 			'passwd' : $('#commentPasswd').val(),
-// 			'content' : $('#commentContent').val()
-// 		}
-// 		const url = '../board/commentChugaProc.jsp';
-// 		$.ajax({
-// 			type: 'post',
-// 			data: param,
-// 			url: url,
-// 			success: function(data) {
-// 				commentList();
-// 			}
-// 		});
-	}//commentSave
+		$('#btnCommentSave').text(value5);
+	}//suntaek
 	
-	function suntaek() {
-		
-	}
+	function commentReset() {
+		$('#procGubun').text('chuga');
+		$('#commentNo').text('');
+		$('#commentPasswd').val('');
+		$('#commentWriter').val('');
+		$('#commentContent').val('');
+		$('#btnCommentSave').text('등록하기');
+	}//commentReset
 </script>

@@ -39,7 +39,7 @@
       curveType: '<%=chartCurveType %>',
       width: 900,
       height: 500,
-      backgroundColor: '#80ed99'
+      backgroundColor: '#bdbdbd'
     };
 
     const chart = new google.visualization.<%=chartType %>(document.getElementById('chart_div'));

@@ -25,7 +25,7 @@
       hAxis: {title: 'Month'},
       seriesType: 'bars',
       series: {5: {type: 'line'}},
-      backgroundColor: '#80ed99'
+      backgroundColor: '#bdbdbd'
     };
 
     let chart = new google.visualization.ComboChart(document.getElementById('chart_div'));

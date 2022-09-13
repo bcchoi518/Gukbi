@@ -37,7 +37,7 @@ public class BoardDAO {
 		ArrayList<BoardDTO> boardList = new ArrayList<>();
 		conn = DB.dbConn();
 		try {
-			String basicSql = "SELECT * FROM board WHERE 1=1 ";
+			String basicSql = "SELECT * FROM board WHERE tbl = ? ";
 			
 			if (searchValue.equals("O")) {
 				if (paramDto.getSearchGubun().equals("writer_subject_content")) {
@@ -53,6 +53,7 @@ public class BoardDAO {
 			pstmt = conn.prepareStatement(sql);
 
 			int k = 0;
+			pstmt.setString(++k, paramDto.getTbl());
 			if (searchValue.equals("O")) {
 				if (paramDto.getSearchGubun().equals("writer_subject_content")) {
 					pstmt.setString(++k, '%'+ paramDto.getSearchData() +'%');
@@ -115,7 +116,7 @@ public class BoardDAO {
 			subQuery += "LEAD(no) OVER (ORDER BY noticeNo DESC, refNo DESC, levelNo ASC) nxtNo, ";
 			subQuery += "LEAD(subject) OVER (ORDER BY noticeNo DESC, refNo DESC, levelNo ASC) nxtSubject ";
 			subQuery += "FROM board b ";
-			subQuery += "WHERE 1 = 1 ";
+			subQuery += "WHERE tbl = ? ";
 			if (searchValue.equals("O")) {
 				if (paramDto.getSearchGubun().equals("writer_subject_content")) {
 					subQuery += "AND (writer LIKE ? OR subject LIKE ? OR content LIKE ?) ";
@@ -129,6 +130,7 @@ public class BoardDAO {
 			pstmt = conn.prepareStatement(sql);
 			
 			int k = 0;
+			pstmt.setString(++k, paramDto.getTbl());
 			if (searchValue.equals("O")) {
 				if (paramDto.getSearchGubun().equals("writer_subject_content")) {
 					pstmt.setString(++k, '%'+ paramDto.getSearchData() +'%');
@@ -206,25 +208,27 @@ public class BoardDAO {
 		int result = 0;
 		conn = DB.dbConn();
 		try {
-			String sql = "SELECT COUNT(*) recordCounter FROM board ";
+			String sql = "SELECT COUNT(*) recordCounter FROM board WHERE tbl = ? ";
 			
 			if (searchValue.equals("O")) {
 				if (paramDto.getSearchGubun().equals("writer_subject_content")) {
-					sql += "WHERE (writer LIKE ? OR subject LIKE ? OR content LIKE ?)";
+					sql += "AND (writer LIKE ? OR subject LIKE ? OR content LIKE ?)";
 				} else {
-					sql += "WHERE "+ fieldNameChecker(paramDto.getSearchGubun()) +" LIKE ?";
+					sql += "AND "+ fieldNameChecker(paramDto.getSearchGubun()) +" LIKE ?";
 				}//if
 			}//if
 			
 			pstmt = conn.prepareStatement(sql);
 			
+			int k = 0;
+			pstmt.setString(++k, paramDto.getTbl());
 			if (searchValue.equals("O")) {
 				if (paramDto.getSearchGubun().equals("writer_subject_content")) {
-					pstmt.setString(1, '%'+ paramDto.getSearchData() +'%');
-					pstmt.setString(2, '%'+ paramDto.getSearchData() +'%');
-					pstmt.setString(3, '%'+ paramDto.getSearchData() +'%');
+					pstmt.setString(++k, '%'+ paramDto.getSearchData() +'%');
+					pstmt.setString(++k, '%'+ paramDto.getSearchData() +'%');
+					pstmt.setString(++k, '%'+ paramDto.getSearchData() +'%');
 				} else {
-					pstmt.setString(1, '%'+ paramDto.getSearchData() +'%');
+					pstmt.setString(++k, '%'+ paramDto.getSearchData() +'%');
 				}//if
 			}//if
 			
@@ -297,7 +301,7 @@ public class BoardDAO {
 		try {
 			String sql = "UPDATE board "
 					   + "SET subject = ?, content = ?, email = ?, noticeNo = ?, secretGubun = ?, AttachInfo = ? "
-					   + "WHERE no = ? AND passwd = ?";
+					   + "WHERE tbl = ? AND no = ? AND passwd = ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, paramDto.getSubject());
 			pstmt.setString(2, paramDto.getContent());
@@ -305,8 +309,9 @@ public class BoardDAO {
 			pstmt.setInt(4, paramDto.getNoticeNo());
 			pstmt.setString(5, paramDto.getSecretGubun());
 			pstmt.setString(6, paramDto.getAttachInfo());
-			pstmt.setInt(7, paramDto.getNo());
-			pstmt.setString(8, paramDto.getPasswd());
+			pstmt.setString(7, paramDto.getTbl());
+			pstmt.setInt(8, paramDto.getNo());
+			pstmt.setString(9, paramDto.getPasswd());
 			result = pstmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -319,9 +324,10 @@ public class BoardDAO {
 	public void setUpdateHit(BoardDTO paramDto) {
 		conn = DB.dbConn();
 		try {
-			String sql = "UPDATE board SET hit = (hit + 1) WHERE no = ?";
+			String sql = "UPDATE board SET hit = (hit + 1) WHERE tbl = ? AND no = ?";
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, paramDto.getNo());
+			pstmt.setString(1, paramDto.getTbl());
+			pstmt.setInt(2, paramDto.getNo());
 			pstmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -333,10 +339,11 @@ public class BoardDAO {
 	public void setUpdateReLevel(BoardDTO paramDto) {
 		conn = DB.dbConn();
 		try {
-			String sql = "UPDATE board SET levelNo = (levelNo + 1) WHERE refNo = ? AND levelNo > ?";
+			String sql = "UPDATE board SET levelNo = (levelNo + 1) WHERE tbl = ? AND refNo = ? AND levelNo > ?";
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, paramDto.getRefNo());
-			pstmt.setInt(2, paramDto.getLevelNo());
+			pstmt.setString(1, paramDto.getTbl());
+			pstmt.setInt(2, paramDto.getRefNo());
+			pstmt.setInt(3, paramDto.getLevelNo());
 			pstmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -349,10 +356,11 @@ public class BoardDAO {
 		int result = 0;
 		conn = DB.dbConn();
 		try {
-			String sql = "DELETE FROM board WHERE no = ? AND passwd = ?";
+			String sql = "DELETE FROM board WHERE tbl = ? AND no = ? AND passwd = ?";
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, paramDto.getNo());
-			pstmt.setString(2, paramDto.getPasswd());
+			pstmt.setString(1, paramDto.getTbl());
+			pstmt.setInt(2, paramDto.getNo());
+			pstmt.setString(3, paramDto.getPasswd());
 			result = pstmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();

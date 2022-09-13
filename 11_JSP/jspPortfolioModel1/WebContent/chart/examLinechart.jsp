@@ -21,7 +21,7 @@ google.charts.setOnLoadCallback(drawChart);
       title: 'Company Performance',
       curveType: 'function',
       legend: { position: 'bottom' },
-      backgroundColor: '#80ed99'
+      backgroundColor: '#bdbdbd'
     };
 
     let chart = new google.visualization.LineChart(document.getElementById('curve_chart'));

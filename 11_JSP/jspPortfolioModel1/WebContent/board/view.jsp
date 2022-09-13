@@ -54,7 +54,7 @@
 	} else { 
 		boardDao.setUpdateHit(arguBoardDto);
 %>
-	<h2>게시글 상세보기</h2>
+	<h2><%=imsiBoardTitle %> 게시글 상세보기</h2>
 	<table border="0" align="center">
 		<tr>
 			<td class="entryName">no</td>
@@ -135,7 +135,7 @@
 				<td width="100px"  class="entryName">이전글</td>
 				<td>
 					<% if (resultBoardDto.getPreNo() > 0) { %>
-						<a href="#" onClick="goPage('board_view','<%=pageNumber %>','<%=searchGubun %>','<%=searchData %>','<%=resultBoardDto.getPreNo() %>')"><%=resultBoardDto.getPreSubject() %></a>
+						<a href="#" onClick="goPage('board_view','<%=pageNumber %>','<%=resultBoardDto.getPreNo() %>')"><%=resultBoardDto.getPreSubject() %></a>
 					<% } else { %>
 						이전글이 없습니다.
 					<% }//if %>
@@ -145,7 +145,7 @@
 				<td class="entryName">다음글</td>
 				<td>
 					<% if (resultBoardDto.getNxtNo() > 0) { %>
-						<a href="#" onClick="goPage('board_view','<%=pageNumber %>','<%=searchGubun %>','<%=searchData %>','<%=resultBoardDto.getNxtNo() %>')"><%=resultBoardDto.getNxtSubject() %></a>
+						<a href="#" onClick="goPage('board_view','<%=pageNumber %>','<%=resultBoardDto.getNxtNo() %>')"><%=resultBoardDto.getNxtSubject() %></a>
 					<% } else { %>
 						다음글이 없습니다.
 					<% }//if %>
@@ -156,17 +156,17 @@
 <% }//if %>
 <div style="border: 0px solid red; padding-top:20px; width:80%; text-align:right;">
 |
-<a href="#" onClick="goPage('board_list')">전체목록</a>
+<a href="main.jsp?menuGubun=board_list&tbl=<%=tbl %>">전체목록</a>
 |
-<a href="#" onClick="goPage('board_list','1','<%=searchGubun %>','<%=searchData %>')">목록</a>
+<a href="#" onClick="goPage('board_list','1')">목록</a>
 |
-<a href="#" onClick="goPage('board_chuga','<%=pageNumber %>','<%=searchGubun %>','<%=searchData %>')">등록</a>
+<a href="#" onClick="goPage('board_chuga','<%=pageNumber %>')">등록</a>
 |
-<a href="#" onClick="goPage('board_chuga','<%=pageNumber %>','<%=searchGubun %>','<%=searchData %>','<%=resultBoardDto.getNo() %>')">답변</a>
+<a href="#" onClick="goPage('board_chuga','<%=pageNumber %>','<%=resultBoardDto.getNo() %>')">답변</a>
 |
-<a href="#" onClick="goPage('board_sujung','<%=pageNumber %>','<%=searchGubun %>','<%=searchData %>','<%=resultBoardDto.getNo() %>')">수정</a>
+<a href="#" onClick="goPage('board_sujung','<%=pageNumber %>','<%=resultBoardDto.getNo() %>')">수정</a>
 |
-<a href="#" onClick="goPage('board_sakje','<%=pageNumber %>','<%=searchGubun %>','<%=searchData %>','<%=resultBoardDto.getNo() %>')">삭제</a>
+<a href="#" onClick="goPage('board_sakje','<%=pageNumber %>','<%=resultBoardDto.getNo() %>')">삭제</a>
 |
 </div>
 
@@ -192,5 +192,22 @@
 				}
 			});
 		}//commentList
+		
+		function search() {
+			document.searchForm.action = 'main.jsp?menuGubun=board_listSearch&tbl=<%=tbl %>';
+			document.searchForm.method = 'post';
+			document.searchForm.submit();
+		}//search
+		
+		function goPage(value1, value2, value3) {
+			let linkAddr = 'main.jsp?menuGubun=' + value1;
+			if (value2 != undefined) {
+				linkAddr += '&pageNumber=' + value2;
+			}//if
+			if (value3 != undefined) {
+				linkAddr += '&no=' + value3;
+			}//if
+			location.href = linkAddr + '&<%=imsiQueryString %>';
+		}//goPage
 	</script>
 <% }//if %>

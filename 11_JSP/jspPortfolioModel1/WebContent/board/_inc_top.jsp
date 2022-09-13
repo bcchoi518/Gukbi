@@ -1,11 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
-<%@page import="java.util.ArrayList"%>
+<%@ page import="java.util.ArrayList"%>
 
-<%@page import="board.model.dao.BoardDAO"%>
-<%@page import="board.model.dto.BoardDTO"%>
-<%@page import="config.Util"%>
+<%@ page import="board.model.dto.BoardChkDTO"%>
+<%@ page import="board.model.dao.BoardChkDAO"%>
+<%@ page import="board.model.dao.BoardDAO"%>
+<%@ page import="board.model.dto.BoardDTO"%>
+<%@ page import="config.Util"%>
 
 <%@ include file = "../_include/inc_header.jsp" %>
 <%@ include file = "../_include/inc_sessionChk.jsp" %>
@@ -15,6 +17,20 @@
 	BoardDTO resultBoardDto = new BoardDTO();
 	BoardDAO boardDao = new BoardDAO();
 	Util util = new Util();
+	
+	String tbl = request.getParameter("tbl");
+	tbl = util.getNullBlankCheck(tbl, "");
+	
+	BoardChkDAO boardChkDao = new BoardChkDAO();
+	BoardChkDTO resultBoardChkDto = boardChkDao.getSelectOne(tbl);
+	
+	String imsiBoardTitle = "";
+	if (resultBoardChkDto.getBoardChkNo() > 0) {
+		imsiBoardTitle = resultBoardChkDto.getTblName();
+	} else {
+		out.println("<script> alert('잘못된 접근입니다.'); location.href='main.jsp?menuGubun=board_list&tbl=freeboard'; </script>");
+		return;
+	}//if
 	
 	String pageNumber_ = request.getParameter("pageNumber"); 
 	pageNumber_ = util.getNullBlankCheck(pageNumber_, "1");
@@ -34,6 +50,7 @@
 		searchGubun = "";
 		searchData = "";
 	}//if
+	arguBoardDto.setTbl(tbl);
 	arguBoardDto.setSearchGubun(searchGubun);
 	arguBoardDto.setSearchData(searchData);
 	//search end
@@ -51,9 +68,11 @@
 		
 		if (no > 0) {//일부러 이상한 값을 입력한 경우를 잡아내자
 			if (resultBoardDto.getNo() <= 0) {
-				out.println("<script> alert('잘못된 접근입니다.'); location.href='main.jsp?menuGubun=board_list'; </script>");
+				out.println("<script> alert('잘못된 접근입니다.'); location.href='main.jsp?menuGubun=board_list&tbl="+ tbl +"'; </script>");
 				return;
 			}//if
 		}//if
 	}//if
+	
+	String imsiQueryString = "tbl="+ tbl +"&searchGubun="+ searchGubun +"&searchData="+ searchData;
 %>

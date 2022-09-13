@@ -21,7 +21,7 @@
     let options = {
       title: '샘플 챠트 02',
       is3D: true,
-      backgroundColor: '#80ed99'
+      backgroundColor: '#bdbdbd'
     };
 
     let chart = new google.visualization.PieChart(document.getElementById('piechart_3d'));

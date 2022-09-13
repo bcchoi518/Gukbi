@@ -47,7 +47,7 @@
 	if (failCounter > 0) {
 		out.println("<script>");
 		out.println("alert('입력한 값이 정확하지않습니다.');");
-		out.println("location.href='main.jsp?menuGubun=board_list&searchGubun=" + searchGubun + "&searchData=" + searchData + "';");
+		out.println("location.href='main.jsp?menuGubun=board_list&tbl="+ tbl +"&searchGubun=" + searchGubun + "&searchData=" + searchData + "';");
 		out.println("</script>");
 		return;
 	}//if
@@ -66,6 +66,7 @@
 	String attachInfo = resultBoardDto.getAttachInfo();
 	
 	arguBoardDto.setNo(resultBoardDto.getNo());
+	arguBoardDto.setTbl(tbl);
 	arguBoardDto.setSubject(subject);
 	arguBoardDto.setContent(content);
 	arguBoardDto.setEmail(email);
@@ -77,7 +78,7 @@
 	
 	int result = boardDao.setUpdate(arguBoardDto);
 	
-	String imsiQueryString = "no="+ resultBoardDto.getNo() + "&pageNumber="+ pageNumber +"&searchGubun="+ searchGubun +"&searchData="+ searchData;
+	imsiQueryString += "&no="+ resultBoardDto.getNo() + "&pageNumber="+ pageNumber;
 	String resultPage = "board_view";
 	out.println("<script>");
 	if (result <= 0) {

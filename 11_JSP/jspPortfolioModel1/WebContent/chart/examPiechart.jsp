@@ -20,7 +20,7 @@
 
     let options = {
       title: '샘플 챠트 01',
-      backgroundColor: '#80ed99'
+      backgroundColor: '#bdbdbd'
     };
 
     let chart = new google.visualization.PieChart(document.getElementById('chart_div'));
