@@ -1,0 +1,37 @@
+CREATE TABLE member (
+    id VARCHAR2(50) NOT NULL,
+    pwd VARCHAR2(50) NOT NULL,
+    name VARCHAR2(50) NOT NULL,
+    phone VARCHAR2(50) NOT NULL,
+    job VARCHAR2(50) NOT NULL
+);
+
+SELECT * FROM member;
+
+CREATE TABLE product (
+    no NUMBER NOT NULL,
+    cate VARCHAR2(50) NOT NULL,
+    pName VARCHAR2(50) NOT NULL,
+    price NUMBER NOT NULL
+);
+CREATE SEQUENCE seq_product START WITH 1 INCREMENT BY 1 NOMAXVALUE NOCACHE;
+
+SELECT * FROM product;
+
+CREATE TABLE sj (
+    name VARCHAR2(50) NOT NULL,
+    sName VARCHAR2(50) NOT NULL,
+    mun_1 NUMBER NOT NULL,
+    mun_2 NUMBER NOT NULL,
+    mun_3 NUMBER NOT NULL,
+    mun_4 NUMBER NOT NULL,
+    mun_5 NUMBER NOT NULL,
+    mun_ox_1 VARCHAR2(5) NOT NULL,
+    mun_ox_2 VARCHAR2(5) NOT NULL,
+    mun_ox_3 VARCHAR2(5) NOT NULL,
+    mun_ox_4 VARCHAR2(5) NOT NULL,
+    mun_ox_5 VARCHAR2(5) NOT NULL,
+    jumsu NUMBER NOT NULL
+);
+
+SELECT * FROM sj;
