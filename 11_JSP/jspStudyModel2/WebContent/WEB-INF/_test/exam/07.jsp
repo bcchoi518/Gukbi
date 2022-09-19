@@ -37,7 +37,7 @@
 	<script>
 		function save() {
 			if (confirm('실행할까요?')) {
-				document.DirForm.action = '/jspStudyModel2/exam_servlet/07Proc.do';
+				document.DirForm.action = '${path }/exam_servlet/07Proc.do';
 				document.DirForm.method = 'post';
 				document.DirForm.submit();
 			}//if

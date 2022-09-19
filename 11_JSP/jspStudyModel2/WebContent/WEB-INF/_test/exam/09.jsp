@@ -10,7 +10,7 @@
 
 	<%@ include file = "../../_include/inc_menu.jsp" %>
 	
-	<h2>01</h2>
+	<h2>09</h2>
 	
 	<form name="DirForm">
 		<table border="1">
@@ -19,29 +19,35 @@
 				<td><input type="text" name="name" /></td>
 			</tr>
 			<tr>
-				<td>주소 : </td>
-				<td><input type="text" name="address" /></td>
+				<td>국어 : </td>
+				<td><input type="text" name="kor" /></td>
 			</tr>
 			<tr>
-				<td>나이 : </td>
-				<td><input type="text" name="age" /></td>
+				<td>영어 : </td>
+				<td><input type="text" name="eng" /></td>
+			</tr>
+			<tr>
+				<td>수학 : </td>
+				<td><input type="text" name="mat" /></td>
 			</tr>
 			<tr>
 				<td colspan="2">
-					<button type="button" onclick="save()">확인</button>
+					<button type="button" onclick="formCheck()">확인</button>
 				</td>
 			</tr>
 		</table>
 	</form>
 	
 	<script>
-		function save() {
-			if (confirm('실행할까요?')) {
-				document.DirForm.action = '${path }/exam_servlet/01Proc.do';
-				document.DirForm.method = 'post';
-				document.DirForm.submit();
+		function formCheck() {
+			const f = document.DirForm;
+			
+			if (confirm('OK?')) {
+				f.action = '${path }/exam_servlet/09Proc.do';
+				f.method = 'post';
+				f.submit();
 			}//if
-		}//save
+		}//formCheck
 	</script>
 </body>
 </html>
