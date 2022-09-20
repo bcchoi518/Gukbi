@@ -4,6 +4,37 @@ import java.util.Calendar;
 import java.util.UUID;
 
 public class Util {
+	public int getNumberCheck(String str, int defaultNum) {
+		int result = 0;
+		
+		String tmp = str;
+		if (tmp == null || tmp.trim().equals("")) {
+			tmp = "-";
+		}//if
+		
+		for (int i = 0; i < 10; i++) {
+			tmp = tmp.replace(i + "", "");
+		}//if
+		
+		if (tmp.equals("")) {
+			result = Integer.parseInt(str);
+		} else {
+			result = defaultNum;
+		}//if
+		
+		return result;
+	}//getNumberCheck
+	
+	public String getNullBlankCheck(String str) {
+		String result = str;
+		
+		if (result == null || result.trim().equals("")) {
+			result = "";
+		}//if
+		
+		return result;
+	}//getNullBlankCheck
+	
 	public int[] getCalendar() {
 		Calendar cal = Calendar.getInstance();
 		
