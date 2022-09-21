@@ -114,6 +114,10 @@ public class StudentController extends HttpServlet {
 			String addr3 = request.getParameter("addr3");
 			String addr4 = request.getParameter("addr4");
 			
+			if (addr4.equals("")) {
+				addr4 = "-";
+			}//if
+			
 			StudentDTO arguStudentDto = new StudentDTO();
 			arguStudentDto.setName(name);
 			arguStudentDto.setPhone(phone);
@@ -141,6 +145,10 @@ public class StudentController extends HttpServlet {
 			String addr2 = request.getParameter("addr2");
 			String addr3 = request.getParameter("addr3");
 			String addr4 = request.getParameter("addr4");
+			
+			if (addr4.equals("")) {
+				addr4 = "-";
+			}//if
 			
 			StudentDTO arguStudentDto = new StudentDTO();
 			arguStudentDto.setHakbun(hakbun);

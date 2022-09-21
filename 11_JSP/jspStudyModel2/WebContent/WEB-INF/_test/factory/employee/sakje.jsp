@@ -13,54 +13,42 @@
 
 	<%@ include file = "../../../_include/inc_menu.jsp" %>
 	
-	<h2>학사관리_성적삭제</h2>
+	<h2>사원정보삭제</h2>
 	
 	<form name="DirForm">
-		<input type="hidden" name="sungjukNo" value="${requestScope.dto.sungjukNo }"/>
+		<input type="hidden" name="sabun" value="${requestScope.dto.sabun }" />
 		<table border="1" width="80%">
 			<tr>
-				<td>성적번호</td>
-				<td>${requestScope.dto.sungjukNo }</td>
+				<td>사원번호</td>
+				<td>${requestScope.dto.sabun }</td>
 			</tr>
 			<tr>
-				<td>이름</td>
+				<td>사원이름</td>
 				<td>${requestScope.dto.name }</td>
 			</tr>
 			<tr>
-				<td>시험명</td>
-				<td>${requestScope.dto.sihumName }</td>
+				<td>연락처</td>
+				<td>${requestScope.dto.phone }</td>
 			</tr>
 			<tr>
-				<td>국어</td>
-				<td>${requestScope.dto.kor }</td>
+				<td>입사일</td>
+				<td>${requestScope.dto.hireDate }</td>
 			</tr>
 			<tr>
-				<td>영어</td>
-				<td>${requestScope.dto.eng }</td>
+				<td>이메일</td>
+				<td>${requestScope.dto.email }</td>
 			</tr>
 			<tr>
-				<td>수학</td>
-				<td>${requestScope.dto.mat }</td>
+				<td>급여</td>
+				<td>${requestScope.dto.salary }</td>
 			</tr>
 			<tr>
-				<td>과학</td>
-				<td>${requestScope.dto.sci }</td>
+				<td>부서</td>
+				<td>${requestScope.dto.buseoName }</td>
 			</tr>
 			<tr>
-				<td>역사</td>
-				<td>${requestScope.dto.his }</td>
-			</tr>
-			<tr>
-				<td>총점</td>
-				<td>${requestScope.dto.tot }</td>
-			</tr>
-			<tr>
-				<td>평균</td>
-				<td>${requestScope.dto.avg }</td>
-			</tr>
-			<tr>
-				<td>등급</td>
-				<td>${requestScope.dto.grade }</td>
+				<td>부서</td>
+				<td>${requestScope.dto.positionName }</td>
 			</tr>
 			<tr>
 				<td>등록일</td>
@@ -77,12 +65,11 @@
 	<script>
 		function save() {
 			if (confirm('삭제하시겠습니까?')) {
-				document.DirForm.action = '${path }/haksaSungjuk_servlet/sakjeProc.do';
+				document.DirForm.action = '${path }/employee_servlet/sakjeProc.do';
 				document.DirForm.method = 'post';
 				document.DirForm.submit();
 			}//if
 		}//save
 	</script>
-	
 </body>
 </html>

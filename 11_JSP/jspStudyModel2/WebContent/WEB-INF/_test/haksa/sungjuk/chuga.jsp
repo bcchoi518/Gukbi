@@ -21,7 +21,7 @@
 				<td>이름</td>
 				<td>
 					<select name="hakbun">
-						<option value="0">-- 선택 --</option>
+						<option value="0" selected>-- 선택 --</option>
 						<c:forEach var="dto" items="${requestScope.studentList }">
 							<option value="${dto.hakbun }">${dto.name }</option>
 						</c:forEach>
@@ -32,7 +32,7 @@
 				<td>시험명</td>
 				<td>
 					<select name="sihumNo">
-						<option value="0">-- 선택 --</option>
+						<option value="0" selected>-- 선택 --</option>
 						<c:forEach var="dto" items="${requestScope.sihumList }">
 							<option value="${dto.sihumNo }">${dto.sihumName }</option>
 						</c:forEach>

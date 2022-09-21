@@ -37,5 +37,13 @@
 <a href="${path }/haksaSihum_servlet/list.do">학사관리(시험)</a>
 &nbsp;
 <a href="${path }/haksaSungjuk_servlet/list.do">학사관리(성적)</a>
+&nbsp;
+<a href="${path }/employee_servlet/list.do">직원관리</a>
+&nbsp;
+<a href="${path }/buseo_servlet/list.do">부서관리</a>
+&nbsp;
+<a href="${path }/position_servlet/list.do">직위관리</a>
+&nbsp;
+<a href="${path }/jepum_servlet/list.do">제품관리</a>
 
 <hr>

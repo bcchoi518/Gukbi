@@ -110,6 +110,17 @@ public class SungjukController extends HttpServlet {
 			rd.forward(request, response);
 			
 		} else if (imsiUriFileName.equals("sakje.do")) {
+			String sungjukNo_ = request.getParameter("sungjukNo");
+			int sungjukNo = util.getNumberCheck(sungjukNo_, 0);
+			
+			SungjukDTO arguSungjukDto = new SungjukDTO();
+			arguSungjukDto.setSungjukNo(sungjukNo);
+			
+			SungjukDAO sungjukDao = new SungjukDAO();
+			SungjukDTO resultSungjukDto = sungjukDao.getSelectOne(arguSungjukDto);
+			
+			request.setAttribute("dto", resultSungjukDto);
+			
 			forwardPage += "/sakje.jsp";
 			RequestDispatcher rd = request.getRequestDispatcher(forwardPage);
 			rd.forward(request, response);
@@ -172,7 +183,7 @@ public class SungjukController extends HttpServlet {
 			int his = util.getNumberCheck(his_, 0);
 			
 			SungjukDTO arguSungjukDto = new SungjukDTO();
-			arguSungjukDto.setSihumNo(sungjukNo);
+			arguSungjukDto.setSungjukNo(sungjukNo);
 			arguSungjukDto.setHakbun(hakbun);
 			arguSungjukDto.setSihumNo(sihumNo);
 			arguSungjukDto.setKor(kor);
@@ -192,7 +203,22 @@ public class SungjukController extends HttpServlet {
 			} else {
 				response.sendRedirect(path + "/haksaSungjuk_servlet/sujung.do?sungjukNo=" + sungjukNo);
 			}//if
+			
 		} else if (imsiUriFileName.equals("sakjeProc.do")) {
+			String sungjukNo_ = request.getParameter("sungjukNo");
+			int sungjukNo = util.getNumberCheck(sungjukNo_, 0);
+			
+			SungjukDTO arguSungjukDto = new SungjukDTO();
+			arguSungjukDto.setSungjukNo(sungjukNo);
+			
+			SungjukDAO sungjukDao = new SungjukDAO();
+			int result = sungjukDao.setDelete(arguSungjukDto);
+			
+			if (result > 0) {
+				response.sendRedirect(path + "/haksaSungjuk_servlet/list.do");
+			} else {
+				response.sendRedirect(path + "/haksaSungjuk_servlet/sakje.do?sungjukNo=" + sungjukNo);
+			}//if
 			
 		} else {
 			System.out.println("없네..");

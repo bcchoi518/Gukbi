@@ -16,7 +16,7 @@
 	<h2>학사관리_성적수정</h2>
 	
 	<form name="DirForm">
-		<input type="hidden" name="sungjukNo" value="${dto.sungjukNo }"/>
+		<input type="hidden" name="sungjukNo" value="${requestScope.dto.sungjukNo }"/>
 		<table border="1" width="80%">
 			<tr>
 				<td>이름</td>
@@ -24,7 +24,7 @@
 					<select name="hakbun">
 						<option value="0">-- 선택 --</option>
 						<c:forEach var="studentDto" items="${requestScope.studentList }">
-							<option value="${studentDto.hakbun }" <c:if test="${studentDto.hakbun == dto.hakbun }">selected</c:if>>${studentDto.name }</option>
+							<option value="${studentDto.hakbun }" <c:if test="${studentDto.hakbun == requestScope.dto.hakbun }">selected</c:if>>${studentDto.name }</option>
 						</c:forEach>
 					</select>
 				</td>
@@ -35,30 +35,30 @@
 					<select name="sihumNo">
 						<option value="0">-- 선택 --</option>
 						<c:forEach var="sihumDto" items="${requestScope.sihumList }">
-							<option value="${sihumDto.sihumNo }" <c:if test="${sihumDto.sihumNo == dto.sihumNo }">selected</c:if>>${sihumDto.sihumName }</option>
+							<option value="${sihumDto.sihumNo }" <c:if test="${sihumDto.sihumNo == requestScope.dto.sihumNo }">selected</c:if>>${sihumDto.sihumName }</option>
 						</c:forEach>
 					</select>
 				</td>
 			</tr>
 			<tr>
 				<td>국어</td>
-				<td><input type="text" name="kor" value="${dto.kor }"/></td>
+				<td><input type="text" name="kor" value="${requestScope.dto.kor }"/></td>
 			</tr>
 			<tr>
 				<td>영어</td>
-				<td><input type="text" name="eng" value="${dto.eng }"/></td>
+				<td><input type="text" name="eng" value="${requestScope.dto.eng }"/></td>
 			</tr>
 			<tr>
 				<td>수학</td>
-				<td><input type="text" name="mat" value="${dto.mat }"/></td>
+				<td><input type="text" name="mat" value="${requestScope.dto.mat }"/></td>
 			</tr>
 			<tr>
 				<td>과학</td>
-				<td><input type="text" name="sci" value="${dto.sci }"/></td>
+				<td><input type="text" name="sci" value="${requestScope.dto.sci }"/></td>
 			</tr>
 			<tr>
 				<td>역사</td>
-				<td><input type="text" name="his" value="${dto.his }"/></td>
+				<td><input type="text" name="his" value="${requestScope.dto.his }"/></td>
 			</tr>
 			<tr>
 				<td colspan="2">

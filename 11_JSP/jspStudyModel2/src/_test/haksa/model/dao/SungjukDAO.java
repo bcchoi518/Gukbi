@@ -19,8 +19,9 @@ public class SungjukDAO {
 		conn = DB.dbConn();
 		try {
 			String sql = "SELECT mb.name, sh.sihumName, sj.* "
-					+ "FROM haksaSungjuk sj, haksaMember mb, haksaSihum sh "
-					+ "WHERE sj.hakbun = mb.hakbun AND sj.sihumNo = sh.sihumNo "
+					+ "FROM haksaSungjuk sj "
+					+ "INNER JOIN haksaMember mb ON sj.hakbun = mb.hakbun "
+					+ "INNER JOIN haksaSihum sh ON sj.sihumNo = sh.sihumNo "
 					+ "ORDER BY sungjukNo DESC";
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
@@ -55,9 +56,10 @@ public class SungjukDAO {
 		conn = DB.dbConn();
 		try {
 			String sql = "SELECT mb.name, sh.sihumName, sj.* "
-					+ "FROM haksaSungjuk sj, haksaMember mb, haksaSihum sh "
-					+ "WHERE sj.hakbun = mb.hakbun AND sj.sihumNo = sh.sihumNo "
-					+ "AND sungjukNo = ?";
+					+ "FROM haksaSungjuk sj "
+					+ "INNER JOIN haksaMember mb ON sj.hakbun = mb.hakbun "
+					+ "INNER JOIN haksaSihum sh ON sj.sihumNo = sh.sihumNo "
+					+ "WHERE sungjukNo = ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, paramDto.getSungjukNo());
 			rs = pstmt.executeQuery();
@@ -114,7 +116,9 @@ public class SungjukDAO {
 		int result = 0;
 		conn = DB.dbConn();
 		try {
-			String sql = "UPDATE haksaSungjuk SET kor = ?, eng = ?, mat = ?, sci = ?, his = ?, tot = ?, avg = ?, grade = ?, hakbun = ?, sihumNo = ? WHERE sungjukNo = ?";
+			String sql = "UPDATE haksaSungjuk "
+					+ "SET kor = ?, eng = ?, mat = ?, sci = ?, his = ?, tot = ?, avg = ?, grade = ?, hakbun = ?, sihumNo = ? "
+					+ "WHERE sungjukNo = ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, paramDto.getKor());
 			pstmt.setInt(2, paramDto.getEng());
