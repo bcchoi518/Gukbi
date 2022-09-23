@@ -7,6 +7,8 @@
 
 <form name="DirForm">
 	<input type="hidden" name="no" id="no" value="${requestScope.dto.no }" />
+	<input type="hidden" name="searchGubun" id="searchGubun" value="${requestScope.searchGubun }" />
+	<input type="hidden" name="searchData" id="searchData" value="${requestScope.searchData }" />
 	<table border="1" align="center" width="80%">
 		<tr>
 			<td width="150px">아이디</td>
@@ -97,7 +99,10 @@
 			</td>
 		</tr>
 		<tr>
-			<td colspan="2" align="center" style="height:50px"><button type="button" onclick="save()">수정하기</button></td>
+			<td colspan="2" align="center" style="height:50px">
+				<button type="button" onclick="save()">수정하기</button>
+				<button type="button" onclick="move('member_list.do')">목록으로</button>
+			</td>
 		</tr>
 	</table>
 </form>
@@ -105,11 +110,19 @@
 <script>
 	function save() {
 		if (confirm('OK?')) {
-			document.DirForm.action = '${path }/member_servlet/member_sujungProc.do';
+			document.DirForm.action = '${requestScope.path }/member_servlet/member_sujungProc.do';
 			document.DirForm.method = 'post';
 			document.DirForm.submit();
 		}//if
 	}//save
+	
+	function move(value1, value2) {
+		let linkAddr = '${requestScope.path }/member_servlet/' + value1 + '?${requestScope.searchQuery }';
+		if (value2 != undefined) {
+			linkAddr += '&no=' + value2;
+		}//if
+		location.href = linkAddr;
+	}//move
 </script>
 
 <jsp:include page="_inc_daumApi.jsp" flush="true"></jsp:include>

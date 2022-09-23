@@ -1,4 +1,4 @@
-package project.shopProduct.controller;
+package project.chart.controller;
 
 import java.io.IOException;
 
@@ -11,8 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import project.common.Util;
 
-@WebServlet("/shopProduct_servlet/*")
-public class ShopProductController extends HttpServlet {
+@WebServlet("/ChartController")
+public class ChartController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -22,7 +22,7 @@ public class ShopProductController extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doProc(request, response);
 	}//doPost
-
+	
 	protected void doProc(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		
@@ -38,7 +38,6 @@ public class ShopProductController extends HttpServlet {
 		String folderName = serverInfo[6];
 		String fileName = serverInfo[7];
 		
-		request.setAttribute("referer", referer);
 		request.setAttribute("path", path);
 		request.setAttribute("ip", ip);
 		request.setAttribute("folderName", folderName);
@@ -73,4 +72,4 @@ public class ShopProductController extends HttpServlet {
 			
 		}//if
 	}//doProc
-}//ShopProductController
+}//ChartController

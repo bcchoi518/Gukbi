@@ -41,6 +41,7 @@ public class IndexController extends HttpServlet {
 		folderName = "dashBoard";
 		fileName = "index";
 		
+		request.setAttribute("referer", referer);
 		request.setAttribute("path", path);
 		request.setAttribute("ip", ip);
 		request.setAttribute("folderName", folderName);

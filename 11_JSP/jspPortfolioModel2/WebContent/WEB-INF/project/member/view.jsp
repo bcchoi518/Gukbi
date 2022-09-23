@@ -52,7 +52,36 @@
 	</tr>
 </table>
 
+<div style="border: 0px solid red; padding-top:10px; width:80%;" align="center">
+	<table border="0" width="100%">
+		<tr>
+			<td width="100px" >이전회원</td>
+			<td>
+				<c:if test="${requestScope.dto.preNo > 0 }">
+					<a href="#" onClick="move('member_view.do','${requestScope.dto.preNo }')">${requestScope.dto.preName }</a>
+				</c:if>
+				<c:if test="${requestScope.dto.preNo <= 0 }">
+					등록된 회원이 없습니다.
+				</c:if>
+			</td>
+		</tr>
+		<tr>
+			<td class="entryName">다음회원</td>
+			<td>
+				<c:if test="${requestScope.dto.nxtNo > 0 }">
+					<a href="#" onClick="move('member_view.do','${requestScope.dto.nxtNo }')">${requestScope.dto.nxtName }</a>
+				</c:if>
+				<c:if test="${requestScope.dto.nxtNo <= 0 }">
+					등록된 회원이 없습니다.
+				</c:if>
+			</td>
+		</tr>
+	</table>
+</div>
+
 <div style="border: 0px solid red; width: 80%; margin-top:10px;" align="right">
+|
+<a href="${requestScope.path }/member_servlet/member_list.do" >전체목록</a>
 |
 <a href="#" onclick="move('member_list.do')">목록</a>
 |
@@ -66,9 +95,9 @@
 
 <script>
 	function move(value1, value2) {
-		let linkAddr = '${path }/member_servlet/' + value1;
+		let linkAddr = '${requestScope.path }/member_servlet/' + value1 + '?${requestScope.searchQuery }';
 		if (value2 != undefined) {
-			linkAddr += '?no=' + value2;
+			linkAddr += '&no=' + value2;
 		}//if
 		location.href = linkAddr;
 	}//move

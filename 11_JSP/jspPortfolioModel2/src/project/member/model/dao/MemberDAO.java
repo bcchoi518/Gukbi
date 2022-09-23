@@ -13,12 +13,82 @@ public class MemberDAO {
 	PreparedStatement pstmt = null;
 	ResultSet rs = null;
 	
-	public ArrayList<MemberDTO> getSelectAll() {
+	public int getTotalRecord(MemberDTO paramDto) {
+		int result = 0;
+		conn = DB.dbConn();
+		try {
+			String sql = "";
+			sql += "SELECT COUNT(*) counter FROM member WHERE 1=1 ";
+			
+			if (paramDto.getSearchGubun().equals("id_name")) {
+				sql += "AND (id LIKE ? OR name LIKE ?) ";
+			} else if (paramDto.getSearchGubun().equals("id")) {
+				sql += "AND id LIKE ? ";
+			} else if (paramDto.getSearchGubun().equals("name")) {
+				sql += "AND name LIKE ? ";
+			}//if
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			if (paramDto.getSearchGubun().equals("id_name")) {
+				pstmt.setString(1, '%'+paramDto.getSearchData()+'%');
+				pstmt.setString(2, '%'+paramDto.getSearchData()+'%');
+			} else if (paramDto.getSearchGubun().equals("id")) {
+				pstmt.setString(1, '%'+paramDto.getSearchData()+'%');
+			} else if (paramDto.getSearchGubun().equals("name")) {
+				pstmt.setString(1, '%'+paramDto.getSearchData()+'%');
+			}//if
+			
+			rs = pstmt.executeQuery();
+			
+			if (rs.next()) {
+				result = rs.getInt("counter");
+			}//if
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DB.dbConnClose(rs, pstmt, conn);
+		}//try-catch-finally
+		return result;
+	}//getTotalRecord
+	
+	public ArrayList<MemberDTO> getSelectAll(MemberDTO paramDto) {
 		ArrayList<MemberDTO> memberList = new ArrayList<>();
 		conn = DB.dbConn();
 		try {
-			String sql = "SELECT * FROM member ORDER BY no DESC";
+			String basicSql = "";
+			basicSql += "SELECT * FROM member WHERE 1=1 ";
+			
+			if (paramDto.getSearchGubun().equals("id_name")) {
+				basicSql += "AND (id LIKE ? OR name LIKE ?) ";
+			} else if (paramDto.getSearchGubun().equals("id")) {
+				basicSql += "AND id LIKE ? ";
+			} else if (paramDto.getSearchGubun().equals("name")) {
+				basicSql += "AND name LIKE ? ";
+			}//if
+			
+			basicSql += "ORDER BY no DESC";
+			
+			String sql = "";
+			sql += "SELECT * FROM (SELECT basic.*, rownum rnum FROM (";
+			sql += basicSql;
+			sql += ") basic) WHERE rnum BETWEEN ? AND ?";
+			
 			pstmt = conn.prepareStatement(sql);
+			
+			int k = 0;
+			if (paramDto.getSearchGubun().equals("id_name")) {
+				pstmt.setString(++k, '%'+paramDto.getSearchData()+'%');
+				pstmt.setString(++k, '%'+paramDto.getSearchData()+'%');
+			} else if (paramDto.getSearchGubun().equals("id")) {
+				pstmt.setString(++k, '%'+paramDto.getSearchData()+'%');
+			} else if (paramDto.getSearchGubun().equals("name")) {
+				pstmt.setString(++k, '%'+paramDto.getSearchData()+'%');
+			}//if
+			
+			pstmt.setInt(++k, paramDto.getStartRecord());
+			pstmt.setInt(++k, paramDto.getLastRecord());
+			
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
 				MemberDTO memberDto = new MemberDTO();
@@ -52,9 +122,41 @@ public class MemberDAO {
 		MemberDTO memberDto = new MemberDTO();
 		conn = DB.dbConn();
 		try {
-			String sql = "SELECT * FROM member WHERE no = ?";
+			String sql = "";
+			sql += "SELECT * FROM (";
+			sql += "SELECT m.*, ";
+			
+			sql += "LAG(no) OVER (ORDER BY no DESC) preNo, ";
+			sql += "LAG(name) OVER (ORDER BY no DESC) preName, ";
+			sql += "LEAD(no) OVER (ORDER BY no DESC) nxtNo, ";
+			sql += "LEAD(name) OVER  (ORDER BY no DESC) nxtName ";
+			
+			sql += "FROM member m WHERE 1=1 ";
+			
+			if (paramDto.getSearchGubun().equals("id_name")) {
+				sql += "AND (id LIKE ? OR name LIKE ?) ";
+			} else if (paramDto.getSearchGubun().equals("id")) {
+				sql += "AND id LIKE ? ";
+			} else if (paramDto.getSearchGubun().equals("name")) {
+				sql += "AND name LIKE ? ";
+			}//if
+			
+			sql += "ORDER BY no DESC";
+			sql += ") WHERE no = ?";
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, paramDto.getNo());
+			
+			int k = 0;
+			if (paramDto.getSearchGubun().equals("id_name")) {
+				pstmt.setString(++k, '%'+paramDto.getSearchData()+'%');
+				pstmt.setString(++k, '%'+paramDto.getSearchData()+'%');
+			} else if (paramDto.getSearchGubun().equals("id")) {
+				pstmt.setString(++k, '%'+paramDto.getSearchData()+'%');
+			} else if (paramDto.getSearchGubun().equals("name")) {
+				pstmt.setString(++k, '%'+paramDto.getSearchData()+'%');
+			}//if
+			
+			pstmt.setInt(++k, paramDto.getNo());
+			
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
 				memberDto.setNo(rs.getInt("no"));
@@ -73,6 +175,10 @@ public class MemberDAO {
 				memberDto.setDetailAddress(rs.getString("detailAddress"));
 				memberDto.setExtraAddress(rs.getString("extraAddress"));
 				memberDto.setRegiDate(rs.getDate("regiDate"));
+				memberDto.setPreNo(rs.getInt("preNo"));
+				memberDto.setPreName(rs.getString("preName"));
+				memberDto.setNxtNo(rs.getInt("nxtNo"));
+				memberDto.setNxtName(rs.getString("nxtName"));
 			}//if
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -155,4 +261,23 @@ public class MemberDAO {
 		}//try-catch-finally
 		return result;
 	}//setDelete
+	
+	public int getIdCheckWin(MemberDTO paramDto) {
+		int result = 0;
+		conn = DB.dbConn();
+		try {
+			String sql = "SELECT no FROM member WHERE id = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, paramDto.getId());
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				result = rs.getInt("no");
+			}//if
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DB.dbConnClose(rs, pstmt, conn);
+		}//try-catch-finally
+		return result;
+	}//getIdCheckWin
 }//MemberDAO

@@ -30,13 +30,13 @@
 			<a href="${requestScope.path }/shopProduct_servlet/shopProduct_list.do">Mall(상품관리)</a>
 		</td>
 		<td style="padding:0px 10px;" id="shopVendor">
-			<a href="#">Mall(제조사)</a>
+			<a href="${requestScope.path }/shopVendor_servlet/shopVendor_list.do">Mall(제조사)</a>
 		</td>
 		<td style="padding:0px 10px;" id="shopMall">
-			<a href="#">Mall(쇼핑몰)</a>
+			<a href="${requestScope.path }/shopMall_servlet/shopMall_list.do">Mall(쇼핑몰)</a>
 		</td>
 		<td style="padding:0px 10px;" id="chart">
-			<a href="#">chart</a>
+			<a href="${requestScope.path }/chart_servlet/chart_list.do">chart</a>
 		</td>
 	</tr>
 </table>

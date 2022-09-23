@@ -1,7 +1,11 @@
 package project.member.controller;
 
 import java.io.IOException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -31,6 +35,7 @@ public class MemberController extends HttpServlet {
 		
 		Util util = new Util();
 		
+//serverInfo Start
 		String[] serverInfo = util.getServerInfo(request);
 		String referer = serverInfo[0];
 		String path = serverInfo[1];
@@ -41,16 +46,75 @@ public class MemberController extends HttpServlet {
 		String folderName = serverInfo[6];
 		String fileName = serverInfo[7];
 		
+		request.setAttribute("referer", referer);
 		request.setAttribute("path", path);
 		request.setAttribute("ip", ip);
 		request.setAttribute("folderName", folderName);
 		request.setAttribute("fileName", fileName);
+//serverInfo Start		
+//pagerStart
+		String pageNumber_ = request.getParameter("pageNumber");
+		int pageNumber = util.getNumberCheck(pageNumber_, 1);
+		request.setAttribute("pageNumber", pageNumber);
+//pagerEnd
+//searchStart
+		String searchGubun = request.getParameter("searchGubun");
+		String searchData = request.getParameter("searchData");
+		String imsiSearchYN = "O";
+		
+		searchGubun = util.getNullBlankCheck(searchGubun);
+		searchData = util.getNullBlankCheck(searchData);
+		
+		if (searchGubun.equals("") || searchData.equals("")) {
+			imsiSearchYN = "X";
+			searchGubun = "";
+			searchData = "";
+		}//if
+		
+		//임의로 주소줄에 적어서 넘어온 값은 인코딩되어 있으므로 디코딩해야 함
+		searchGubun = URLDecoder.decode(searchGubun, "UTF-8"); //import java.net.URLDecoder
+		searchData = URLDecoder.decode(searchData, "UTF-8"); //import java.net.URLDecoder
+		
+		String searchQuery = "pageNumber="+ pageNumber +"&searchGubun=&searchData=";
+		if (imsiSearchYN.equals("O")) {
+			String imsiSearchGubun = URLEncoder.encode(searchGubun, "UTF-8");
+			String imsiSearchData = URLEncoder.encode(searchData, "UTF-8");
+			searchQuery = "pageNumber="+ pageNumber +"&searchGubun="+ imsiSearchGubun +"&searchData="+ imsiSearchData;
+		}//if
+		
+		request.setAttribute("searchGubun", searchGubun);
+		request.setAttribute("searchData", searchData);
+		request.setAttribute("searchQuery", searchQuery);
+//searchEnd
 		
 		String forwardPage = "/WEB-INF/project/main/main.jsp";
+		
 		if (fileName.equals("list")) {
-			MemberDAO memberDao = new MemberDAO();
-			ArrayList<MemberDTO> memberList = memberDao.getSelectAll();
+			searchGubun = util.getCheckString(searchGubun);
+			searchData = util.getCheckString(searchData);
 			
+			MemberDTO arguMemberDto = new MemberDTO();
+			arguMemberDto.setSearchGubun(searchGubun);
+			arguMemberDto.setSearchData(searchData);
+			
+			MemberDAO memberDao = new MemberDAO();
+			
+//pagerStart
+			int pageSize = 3;
+			int blockSize = 10;
+			int totalRecord = memberDao.getTotalRecord(arguMemberDto);
+			request.setAttribute("totalRecord", totalRecord);
+			
+			Map<String, Integer> pagerMap = util.getPagerMap(pageNumber, pageSize, blockSize, totalRecord);
+			pagerMap.put("blockSize", blockSize);
+			
+			arguMemberDto.setStartRecord(pagerMap.get("startRecord"));
+			arguMemberDto.setLastRecord(pagerMap.get("lastRecord"));
+//pagerEnd
+			
+			ArrayList<MemberDTO> memberList = memberDao.getSelectAll(arguMemberDto);
+			
+			request.setAttribute("pagerMap", pagerMap);
 			request.setAttribute("list", memberList);
 			
 			RequestDispatcher rd = request.getRequestDispatcher(forwardPage);
@@ -67,6 +131,8 @@ public class MemberController extends HttpServlet {
 			
 			MemberDTO arguMemberDto = new MemberDTO();
 			arguMemberDto.setNo(no);
+			arguMemberDto.setSearchGubun(searchGubun);
+			arguMemberDto.setSearchData(searchData);
 			
 			MemberDAO memberDao = new MemberDAO();
 			MemberDTO returnMemberDto = memberDao.getSelectOne(arguMemberDto);
@@ -134,8 +200,16 @@ public class MemberController extends HttpServlet {
 			
 			RequestDispatcher rd = request.getRequestDispatcher(forwardPage);
 			rd.forward(request, response);
+		
 			
+		} else if (fileName.equals("search")) {
+			String moveUrl = "";
+			moveUrl += path + "/member_servlet/member_list.do?" + searchQuery;
+			
+			response.sendRedirect(moveUrl);
+
 		} else if (fileName.equals("chugaProc")) {
+			System.out.println("referer: " + referer);
 			String id = request.getParameter("id");
 			String passwd = request.getParameter("passwd");
 			String passwdChk = request.getParameter("passwdChk");
@@ -241,7 +315,7 @@ public class MemberController extends HttpServlet {
 			if (result > 0) {
 				response.sendRedirect(path + "/member_servlet/member_list.do");
 			} else {
-				response.sendRedirect(path + "/member_servlet/member_chuga.do");
+				response.sendRedirect(path + "/member_servlet/member_chuga.do?" + searchQuery);
 			}//if
 			
 		} else if (fileName.equals("sujungProc")) {
@@ -341,9 +415,9 @@ public class MemberController extends HttpServlet {
 			int result = memberDao.setUpdate(arguMemberDto);
 			
 			if (result > 0) {
-				response.sendRedirect(path + "/member_servlet/member_view.do?no=" + no);
+				response.sendRedirect(path + "/member_servlet/member_view.do?no=" + no + "&" + searchQuery);
 			} else {
-				response.sendRedirect(path + "/member_servlet/member_sujung.do?no=" + no);
+				response.sendRedirect(path + "/member_servlet/member_sujung.do?no=" + no + "&" + searchQuery);
 			}//if
 			
 		} else if (fileName.equals("sakjeProc")) {
@@ -385,10 +459,38 @@ public class MemberController extends HttpServlet {
 			int result = memberDao.setDelete(arguMemberDto);
 			
 			if (result > 0) {
-				response.sendRedirect(path + "/member_servlet/member_list.do");
+				response.sendRedirect(path + "/member_servlet/member_list.do?" + searchQuery);
 			} else {
-				response.sendRedirect(path + "/member_servlet/member_sakje.do?no=" + no);
+				response.sendRedirect(path + "/member_servlet/member_sakje.do?no=" + no + "&" + searchQuery);
 			}//if
+			
+		} else if (fileName.equals("idCheckWin")) {
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/project/member/idCheckWin.jsp");
+			rd.forward(request, response);
+			
+		} else if (fileName.equals("idCheckWinProc")) {
+			String id = request.getParameter("id");
+			id = util.getNullBlankCheck(id);
+			
+			MemberDTO arguMemberDto = new MemberDTO();
+			arguMemberDto.setId(id);
+			
+			MemberDAO memberDao = new MemberDAO();
+			int result = memberDao.getIdCheckWin(arguMemberDto);
+			
+			String imsiId = id;
+			String msg = "사용 가능한 아이디입니다.";
+			if(result > 0) {
+				imsiId = "";
+				msg = "사용 불가능한 아이디입니다.";	
+			}//if
+			
+			request.setAttribute("id", id);
+			request.setAttribute("imsiId", imsiId);
+			request.setAttribute("msg", msg);
+			
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/project/member/idCheckWin.jsp");
+			rd.forward(request, response);
 		}//if
 	}//doProc
 }//MemberController
