@@ -155,18 +155,20 @@ public class MemberController extends HttpServlet {
 			String no_ = request.getParameter("no");
 			int no = util.getNumberCheck(no_, 0);
 			
-			if (no == 0) {
+			if (no <= 0) {
 				System.out.println("no: " + no);
 				return;
 			}//if
 			
 			MemberDTO arguMemberDto = new MemberDTO();
 			arguMemberDto.setNo(no);
+			arguMemberDto.setSearchGubun(searchGubun);
+			arguMemberDto.setSearchData(searchData);
 			
 			MemberDAO memberDao = new MemberDAO();
 			MemberDTO returnMemberDto = memberDao.getSelectOne(arguMemberDto);
 			
-			if (returnMemberDto.getNo() == 0) {
+			if (returnMemberDto.getNo() <= 0) {
 				System.out.println("no: " + returnMemberDto.getNo());
 				return;
 			}//if
@@ -187,11 +189,13 @@ public class MemberController extends HttpServlet {
 			
 			MemberDTO arguMemberDto = new MemberDTO();
 			arguMemberDto.setNo(no);
+			arguMemberDto.setSearchGubun(searchGubun);
+			arguMemberDto.setSearchData(searchData);
 			
 			MemberDAO memberDao = new MemberDAO();
 			MemberDTO returnMemberDto = memberDao.getSelectOne(arguMemberDto);
 			
-			if (returnMemberDto.getNo() == 0) {
+			if (returnMemberDto.getNo() <= 0) {
 				System.out.println("no: " + returnMemberDto.getNo());
 				return;
 			}//if
@@ -329,11 +333,13 @@ public class MemberController extends HttpServlet {
 			
 			MemberDTO arguMemberDto = new MemberDTO();
 			arguMemberDto.setNo(no);
+			arguMemberDto.setSearchGubun(searchGubun);
+			arguMemberDto.setSearchData(searchData);
 			
 			MemberDAO memberDao = new MemberDAO();
 			MemberDTO returnMemberDto = memberDao.getSelectOne(arguMemberDto);
 			
-			if (returnMemberDto.getNo() == 0) {
+			if (returnMemberDto.getNo() <= 0) {
 				System.out.println("no: " + returnMemberDto.getNo());
 				return;
 			}//if
@@ -431,6 +437,8 @@ public class MemberController extends HttpServlet {
 			
 			MemberDTO arguMemberDto = new MemberDTO();
 			arguMemberDto.setNo(no);
+			arguMemberDto.setSearchGubun(searchGubun);
+			arguMemberDto.setSearchData(searchData);
 			
 			MemberDAO memberDao = new MemberDAO();
 			MemberDTO returnMemberDto = memberDao.getSelectOne(arguMemberDto);

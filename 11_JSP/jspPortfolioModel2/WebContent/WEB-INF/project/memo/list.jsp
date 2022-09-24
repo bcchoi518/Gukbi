@@ -166,9 +166,11 @@
 	}//formReset
 	
 	function search() {
-		document.searchForm.action = '${requestScope.path }/memo_servlet/memo_list.do';
-		document.searchForm.method = 'post';
-		document.searchForm.submit();
+		if (alert('searchOK?')) {
+			document.searchForm.action = '${requestScope.path }/memo_servlet/memo_list.do';
+			document.searchForm.method = 'post';
+			document.searchForm.submit();
+		}//if
 	}//search
 	
 	function goPage(value1) {

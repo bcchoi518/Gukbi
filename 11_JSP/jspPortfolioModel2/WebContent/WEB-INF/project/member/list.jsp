@@ -3,7 +3,7 @@
     
 <%@ include file = "../include/inc_header.jsp" %>
 
-<h2>회원관리</h2>
+<h2>회원목록</h2>
 
 <div style="border: 0px solid red; width: 80%; margin-top:10px;" align="left">
 	<c:choose>

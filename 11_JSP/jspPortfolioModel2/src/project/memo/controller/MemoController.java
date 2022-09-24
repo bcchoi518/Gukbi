@@ -113,6 +113,18 @@ public class MemoController extends HttpServlet {
 				writer = util.getNullBlankCheck(writer);
 				content = util.getNullBlankCheck(content);
 				
+				int failCounter = 0;
+				if (writer.equals("")) {
+					failCounter++;
+				} else if (content.equals("")) {
+					failCounter++;
+				}//if
+				
+				if (failCounter > 0) {
+					System.out.println("failCounter: " + failCounter);
+					return;
+				}//if
+				
 				writer = util.getCheckString(writer);
 				content = util.getCheckString(content);
 				
@@ -138,6 +150,18 @@ public class MemoController extends HttpServlet {
 				
 				writer = util.getNullBlankCheck(writer);
 				content = util.getNullBlankCheck(content);
+				
+				int failCounter = 0;
+				if (writer.equals("")) {
+					failCounter++;
+				} else if (content.equals("")) {
+					failCounter++;
+				}//if
+				
+				if (failCounter > 0) {
+					System.out.println("failCounter: " + failCounter);
+					return;
+				}//if
 				
 				writer = util.getCheckString(writer);
 				content = util.getCheckString(content);
