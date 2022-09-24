@@ -42,9 +42,10 @@
 		</c:choose>
 	</c:if>
 	
+	<c:set var="cntDisplay" value="${requestScope.pagerMap.cntDisplay }" />
 	<c:forEach var="memberDto" items="${requestScope.list }">
 		<tr>
-			<td>${memberDto.no }</td>
+			<td>${cntDisplay }</td>
 			<td><a href="#" onclick="move('member_view.do','${memberDto.no }')">${memberDto.id }</a></td>
 			<td>${memberDto.passwd }</td>
 			<td>${memberDto.name }</td>
@@ -52,6 +53,7 @@
 			<td>${memberDto.phone1 }-${memberDto.phone2 }-${memberDto.phone3 }</td>
 			<td>${memberDto.regiDate }</td>
 		</tr>
+		<c:set var="cntDisplay" value="${cntDisplay - 1 }" />
 	</c:forEach>
 </table>
 
