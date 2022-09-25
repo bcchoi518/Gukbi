@@ -57,7 +57,9 @@
 			<td>
 				<input type="text" name="email1" style="width:100px" />
 				@
-				<select name="email2">
+				<input type="text" name="email2" id="email2" style="width:100px" />
+				<select name="emailSelector" id="emailSelector" onchange="changeEmail2()">
+					<option value="" selected>-- 직접입력 --</option>
 					<option value="google.com" >google.com</option>
 					<option value="naver.com" >naver.com</option>
 					<option value="daum.net" >daum.net</option>
@@ -92,6 +94,20 @@
 </form>
 
 <script>
+	function changeEmail2() {
+		const emailSelector = document.querySelector('#emailSelector');
+		const email2 = document.querySelector('#email2');
+		const selectedValue = emailSelector.options[emailSelector.selectedIndex].value;
+		
+		email2.value = selectedValue;
+		
+		if (selectedValue == '') {
+			email2.readOnly = false;
+		} else {
+			email2.readOnly = true;
+		}//if
+	}//changeEmail2
+
 	function save() {
 		if (confirm('OK?')) {
 			document.DirForm.action = '${requestScope.path }/member_servlet/member_chugaProc.do';

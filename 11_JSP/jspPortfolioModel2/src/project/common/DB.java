@@ -59,4 +59,14 @@ public class DB {
  			System.out.println("-- Error 04 --");
 		}//try-catch
 	}//dbConnClose
+	
+	public static String getCheckfieldName(String fieldName) {
+		if (fieldName == null) {
+			return null;
+		}//if
+		
+		fieldName = fieldName.replace(" ", "").replace(";", "");
+		
+		return fieldName;
+	}//getCheckfieldName
 }//DB

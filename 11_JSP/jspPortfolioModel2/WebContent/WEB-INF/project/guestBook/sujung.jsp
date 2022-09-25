@@ -24,7 +24,9 @@
 				<c:set var="emailArray" value="${fn:split(requestScope.dto.email, '@') }" />
 				<input type="text" name="email1" style="width:100px" value="${emailArray[0] }"/>
 				@
-				<select name="email2">
+				<input type="text" name="email2" id="email2" style="width:100px" value="${emailArray[1] }" readOnly/>
+				<select name="emailSelector" id="emailSelector" onchange="changeEmail2()">
+					<option value="">-- 직접입력 --</option>
 					<option value="google.com" <c:if test="${emailArray[1] == 'google.com' }">selected</c:if>>google.com</option>
 					<option value="naver.com" <c:if test="${emailArray[1] == 'naver.com' }">selected</c:if>>naver.com</option>
 					<option value="daum.net" <c:if test="${emailArray[1] == 'daum.net' }">selected</c:if>>daum.net</option>
@@ -45,6 +47,20 @@
 </form>
 
 <script>
+	function changeEmail2() {
+		const emailSelector = document.querySelector('#emailSelector');
+		const email2 = document.querySelector('#email2');
+		const selectedValue = emailSelector.options[emailSelector.selectedIndex].value;
+		
+		email2.value = selectedValue;
+		
+		if (selectedValue == '') {
+			email2.readOnly = false;
+		} else {
+			email2.readOnly = true;
+		}//if
+	}//changeEmail2
+	
 	function save() {
 		if (confirm('OK?')) {
 			document.DirForm.action = '${requestScope.path }/guestBook_servlet/guestBook_sujungProc.do';

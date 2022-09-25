@@ -59,19 +59,23 @@
 			<td>
 				<input type="text" name="email1" style="width:100px" value="${requestScope.dto.email1 }"/>
 				@
-				<select name="email2">
+				<input type="text" name="email2" id="email2" style="width:100px" value="${requestScope.dto.email2 }" readOnly/>
+				<select name="emailSelector" id="emailSelector" onchange="changeEmail2()">
 					<c:choose>
 						<c:when test="${requestScope.dto.email2 == 'google.com' }">
+							<option value="" >-- 직접입력 --</option>
 							<option value="google.com" selected>google.com</option>
 							<option value="naver.com" >naver.com</option>
 							<option value="daum.net" >daum.net</option>
 						</c:when>
 						<c:when test="${requestScope.dto.email2 == 'naver.com' }">
+							<option value="" >-- 직접입력 --</option>
 							<option value="google.com" >google.com</option>
 							<option value="naver.com" selected>naver.com</option>
 							<option value="daum.net" >daum.net</option>
 						</c:when>
 						<c:otherwise>
+							<option value="" >-- 직접입력 --</option>
 							<option value="google.com" >google.com</option>
 							<option value="naver.com" >naver.com</option>
 							<option value="daum.net" selected>daum.net</option>
@@ -108,6 +112,20 @@
 </form>
 
 <script>
+	function changeEmail2() {
+		const emailSelector = document.querySelector('#emailSelector');
+		const email2 = document.querySelector('#email2');
+		const selectedValue = emailSelector.options[emailSelector.selectedIndex].value;
+		
+		email2.value = selectedValue;
+		
+		if (selectedValue == '') {
+			email2.readOnly = false;
+		} else {
+			email2.readOnly = true;
+		}//if
+	}//changeEmail2
+
 	function save() {
 		if (confirm('OK?')) {
 			document.DirForm.action = '${requestScope.path }/member_servlet/member_sujungProc.do';
