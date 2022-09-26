@@ -1,10 +1,10 @@
 package project.member.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
@@ -13,6 +13,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import project.common.Util;
 import project.member.model.dao.MemberDAO;
@@ -46,18 +47,28 @@ public class MemberController extends HttpServlet {
 		String folderName = serverInfo[6];
 		String fileName = serverInfo[7];
 		
+		String[] sessionArray = util.getSessionCheck(request);
+		int sessionNo = Integer.parseInt(sessionArray[0]);
+		String sessionId = sessionArray[1];
+		String sessionName = sessionArray[2];
+		
+		if (sessionNo <= 0) {//로그인 안한 상태..
+			response.sendRedirect(path +"/noLogin_servlet/noLogin_login.do");
+			return;
+		}//if
+		
 		request.setAttribute("referer", referer);
 		request.setAttribute("path", path);
 		request.setAttribute("ip", ip);
 		request.setAttribute("folderName", folderName);
 		request.setAttribute("fileName", fileName);
-//serverInfo Start		
-//pagerStart
+//serverInfo End
+//pager Start
 		String pageNumber_ = request.getParameter("pageNumber");
 		int pageNumber = util.getNumberCheck(pageNumber_, 1);
 		request.setAttribute("pageNumber", pageNumber);
-//pagerEnd
-//searchStart
+//pager End
+//search Start
 		String searchGubun = request.getParameter("searchGubun");
 		String searchData = request.getParameter("searchData");
 		String imsiSearchYN = "O";
@@ -85,7 +96,7 @@ public class MemberController extends HttpServlet {
 		request.setAttribute("searchGubun", searchGubun);
 		request.setAttribute("searchData", searchData);
 		request.setAttribute("searchQuery", searchQuery);
-//searchEnd
+//search End
 		
 		String forwardPage = "/WEB-INF/project/main/main.jsp";
 		
@@ -138,7 +149,7 @@ public class MemberController extends HttpServlet {
 			MemberDTO returnMemberDto = memberDao.getSelectOne(arguMemberDto);
 			
 			if (returnMemberDto.getNo() == 0) {
-				System.out.println("no: " + returnMemberDto.getNo());
+				System.out.println("wrong no");
 				return;
 			}//if
 			
@@ -156,8 +167,12 @@ public class MemberController extends HttpServlet {
 			int no = util.getNumberCheck(no_, 0);
 			
 			if (no <= 0) {
-				System.out.println("no: " + no);
-				return;
+				if (sessionNo > 0) {
+					no = sessionNo;
+				} else {
+					System.out.println("wrong no");
+					return;
+				}//if
 			}//if
 			
 			MemberDTO arguMemberDto = new MemberDTO();
@@ -169,7 +184,7 @@ public class MemberController extends HttpServlet {
 			MemberDTO returnMemberDto = memberDao.getSelectOne(arguMemberDto);
 			
 			if (returnMemberDto.getNo() <= 0) {
-				System.out.println("no: " + returnMemberDto.getNo());
+				System.out.println("wrong no");
 				return;
 			}//if
 			
@@ -182,9 +197,13 @@ public class MemberController extends HttpServlet {
 			String no_ = request.getParameter("no");
 			int no = util.getNumberCheck(no_, 0);
 			
-			if (no == 0) {
-				System.out.println("no: " + no);
-				return;
+			if (no <= 0) {
+				if (sessionNo > 0) {
+					no = sessionNo;
+				} else {
+					System.out.println("wrong no");
+					return;
+				}//if
 			}//if
 			
 			MemberDTO arguMemberDto = new MemberDTO();
@@ -196,7 +215,7 @@ public class MemberController extends HttpServlet {
 			MemberDTO returnMemberDto = memberDao.getSelectOne(arguMemberDto);
 			
 			if (returnMemberDto.getNo() <= 0) {
-				System.out.println("no: " + returnMemberDto.getNo());
+				System.out.println("wrong no");
 				return;
 			}//if
 			
@@ -215,6 +234,7 @@ public class MemberController extends HttpServlet {
 		} else if (fileName.equals("chugaProc")) {
 			System.out.println("referer: " + referer);
 			String id = request.getParameter("id");
+			String tempId = request.getParameter("tempId");
 			String passwd = request.getParameter("passwd");
 			String passwdChk = request.getParameter("passwdChk");
 			String name = request.getParameter("name");
@@ -231,6 +251,7 @@ public class MemberController extends HttpServlet {
 			String extraAddress = request.getParameter("extraAddress");
 			
 			id = util.getNullBlankCheck(id);
+			tempId = util.getNullBlankCheck(tempId);
 			passwd = util.getNullBlankCheck(passwd);
 			passwdChk = util.getNullBlankCheck(passwdChk);
 			name = util.getNullBlankCheck(name);
@@ -248,6 +269,8 @@ public class MemberController extends HttpServlet {
 			
 			int failCounter = 0;
 			if (id.equals("") || id.trim().length() > 10) {
+				failCounter++;
+			} else if (tempId.equals("") || !id.equals(tempId)) {
 				failCounter++;
 			} else if (passwd.equals("") || !passwd.equals(passwdChk)) {
 				failCounter++;
@@ -340,7 +363,7 @@ public class MemberController extends HttpServlet {
 			MemberDTO returnMemberDto = memberDao.getSelectOne(arguMemberDto);
 			
 			if (returnMemberDto.getNo() <= 0) {
-				System.out.println("no: " + returnMemberDto.getNo());
+				System.out.println("wrong no");
 				return;
 			}//if
 			
@@ -444,7 +467,7 @@ public class MemberController extends HttpServlet {
 			MemberDTO returnMemberDto = memberDao.getSelectOne(arguMemberDto);
 			
 			if (returnMemberDto.getNo() == 0) {
-				System.out.println("no: " + returnMemberDto.getNo());
+				System.out.println("wrong no");
 				return;
 			}//if
 			
@@ -471,6 +494,23 @@ public class MemberController extends HttpServlet {
 			} else {
 				response.sendRedirect(path + "/member_servlet/member_sakje.do?no=" + no + "&" + searchQuery);
 			}//if
+			
+		} else if (fileName.equals("idCheck")) {
+			String id = request.getParameter("id");
+			id = util.getNullBlankCheck(id);
+			
+			MemberDTO arguMemberDto = new MemberDTO();
+			arguMemberDto.setId(id);
+			
+			MemberDAO memberDao = new MemberDAO();
+			int result = memberDao.getIdCheckWin(arguMemberDto);
+			
+			response.setContentType("text/html; charset=UTF-8");
+			PrintWriter out = response.getWriter();
+			out.println(result);
+			out.flush();
+			out.close();
+			return;
 			
 		} else if (fileName.equals("idCheckWin")) {
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/project/member/idCheckWin.jsp");

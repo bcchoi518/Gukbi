@@ -1,7 +1,10 @@
 package project.board.controller;
 
 import java.io.IOException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -30,7 +33,7 @@ public class BoardController extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		
 		Util util = new Util();
-		
+//serverInfo Start
 		String[] serverInfo = util.getServerInfo(request);
 		String referer = serverInfo[0];
 		String path = serverInfo[1];
@@ -46,14 +49,63 @@ public class BoardController extends HttpServlet {
 		request.setAttribute("ip", ip);
 		request.setAttribute("folderName", folderName);
 		request.setAttribute("fileName", fileName);
+//serverInfo End
+//search Start
+		String searchGubun = request.getParameter("searchGubun");
+		String searchData = request.getParameter("searchData");
+		String imsiSearchYN = "O";
+		
+		searchGubun = util.getNullBlankCheck(searchGubun);
+		searchData = util.getNullBlankCheck(searchData);
+		
+		if (searchGubun.equals("")) {
+			searchGubun = "";
+			searchData = "";
+			imsiSearchYN = "X";
+		}//if
+		
+		searchGubun = URLDecoder.decode(searchGubun, "UTF-8");
+		searchData = URLDecoder.decode(searchData, "UTF-8");
+		
+		String searchQuery = "searchGubun=&searchData=";
+		if (imsiSearchYN.equals("O")) {
+			String imsiSearchGubun = URLEncoder.encode(searchGubun, "UTF-8");
+			String imsiSearchData = URLEncoder.encode(searchData, "UTF-8");
+			searchQuery = "searchGubun="+ imsiSearchGubun +"&searchData="+ imsiSearchData;
+		}//if
+		
+		request.setAttribute("searchGubun", searchGubun);
+		request.setAttribute("searchData", searchData);
+		request.setAttribute("searchQuery", searchQuery);
+//search End
+//pager Start
+		String pageNumber_ = request.getParameter("pageNumber");
+		int pageNumber = util.getNumberCheck(pageNumber_, 1);
+		request.setAttribute("pageNumber", pageNumber);
+//pager End
 		
 		String forwardPage = "/WEB-INF/project/main/main.jsp";
 		if (fileName.equals("list")) {
 			BoardDTO arguBoardDto = new BoardDTO();
+			arguBoardDto.setSearchGubun(searchGubun);
+			arguBoardDto.setSearchData(searchData);
 			
 			BoardDAO boardDao = new BoardDAO();
+//pager Start
+			int pageSize = 5;
+			int blockSize = 10;
+			int totalRecord = boardDao.getTotalRecord(arguBoardDto);
+			request.setAttribute("totalRecord", totalRecord);
 			
-			ArrayList<BoardDTO> boardList =boardDao.getSelectAll(); 
+			Map<String, Integer> pagerMap = util.getPagerMap(pageNumber, pageSize, blockSize, totalRecord);
+			pagerMap.put("blockSize", blockSize);
+			
+			arguBoardDto.setStartRecord(pagerMap.get("startRecord"));
+			arguBoardDto.setLastRecord(pagerMap.get("lastRecord"));
+			
+			request.setAttribute("pagerMap", pagerMap);
+//pager End
+			ArrayList<BoardDTO> boardList =boardDao.getSelectAll(arguBoardDto); 
 			
 			request.setAttribute("list", boardList);
 			
@@ -70,8 +122,11 @@ public class BoardController extends HttpServlet {
 			
 			BoardDTO arguBoardDto = new BoardDTO();
 			arguBoardDto.setNo(no);
+			arguBoardDto.setSearchGubun(searchGubun);
+			arguBoardDto.setSearchData(searchData);
 			
 			BoardDAO boardDao = new BoardDAO();
+			boardDao.setUpdateHit(arguBoardDto);
 			BoardDTO returnBoardDto = boardDao.getSelectOne(arguBoardDto);
 			
 			if (returnBoardDto.getNo() <= 0) {
@@ -85,16 +140,89 @@ public class BoardController extends HttpServlet {
 			rd.forward(request, response);
 			
 		} else if (fileName.equals("chuga")) {
+			String no_ = request.getParameter("no");
+			int no = util.getNumberCheck(no_, 0);
+			
+			if (no > 0) {
+				BoardDTO arguBoardDto = new BoardDTO();
+				arguBoardDto.setNo(no);
+				arguBoardDto.setSearchGubun(searchGubun);
+				arguBoardDto.setSearchData(searchData);
+				
+				BoardDAO boardDao = new BoardDAO();
+				BoardDTO returnBoardDto = boardDao.getSelectOne(arguBoardDto);
+				
+				if (returnBoardDto.getNo() <= 0) {
+					System.out.println("wrong no");
+					return;
+				}//if
+				
+				request.setAttribute("newLine", "\n");
+				request.setAttribute("dto", returnBoardDto);
+			}//if
+			
 			RequestDispatcher rd = request.getRequestDispatcher(forwardPage);
 			rd.forward(request, response);
 			
 		} else if (fileName.equals("sujung")) {
+			String no_ = request.getParameter("no");
+			int no = util.getNumberCheck(no_, 0);
+			
+			if (no <= 0) {
+				System.out.println("wrong no");
+				return;
+			}//if
+			
+			BoardDTO arguBoardDto = new BoardDTO();
+			arguBoardDto.setNo(no);
+			arguBoardDto.setSearchGubun(searchGubun);
+			arguBoardDto.setSearchData(searchData);
+			
+			BoardDAO boardDao = new BoardDAO();
+			BoardDTO returnBoardDto = boardDao.getSelectOne(arguBoardDto);
+			
+			if (returnBoardDto.getNo() <= 0) {
+				System.out.println("wrong no");
+				return;
+			}//if
+			
+			request.setAttribute("dto", returnBoardDto);
+			
 			RequestDispatcher rd = request.getRequestDispatcher(forwardPage);
 			rd.forward(request, response);
 			
 		} else if (fileName.equals("sakje")) {
+			String no_ = request.getParameter("no");
+			int no = util.getNumberCheck(no_, 0);
+			
+			if (no <= 0) {
+				System.out.println("wrong no");
+				return;
+			}//if
+			
+			BoardDTO arguBoardDto = new BoardDTO();
+			arguBoardDto.setNo(no);
+			arguBoardDto.setSearchGubun(searchGubun);
+			arguBoardDto.setSearchData(searchData);
+			
+			BoardDAO boardDao = new BoardDAO();
+			BoardDTO returnBoardDto = boardDao.getSelectOne(arguBoardDto);
+			
+			if (returnBoardDto.getNo() <= 0) {
+				System.out.println("wrong no");
+				return;
+			}//if
+			
+			request.setAttribute("dto", returnBoardDto);
+			
 			RequestDispatcher rd = request.getRequestDispatcher(forwardPage);
 			rd.forward(request, response);
+			
+		} else if (fileName.equals("search")) {
+			String moveUrl = "";
+			moveUrl += path + "/board_servlet/board_list.do?" + searchQuery;
+			
+			response.sendRedirect(moveUrl);
 			
 		} else if (fileName.equals("chugaProc")) {
 			String no_ = request.getParameter("no");
@@ -159,6 +287,8 @@ public class BoardController extends HttpServlet {
 			
 			BoardDTO arguBoardDto = new BoardDTO();
 			arguBoardDto.setNo(no);
+			arguBoardDto.setSearchGubun(searchGubun);
+			arguBoardDto.setSearchData(searchData);
 			
 			BoardDAO boardDao = new BoardDAO();
 			BoardDTO returnDto = boardDao.getSelectOne(arguBoardDto);
@@ -226,9 +356,158 @@ public class BoardController extends HttpServlet {
 			}//if
 			
 		} else if (fileName.equals("sujungProc")) {
+			String no_ = request.getParameter("no");
+			int no = util.getNumberCheck(no_, 0);
+			
+			String writer = request.getParameter("writer");
+			String passwd = request.getParameter("passwd");
+			String email1 = request.getParameter("email1");
+			String email2 = request.getParameter("email2");
+			String secretGubun = request.getParameter("secretGubun");
+			String noticeGubun = request.getParameter("noticeGubun");
+			String subject = request.getParameter("subject");
+			String content = request.getParameter("content");
+			
+			writer = util.getNullBlankCheck(writer);
+			passwd = util.getNullBlankCheck(passwd);
+			email1 = util.getNullBlankCheck(email1);
+			email2 = util.getNullBlankCheck(email2);
+			secretGubun = util.getNullBlankCheck(secretGubun);
+			noticeGubun = util.getNullBlankCheck(noticeGubun);
+			subject = util.getNullBlankCheck(subject);
+			content = util.getNullBlankCheck(content);
+			
+			int failCounter = 0;
+			if (writer.equals("")) {
+				System.out.println("writer error");
+				failCounter++;
+			} else if (passwd.equals("")) {
+				System.out.println("passwd error");
+				failCounter++;
+			} else if (email1.equals("")) {
+				System.out.println("email1 error");
+				failCounter++;
+			} else if (email2.equals("")) {
+				System.out.println("email2 error");
+				failCounter++;
+			} else if (secretGubun.equals("") || !(secretGubun.equals("T") || secretGubun.equals("F"))) {
+				System.out.println("secretGubun error");
+				failCounter++;
+			} else if (noticeGubun.equals("") || !(secretGubun.equals("T") || secretGubun.equals("F"))) {
+				System.out.println("noticeGubun error");
+				failCounter++;
+			} else if (noticeGubun.equals("T") && secretGubun.equals("T")) {
+				System.out.println("T && T error");
+				failCounter++;
+			} else if (subject.equals("")) {
+				System.out.println("subject error");
+				failCounter++;
+			} else if (content.equals("")) {
+				System.out.println("content error");
+				failCounter++;
+			}//if
+			
+			writer = util.getCheckString(writer);
+			passwd = util.getCheckString(passwd);
+			email1 = util.getCheckString(email1);
+			email2 = util.getCheckString(email2);
+			secretGubun = util.getCheckString(secretGubun);
+			noticeGubun = util.getCheckString(noticeGubun);
+			subject = util.getCheckString(subject);
+			content = util.getCheckString(content);
+			
+			BoardDTO arguBoardDto = new BoardDTO();
+			arguBoardDto.setNo(no);
+			arguBoardDto.setSearchGubun(searchGubun);
+			arguBoardDto.setSearchData(searchData);
+			
+			BoardDAO boardDao = new BoardDAO();
+			BoardDTO returnDto = boardDao.getSelectOne(arguBoardDto);
+			
+			if (returnDto.getNo() <= 0) {
+				System.out.println("wrong no");
+				failCounter++;
+			} else if (!passwd.equals(returnDto.getPasswd())) {
+				System.out.println("passwd mismatch");
+				failCounter++;
+			}//if
+			
+			if (failCounter > 0) {
+				return;
+			}//if
+			
+			String email = email1 +"@"+ email2;
+			String attachInfo = "-";
+			
+			int noticeNo = returnDto.getNoticeNo();
+			if (noticeNo == 0 && noticeGubun.equals("T")) {
+				noticeNo = boardDao.getMaxValue("noticeNo") + 1;
+			} else if (noticeNo > 0 && noticeGubun.equals("F")) {
+				noticeNo = 0;
+			}//if
+			
+			arguBoardDto.setWriter(writer);
+			arguBoardDto.setSubject(subject);
+			arguBoardDto.setContent(content);
+			arguBoardDto.setEmail(email);
+			arguBoardDto.setPasswd(passwd);
+			arguBoardDto.setNoticeNo(noticeNo);
+			arguBoardDto.setSecretGubun(secretGubun);
+			arguBoardDto.setAttachInfo(attachInfo);
+			
+			int result = boardDao.setUpdate(arguBoardDto);
+			
+			if (result > 0) {
+				response.sendRedirect(path + "/board_servlet/board_view.do?no="+ no);
+			} else {
+				response.sendRedirect(path + "/board_servlet/board_sujung.do?no="+ no);
+			}//if
 			
 		} else if (fileName.equals("sakjeProc")) {
+			String no_ = request.getParameter("no");
+			int no = util.getNumberCheck(no_, 0);
 			
+			String passwd = request.getParameter("passwd");
+			
+			passwd = util.getNullBlankCheck(passwd);
+			
+			int failCounter = 0;
+			if (passwd.equals("")) {
+				System.out.println("passwd error");
+				failCounter++;
+			}//if
+			
+			passwd = util.getCheckString(passwd);
+			
+			BoardDTO arguBoardDto = new BoardDTO();
+			arguBoardDto.setNo(no);
+			arguBoardDto.setSearchGubun(searchGubun);
+			arguBoardDto.setSearchData(searchData);
+			
+			BoardDAO boardDao = new BoardDAO();
+			BoardDTO returnDto = boardDao.getSelectOne(arguBoardDto);
+			
+			if (returnDto.getNo() <= 0) {
+				System.out.println("wrong no");
+				failCounter++;
+			} else if (!passwd.equals(returnDto.getPasswd())) {
+				System.out.println("passwd mismatch");
+				failCounter++;
+			}//if
+			
+			if (failCounter > 0) {
+				return;
+			}//if
+			
+			arguBoardDto.setPasswd(passwd);
+			
+			int result = boardDao.setDelete(arguBoardDto);
+			
+			if (result > 0) {
+				response.sendRedirect(path + "/board_servlet/board_list.do?");
+			} else {
+				response.sendRedirect(path + "/board_servlet/board_sakje.do?no="+ no);
+			}//if
 		}//if
 	}//doProc
 }//BoardController

@@ -188,6 +188,28 @@ public class MemberDAO {
 		return memberDto;
 	}//getSelectOne
 	
+	public MemberDTO getLogin(MemberDTO paramDto) {
+		MemberDTO memberDto = new MemberDTO();
+		conn = DB.dbConn();
+		try {
+			String sql = "SELECT no, id, name FROM member WHERE id = ? AND passwd = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, paramDto.getId());
+			pstmt.setString(2, paramDto.getPasswd());
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				memberDto.setNo(rs.getInt("no"));
+				memberDto.setId(rs.getString("id"));
+				memberDto.setName(rs.getString("name"));
+			}//if
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DB.dbConnClose(rs, pstmt, conn);
+		}//try-catch-finally
+		return memberDto;
+	}//getLogin
+	
 	public int setInsert(MemberDTO paramDto) {
 		int result = 0;
 		conn = DB.dbConn();

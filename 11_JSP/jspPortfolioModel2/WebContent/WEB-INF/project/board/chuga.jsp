@@ -3,9 +3,23 @@
 
 <%@ include file = "../include/inc_header.jsp" %>
 
-<h2>게시글등록</h2>
+<c:set var="subject" value=""/>
+<c:set var="content" value=""/>
+<c:set var="no" value="0"/>
+<c:choose>
+	<c:when test="${requestScope.dto.no > 0 }">
+		<h2>답변글등록</h2>
+		<c:set var="subject" value="${requestScope.dto.subject }"/>
+		<c:set var="content" value="${requestScope.dto.content }"/>
+		<c:set var="no" value="${requestScope.dto.no }"/>
+	</c:when>
+	<c:otherwise>
+		<h2>게시글등록</h2>
+	</c:otherwise>
+</c:choose>
 
 <form name="DirForm">
+	<input type="hidden" name="no" value="${no }"/>
 	<table border="1" align="center" width="80%">
 		<tr>
 			<td style="width:10%;">작성자</td>
@@ -47,11 +61,11 @@
 		</tr>
 		<tr>
 			<td>제목</td>
-			<td><input type="text" name="subject" id="subject" value="" style="width:99%;"/></td>
+			<td><input type="text" name="subject" id="subject" value="${subject }" style="width:99%;"/></td>
 		</tr>
 		<tr>
 			<td>내용</td>
-			<td><textarea name="content" style="width:99%; height:200px;"></textarea></td>
+			<td><textarea name="content" style="width:99%; height:200px;">${content }</textarea></td>
 		</tr>
 		<tr>
 			<td colspan="2" align="center" style="height:50px">

@@ -21,16 +21,15 @@
 			<td>
 				<input type="text" name="id" id="id" value="${requestScope.id }" style="width:100px;" />
 				<span id="spanMsg">${requestScope.msg }</span>
-				<br>
-				<input type="text" name="result" id="result" value="${requestScope.imsiId }" style="width:100px;" />
+				<input type="hidden" name="result" id="result" value="${requestScope.imsiId }" style="width:100px;" />
 			</td>
 		</tr>
 		<tr>
 			<td colspan="2" align="center" style="height:50px;">
-				<button bype="button" onclick="search();">검색</button>
-				<span id="spanView" style="display:none;">
-					<button bype="button" onclick="save();">적용</button>
-				</span>
+				<button type="button" onclick="search();">검색</button>
+				<c:if test="${fn:length(requestScope.imsiId) > 0 }">
+					<button type="button" onclick="apply();">적용</button>
+				</c:if>
 			</td>
 		</tr>
 	</table>
@@ -49,6 +48,14 @@
 			document.DirForm.submit();
 		}//if
 	}//search
+	
+	function apply() {
+		const id = document.querySelector('#result').value;
+		opener.document.querySelector('#id').value = id;
+		opener.document.querySelector('#tempId').value = id;
+		opener.document.querySelector('#id').readOnly = true;
+		window.close();
+	}//apply
 </script>
 
 </body>

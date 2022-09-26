@@ -11,7 +11,7 @@
 	<input type="hidden" name="no" />
 	<table border="0" style="width:80%;">
 		<tr>
-			<td style="width:5%; text-align:center;">작성자</td>
+			<td style="width:10%; text-align:center;">작성자</td>
 			<td style="width:10%;"><input type="text" name="writer"/></td>
 			<td>
 				<button type="button" id="btnSave" onclick="save()">등록</button>

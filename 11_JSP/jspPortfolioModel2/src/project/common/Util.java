@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 public class Util {
 	public String[] getServerInfo(HttpServletRequest request) throws UnknownHostException {
@@ -64,6 +65,30 @@ public class Util {
 		
 		return array;
 	}//getServerInfo
+	
+	public String[] getSessionCheck(HttpServletRequest request) {
+		int sessionNo = 0;
+		String sessionId = "";
+		String sessionName = "";
+		
+		HttpSession session = request.getSession();
+		
+		if (session.getAttribute("sessionNo") != null) {
+			sessionNo = (Integer) session.getAttribute("sessionNo");
+		}//if
+		if (session.getAttribute("sessionId") != null) {
+			sessionId = (String) session.getAttribute("sessionId");
+		}//if
+		if (session.getAttribute("sessionName") != null) {
+			sessionName = (String) session.getAttribute("sessionName");
+		}//if
+		
+		String[] result = new String[3];
+		result[0] = sessionNo + "";
+		result[1] = sessionId;
+		result[2] = sessionName;
+		return result;
+	}//getSessionCheck
 	
 	public String getCheckString(String str) {
 		String result = "";

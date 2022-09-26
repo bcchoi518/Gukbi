@@ -13,6 +13,44 @@ public class BoardDAO {
 	PreparedStatement pstmt = null;
 	ResultSet rs = null;
 	
+	public int getTotalRecord(BoardDTO paramDto) {
+		int result = 0;
+		conn = DB.dbConn();
+		try {
+			String sql = "SELECT COUNT(*) totalRecord FROM board WHERE 1=1 ";
+			
+			if (paramDto.getSearchGubun().equals("writer_subject")) {
+				sql += "AND (writer LIKE ? OR subject LIKE ?) ";
+			} else if (paramDto.getSearchGubun().equals("writer")) {
+				sql += "AND writer LIKE ? ";
+			} else if (paramDto.getSearchGubun().equals("subject")) {
+				sql += "AND subject LIKE ? ";
+			}//if
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			int k = 0;
+			if (paramDto.getSearchGubun().equals("writer_subject")) {
+				pstmt.setString(++k, '%'+ paramDto.getSearchData() +'%');
+				pstmt.setString(++k, '%'+ paramDto.getSearchData() +'%');
+			} else if (paramDto.getSearchGubun().equals("writer")) {
+				pstmt.setString(++k, '%'+ paramDto.getSearchData() +'%');
+			} else if (paramDto.getSearchGubun().equals("subject")) {
+				pstmt.setString(++k, '%'+ paramDto.getSearchData() +'%');
+			}//if
+			
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				result = rs.getInt("totalRecord");
+			}//if
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DB.dbConnClose(rs, pstmt, conn);
+		}//try-catch-finally
+		return result;
+	}//getTotalRecord
+	
 	public int getMaxValue(String fieldName) {
 		String tmp = DB.getCheckfieldName(fieldName);
 		if (tmp == null || !tmp.equals(fieldName)) {
@@ -36,12 +74,37 @@ public class BoardDAO {
 		return result;
 	}//getMaxValue
 	
-	public ArrayList<BoardDTO> getSelectAll() {
+	public ArrayList<BoardDTO> getSelectAll(BoardDTO paramDto) {
 		ArrayList<BoardDTO> boardList = new ArrayList<>();
 		conn = DB.dbConn();
 		try {
-			String sql = "SELECT * FROM board ORDER BY no DESC";
+			String sql = "";
+			sql += "SELECT * FROM board WHERE 1=1 ";
+			
+			if (paramDto.getSearchGubun().equals("writer_subject")) {
+				sql += "AND (writer LIKE ? OR subject LIKE ?) ";
+			} else if (paramDto.getSearchGubun().equals("writer")) {
+				sql += "AND writer LIKE ? ";
+			} else if (paramDto.getSearchGubun().equals("subject")) {
+				sql += "AND subject LIKE ? ";
+			}//if
+			
+			sql += "ORDER BY noticeNo DESC, refNo DESC, levelNo ASC";
+			
+			String subQuery = "";
+			
 			pstmt = conn.prepareStatement(sql);
+			
+			int k = 0;
+			if (paramDto.getSearchGubun().equals("writer_subject")) {
+				pstmt.setString(++k, '%'+ paramDto.getSearchData() +'%');
+				pstmt.setString(++k, '%'+ paramDto.getSearchData() +'%');
+			} else if (paramDto.getSearchGubun().equals("writer")) {
+				pstmt.setString(++k, '%'+ paramDto.getSearchData() +'%');
+			} else if (paramDto.getSearchGubun().equals("subject")) {
+				pstmt.setString(++k, '%'+ paramDto.getSearchData() +'%');
+			}//if
+			
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
 				BoardDTO boardDto = new BoardDTO();
@@ -78,9 +141,38 @@ public class BoardDAO {
 		BoardDTO boardDto = new BoardDTO();
 		conn = DB.dbConn();
 		try {
-			String sql = "SELECT * FROM board WHERE no = ?";
+			String subQuery = "";
+			subQuery += "SELECT b.*, ";
+			subQuery += "LAG(no) OVER (ORDER BY noticeNo DESC, refNo DESC, levelNo ASC) preNo, ";
+			subQuery += "LAG(subject) OVER (ORDER BY noticeNo DESC, refNo DESC, levelNo ASC) preSubject, ";
+			subQuery += "LEAD(no) OVER (ORDER BY noticeNo DESC, refNo DESC, levelNo ASC) nxtNo, ";
+			subQuery += "LEAD(subject) OVER (ORDER BY noticeNo DESC, refNo DESC, levelNo ASC) nxtSubject ";
+			subQuery += "FROM board b WHERE 1=1 ";
+			
+			if (paramDto.getSearchGubun().equals("writer_subject")) {
+				subQuery += "AND (writer LIKE ? OR subject LIKE ?) ";
+			} else if (paramDto.getSearchGubun().equals("writer")) {
+				subQuery += "AND writer LIKE ? ";
+			} else if (paramDto.getSearchGubun().equals("subject")) {
+				subQuery += "AND subject LIKE ? ";
+			}//if
+			
+			subQuery += "ORDER BY noticeNo DESC, refNo DESC, levelNo ASC";
+			
+			String sql = "SELECT * FROM ("+ subQuery +") WHERE no = ?";
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, paramDto.getNo());
+			
+			int k = 0;
+			if (paramDto.getSearchGubun().equals("writer_subject")) {
+				pstmt.setString(++k, '%'+ paramDto.getSearchData() +'%');
+				pstmt.setString(++k, '%'+ paramDto.getSearchData() +'%');
+			} else if (paramDto.getSearchGubun().equals("writer")) {
+				pstmt.setString(++k, '%'+ paramDto.getSearchData() +'%');
+			} else if (paramDto.getSearchGubun().equals("subject")) {
+				pstmt.setString(++k, '%'+ paramDto.getSearchData() +'%');
+			}//if
+			
+			pstmt.setInt(++k, paramDto.getNo());
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
 				boardDto.setNo(rs.getInt("no"));
@@ -102,6 +194,10 @@ public class BoardDAO {
 				boardDto.setSecretGubun(rs.getString("secretGubun"));
 				boardDto.setRegiDate(rs.getDate("regiDate"));
 				boardDto.setAttachInfo(rs.getString("attachInfo"));
+				boardDto.setPreNo(rs.getInt("preNo"));
+				boardDto.setPreSubject(rs.getString("preSubject"));
+				boardDto.setNxtNo(rs.getInt("nxtNo"));
+				boardDto.setNxtSubject(rs.getString("nxtSubject"));
 			}//if
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -167,6 +263,20 @@ public class BoardDAO {
 		return result;
 	}//setUpdate
 	
+	public void setUpdateHit(BoardDTO paramDto) {
+		conn = DB.dbConn();
+		try {
+			String sql = "UPDATE board SET hit = (hit + 1) WHERE no = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, paramDto.getNo());
+			pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DB.dbConnClose(rs, pstmt, conn);
+		}//try-catch-finally
+	}//setUpdateHit
+	
 	public void setUpdateReLevel(BoardDTO paramDto) {
 		conn = DB.dbConn();
 		try {
@@ -174,6 +284,7 @@ public class BoardDAO {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, paramDto.getRefNo());
 			pstmt.setInt(2, paramDto.getLevelNo());
+			pstmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {

@@ -13,6 +13,7 @@
 			<td width="150px">아이디</td>
 			<td>
 				<input type="text" name="id" id="id" value="" />
+				<input type="hidden" name="tempId" id="tempId" value="" />
 				<button type="button" onclick="idCheck()">아이디찾기</button>
 				<button type="button" onclick="idCheckWin()">아이디찾기(새창)</button>
 				<br>
@@ -109,10 +110,18 @@
 	}//changeEmail2
 
 	function save() {
+		const id = document.DirForm.id.value;
+		const tempId = document.DirForm.tempId.value;
+		
+		if (id == '' || tempId == '' || id != tempId) {
+			alert('아이디 찾기를 해주세요..');
+			return;
+		}//if
+		
 		if (confirm('OK?')) {
-			document.DirForm.action = '${requestScope.path }/member_servlet/member_chugaProc.do';
-			document.DirForm.method = 'post';
-			document.DirForm.submit();
+			frm.action = '${requestScope.path }/member_servlet/member_chugaProc.do';
+			frm.method = 'post';
+			frm.submit();
 		}//if
 	}//save
 	
@@ -125,7 +134,34 @@
 	}//move
 	
 	function idCheck() {
-		alert('idCheck');
+		const id = $('#id').val();
+
+		if(id == '') {
+			$('#label_id').html('아이디를 입력하세요.');
+			$('#label_id').css({'color':'red', 'font-size':'8px'});
+			$('#id').focus();
+			return;
+		}//if
+		
+		const param = 'id=' + id //쿼리 스트링 개념
+		
+		$.ajax({
+			type: 'post',
+			data: param,
+			url: '${requestScope.path }/member_servlet/member_idCheck.do',
+			success: function(result) {
+				if (result > 0) {
+					$('#id').val('');
+					$('#id').focus();
+					$('#label_id').html('이미 사용중인 아이디입니다.');
+					$('#label_id').css({'color':'red', 'font-size':'8px'});
+				} else {
+					$('#label_id').html('사용 가능한 아이디입니다.');
+					$('#label_id').css({'color':'blue', 'font-size':'8px'});
+					$('#tempId').val(id);
+				}//if
+			}//success
+		});
 	}//idCheck
 	
 	function idCheckWin() {

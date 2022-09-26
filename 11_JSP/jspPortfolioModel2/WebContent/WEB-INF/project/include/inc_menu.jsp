@@ -1,13 +1,26 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
+<%@ include file = "../include/inc_header.jsp" %>
+
 <table border="0" align="center" width="90%">
 	<tr>
 		<td colspan="5" style="padding: 0px 0px 10px 10px;">
-			Location : project > ${requestScope.folderName } > ${requestScope.fileName }
+<%-- 			Location : project > ${requestScope.folderName } > ${requestScope.fileName } --%>
+			접속IP : ${requestScope.ip }
 		</td>
 		<td colspan="4" style="padding: 0px 0px 10px 10px;" align="right">
-			접속IP : ${requestScope.ip }
+			<c:choose>
+				<c:when test="${sessionScope.sessionNo > 0 }">
+					${sessionScope.sessionName }님...
+					<a href="${requestScope.path }/member_servlet/member_sujung.do">회원정보수정</a>
+					<a href="${requestScope.path }/member_servlet/member_sakje.do">회원탈퇴</a>
+					<a href="${requestScope.path }/noLogin_servlet/noLogin_logout.do">로그아웃</a>
+				</c:when>
+				<c:otherwise>
+					<a href="${requestScope.path }/noLogin_servlet/noLogin_login.do">로그인</a>
+				</c:otherwise>
+			</c:choose>
 		</td>
 	</tr>
 	<tr align="center">
