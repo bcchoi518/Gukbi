@@ -46,14 +46,14 @@
 			</td>
 		</tr>
 		<tr>
-			<td>공지글 여부</td>
+			<td>공지글</td>
 			<td>
 				<input type="radio" name="noticeGubun" id="noticeGubun" value="F" checked/>일반
 				<input type="radio" name="noticeGubun" id="noticeGubun" value="T" />공지
 			</td>
 		</tr>
 		<tr>
-			<td>비밀글 여부</td>
+			<td>비밀글</td>
 			<td>
 				<input type="radio" name="secretGubun" id="secretGubun" value="F" checked/>공개
 				<input type="radio" name="secretGubun" id="secretGubun" value="T" />비밀
@@ -77,6 +77,14 @@
 </form>
 
 <script>
+	const frm = document.DirForm;
+	frm.noticeGubun[0].addEventListener('change', function() {
+		frm.secretGubun[1].disabled = false;
+	});
+	frm.noticeGubun[1].addEventListener('change', function() {
+		frm.secretGubun[1].disabled = true;
+	});
+	
 	function changeEmail2() {
 		const emailSelector = document.querySelector('#emailSelector');
 		const email2 = document.querySelector('#email2');
@@ -93,9 +101,9 @@
 
 	function save() {
 		if (confirm('OK?')) {
-			document.DirForm.action = '${requestScope.path }/board_servlet/board_chugaProc.do';
-			document.DirForm.method = 'post';
-			document.DirForm.submit();
+			frm.action = '${requestScope.path }/board_servlet/board_chugaProc.do';
+			frm.method = 'post';
+			frm.submit();
 		}//if
 	}//save
 	

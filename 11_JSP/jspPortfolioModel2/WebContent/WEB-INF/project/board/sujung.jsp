@@ -32,17 +32,17 @@
 			</td>
 		</tr>
 		<tr>
-			<td>공지글 여부</td>
+			<td>공지글</td>
 			<td>
 				<input type="radio" name="noticeGubun" id="noticeGubun" value="F" <c:if test="${requestScope.dto.noticeNo == 0 }">checked</c:if>/>일반
 				<input type="radio" name="noticeGubun" id="noticeGubun" value="T" <c:if test="${requestScope.dto.noticeNo > 0 }">checked</c:if>/>공지
 			</td>
 		</tr>
 		<tr>
-			<td>비밀글 여부</td>
+			<td>비밀글</td>
 			<td>
 				<input type="radio" name="secretGubun" id="secretGubun" value="F" <c:if test="${requestScope.dto.secretGubun == 'F' }">checked</c:if>/>공개
-				<input type="radio" name="secretGubun" id="secretGubun" value="T" <c:if test="${requestScope.dto.secretGubun == 'T' }">checked</c:if>/>비밀
+				<input type="radio" name="secretGubun" id="secretGubun" value="T" <c:if test="${requestScope.dto.secretGubun == 'T' }">checked</c:if> <c:if test="${requestScope.dto.noticeNo > 0 }">disabled</c:if> />비밀
 			</td>
 		</tr>
 		<tr>
@@ -63,6 +63,13 @@
 </form>
 
 <script>
+	const frm = document.DirForm;
+	frm.noticeGubun[0].addEventListener('change', function() {
+		frm.secretGubun[1].disabled = false;
+	});
+	frm.noticeGubun[1].addEventListener('change', function() {
+		frm.secretGubun[1].disabled = true;
+	});
 	function changeEmail2() {
 		const emailSelector = document.querySelector('#emailSelector');
 		const email2 = document.querySelector('#email2');

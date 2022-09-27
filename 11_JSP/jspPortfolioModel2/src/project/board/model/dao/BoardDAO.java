@@ -78,20 +78,21 @@ public class BoardDAO {
 		ArrayList<BoardDTO> boardList = new ArrayList<>();
 		conn = DB.dbConn();
 		try {
-			String sql = "";
-			sql += "SELECT * FROM board WHERE 1=1 ";
+			String basicSql = "";
+			basicSql += "SELECT * FROM board WHERE 1=1 ";
 			
 			if (paramDto.getSearchGubun().equals("writer_subject")) {
-				sql += "AND (writer LIKE ? OR subject LIKE ?) ";
+				basicSql += "AND (writer LIKE ? OR subject LIKE ?) ";
 			} else if (paramDto.getSearchGubun().equals("writer")) {
-				sql += "AND writer LIKE ? ";
+				basicSql += "AND writer LIKE ? ";
 			} else if (paramDto.getSearchGubun().equals("subject")) {
-				sql += "AND subject LIKE ? ";
+				basicSql += "AND subject LIKE ? ";
 			}//if
 			
-			sql += "ORDER BY noticeNo DESC, refNo DESC, levelNo ASC";
+			basicSql += "ORDER BY noticeNo DESC, refNo DESC, levelNo ASC";
 			
-			String subQuery = "";
+			String subQuery = "SELECT rownum rnum, basic.* FROM ("+ basicSql +") basic";
+			String sql = "SELECT * FROM ("+ subQuery +") WHERE rnum BETWEEN ? AND ?";
 			
 			pstmt = conn.prepareStatement(sql);
 			
@@ -104,6 +105,9 @@ public class BoardDAO {
 			} else if (paramDto.getSearchGubun().equals("subject")) {
 				pstmt.setString(++k, '%'+ paramDto.getSearchData() +'%');
 			}//if
+			
+			pstmt.setInt(++k, paramDto.getStartRecord());
+			pstmt.setInt(++k, paramDto.getLastRecord());
 			
 			rs = pstmt.executeQuery();
 			while (rs.next()) {

@@ -50,6 +50,11 @@ public class BoardController extends HttpServlet {
 		request.setAttribute("folderName", folderName);
 		request.setAttribute("fileName", fileName);
 //serverInfo End
+//pager Start
+		String pageNumber_ = request.getParameter("pageNumber");
+		int pageNumber = util.getNumberCheck(pageNumber_, 1);
+		request.setAttribute("pageNumber", pageNumber);
+//pager End
 //search Start
 		String searchGubun = request.getParameter("searchGubun");
 		String searchData = request.getParameter("searchData");
@@ -67,22 +72,17 @@ public class BoardController extends HttpServlet {
 		searchGubun = URLDecoder.decode(searchGubun, "UTF-8");
 		searchData = URLDecoder.decode(searchData, "UTF-8");
 		
-		String searchQuery = "searchGubun=&searchData=";
+		String searchQuery = "pageNumber="+ pageNumber;
 		if (imsiSearchYN.equals("O")) {
 			String imsiSearchGubun = URLEncoder.encode(searchGubun, "UTF-8");
 			String imsiSearchData = URLEncoder.encode(searchData, "UTF-8");
-			searchQuery = "searchGubun="+ imsiSearchGubun +"&searchData="+ imsiSearchData;
+			searchQuery += "&searchGubun="+ imsiSearchGubun +"&searchData="+ imsiSearchData;
 		}//if
 		
 		request.setAttribute("searchGubun", searchGubun);
 		request.setAttribute("searchData", searchData);
 		request.setAttribute("searchQuery", searchQuery);
 //search End
-//pager Start
-		String pageNumber_ = request.getParameter("pageNumber");
-		int pageNumber = util.getNumberCheck(pageNumber_, 1);
-		request.setAttribute("pageNumber", pageNumber);
-//pager End
 		
 		String forwardPage = "/WEB-INF/project/main/main.jsp";
 		if (fileName.equals("list")) {
@@ -119,6 +119,11 @@ public class BoardController extends HttpServlet {
 			if (no <= 0) {
 				return;
 			}//if
+			
+			String viewPasswd = request.getParameter("viewPasswd");
+			viewPasswd = util.getNullBlankCheck(viewPasswd);
+			viewPasswd = util.getCheckString(viewPasswd);
+			request.setAttribute("viewPasswd", viewPasswd);
 			
 			BoardDTO arguBoardDto = new BoardDTO();
 			arguBoardDto.setNo(no);
@@ -223,6 +228,10 @@ public class BoardController extends HttpServlet {
 			moveUrl += path + "/board_servlet/board_list.do?" + searchQuery;
 			
 			response.sendRedirect(moveUrl);
+			
+		} else if (fileName.equals("commentList")) {
+			RequestDispatcher rd = request.getRequestDispatcher(forwardPage);
+			rd.forward(request, response);
 			
 		} else if (fileName.equals("chugaProc")) {
 			String no_ = request.getParameter("no");

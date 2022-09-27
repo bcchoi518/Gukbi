@@ -18,3 +18,5 @@ delete from testMember;
 
 SELECT id, trunc(months_between(sysdate, changeDate)) from testMember;
 SELECT id, round(months_between(sysdate, changeDate)) from testMember;
+
+select * from board;

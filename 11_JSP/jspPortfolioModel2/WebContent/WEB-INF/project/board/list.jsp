@@ -5,6 +5,18 @@
 
 <h2>게시글목록</h2>
 
+<div style="border: 0px solid red; width: 80%; margin-top:10px;" align="left">
+	<c:choose>
+		<c:when test="${requestScope.searchGubun != '' }">
+			* 검색어 "<span style="color:red; font-weight:bold;">${requestScope.searchData }</span>"으/로 검색된 목록 : ${requestScope.totalRecord }건
+		</c:when>
+		<c:otherwise>
+			* 전체목록: ${requestScope.totalRecord }건
+		</c:otherwise>
+	</c:choose>
+	(${requestScope.pageNumber }/${requestScope.pagerMap.totalPage })
+</div>
+
 <table border="1" width="80%" align="center">
 	<tr>
 		<th>순번</th>
@@ -18,6 +30,7 @@
 			<td colspan="5" height="200px" style="text-align:center;">등록된 글이 없습니다.</td>
 		</tr>
 	</c:if>
+	<c:set var="cntDisplay" value="${requestScope.pagerMap.cntDisplay }" />
 	<c:forEach var="boardDto" items="${requestScope.list }">
 		<tr>
 			<td>
@@ -26,7 +39,7 @@
 						[공지]
 					</c:when>
 					<c:otherwise>
-						${boardDto.no }
+						${cntDisplay }
 					</c:otherwise>
 				</c:choose>
 			</td>
@@ -44,6 +57,7 @@
 			<td>${boardDto.hit }</td>
 			<td>${boardDto.regiDate }</td>
 		</tr>
+		<c:set var="cntDisplay" value="${cntDisplay - 1 }" />
 	</c:forEach>
 </table>
 
