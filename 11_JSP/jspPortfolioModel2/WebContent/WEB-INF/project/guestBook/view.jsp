@@ -39,7 +39,7 @@
 			</td>
 		</tr>
 		<tr>
-			<td class="entryName">다음글</td>
+			<td>다음글</td>
 			<td>
 				<c:if test="${requestScope.dto.nxtNo > 0 }">
 					<a href="#" onClick="move('guestBook_view.do','${requestScope.dto.nxtNo }')">${requestScope.dto.nxtContent }...</a>

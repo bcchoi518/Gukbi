@@ -33,6 +33,9 @@
 		<td style="padding:0px 10px;" id="memo">
 			<a href="${requestScope.path }/memo_servlet/memo_list.do">메모장</a>
 		</td>
+		<td style="padding:0px 10px;" id="memoMybatis">
+			<a href="${requestScope.path }/memoMybatis_servlet/memoMybatis_list.do">메모장(Mybatis)</a>
+		</td>
 		<td style="padding:0px 10px;" id="guestBook">
 			<a href="${requestScope.path }/guestBook_servlet/guestBook_list.do">방명록</a>
 		</td>

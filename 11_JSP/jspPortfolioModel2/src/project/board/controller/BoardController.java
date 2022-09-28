@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import project.board.model.dao.BoardDAO;
+import project.board.model.dto.BoardCommentDTO;
 import project.board.model.dto.BoardDTO;
 import project.common.Util;
 
@@ -230,6 +231,66 @@ public class BoardController extends HttpServlet {
 			response.sendRedirect(moveUrl);
 			
 		} else if (fileName.equals("commentList")) {
+			String no_ = request.getParameter("no");
+			int no = util.getNumberCheck(no_, 0);
+			
+			request.setAttribute("no", no);
+			
+			forwardPage = "/WEB-INF/project/board/commentList.jsp";
+			RequestDispatcher rd = request.getRequestDispatcher(forwardPage);
+			rd.forward(request, response);
+			
+		} else if (fileName.equals("commentProc")) {
+			String procGubun = request.getParameter("procGubun");
+			String no_ = request.getParameter("no");
+			int no = util.getNumberCheck(no_, 0);
+			procGubun = util.getNullBlankCheck(procGubun);
+			
+			if (procGubun.equals("chuga")) {
+				String commentNo_ = request.getParameter("commentNo");
+				String commentWriter = request.getParameter("commentWriter");
+				String commentPasswd = request.getParameter("commentPasswd");
+				String commentContent = request.getParameter("commentContent");
+				int commentNo = util.getNumberCheck(commentNo_, 0);
+				
+				commentWriter = util.getNullBlankCheck(commentWriter);
+				commentPasswd = util.getNullBlankCheck(commentPasswd);
+				commentContent = util.getNullBlankCheck(commentContent);
+				
+				int failCounter = 0;
+				if (commentWriter.equals("")) {
+					System.out.println("commentWriter error");
+					failCounter++;
+				} else if (commentPasswd.equals("")) {
+					System.out.println("commentPasswd error");
+					failCounter++;
+				} else if (commentContent.equals("")) {
+					System.out.println("commentContent error");
+					failCounter++;
+				}//if
+				
+				if (failCounter > 0) {
+					return;
+				}//if
+				
+				commentWriter = util.getCheckString(commentWriter);
+				commentPasswd = util.getCheckString(commentPasswd);
+				commentContent = util.getCheckString(commentContent);
+				
+				BoardCommentDTO arguBoardCommentDto = new BoardCommentDTO();
+				arguBoardCommentDto.setBoardNo(no);
+				arguBoardCommentDto.setWriter(commentWriter);
+				arguBoardCommentDto.setPasswd(commentPasswd);
+				arguBoardCommentDto.setContent(commentContent);
+				arguBoardCommentDto.setIp(ip);
+				
+			} else if (procGubun.equals("sujung")) {
+				
+			} else if (procGubun.equals("sakje")) {
+				
+			}//if
+			
+			forwardPage = "/WEB-INF/project/board/commentList.jsp";
 			RequestDispatcher rd = request.getRequestDispatcher(forwardPage);
 			rd.forward(request, response);
 			

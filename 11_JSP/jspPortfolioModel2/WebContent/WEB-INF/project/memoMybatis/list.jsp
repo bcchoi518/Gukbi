@@ -2,29 +2,9 @@
     pageEncoding="UTF-8"%>
     
 <%@ include file = "../include/inc_header.jsp" %>
+<%@ include file = "_inc_top.jsp" %>
 
-<%-- 메모 입력 Start --%>
-<form name="DirForm">
-	<input type="hidden" name="searchGubun" value="${requestScope.searchGubun }" />
-	<input type="hidden" name="searchData" value="${requestScope.searchData }" />
-	<input type="hidden" name="procGubun" value="chuga" />
-	<input type="hidden" name="no" />
-	<table border="0" style="width:80%;">
-		<tr>
-			<td style="width:10%; text-align:center;">작성자</td>
-			<td style="width:10%;"><input type="text" name="writer"/></td>
-			<td>
-				<button type="button" id="btnSave" onclick="save()">등록</button>
-				<button type="button" id="btnReset" onclick="resetForm()">초기화</button>
-			</td>
-		</tr>
-		<tr>
-			<td style="text-align:center;">내용</td>
-			<td colspan="3"><textarea name="content" style="height:40px; width:99%;" ></textarea></td>
-		</tr>
-	</table>
-</form>
-<%-- 메모 입력 End --%>
+<h2>메모목록 (Mybatis)</h2>
 <div style="border: 0px solid red; width: 80%; margin-top:10px;" align="left">
 	<c:choose>
 		<c:when test="${requestScope.searchGubun != '' }">
@@ -43,7 +23,6 @@
 		<th>작성자</th>
 		<th width="70%">내용</th>
 		<th>등록일</th>
-		<th>비고</th>
 	</tr>
 	<c:if test="${fn:length(requestScope.list) == 0 }">
 		<c:if test="${requestScope.searchGubun == '' }">
@@ -61,26 +40,25 @@
 	<c:forEach var="dto" items="${requestScope.list }">
 		<tr>
 			<td>${cntDisplay }</td>
+			<td>${dto.writer }</td>
 			<td>
-				${dto.writer }
-				<input type="hidden" id="writer_${dto.no }" value="${dto.writer }" />
-			</td>
-			<td>
-				${fn:replace(dto.content, requestScope.newLine, '<br>') }
-				<input type="hidden" id="content_${dto.no }" value="${dto.content }" />
+				<a href="#" onclick="move('memoMybatis_view.do','${dto.no }')">${fn:replace(dto.content, requestScope.newLine, '<br>') }</a>
 			</td>
 			<td>${dto.regiDate }</td>
-			<td>
-			<a href="#" onclick="suntaek('sujung', '${dto.no }')">수정</a>
-			/
-			<a href="#" onclick="suntaek('sakje', '${dto.no }')">삭제</a>
-			</td>
 		</tr>
 		<c:set var="cntDisplay" value="${cntDisplay - 1 }" />
 	</c:forEach>
 </table>
 <%-- 메모 목록 End --%>
-
+<div style="border: 0px solid red; width: 80%; margin-top:10px;" align="right">
+|
+<a href="${requestScope.path }/memoMybatis_servlet/memoMybatis_list.do" >전체목록</a>
+|
+<a href="#" onclick="move('memoMybatis_list.do')">목록</a>
+|
+<a href="#" onclick="move('memoMybatis_chuga.do')">등록</a>
+|
+</div>
 <%-- search Start --%>
 <div style="width:80%; text-align:center; margin-top:20px;">
 	<form name="searchForm">
@@ -94,7 +72,6 @@
 		<input type="text" name="searchData" value="${requestScope.searchData }"/>
 		&nbsp;
 		<button type="button" onclick="search()">검색</button>
-		<button type="button" onclick="location.href='${requestScope.path }/memo_servlet/memo_list.do'">초기화</button>
 	</form>
 </div>
 <%-- search End --%>
@@ -135,47 +112,23 @@
 <%-- pagerEnd --%>
 
 <script>
-	const frm = document.DirForm;
-	function save() {
-		if (confirm('OK?')) {
-			frm.action = '${requestScope.path }/memo_servlet/memo_proc.do';
-			frm.method = 'post';
-	 		frm.submit();
+	function move(value1, value2) {
+		let linkAddr = '${requestScope.path }/memoMybatis_servlet/' + value1 + '?${requestScope.searchQuery }';
+		if (value2 != undefined) {
+			linkAddr += '&no=' + value2;
 		}//if
-	}//save
-	
-	function suntaek(value1, value2) {
-		frm.procGubun.value = value1;
-		frm.no.value = value2;
-		
-		if (value1 == 'sujung') {
-			frm.writer.value = document.querySelector('#writer_' + value2).value
-			frm.content.value = document.querySelector('#content_' + value2).value
-			document.querySelector('#btnSave').innerText = '수정';
-		} else if (value1 == 'sakje') {
-			if (confirm('deleteOK?')) {
-				save();
-				document.querySelector('#btnSave').innerText = '삭제';
-			}//if
-		}//if
-	}//suntaek
-	
-	function resetForm() {
-		frm.writer.value = '';
-		frm.content.value = '';
-		frm.procGubun.value = 'chuga';
-		document.querySelector('#btnSave').innerText = '등록';
-	}//formReset
-	
+		location.href = linkAddr;
+	}//move
+
 	function search() {
 		if (confirm('searchOK?')) {
-			document.searchForm.action = '${requestScope.path }/memo_servlet/memo_list.do';
+			document.searchForm.action = '${requestScope.path }/memoMybatis_servlet/memoMybatis_search.do';
 			document.searchForm.method = 'post';
 			document.searchForm.submit();
 		}//if
 	}//search
 	
 	function goPage(value1) {
-		location.href = '${requestScope.path }/memo_servlet/memo_list.do?pageNumber='+ value1 +'&searchGubun=${requestScope.searchGubun }&searchData=${requestScope.searchData }';
+		location.href = '${requestScope.path }/memoMybatis_servlet/memoMybatis_list.do?pageNumber='+ value1 +'&searchGubun=${requestScope.searchGubun }&searchData=${requestScope.searchData }';
 	}//goPage
 </script>
