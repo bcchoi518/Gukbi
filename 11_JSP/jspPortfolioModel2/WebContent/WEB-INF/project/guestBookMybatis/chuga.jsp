@@ -2,19 +2,21 @@
     pageEncoding="UTF-8"%>
     
 <%@ include file = "../include/inc_header.jsp" %>
+<%@ include file = "_inc_top.jsp" %>
 
-<h2>방명록등록</h2>
+<h2>방명록등록 (Mybatis)</h2>
 
 <form name="DirForm">
 	<input type="hidden" name="searchGubun" id="searchGubun" value="${requestScope.searchGubun }" />
 	<input type="hidden" name="searchData" id="searchData" value="${requestScope.searchData }" />
+	<input type="hidden" name="pageNumber" id="pageNumber" value="${requestScope.pageNumber }" />
 	<table border="1" align="center" width="80%">
 		<tr>
-			<td style="width:10%;">이름</td>
+			<td style="width:10%;">이름(*)</td>
 			<td><input type="text" name="name" id="name" value="${sessionScope.sessionName }" /></td>
 		</tr>
 		<tr>
-			<td>비밀번호</td>
+			<td>비밀번호(*)</td>
 			<td><input type="password" name="passwd" id="passwd" value="" /></td>
 		</tr>
 		<tr>
@@ -38,7 +40,7 @@
 		<tr>
 			<td colspan="2" align="center" style="height:50px">
 				<button type="button" onclick="save()">등록하기</button>
-				<button type="button" onclick="move('guestBook_list.do')">목록으로</button>
+				<button type="button" onclick="move('guestBookMybatis_list.do')">목록으로</button>
 			</td>
 		</tr>
 	</table>
@@ -61,14 +63,14 @@
 
 	function save() {
 		if (confirm('OK?')) {
-			document.DirForm.action = '${requestScope.path }/guestBook_servlet/guestBook_chugaProc.do';
+			document.DirForm.action = '${requestScope.path }/guestBookMybatis_servlet/guestBookMybatis_chugaProc.do';
 			document.DirForm.method = 'post';
 			document.DirForm.submit();
 		}//if
 	}//save
 	
 	function move(value1, value2) {
-		let linkAddr = '${requestScope.path }/guestBook_servlet/' + value1 + '?${requestScope.searchQuery }';
+		let linkAddr = '${requestScope.path }/guestBookMybatis_servlet/' + value1 + '?${requestScope.searchQuery }';
 		if (value2 != undefined) {
 			linkAddr += '&no=' + value2;
 		}//if

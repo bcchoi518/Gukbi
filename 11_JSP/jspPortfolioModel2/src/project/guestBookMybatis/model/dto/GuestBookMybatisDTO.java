@@ -1,8 +1,8 @@
-package project.guestBook.model.dto;
+package project.guestBookMybatis.model.dto;
 
 import java.sql.Date;
 
-public class GuestBookDTO {
+public class GuestBookMybatisDTO {
 	private int no;
 	private String name;
 	private String email;
@@ -10,15 +10,11 @@ public class GuestBookDTO {
 	private String content;
 	private Date regiDate;
 	private int memberNo;
-	private String searchGubun;
-	private String searchData;
-	private int startRecord;
-	private int lastRecord;
-	private int preNo;
-	private String preContent;
-	private int nxtNo;
-	private String nxtContent;
-	
+    private String searchGubun;
+    private String searchData;
+    private int startRecord;
+    private int lastRecord;
+    
 	public int getNo() {
 		return no;
 	}
@@ -85,28 +81,4 @@ public class GuestBookDTO {
 	public void setLastRecord(int lastRecord) {
 		this.lastRecord = lastRecord;
 	}
-	public int getPreNo() {
-		return preNo;
-	}
-	public void setPreNo(int preNo) {
-		this.preNo = preNo;
-	}
-	public String getPreContent() {
-		return preContent;
-	}
-	public void setPreContent(String preContent) {
-		this.preContent = preContent;
-	}
-	public int getNxtNo() {
-		return nxtNo;
-	}
-	public void setNxtNo(int nxtNo) {
-		this.nxtNo = nxtNo;
-	}
-	public String getNxtContent() {
-		return nxtContent;
-	}
-	public void setNxtContent(String nxtContent) {
-		this.nxtContent = nxtContent;
-	}
-}//GuestBookDTO
+}//GuestBookMybatisDTO

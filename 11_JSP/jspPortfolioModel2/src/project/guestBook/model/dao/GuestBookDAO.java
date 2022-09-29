@@ -172,12 +172,13 @@ public class GuestBookDAO {
 		int result = 0;
 		conn = DB.dbConn();
 		try {
-			String sql = "INSERT INTO guestBook VALUES (seq_guestBook.NEXTVAL, ?, ?, ?, ?, SYSDATE)";
+			String sql = "INSERT INTO guestBook VALUES (seq_guestBook.NEXTVAL, ?, ?, ?, ?, SYSDATE, ?)";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, paramDto.getName());
 			pstmt.setString(2, paramDto.getEmail());
 			pstmt.setString(3, paramDto.getPasswd());
 			pstmt.setString(4, paramDto.getContent());
+			pstmt.setInt(5, paramDto.getMemberNo());
 			result = pstmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();

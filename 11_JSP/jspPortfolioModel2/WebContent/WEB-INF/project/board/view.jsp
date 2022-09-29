@@ -134,7 +134,7 @@
 	
 	function commentList() {
 		const param = {
-				'no' : ${requestScope.dto.no }
+				no : ${requestScope.dto.no }
 		}
 		const url = '${requestScope.path }/board_servlet/board_commentList.do';
 		$.ajax({

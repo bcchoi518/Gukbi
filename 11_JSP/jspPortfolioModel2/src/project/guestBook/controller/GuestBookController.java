@@ -1,6 +1,7 @@
 package project.guestBook.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.ArrayList;
@@ -43,6 +44,23 @@ public class GuestBookController extends HttpServlet {
 		String ip6 = serverInfo[5];
 		String folderName = serverInfo[6];
 		String fileName = serverInfo[7];
+		
+		String[] sessionArray = util.getSessionCheck(request);
+		int sessionNo = Integer.parseInt(sessionArray[0]);
+		String sessionId = sessionArray[1];
+		String sessionName = sessionArray[2];
+		
+		if (sessionNo <= 0) {
+			response.setContentType("text/html; charset=UTF-8");
+			PrintWriter out = response.getWriter();
+			out.println("<script>");
+			out.println("alert('로그인 후 이용하세요.');");
+			out.println("location.href='"+ path +"';");
+			out.println("</script>");
+			out.flush();
+			out.close();
+			return;
+		}//if
 		
 		request.setAttribute("referer", referer);
 		request.setAttribute("path", path);
@@ -233,6 +251,7 @@ public class GuestBookController extends HttpServlet {
 			arguGuestBookDto.setPasswd(passwd);
 			arguGuestBookDto.setEmail(email);
 			arguGuestBookDto.setContent(content);
+			arguGuestBookDto.setMemberNo(sessionNo);
 			
 			GuestBookDAO guestBookDao = new GuestBookDAO();
 			int result = guestBookDao.setInsert(arguGuestBookDto);

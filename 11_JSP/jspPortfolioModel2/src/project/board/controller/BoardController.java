@@ -1,6 +1,7 @@
 package project.board.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.ArrayList;
@@ -13,6 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import project.board.model.dao.BoardCommentDAO;
 import project.board.model.dao.BoardDAO;
 import project.board.model.dto.BoardCommentDTO;
 import project.board.model.dto.BoardDTO;
@@ -44,6 +46,23 @@ public class BoardController extends HttpServlet {
 		String ip6 = serverInfo[5];
 		String folderName = serverInfo[6];
 		String fileName = serverInfo[7];
+		
+		String[] sessionArray = util.getSessionCheck(request);
+		int sessionNo = Integer.parseInt(sessionArray[0]);
+		String sessionId = sessionArray[1];
+		String sessionName = sessionArray[2];
+		
+		if (sessionNo <= 0) {
+			response.setContentType("text/html; charset=UTF-8");
+			PrintWriter out = response.getWriter();
+			out.println("<script>");
+			out.println("alert('로그인 후 이용하세요.');");
+			out.println("location.href='"+ path +"';");
+			out.println("</script>");
+			out.flush();
+			out.close();
+			return;
+		}//if
 		
 		request.setAttribute("referer", referer);
 		request.setAttribute("path", path);
@@ -234,7 +253,19 @@ public class BoardController extends HttpServlet {
 			String no_ = request.getParameter("no");
 			int no = util.getNumberCheck(no_, 0);
 			
+			if (no <= 0) {
+				System.out.println("no: "+ no);
+				return;
+			}//if
+			
+			BoardCommentDTO arguBoardCommentDto = new BoardCommentDTO();
+			arguBoardCommentDto.setBoardNo(no);
+			
+			BoardCommentDAO commentBoardDao = new BoardCommentDAO();
+			ArrayList<BoardCommentDTO> commentList = commentBoardDao.getSelectAll(arguBoardCommentDto);
+			
 			request.setAttribute("no", no);
+			request.setAttribute("list", commentList);
 			
 			forwardPage = "/WEB-INF/project/board/commentList.jsp";
 			RequestDispatcher rd = request.getRequestDispatcher(forwardPage);
@@ -246,7 +277,54 @@ public class BoardController extends HttpServlet {
 			int no = util.getNumberCheck(no_, 0);
 			procGubun = util.getNullBlankCheck(procGubun);
 			
+			int result = 0;
 			if (procGubun.equals("chuga")) {
+				String commentWriter = request.getParameter("commentWriter");
+				String commentPasswd = request.getParameter("commentPasswd");
+				String commentContent = request.getParameter("commentContent");
+				
+				commentWriter = util.getNullBlankCheck(commentWriter);
+				commentPasswd = util.getNullBlankCheck(commentPasswd);
+				commentContent = util.getNullBlankCheck(commentContent);
+				
+				int failCounter = 0;
+				if (commentWriter.equals("")) {
+					System.out.println("commentWriter error");
+					failCounter++;
+				} else if (commentPasswd.equals("")) {
+					System.out.println("commentPasswd error");
+					failCounter++;
+				} else if (commentContent.equals("")) {
+					System.out.println("commentContent error");
+					failCounter++;
+				}//if
+				
+				if (failCounter > 0) {
+					return;
+				}//if
+				
+				commentWriter = util.getCheckString(commentWriter);
+				commentPasswd = util.getCheckString(commentPasswd);
+				commentContent = util.getCheckString(commentContent);
+				
+				BoardCommentDTO arguBoardCommentDto = new BoardCommentDTO();
+				arguBoardCommentDto.setBoardNo(no);
+				arguBoardCommentDto.setWriter(commentWriter);
+				arguBoardCommentDto.setContent(commentContent);
+				arguBoardCommentDto.setPasswd(commentPasswd);
+				arguBoardCommentDto.setMemberNo(sessionNo);
+				arguBoardCommentDto.setIp(ip);
+				
+				BoardCommentDAO commentBoardDao = new BoardCommentDAO();
+				result = commentBoardDao.setInsert(arguBoardCommentDto);
+				
+				response.setContentType("text/html; charset=UTF-8");
+				PrintWriter out = response.getWriter();
+				out.println(result);
+				out.flush();
+				out.close();
+				
+			} else if (procGubun.equals("sujung")) {
 				String commentNo_ = request.getParameter("commentNo");
 				String commentWriter = request.getParameter("commentWriter");
 				String commentPasswd = request.getParameter("commentPasswd");
@@ -278,21 +356,52 @@ public class BoardController extends HttpServlet {
 				commentContent = util.getCheckString(commentContent);
 				
 				BoardCommentDTO arguBoardCommentDto = new BoardCommentDTO();
-				arguBoardCommentDto.setBoardNo(no);
+				arguBoardCommentDto.setCommentNo(commentNo);
 				arguBoardCommentDto.setWriter(commentWriter);
-				arguBoardCommentDto.setPasswd(commentPasswd);
 				arguBoardCommentDto.setContent(commentContent);
-				arguBoardCommentDto.setIp(ip);
+				arguBoardCommentDto.setPasswd(commentPasswd);
 				
-			} else if (procGubun.equals("sujung")) {
+				BoardCommentDAO commentBoardDao = new BoardCommentDAO();
+				result = commentBoardDao.setUpdate(arguBoardCommentDto);
+				
+				response.setContentType("text/html; charset=UTF-8");
+				PrintWriter out = response.getWriter();
+				out.println(result);
+				out.flush();
+				out.close();
 				
 			} else if (procGubun.equals("sakje")) {
+				String commentNo_ = request.getParameter("commentNo");
+				String commentPasswd = request.getParameter("commentPasswd");
+				int commentNo = util.getNumberCheck(commentNo_, 0);
 				
+				commentPasswd = util.getNullBlankCheck(commentPasswd);
+				
+				int failCounter = 0;
+				if (commentPasswd.equals("")) {
+					System.out.println("commentPasswd error");
+					failCounter++;
+				}//if
+				
+				if (failCounter > 0) {
+					return;
+				}//if
+				
+				commentPasswd = util.getCheckString(commentPasswd);
+				
+				BoardCommentDTO arguBoardCommentDto = new BoardCommentDTO();
+				arguBoardCommentDto.setCommentNo(commentNo);
+				arguBoardCommentDto.setPasswd(commentPasswd);
+				
+				BoardCommentDAO commentBoardDao = new BoardCommentDAO();
+				result = commentBoardDao.setDelete(arguBoardCommentDto);
+				
+				response.setContentType("text/html; charset=UTF-8");
+				PrintWriter out = response.getWriter();
+				out.println(result);
+				out.flush();
+				out.close();
 			}//if
-			
-			forwardPage = "/WEB-INF/project/board/commentList.jsp";
-			RequestDispatcher rd = request.getRequestDispatcher(forwardPage);
-			rd.forward(request, response);
 			
 		} else if (fileName.equals("chugaProc")) {
 			String no_ = request.getParameter("no");

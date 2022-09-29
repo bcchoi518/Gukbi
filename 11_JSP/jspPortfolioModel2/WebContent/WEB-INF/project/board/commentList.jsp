@@ -6,9 +6,9 @@
 <table border="0" style="width:100%" align="center">
 	<tr>
 		<td style="padding:20px 0px">
-			<span id="procGubun" style="display:">chuga</span><br>
-			<span id="no" style="display:">${requestScope.no }</span><br>
-			<span id="commentNo" style="display:"></span><br>
+			<span id="procGubun" style="display:none">chuga</span>
+			<span id="no" style="display:none">${requestScope.no }</span>
+			<span id="commentNo" style="display:none"></span>
 			이름: <input type="text" name="commentWriter" id="commentWriter" size="10" value="" />
 			비밀번호: <input type="password" name="commentPasswd" id="commentPasswd" size="10" value="" /><br>
 			댓글: <input type="text" name="commentContent" id="commentContent" size="100" value="" />
@@ -26,19 +26,19 @@
 					<tr>
 						<td>
 						${dto.writer }
-						<input type="hidden" name="commentWriter_${dto.no}" id="commentWriter_${dto.no }" value="${dto.writer }"/>
+						<input type="hidden" name="commentWriter_${dto.commentNo }" id="commentWriter_${dto.commentNo }" value="${dto.writer }"/>
 						&nbsp; 
 						${dto.regiDate }</td>
 						<td align="right">
-							<a href="#comment" onclick="suntaek('sujung', '${dto.no }">[수정]</a>
+							<a href="#comment" onclick="suntaek('sujung', '${dto.commentNo }')">[수정]</a>
 							/
-							<a href="#comment" onclick="suntaek('sakje', '${dto.no }">[삭제]</a>
+							<a href="#comment" onclick="suntaek('sakje', '${dto.commentNo }')">[삭제]</a>
 						</td>
 					</tr>
 					<tr>
 						<td>
 							${dto.content }
-							<input type="hidden" name="commentContent_${dto.no } }" id="commentContent_${dto.no } }" value="${dto.content }"/>
+							<input type="hidden" name="commentContent_${dto.commentNo }" id="commentContent_${dto.commentNo }" value="${dto.content }"/>
 						</td>
 					</tr>
 				</c:forEach>
@@ -51,16 +51,18 @@
 <input type="hidden" id="result" />
 
 <script>
-	$('#btnCommentSave').click(function() {
+	$('#btnCommentSave').click(function () {
+		if (confirm('OK?')) {
 		const param = {
-			'no': $('#no').val();
-			'procGubun': $('#procGubun').val();
-			'commentNo': $('#commentNo').val();
-			'commentWriter': $('#commentWriter').val();
-			'commentPasswd': $('#commentPasswd').val();
-			'commentContent': $('#commentContent').val();
-		}
-		const url = '${requestScope.path }/board_servlet/commentProc.do';
+			no: $('#no').text(),
+			procGubun: $('#procGubun').text(),
+			commentNo: $('#commentNo').text(),
+			commentWriter: $('#commentWriter').val(),
+			commentPasswd: $('#commentPasswd').val(),
+			commentContent: $('#commentContent').val()
+		}//param
+		console.log(param);
+		const url = '${requestScope.path }/board_servlet/board_commentProc.do';
 		$.ajax({
 			type: 'post',
 			data: param,
@@ -71,15 +73,16 @@
 					alert('성공');
 				} else {
 					alert('실패');
-				}
+				}//if
 				commentList();
-			}
-		});
-	});
+			}//success
+		});//ajax
+		}//if
+	});//btnCommentSave.Click
 	
-	$('#btnCommentReset').click(function() {
-		$('#procGubun').val('chuga');
-		$('#commentNo').val('');
+	$('#btnCommentReset').click(function () {
+		$('#procGubun').text('chuga');
+		$('#commentNo').text('');
 		$('#commentWriter').val('');
 		$('#commentPasswd').val('');
 		$('#commentContent').val('');
@@ -87,18 +90,15 @@
 	});
 	
 	function suntaek(value1, value2) {
-		$('#procGubun').val(value1);
-		$('#no').val(value2);
+		$('#procGubun').text(value1);
+		$('#commentNo').text(value2);
+		$('#commentWriter').val($('#commentWriter_'+ value2).val());
+		$('#commentContent').val($('#commentContent_'+ value2).val());
 		
 		if (value1 == 'sujung') {
-			$('#commentWriter').val($('#commentWriter_'+ value2).val());
-			$('#commentContent').val($('#commentContent_'+ value2).val());
 			document.querySelector('#btnCommentSave').innerText = '수정';
 		} else if (value1 == 'sakje') {
-			if (confirm('deleteOK?')) {
-				document.querySelector('#btnCommentSave').innerText = '삭제';
-				$('#btnCommentSave').click();
-			}//if
+			document.querySelector('#btnCommentSave').innerText = '삭제';
 		}//if
 	}//suntaek
 </script>

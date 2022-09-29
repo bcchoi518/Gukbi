@@ -1,6 +1,7 @@
 package project.memoMybatis.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.List;
@@ -16,7 +17,6 @@ import javax.servlet.http.HttpServletResponse;
 import project.common.Util;
 import project.memoMybatis.model.dao.MemoMybatisDAO;
 import project.memoMybatis.model.dto.MemoMybatisDTO;
-
 
 @WebServlet("/memoMybatis_servlet/*")
 public class MemoMybatisController extends HttpServlet {
@@ -51,8 +51,15 @@ public class MemoMybatisController extends HttpServlet {
 		String sessionId = sessionArray[1];
 		String sessionName = sessionArray[2];
 		
-		if (sessionNo <= 0) {//로그인 안한 상태..
-			response.sendRedirect(path +"/noLogin_servlet/noLogin_login.do");
+		if (sessionNo <= 0) {
+			response.setContentType("text/html; charset=UTF-8");
+			PrintWriter out = response.getWriter();
+			out.println("<script>");
+			out.println("alert('로그인 후 이용하세요.');");
+			out.println("location.href='"+ path +"';");
+			out.println("</script>");
+			out.flush();
+			out.close();
 			return;
 		}//if
 		

@@ -13,12 +13,13 @@ public class BoardCommentDAO {
 	PreparedStatement pstmt = null;
 	ResultSet rs = null;
 	
-	public ArrayList<BoardCommentDTO> getSelectAll() {
+	public ArrayList<BoardCommentDTO> getSelectAll(BoardCommentDTO paramDto) {
 		ArrayList<BoardCommentDTO> boardCommentList = new ArrayList<>();
 		conn = DB.dbConn();
 		try {
-			String sql = "SELECT * FROM boardComment ORDER BY commentNo DESC";
+			String sql = "SELECT * FROM boardComment WHERE boardNo = ? ORDER BY commentNo DESC";
 			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, paramDto.getBoardNo());
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
 				BoardCommentDTO boardCommentDto = new BoardCommentDTO();
