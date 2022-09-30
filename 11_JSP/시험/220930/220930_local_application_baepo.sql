@@ -1,0 +1,18 @@
+SELECT * FROM user_tables;
+
+CREATE TABLE member (
+    no NUMBER NOT NULL,
+    id VARCHAR2(50) NOT NULL,
+    passwd VARCHAR2(50) NOT NULL,
+    name VARCHAR2(50) NOT NULL,
+    gender CHAR(1) NOT NULL CHECK (gender IN ('M','F')),
+    birthYear VARCHAR2(50) NOT NULL,
+    addr1 VARCHAR2(50) NOT NULL,
+    addr2 VARCHAR2(50) NOT NULL,
+    addr3 VARCHAR2(50) NOT NULL,
+    addr4 VARCHAR2(50) NOT NULL,
+    regiDate DATE NOT NULL,
+    PRIMARY KEY (id)
+);
+
+CREATE SEQUENCE seq_member START WITH 1 INCREMENT BY 1 NOMAXVALUE NOCACHE;
