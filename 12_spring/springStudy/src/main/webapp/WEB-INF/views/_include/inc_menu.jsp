@@ -26,6 +26,6 @@
 |
 <br>
 |
-<a href="${path }">이제 뭐 하지</a>
+<a href="${path }/member/list">회원관리</a>
 |
 <hr>

@@ -234,7 +234,7 @@ public class TestController {
 		String attachPath = "C:/cbc/attach";
 		String uploadPath = attachPath + "/imsi";
 		
-		ArrayList<String> list = new ArrayList();
+		ArrayList<String> list = new ArrayList<>();
 		
 		File f1 = new File(uploadPath);
 		File[] array = f1.listFiles();

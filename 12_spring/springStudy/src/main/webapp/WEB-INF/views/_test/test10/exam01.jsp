@@ -31,19 +31,21 @@
 	<c:if test="${empty list }" >
 		파일이 있었는데요 없었습니다.
 	</c:if>
+	
 	<script>
 		function sakje(value1) {
+			//DOM
+			const formTag = document.imsiForm;
 			if (confirm('delete OK?')) {
 				const info = document.getElementById(value1).value;
-				document.imsiForm.fileInfo.value = info;
+				formTag.fileInfo.value = info;
 				
-				document.imsiForm.action = '${path }/test10Proc';
-				document.imsiForm.method = 'post';
-				document.imsiForm.submit();
+				formTag.action = '${path }/test10Proc';
+				formTag.method = 'post';
+				formTag.submit();
 			}//if
 		}//sakje
 	</script>
-	
 	
 </body>
 </html>
