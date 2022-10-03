@@ -17,53 +17,26 @@
 	
 	<table border="1" width="80%">
 		<tr>
-			<td>아이디</td>
-			<td>${requestScope.dto.id }</td>
-		</tr>
-		<tr>
 			<td>이름</td>
 			<td>${requestScope.dto.name }</td>
-		</tr>
-		<tr>
-			<td>연락처</td>
-			<td>${requestScope.dto.phone }</td>
 		</tr>
 		<tr>
 			<td>이메일</td>
 			<td>${requestScope.dto.email }</td>
 		</tr>
 		<tr>
-			<td>주민번호</td>
-			<td>${fn:substring(dto.jumin, 0, 7) }-${fn:substring(dto.jumin, 7, 8) }******</td>
-		</tr>
-		<tr>
-			<td>주소</td>
-			<td>
-				(${requestScope.dto.juso1 })
-				${requestScope.dto.juso2 }
-				${requestScope.dto.juso3 }
-				<c:if test="${requestScope.dto.juso4 != '-' }">
-					${requestScope.dto.juso4 }
-				</c:if>
-			</td>
-		</tr>
-		<tr>
-			<td>등급</td>
-			<td>${requestScope.dto.grade }</td>
+			<td>내용</td>
+			<td>${fn:replace(requestScope.dto.content, newLineChar, '<br>') }</td>
 		</tr>
 		<tr>
 			<td>등록일</td>
 			<td>${requestScope.dto.regiDate }</td>
 		</tr>
-		<tr>
-			<td>첨부파일</td>
-			<td>${fn:replace(requestScope.dto.attachInfo, '|', '<br>') }</td>
-		</tr>
 	</table>
 	
 	<div style="border: 0px solid red; width: 80%; margin-top:10px;" align="right">
 	|
-	<a href="${path }/member/list" >전체목록</a>
+	<a href="${path }/guestBook/list" >전체목록</a>
 	|
 	<a href="#" onclick="move('list')">목록</a>
 	|
@@ -77,9 +50,9 @@
 	
 	<script>
 		function move(value1, value2) {
-			let linkAddr = '${path }/member/' + value1;
+			let linkAddr = '${path }/guestBook/' + value1;
 			if (value2 != undefined) {
-				linkAddr += '?no='+ value2;
+				linkAddr += '?no=' + value2;
 			}//if
 			location.href = linkAddr;
 		}//move

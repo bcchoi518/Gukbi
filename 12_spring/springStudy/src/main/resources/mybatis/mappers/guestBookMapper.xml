@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="guestBook">
+	<select id="getSelectAll" resultType="com.cbc.springStudy.guestBook.model.dto.GuestBookDTO">
+		SELECT * 
+		  FROM guestBook 
+	  ORDER BY no DESC
+	</select>
+	
+	<select id="getSelectOne" resultType="com.cbc.springStudy.guestBook.model.dto.GuestBookDTO">
+		SELECT * 
+		  FROM guestBook 
+	  	 WHERE no = #{no}
+	</select>
+	<insert id="setInsert"> <!-- parameterType="" 생략가능 -->
+		INSERT INTO guestBook
+			 VALUES (seq_guestBook.NEXTVAL, #{name}, #{email}, #{passwd}, #{content}, SYSDATE, #{memberNo})
+	</insert>
+	
+	<update id="setUpdate">
+		UPDATE guestBook
+		   SET name = #{name}, email = #{email}, content = #{content}
+		 WHERE no = #{no} AND passwd = #{passwd}
+	</update>
+	
+	<delete id="setDelete">
+		DELETE FROM guestBook
+		 	  WHERE no = #{no} AND passwd = #{passwd}
+	</delete>
+</mapper>

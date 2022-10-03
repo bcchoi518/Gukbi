@@ -1,0 +1,60 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+
+<%@ include file = "../_include/inc_header.jsp" %>
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+	<%@ include file = "../_include/inc_menu.jsp" %>
+	
+	<h2>${requestScope.title }</h2>
+	
+	<form name="DirForm">
+		<input type="hidden" name="no" id="no" value="${requestScope.dto.no }" />
+		<table border="1" width="80%">
+			<tr>
+				<td style="width:10%;">이름</td>
+				<td>${requestScope.dto.name }</td>
+			</tr>
+			<tr>
+				<td>비밀번호</td>
+				<td><input type="password" name="passwd" id="passwd" value="" /></td>
+			</tr>
+			<tr>
+				<td>이메일</td>
+				<td>${requestScope.dto.email }</td>
+			</tr>
+			<tr>
+				<td>내용</td>
+				<td>${fn:replace(requestScope.dto.content, newLineChar, '<br>') }</td>
+			</tr>
+			<tr>
+				<td>등록일</td>
+				<td>${requestScope.dto.regiDate }</td>
+			</tr>
+			<tr>
+				<td colspan="2" align="center" style="height:50px">
+					<button type="button" onclick="save()">삭제</button>
+				</td>
+			</tr>
+		</table>
+	</form>
+	
+	<script>
+		function save() {
+			if (confirm('OK?')) {
+				document.DirForm.action = '${path }/guestBook/sakjeProc';
+				document.DirForm.method = 'post';
+				document.DirForm.submit();
+			}//if
+		}//save
+	</script>
+	
+</body>
+</html>

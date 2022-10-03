@@ -1,6 +1,7 @@
 package com.cbc.springStudy.member.model.dao;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.inject.Inject;
 
@@ -39,5 +40,11 @@ public class MemberDAOImpl implements MemberDAO {
 	public int setDelete(MemberDTO paramDto) {
 		return sqlSession.delete("member.setDelete", paramDto);
 	}//setDelete
+
+	@Override
+	public int getLogin(MemberDTO paramDto) {
+		Optional<Integer> opt = Optional.ofNullable(sqlSession.selectOne("member.getLogin", paramDto));
+		return opt.orElse(0);
+	}//getLogin
 
 }//MemberDAOImpl

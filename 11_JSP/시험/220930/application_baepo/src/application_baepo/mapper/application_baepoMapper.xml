@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="application_baepo">
+	<select id="getSelectAll" resultType="application_baepo.model.dto.Application_baepoDTO">
+		SELECT * 
+		  FROM ${tableName} 
+	  ORDER BY no DESC
+	</select>
+	
+	<select id="getSelectOne" resultType="application_baepo.model.dto.Application_baepoDTO">
+		SELECT * 
+		  FROM ${tableName} 
+	  	 WHERE no = #{dto.no}
+	</select>
+	
+	<insert id="setInsert">
+		INSERT INTO ${tableName} (no, id, passwd, name, gender, birthYear, addr1, addr2, addr3, addr4, regiDate)
+			 VALUES (seq_member.NEXTVAL, #{dto.id}, #{dto.passwd}, #{dto.name}, #{dto.gender}, #{dto.birthYear}, #{dto.addr1}, #{dto.addr2}, #{dto.addr3}, #{dto.addr4}, SYSDATE)
+	</insert>
+</mapper>

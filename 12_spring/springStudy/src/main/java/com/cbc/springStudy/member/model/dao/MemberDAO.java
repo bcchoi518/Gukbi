@@ -10,4 +10,5 @@ public interface MemberDAO {
 	public int setInsert(MemberDTO paramDto);
 	public int setUpdate(MemberDTO paramDto);
 	public int setDelete(MemberDTO paramDto);
+	public int getLogin(MemberDTO paramDto);
 }//MemberDAO

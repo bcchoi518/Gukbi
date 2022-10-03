@@ -10,3 +10,5 @@
 <%-- <c:set var="uri" value="${pageContext.request.requestURI }" /> --%>
 <%-- <c:set var="ip" value="${pageContext.request.remoteAddr }" /> --%>
 <%-- <script src = "http://code.jquery.com/jquery-3.3.1.min.js" /> --%>
+
+<% pageContext.setAttribute("newLineChar", "\n"); %>

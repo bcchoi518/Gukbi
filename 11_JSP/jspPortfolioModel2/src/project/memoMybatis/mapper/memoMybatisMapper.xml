@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="memoMybatis">
+<!-- 	#{} => 작은따움표를 붙인 상태에서 삽입 -->
+<!-- 	${} => 작은따움표를 붙이지 않은 상태에서 삽입 -->
+
+	<sql id="search">
+		<choose>
+			<when test="dto.searchGubun == 'writer_content'">
+				AND (writer LIKE '%' || #{dto.searchData} || '%' OR content LIKE '%' || #{dto.searchData} || '%')
+			</when>
+			<when test="dto.searchGubun != null and dto.searchGubun != '' and dto.searchData != null and dto.searchData != ''">
+				AND ${dto.searchGubun} LIKE '%' || #{dto.searchData} || '%'
+			</when>
+			<otherwise>
+				
+			</otherwise>
+		</choose>
+	</sql>
+	
+	<select id="getTotalRecord" resultType="int">
+		SELECT COUNT(*) totalRecord FROM ${tableName01} WHERE 1=1
+		<include refid="search"></include>
+	</select>
+	
+<!-- DTO의 package 경로를 다 적어줘야 함 -->
+	<select id="getSelectAll" resultType="project.memoMybatis.model.dto.MemoMybatisDTO">
+		SELECT * FROM (SELECT rownum rnum, basic.* FROM (
+			SELECT * FROM ${tableName01} WHERE 1=1 
+			<include refid="search"></include>
+<!-- SQL문장에서 <와 >가 태그의 <와 >랑 혼동이 되므로 표시해서 구분지음 -->
+<![CDATA[ 
+			ORDER BY no DESC
+		) basic) WHERE rnum >= #{dto.startRecord} AND rnum <= #{dto.lastRecord}
+]]>
+	</select>
+	
+	<select id="getSelectOne" resultType="project.memoMybatis.model.dto.MemoMybatisDTO">
+		SELECT * FROM ${tableName01} WHERE no = #{dto.no}
+	</select>
+	
+	<insert id="setInsert">
+		INSERT INTO ${tableName01} (no, writer, content, regiDate)
+		VALUES (seq_memo.NEXTVAL, #{dto.writer}, #{dto.content}, SYSDATE)
+	</insert>
+	
+	<update id="setUpdate">
+		UPDATE ${tableName01} SET writer = #{dto.writer}, content = #{dto.content} WHERE no = #{dto.no}
+	</update>
+	
+	<delete id="setDelete">
+		DELETE FROM ${tableName01} WHERE no = #{dto.no}
+	</delete>
+</mapper>
