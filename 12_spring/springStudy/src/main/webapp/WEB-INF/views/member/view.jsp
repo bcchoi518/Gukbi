@@ -57,7 +57,22 @@
 		</tr>
 		<tr>
 			<td>첨부파일</td>
-			<td>${fn:replace(requestScope.dto.attachInfo, '|', '<br>') }</td>
+			<td>
+<%-- 				<c:forEach var='i' begin="0" end="2" > --%>
+					<c:choose>
+						<c:when test="${dto.attachInfo == '-' }">
+							&nbsp;
+						</c:when>
+						<c:otherwise>
+							<c:set var="fileName" value="${fn:split(requestScope.dto.attachInfo, ',')[1] }" />
+							<c:set var="fileOriginName" value="${fn:split(requestScope.dto.attachInfo, ',')[0] }" />
+							<a href="#" onclick="download('${requestScope.dto.no }','${i }')">
+								<img alt="${fileOriginName }" title="${fileOriginName }" src="${path }/attach${path }/product/${fileName }" />
+							</a>
+						</c:otherwise>
+					</c:choose>
+<%-- 				</c:forEach> --%>
+			</td>
 		</tr>
 	</table>
 	
@@ -83,6 +98,10 @@
 			}//if
 			location.href = linkAddr;
 		}//move
+		
+		function download(value1, value2) {
+			location.href = '${path }/member/download?no='+ value1 + "&num="+ value2;
+		}//download
 	</script>
 	
 </body>

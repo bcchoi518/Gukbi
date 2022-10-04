@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
@@ -210,4 +211,17 @@ public class MemberController
 		
 		return "redirect:/"+ returnValue +"/login";
 	}//logout
+	
+	@RequestMapping("/download")
+	public String download(
+			Model model, 
+			HttpServletRequest request,
+			HttpServletResponse response
+			)
+	{
+		String no_ = request.getParameter("no");
+		String num_ = request.getParameter("num");
+		
+		return "redirect:/"+ returnValue +"/login";
+	}//download
 }//MemberController

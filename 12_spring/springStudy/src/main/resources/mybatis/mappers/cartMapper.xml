@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cart">
+	<select id="getSelectAll" resultType="com.cbc.springStudy.cart.model.dto.CartDTO">
+		SELECT c.cartNo, c.amount, c.regiDate,
+			   p.productNo, p.productName, p.productPrice, (p.productPrice * c.amount) pay, 
+			   m.no memberNo, m.id memberId, m.name memberName
+		  FROM cart c INNER JOIN product p
+		  					  ON c.productNo = p.productNo
+		  			  INNER JOIN member m
+		  			  		  ON c.memberNo = m.no
+	  ORDER BY cartNo DESC
+	</select>
+	
+	<insert id="setInsert"> <!-- parameterType="" 생략가능 -->
+		INSERT INTO cart
+			 VALUES (seq_cart.NEXTVAL, #{productNo}, #{amount}, #{memberNo}, SYSDATE)
+	</insert>
+	
+	<update id="setUpdate">
+		UPDATE cart
+		   SET amount = #{amount}
+		 WHERE cartNo = #{cartNo}
+	</update>
+	
+	<delete id="setDelete">
+		DELETE FROM cart
+			  WHERE cartNo = #{cartNo}
+	</delete>
+	
+	<delete id="setClear">
+		DELETE FROM cart
+			  WHERE memberNo = #{memberNo}
+	</delete>
+</mapper>

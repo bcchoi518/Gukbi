@@ -5,13 +5,14 @@
 	<c:choose>
 		<c:when test="${sessionScope.sessionNo == null }">
 			<a href="${path }/member/login">로그인</a>
+			<c:set var="imsiMemberNo" value="0" />
 		</c:when>
 		<c:otherwise>
 			<a href="${path }/member/logout">로그아웃</a>
+			<c:set var="imsiMemberNo" value="${sessionScope.sessionNo }" />
 		</c:otherwise>
 	</c:choose>
 </div>
-
 
 |
 <a href="${path }">Home</a>
@@ -43,5 +44,9 @@
 <a href="${path }/memo/list">메모장</a>
 |
 <a href="${path }/guestBook/list">방명록</a>
+|
+<a href="${path }/product/list">상품관리</a>
+|
+<a href="${path }/cart/list">장바구니</a>
 |
 <hr>

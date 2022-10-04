@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="product">
+	<select id="getSelectAll" resultType="com.cbc.springStudy.product.model.dto.ProductDTO">
+		SELECT * 
+		  FROM product 
+	  ORDER BY productNo DESC
+	</select>
+	
+	<select id="getSelectOne" resultType="com.cbc.springStudy.product.model.dto.ProductDTO">
+		SELECT * 
+		  FROM product 
+	  	 WHERE productNo = #{productNo}
+	</select>
+	
+	<insert id="setInsert"> <!-- parameterType="" 생략가능 -->
+		INSERT INTO product
+			 VALUES (seq_product.NEXTVAL, #{productName}, #{productPrice}, #{productDescription}, #{vendorNo}, #{vendorName}, #{attachInfo}, SYSDATE)
+	</insert>
+	
+	<update id="setUpdate">
+		UPDATE product
+		   SET productName = #{productName}, productPrice = #{productPrice}, productDescription = #{productDescription}, vendorNo = #{vendorNo}, vendorName = #{vendorName}, attachInfo = #{attachInfo}
+		 WHERE productNo = #{productNo}
+	</update>
+	
+	<delete id="setDelete">
+		DELETE FROM product
+		 	  WHERE productNo = #{productNo}
+	</delete>
+	
+</mapper>
