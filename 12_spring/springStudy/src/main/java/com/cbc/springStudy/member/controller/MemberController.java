@@ -213,15 +213,30 @@ public class MemberController
 	}//logout
 	
 	@RequestMapping("/download")
-	public String download(
-			Model model, 
-			HttpServletRequest request,
-			HttpServletResponse response
-			)
+	public void download(
+			Model model,
+    		HttpServletRequest request, 
+    		HttpServletResponse response
+			) 
 	{
 		String no_ = request.getParameter("no");
 		String num_ = request.getParameter("num");
+		int no = Integer.parseInt(no_);
+		int num = Integer.parseInt(num_);
 		
-		return "redirect:/"+ returnValue +"/login";
+		MemberDTO arguDto = new MemberDTO();
+		arguDto.setNo(no);
+		
+		MemberDTO returnDto = memberDao.getSelectOne(arguDto);
+		String[] imsiArray = returnDto.getAttachInfo().split("[|]");
+
+		for (int i = 0; i < imsiArray.length; i++) {
+			if (i == num) {
+				String[] tempArray = imsiArray[i].split(",");
+				
+				MultipartUpload mu = new MultipartUpload();
+				mu.attachDownload(response, tempArray[0], tempArray[1], "/springStudy/member");
+			}//if
+		}//for
 	}//download
 }//MemberController

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="member">
+	<select id="getSelectAll" resultType="com.cbc.springPortfolio.member.model.dto.MemberDTO">
+		SELECT * 
+		  FROM member 
+	  ORDER BY no DESC
+	</select>
+	
+	<select id="getSelectOne" resultType="com.cbc.springPortfolio.member.model.dto.MemberDTO">
+		SELECT * 
+		  FROM member 
+	  	 WHERE no = #{no}
+	</select>
+	
+	<select id="getIdCheck" resultType="int">
+		SELECT COUNT(*)
+		  FROM member
+		 WHERE id = #{id}
+	</select>
+	
+	<insert id="setInsert"> <!-- parameterType="" 생략가능 -->
+		INSERT INTO member
+			 VALUES (seq_member.NEXTVAL, #{id}, #{passwd}, #{name}, #{jumin1}, #{jumin2}, #{phone1}, #{phone2}, #{phone3}, #{email1}, #{email2}, #{postcode}, #{address}, #{detailAddress}, #{extraAddress}, SYSDATE)
+	</insert>
+	
+	<update id="setUpdate">
+		UPDATE member
+		   SET phone1 = #{phone1}, phone2 = #{phone2}, phone3 = #{phone3}, email1 = #{email1}, email2 = #{email2}, postcode = #{postcode}, address = #{address}, detailAddress = #{detailAddress}, extraAddress = #{extraAddress}
+		 WHERE no = #{no} AND passwd = #{passwd}
+	</update>
+	
+	<delete id="setDelete">
+		DELETE FROM member
+		 	  WHERE no = #{no} AND passwd = #{passwd}
+	</delete>
+	
+</mapper>

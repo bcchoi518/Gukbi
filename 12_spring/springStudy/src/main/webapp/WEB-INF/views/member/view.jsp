@@ -58,20 +58,23 @@
 		<tr>
 			<td>첨부파일</td>
 			<td>
-<%-- 				<c:forEach var='i' begin="0" end="2" > --%>
+				<c:set var="fileInfoArray" value="${fn:split(requestScope.dto.attachInfo, '|') }" />
+				<c:forEach var="i" begin="0" end="${fn:length(fileInfoArray) - 1 }" step="1">
 					<c:choose>
 						<c:when test="${dto.attachInfo == '-' }">
 							&nbsp;
 						</c:when>
 						<c:otherwise>
-							<c:set var="fileName" value="${fn:split(requestScope.dto.attachInfo, ',')[1] }" />
-							<c:set var="fileOriginName" value="${fn:split(requestScope.dto.attachInfo, ',')[0] }" />
-							<a href="#" onclick="download('${requestScope.dto.no }','${i }')">
-								<img alt="${fileOriginName }" title="${fileOriginName }" src="${path }/attach${path }/product/${fileName }" />
+							<c:set var="fileInfo" value="${fn:split(fileInfoArray[i], ',') }" />
+							<c:set var="fileOriginName" value="${fileInfo[0] }" />
+							<c:set var="fileName" value="${fileInfo[1] }" />
+							<a href="#" onclick="attachDownLoad('${requestScope.dto.no }','${i }')">
+								<img alt="${fileOriginName }" title="${fileOriginName }" src="${path }/attach${path }/member/${fileName }" />
 							</a>
 						</c:otherwise>
 					</c:choose>
-<%-- 				</c:forEach> --%>
+					<hr>
+				</c:forEach>
 			</td>
 		</tr>
 	</table>
@@ -99,7 +102,7 @@
 			location.href = linkAddr;
 		}//move
 		
-		function download(value1, value2) {
+		function attachDownLoad(value1, value2) {
 			location.href = '${path }/member/download?no='+ value1 + "&num="+ value2;
 		}//download
 	</script>

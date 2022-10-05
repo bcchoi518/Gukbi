@@ -1,4 +1,4 @@
-package com.cbc.springStudy._common;
+package com.cbc.springPortfolio.common;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -14,8 +14,7 @@ import org.apache.tika.Tika;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-public class MultipartUpload 
-{
+public class MultipartUpload {
 	String attachPath = Constants.ATTACH_PATH;
 	int maxUpload = Constants.MAX_UPLOAD;
 

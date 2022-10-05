@@ -1,0 +1,8 @@
+CREATE TABLESPACE springPortfolio
+DATAFILE 'C:/cbc/oradata/springPortfolio.dbf' SIZE 50m
+AUTOEXTEND ON NEXT 10m MAXSIZE UNLIMITED;
+
+CREATE USER springPortfolio IDENTIFIED BY 1234
+DEFAULT TABLESPACE springPortfolio;
+
+GRANT CONNECT, RESOURCE TO springPortfolio;
