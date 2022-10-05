@@ -4,15 +4,46 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="member">
+
+	<sql id="search">
+		<choose>
+			<when test="searchGubun == 'id_name'">
+				AND (id LIKE '%' || #{searchData} || '%' OR name LIKE '%' || #{searchData} || '%')
+			</when>
+			<when test="searchGubun != null and searchGubun != '' and searchData != null and searchData != ''">
+				AND ${searchGubun} LIKE '%' || #{searchData} || '%'
+			</when>
+			<otherwise>
+				
+			</otherwise>
+		</choose>
+	</sql>
+
 	<select id="getSelectAll" resultType="com.cbc.springPortfolio.member.model.dto.MemberDTO">
-		SELECT * 
-		  FROM member 
-	  ORDER BY no DESC
+		SELECT *
+		  FROM (SELECT rownum rnum, basic.*
+			  	  FROM (SELECT * 
+						  FROM member 
+						 WHERE 1 = 1
+				 		<include refid="search"></include>
+				  	  ORDER BY no DESC
+				  	   ) basic
+			   )
+		 WHERE rnum BETWEEN #{startRecord} AND #{lastRecord}
 	</select>
 	
 	<select id="getSelectOne" resultType="com.cbc.springPortfolio.member.model.dto.MemberDTO">
-		SELECT * 
-		  FROM member 
+		SELECT *
+		  FROM (SELECT m.*,
+			   		   LAG(no) OVER (ORDER BY no DESC) preNo,
+			   		   LAG(name) OVER (ORDER BY no DESC) preName,
+			   		   LEAD(no) OVER (ORDER BY no DESC) nxtNo,
+			   		   LEAD(name) OVER (ORDER BY no DESC) nxtName
+		  		  FROM member m
+		 		 WHERE 1=1
+	  	 		 <include refid="search"></include>
+	  		  ORDER BY no DESC
+	  		   )
 	  	 WHERE no = #{no}
 	</select>
 	
@@ -20,6 +51,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT COUNT(*)
 		  FROM member
 		 WHERE id = #{id}
+	</select>
+	
+	<select id="getTotalRecord" resultType="int">
+		SELECT COUNT(*)
+		  FROM member
+		 WHERE 1 = 1
+		 <include refid="search"></include>
 	</select>
 	
 	<insert id="setInsert"> <!-- parameterType="" 생략가능 -->

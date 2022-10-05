@@ -135,10 +135,11 @@
 	}//save
 	
 	function move(value1, value2) {
-		let linkAddr = '${path }/member/' + value1 + '?${requestScope.searchQuery }';
+		let linkAddr = '${path }/member/'+ value1 +'?pageNumber=${requestScope.pageNumber }';
 		if (value2 != undefined) {
-			linkAddr += '&no=' + value2;
+			linkAddr += '&no='+ value2;
 		}//if
+		linkAddr += '&searchGubun=${requestScope.searchGubun }&searchData=${requestScope.searchData }';
 		location.href = linkAddr;
 	}//move
 </script>

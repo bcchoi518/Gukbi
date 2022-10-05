@@ -43,7 +43,7 @@
 			return;
 		}//if
 		if (confirm('OK?')) {
-			document.DirForm.action = '${path }/member/idCheckWinProc.do';
+			document.DirForm.action = '${path }/member/idCheckWinProc';
 			document.DirForm.method = 'post';
 			document.DirForm.submit();
 		}//if

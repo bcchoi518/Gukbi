@@ -1,6 +1,8 @@
 package com.cbc.springPortfolio.common;
 
+import java.io.UnsupportedEncodingException;
 import java.net.Inet4Address;
+import java.net.URLEncoder;
 import java.net.UnknownHostException;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -193,4 +195,15 @@ public class Util {
 		
 		return map;
 	}//getPagerMap
+	
+	public String getSearchQuery(String searchGubun, String searchData) {
+		try {
+			searchGubun = URLEncoder.encode(searchGubun, "UTF-8");
+			searchData = URLEncoder.encode(searchData, "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}//try-catch
+		
+		return "searchGubun="+ searchGubun +"&searchData="+ searchData;
+	}//getSearchQuery
 }//Util

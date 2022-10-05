@@ -42,6 +42,11 @@ public class MemberDAOImpl implements MemberDAO {
 
 	@Override
 	public int getIdCheck(MemberDTO paramDto) {
-		return sqlSession.delete("member.getIdCheck", paramDto);
+		return sqlSession.selectOne("member.getIdCheck", paramDto);
 	}//getIdCheck
+
+	@Override
+	public int getTotalRecord(MemberDTO paramDto) {
+		return sqlSession.selectOne("member.getTotalRecord", paramDto);
+	}//getTotalRecord
 }//MemberDAOImpl

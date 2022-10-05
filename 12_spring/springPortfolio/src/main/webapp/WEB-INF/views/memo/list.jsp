@@ -27,14 +27,18 @@
 <%-- 메모 입력 End --%>
 <div style="border: 0px solid red; width: 80%; margin-top:10px;" align="left">
 	<c:choose>
-		<c:when test="${requestScope.searchGubun != '' }">
+		<c:when test="${fn:length(requestScope.searchGubun) > 0 }">
 			* 검색어 "<span style="color:red; font-weight:bold;">${requestScope.searchData }</span>"으/로 검색된 목록 : ${requestScope.totalRecord }건
 		</c:when>
 		<c:otherwise>
 			* 전체목록: ${requestScope.totalRecord }건
 		</c:otherwise>
 	</c:choose>
-	(${requestScope.pageNumber }/${requestScope.pagerMap.totalPage })
+	<c:set var="totalPage" value="${requestScope.pagerMap.totalPage }" />
+	<c:if test="${totalPage <= 0 }">
+		<c:set var="totalPage" value="1" />
+	</c:if>
+	(${requestScope.pageNumber }/${totalPage })
 </div>
 <%-- 메모 목록 Start --%>
 <table border="1" style="width:80%;">
@@ -46,16 +50,18 @@
 		<th>비고</th>
 	</tr>
 	<c:if test="${fn:length(requestScope.list) == 0 }">
-		<c:if test="${requestScope.searchGubun == '' }">
-			<tr>
-				<td colspan="5" style="height:200px; text-align:center;">등록된 내용이 없습니다.</td>
-			</tr>
-		</c:if>
-		<c:if test="${requestScope.searchGubun != '' }">
-			<tr>
-				<td colspan="5" style="height:200px; text-align:center;">검색된 내용이 없습니다.</td>
-			</tr>
-		</c:if>
+		<c:choose>
+			<c:when test="${fn:length(requestScope.searchGubun) > 0 }">
+				<tr>
+					<td colspan="7" height="200px" style="text-align:center;">검색된 결과가 없습니다.</td>
+				</tr>
+			</c:when>
+			<c:otherwise>
+				<tr>
+					<td colspan="7" height="200px" style="text-align:center;">등록된 내용이 없습니다.</td>
+				</tr>
+			</c:otherwise>
+		</c:choose>
 	</c:if>
 	<c:set var="cntDisplay" value="${requestScope.pagerMap.cntDisplay }" />
 	<c:forEach var="dto" items="${requestScope.list }">

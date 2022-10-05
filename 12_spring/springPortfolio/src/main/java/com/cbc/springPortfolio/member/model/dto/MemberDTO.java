@@ -143,22 +143,35 @@ public class MemberDTO {
 		this.regiDate = regiDate;
 	}
 	public String getSearchGubun() {
+		if (searchGubun == null) {
+			return "";
+		}//if
 		return searchGubun;
 	}
 	public void setSearchGubun(String searchGubun) {
 		this.searchGubun = searchGubun;
 	}
 	public String getSearchData() {
+		if (searchData == null) {
+			return "";
+		}//if
 		return searchData;
 	}
 	public void setSearchData(String searchData) {
 		this.searchData = searchData;
 	}
 	public int getPageNumber() {
+		if (pageNumber <= 0) {
+			return 1;
+		}//if
 		return pageNumber;
 	}
 	public void setPageNumber(int pageNumber) {
-		this.pageNumber = pageNumber;
+		if (pageNumber <= 0) {
+			this.pageNumber = 1;
+		} else {
+			this.pageNumber = pageNumber;
+		}//if
 	}
 	public int getStartRecord() {
 		return startRecord;

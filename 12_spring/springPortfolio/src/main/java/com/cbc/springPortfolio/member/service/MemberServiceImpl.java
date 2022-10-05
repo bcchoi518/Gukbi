@@ -44,4 +44,9 @@ public class MemberServiceImpl implements MemberService {
 	public int getIdCheck(MemberDTO paramDto) {
 		return memberDao.getIdCheck(paramDto);
 	}//getIdCheck
+
+	@Override
+	public int getTotalRecord(MemberDTO paramDto) {
+		return memberDao.getTotalRecord(paramDto);
+	}//getTotalRecord
 }//MemberServiceImpl

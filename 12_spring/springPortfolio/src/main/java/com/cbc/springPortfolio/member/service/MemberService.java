@@ -11,4 +11,5 @@ public interface MemberService {
 	public int setUpdate(MemberDTO paramDto);
 	public int setDelete(MemberDTO paramDto);
 	public int getIdCheck(MemberDTO paramDto);
+	public int getTotalRecord(MemberDTO paramDto);
 }//MemberService

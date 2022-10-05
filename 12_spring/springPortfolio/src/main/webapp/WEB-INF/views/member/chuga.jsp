@@ -110,13 +110,13 @@
 	}//changeEmail2
 
 	function save() {
-// 		const id = document.DirForm.id.value;
-// 		const tempId = document.DirForm.tempId.value;
+		const id = document.DirForm.id.value;
+		const tempId = document.DirForm.tempId.value;
 		
-// 		if (id == '' || tempId == '' || id != tempId) {
-// 			alert('아이디 찾기를 해주세요..');
-// 			return;
-// 		}//if
+		if (id == '' || tempId == '' || id != tempId) {
+			alert('아이디 찾기를 해주세요..');
+			return;
+		}//if
 		
 		if (confirm('OK?')) {
 			document.DirForm.action = '${path }/member/chugaProc';
@@ -126,10 +126,11 @@
 	}//save
 	
 	function move(value1, value2) {
-		let linkAddr = '${path }/member/' + value1 + '?${requestScope.searchQuery }';
+		let linkAddr = '${path }/member/'+ value1 +'?pageNumber=${requestScope.pageNumber }';
 		if (value2 != undefined) {
-			linkAddr += '&no=' + value2;
+			linkAddr += '&no='+ value2;
 		}//if
+		linkAddr += '&searchGubun=${requestScope.searchGubun }&searchData=${requestScope.searchData }';
 		location.href = linkAddr;
 	}//move
 	

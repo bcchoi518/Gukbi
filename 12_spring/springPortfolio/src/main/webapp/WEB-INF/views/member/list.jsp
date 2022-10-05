@@ -7,14 +7,18 @@
 
 <div style="border: 0px solid red; width: 80%; margin-top:10px;" align="left">
 	<c:choose>
-		<c:when test="${requestScope.searchGubun != '' }">
+		<c:when test="${fn:length(requestScope.searchGubun) > 0 }">
 			* 검색어 "<span style="color:red; font-weight:bold;">${requestScope.searchData }</span>"으/로 검색된 목록 : ${requestScope.totalRecord }건
 		</c:when>
 		<c:otherwise>
 			* 전체목록: ${requestScope.totalRecord }건
 		</c:otherwise>
 	</c:choose>
-	(${requestScope.pageNumber }/${requestScope.pagerMap.totalPage })
+	<c:set var="totalPage" value="${requestScope.pagerMap.totalPage }" />
+	<c:if test="${totalPage <= 0 }">
+		<c:set var="totalPage" value="1" />
+	</c:if>
+	(${requestScope.pageNumber }/${totalPage })
 </div>
 <table border="1" width="80%" align="center">
 	<tr>
@@ -29,7 +33,7 @@
 	
 	<c:if test="${requestScope.totalRecord == 0 }">
 		<c:choose>
-			<c:when test="${requestScope.searchGubun != '' }">
+			<c:when test="${fn:length(requestScope.searchGubun) > 0 }">
 				<tr>
 					<td colspan="7" height="200px" style="text-align:center;">검색된 결과가 없습니다.</td>
 				</tr>
@@ -120,10 +124,11 @@
 
 <script>
 	function move(value1, value2) {
-		let linkAddr = '${path }/member/' + value1 + '?${requestScope.searchQuery }';
+		let linkAddr = '${path }/member/'+ value1 +'?pageNumber=${requestScope.pageNumber }';
 		if (value2 != undefined) {
 			linkAddr += '&no=' + value2;
 		}//if
+		linkAddr += '&searchGubun=${requestScope.searchGubun }&searchData=${requestScope.searchData }';
 		location.href = linkAddr;
 	}//move
 	
@@ -136,6 +141,6 @@
 	}//search
 	
 	function goPage(value1) {
-		location.href = '${path }/member/list?pageNumber='+ value1 +'&${requestScope.searchQuery }';
+		location.href = '${path }/member/list?pageNumber='+ value1;
 	}//goPage
 </script>
