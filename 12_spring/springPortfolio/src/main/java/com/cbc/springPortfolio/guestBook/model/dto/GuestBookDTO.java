@@ -1,14 +1,17 @@
-package com.cbc.springPortfolio.memo.model.dto;
+package com.cbc.springPortfolio.guestBook.model.dto;
 
 import java.sql.Date;
 
-public class MemoDTO {
+public class GuestBookDTO {
     private int no;
-    private String writer;
+    private String name;
+    private String email;
+    private String email1;
+    private String email2;
+    private String passwd;
     private String content;
     private Date regiDate;
-    
-    private String procGubun;
+    private int memberNo;
     
     private String searchGubun;
     private String searchData;
@@ -23,11 +26,35 @@ public class MemoDTO {
 	public void setNo(int no) {
 		this.no = no;
 	}
-	public String getWriter() {
-		return writer;
+	public String getName() {
+		return name;
 	}
-	public void setWriter(String writer) {
-		this.writer = writer;
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public String getEmail1() {
+		return email1;
+	}
+	public void setEmail1(String email1) {
+		this.email1 = email1;
+	}
+	public String getEmail2() {
+		return email2;
+	}
+	public void setEmail2(String email2) {
+		this.email2 = email2;
+	}
+	public String getPasswd() {
+		return passwd;
+	}
+	public void setPasswd(String passwd) {
+		this.passwd = passwd;
 	}
 	public String getContent() {
 		return content;
@@ -41,11 +68,11 @@ public class MemoDTO {
 	public void setRegiDate(Date regiDate) {
 		this.regiDate = regiDate;
 	}
-	public String getProcGubun() {
-		return procGubun;
+	public int getMemberNo() {
+		return memberNo;
 	}
-	public void setProcGubun(String procGubun) {
-		this.procGubun = procGubun;
+	public void setMemberNo(int memberNo) {
+		this.memberNo = memberNo;
 	}
 	public String getSearchGubun() {
 		if (searchGubun == null) {
@@ -86,4 +113,4 @@ public class MemoDTO {
 	public void setLastRecord(int lastRecord) {
 		this.lastRecord = lastRecord;
 	}
-}//MemoDTO
+}//GuestBookDTO

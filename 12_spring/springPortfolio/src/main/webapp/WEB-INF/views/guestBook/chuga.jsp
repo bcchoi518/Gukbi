@@ -40,7 +40,7 @@
 		<tr>
 			<td colspan="2" align="center" style="height:50px">
 				<button type="button" onclick="save()">등록하기</button>
-				<button type="button" onclick="move('list.do')">목록으로</button>
+				<button type="button" onclick="move('list')">목록으로</button>
 			</td>
 		</tr>
 	</table>
@@ -63,17 +63,18 @@
 
 	function save() {
 		if (confirm('OK?')) {
-			document.DirForm.action = '${path }/guestBook/chugaProc.do';
+			document.DirForm.action = '${path }/guestBook/chugaProc';
 			document.DirForm.method = 'post';
 			document.DirForm.submit();
 		}//if
 	}//save
 	
 	function move(value1, value2) {
-		let linkAddr = '${path }/guestBook/' + value1 + '?${requestScope.searchQuery }';
+		let linkAddr = '${path }/guestBook/'+ value1 +'?pageNumber=${requestScope.pageNumber }';
 		if (value2 != undefined) {
 			linkAddr += '&no=' + value2;
 		}//if
+		linkAddr += '&searchGubun=${requestScope.searchGubun }&searchData=${requestScope.searchData }';
 		location.href = linkAddr;
 	}//move
 </script>

@@ -128,14 +128,17 @@ public class MemberController {
 			failCounter++;
 		}//if
 		
+		String searchGubun = util.getDecodedUrl(arguDto.getSearchGubun());
+		String searchData = util.getDecodedUrl(arguDto.getSearchData());
+		String searchQuery = util.getSearchQuery(searchGubun, searchData);
+		
 		if (failCounter > 0) {
 			System.out.println("입력값 오류");
-			return "redirect:/"+ folderName +"/chuga";
+			return "redirect:/"+ folderName +"/chuga?pageNumber="+ arguDto.getPageNumber() +"&"+ searchQuery;
 		}//if
 		
 		int result = memberService.setInsert(arguDto);
 		
-		String searchQuery = util.getSearchQuery(arguDto.getSearchGubun(), arguDto.getSearchData());
 		
 		String linkAddr = "list";
 		if (result <= 0) {

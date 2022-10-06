@@ -42,6 +42,9 @@ public class MemoController {
 		Map<String, Integer> pagerMap = util.getPagerMap(pageNumber, pageSize, blockSize, totalRecord);
 		pagerMap.put("blockSize", blockSize);
 		
+		arguDto.setStartRecord(pagerMap.get("startRecord"));
+		arguDto.setLastRecord(pagerMap.get("lastRecord"));
+		
 		List<MemoDTO> list = memoService.getSelectAll(arguDto);
 		
 		model.addAttribute("pagerMap", pagerMap);

@@ -67,9 +67,9 @@
 						<td colspan="4" style="height: 200px; padding:15px; vertical-align: top; position: relative;">
 							${fn:replace(guestBookDto.content, newLineChar, '<br>') }
 							<div style="float:right; bottom:15px; right:15px; position: absolute;" >
-								<a href="#" onclick="move('guestBook_sujung','${guestBookDto.no }')">수정</a>
+								<a href="#" onclick="move('sujung','${guestBookDto.no }')">수정</a>
 								/
-								<a href="#" onclick="move('guestBook_sakje','${guestBookDto.no }')">삭제</a>
+								<a href="#" onclick="move('sakje','${guestBookDto.no }')">삭제</a>
 							</div>
 						</td>
 					</tr>
@@ -142,13 +142,14 @@
 <%-- pagerEnd --%>
 
 <script>
-	function move(value1, value2) {
-		let linkAddr = '${path }/guestBook/' + value1 + '?${requestScope.searchQuery }';
-		if (value2 != undefined) {
-			linkAddr += '&no=' + value2;
-		}//if
-		location.href = linkAddr;
-	}//move
+function move(value1, value2) {
+	let linkAddr = '${path }/guestBook/'+ value1 +'?pageNumber=${requestScope.pageNumber }';
+	if (value2 != undefined) {
+		linkAddr += '&no=' + value2;
+	}//if
+	linkAddr += '&searchGubun=${requestScope.searchGubun }&searchData=${requestScope.searchData }';
+	location.href = linkAddr;
+}//move
 	
 	function search() {
 		if (confirm('searchOK?')) {
