@@ -12,7 +12,7 @@
 </head>
 <body>
 
-	<table border="1" align="center">
+	<table border="1" align="center" width="90%">
 		<tr>
 			<td style="padding:20px;" align="center">
 				<%@ include file = "../_include/inc_menu.jsp" %>

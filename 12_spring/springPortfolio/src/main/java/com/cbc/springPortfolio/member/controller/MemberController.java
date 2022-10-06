@@ -2,14 +2,13 @@ package com.cbc.springPortfolio.member.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
 import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -18,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.cbc.springPortfolio.common.Util;
 import com.cbc.springPortfolio.member.model.dto.MemberDTO;
 import com.cbc.springPortfolio.member.service.MemberService;
-import com.cbc.springPortfolio.member.service.MemberServiceImpl;
 
 @Controller
 @RequestMapping("/member")
@@ -26,9 +24,10 @@ public class MemberController {
 	
 	@Inject
 	MemberService memberService;
+	@Autowired
+	Util util;
 	
 	String folderName = "member";
-	Util util = new Util();
 	
 	@RequestMapping("/list")
 	public String list(Model model, @ModelAttribute MemberDTO arguDto) {
@@ -37,15 +36,8 @@ public class MemberController {
 		int blockSize = 10;
 		int totalRecord = memberService.getTotalRecord(arguDto);
 		
-		String searchGubun = arguDto.getSearchGubun();
-		String searchData = arguDto.getSearchData();
-		
-		try {
-			searchGubun = URLDecoder.decode(searchGubun, "UTF-8");
-			searchData = URLDecoder.decode(searchData, "UTF-8");
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}//try-catch
+		String searchGubun = util.getDecodedUrl(arguDto.getSearchGubun());
+		String searchData = util.getDecodedUrl(arguDto.getSearchData());
 		
 		Util util = new Util();
 		Map<String, Integer> pagerMap = util.getPagerMap(pageNumber, pageSize, blockSize, totalRecord);
@@ -69,15 +61,8 @@ public class MemberController {
 	
 	@RequestMapping("/view")
 	public String view(Model model, @ModelAttribute MemberDTO arguDto) {
-		String searchGubun = arguDto.getSearchGubun();
-		String searchData = arguDto.getSearchData();
-		
-		try {
-			searchGubun = URLDecoder.decode(searchGubun, "UTF-8");
-			searchData = URLDecoder.decode(searchData, "UTF-8");
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}//try-catch
+		String searchGubun = util.getDecodedUrl(arguDto.getSearchGubun());
+		String searchData = util.getDecodedUrl(arguDto.getSearchData());
 		
 		MemberDTO returnDto = memberService.getSelectOne(arguDto);
 		
@@ -92,15 +77,8 @@ public class MemberController {
 	
 	@RequestMapping("/chuga")
 	public String chuga(Model model, @ModelAttribute MemberDTO arguDto) {
-		String searchGubun = arguDto.getSearchGubun();
-		String searchData = arguDto.getSearchData();
-		
-		try {
-			searchGubun = URLDecoder.decode(searchGubun, "UTF-8");
-			searchData = URLDecoder.decode(searchData, "UTF-8");
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}//try-catch
+		String searchGubun = util.getDecodedUrl(arguDto.getSearchGubun());
+		String searchData = util.getDecodedUrl(arguDto.getSearchData());
 		
 		model.addAttribute("pageNumber", arguDto.getPageNumber());
 		model.addAttribute("searchGubun", searchGubun);
@@ -152,32 +130,25 @@ public class MemberController {
 		
 		if (failCounter > 0) {
 			System.out.println("입력값 오류");
-			return "redirect:/member/chuga";
+			return "redirect:/"+ folderName +"/chuga";
 		}//if
 		
 		int result = memberService.setInsert(arguDto);
 		
 		String searchQuery = util.getSearchQuery(arguDto.getSearchGubun(), arguDto.getSearchData());
 		
-		String resultLocation = "list";
+		String linkAddr = "list";
 		if (result <= 0) {
-			resultLocation = "chuga?pageNumber="+ arguDto.getPageNumber() +"&"+ searchQuery;
+			linkAddr = "chuga?pageNumber="+ arguDto.getPageNumber() +"&"+ searchQuery;
 		}//if
 		
-		return "redirect:/member/"+ resultLocation;
+		return "redirect:/"+ folderName +"/"+ linkAddr;
 	}//chugaProc
 	
 	@RequestMapping("/sujung")
 	public String sujung(Model model, @ModelAttribute MemberDTO arguDto) {
-		String searchGubun = arguDto.getSearchGubun();
-		String searchData = arguDto.getSearchData();
-		
-		try {
-			searchGubun = URLDecoder.decode(searchGubun, "UTF-8");
-			searchData = URLDecoder.decode(searchData, "UTF-8");
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}//try-catch
+		String searchGubun = util.getDecodedUrl(arguDto.getSearchGubun());
+		String searchData = util.getDecodedUrl(arguDto.getSearchData());
 		
 		MemberDTO returnDto = memberService.getSelectOne(arguDto);
 		
@@ -199,7 +170,7 @@ public class MemberController {
 		MemberDTO returnDto = memberService.getSelectOne(arguDto);
 		
 		if (!arguDto.getPasswd().equals(returnDto.getPasswd())) {
-			return "redirect:/member/sujung?pageNumber="+ arguDto.getPageNumber() +"&no="+ arguDto.getNo() +"&"+ searchQuery;
+			return "redirect:/"+ folderName +"/sujung?pageNumber="+ arguDto.getPageNumber() +"&no="+ arguDto.getNo() +"&"+ searchQuery;
 		}//if
 		
 		int result = memberService.setUpdate(arguDto);
@@ -209,20 +180,13 @@ public class MemberController {
 			resultLocation = "sujung";
 		}//if
 		
-		return "redirect:/member/"+ resultLocation +"?pageNumber="+ arguDto.getPageNumber() +"&no="+ arguDto.getNo() +"&"+ searchQuery;
+		return "redirect:/"+ folderName +"/"+ resultLocation +"?pageNumber="+ arguDto.getPageNumber() +"&no="+ arguDto.getNo() +"&"+ searchQuery;
 	}//sujungProc
 	
 	@RequestMapping("/sakje")
 	public String sakje(Model model, @ModelAttribute MemberDTO arguDto) {
-		String searchGubun = arguDto.getSearchGubun();
-		String searchData = arguDto.getSearchData();
-		
-		try {
-			searchGubun = URLDecoder.decode(searchGubun, "UTF-8");
-			searchData = URLDecoder.decode(searchData, "UTF-8");
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}//try-catch
+		String searchGubun = util.getDecodedUrl(arguDto.getSearchGubun());
+		String searchData = util.getDecodedUrl(arguDto.getSearchData());
 		
 		MemberDTO returnDto = memberService.getSelectOne(arguDto);
 		
@@ -244,7 +208,7 @@ public class MemberController {
 		MemberDTO returnDto = memberService.getSelectOne(arguDto);
 		
 		if (!arguDto.getPasswd().equals(returnDto.getPasswd())) {
-			return "redirect:/member/sakje?pageNumber="+ arguDto.getPageNumber() +"&no="+ arguDto.getNo() +"&"+ searchQuery;
+			return "redirect:/"+ folderName +"/sakje?pageNumber="+ arguDto.getPageNumber() +"&no="+ arguDto.getNo() +"&"+ searchQuery;
 		}//if
 		
 		int result = memberService.setDelete(arguDto);
@@ -254,22 +218,28 @@ public class MemberController {
 			resultLocation = "sakje?pageNumber="+ arguDto.getPageNumber() +"&no="+ arguDto.getNo() +"&"+ searchQuery;
 		}//if
 		
-		return "redirect:/member/"+ resultLocation;
+		return "redirect:/"+ folderName +"/"+ resultLocation;
 	}//sakjeProc
 	
 	@RequestMapping("/search")
 	public String search(Model model, @ModelAttribute MemberDTO arguDto) {
 		String searchGubun = arguDto.getSearchGubun();
 		String searchData = arguDto.getSearchData();
+		
+		if (searchGubun.trim().equals("")) {
+			searchGubun = "";
+			searchData = "";
+		}//if
+		
 		String searchQuery = util.getSearchQuery(searchGubun, searchData);
 		
-		return "redirect:/member/list?pageNumber="+ arguDto.getPageNumber() +"&"+ searchQuery;
+		return "redirect:/"+ folderName +"/list?pageNumber="+ arguDto.getPageNumber() +"&"+ searchQuery;
 	}//search
 	
 	@RequestMapping("/idCheck")
 	public String idCheck(Model model, @ModelAttribute MemberDTO arguDto, HttpServletResponse response) {
 		if (arguDto.getId().trim().equals("")) {
-			return "redirect:/member/chuga";
+			return "redirect:/"+ folderName +"/chuga";
 		}//if
 		
 		int result = memberService.getIdCheck(arguDto);
@@ -283,13 +253,13 @@ public class MemberController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}//try-catch
-		return "redirect:/member/chuga";
+		return "redirect:/"+ folderName +"/chuga";
 	}//idCheck
 	
 	@RequestMapping("/idCheckWin")
 	public String idCheckWin(Model model, @ModelAttribute MemberDTO arguDto, HttpServletResponse response) {
 		
-		return "member/idCheckWin";
+		return folderName +"/idCheckWin";
 	}//idCheckWin
 	
 	@RequestMapping("/idCheckWinProc")
@@ -297,7 +267,7 @@ public class MemberController {
 		String id = arguDto.getId();
 		
 		if (arguDto.getId().trim().equals("")) {
-			return "member/idCheckWin";
+			return folderName +"/idCheckWin";
 		}//if
 		
 		int result = memberService.getIdCheck(arguDto);
@@ -313,6 +283,6 @@ public class MemberController {
 		model.addAttribute("imsiId", imsiId);
 		model.addAttribute("msg", msg);
 		
-		return "member/idCheckWin";
+		return folderName +"/idCheckWin";
 	}//idCheckWinProc
 }//MemberController

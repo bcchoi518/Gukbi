@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="memo">
+	
+	<sql id="search">
+		<choose>
+			<when test="searchGubun == 'writer_content'">
+				AND (writer LIKE '%' || #{searchData} || '%' OR content LIKE '%' || #{searchData} || '%')
+			</when>
+			<when test="searchGubun != null and searchGubun != '' and searchData != null and searchData != ''">
+				AND ${searchGubun} LIKE '%' || #{searchData} || '%'
+			</when>
+			<otherwise>
+			
+			</otherwise>
+		</choose>
+	</sql>
+	
+	<select id="getTotalRecord" resultType="int">
+		SELECT COUNT(*) totalRecord
+		  FROM memo
+		 WHERE 1=1
+		<include refid="search"></include>
+	</select>
+	
+	<select id="getSelectAll" resultType="com.cbc.springPortfolio.memo.model.dto.MemoDTO">
+		SELECT *
+		  FROM memo
+		 WHERE 1=1
+		<include refid="search"></include>
+	  ORDER BY no DESC
+	</select>
+	
+	<select id="getSelectOne" resultType="com.cbc.springPortfolio.memo.model.dto.MemoDTO">
+		SELECT *
+		  FROM memo
+	  	 WHERE no = #{no}
+	</select>
+	
+	<insert id="setInsert">
+		INSERT INTO memo
+			 VALUES (seq_memo.NEXTVAL, #{writer}, #{content}, SYSDATE)
+	</insert>
+	
+	<update id="setUpdate">
+		UPDATE memo
+		   SET writer = #{writer}, content = #{content}
+		 WHERE no = #{no}
+	</update>
+	
+	<delete id="setDelete">
+		DELETE FROM memo
+		 	  WHERE no = #{no}
+	</delete>
+	
+</mapper>

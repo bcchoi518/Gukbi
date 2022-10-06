@@ -7,7 +7,7 @@
 <form name="DirForm">
 	<input type="hidden" name="searchGubun" value="${requestScope.searchGubun }" />
 	<input type="hidden" name="searchData" value="${requestScope.searchData }" />
-	<input type="hidden" name="procGubun" value="chuga" />
+	<input type="hidden" name="procGubun" value="chugaProc" />
 	<input type="hidden" name="no" />
 	<table border="0" style="width:80%;">
 		<tr>
@@ -45,7 +45,7 @@
 	<tr>
 		<th>순번</th>
 		<th>작성자</th>
-		<th width="70%">내용</th>
+		<th width="60%">내용</th>
 		<th>등록일</th>
 		<th>비고</th>
 	</tr>
@@ -77,9 +77,9 @@
 			</td>
 			<td>${dto.regiDate }</td>
 			<td>
-			<a href="#" onclick="suntaek('sujung', '${dto.no }')">수정</a>
+			<a href="#" onclick="suntaek('sujungProc', '${dto.no }')">수정</a>
 			/
-			<a href="#" onclick="suntaek('sakje', '${dto.no }')">삭제</a>
+			<a href="#" onclick="suntaek('sakjeProc', '${dto.no }')">삭제</a>
 			</td>
 		</tr>
 		<c:set var="cntDisplay" value="${cntDisplay - 1 }" />
@@ -142,9 +142,11 @@
 
 <script>
 	const frm = document.DirForm;
+	
 	function save() {
+		const linkAddr = frm.procGubun.value;
 		if (confirm('OK?')) {
-			frm.action = '${path }/memo/proc';
+			frm.action = '${path }/memo/'+ linkAddr;
 			frm.method = 'post';
 	 		frm.submit();
 		}//if
@@ -154,28 +156,26 @@
 		frm.procGubun.value = value1;
 		frm.no.value = value2;
 		
-		if (value1 == 'sujung') {
+		if (value1 == 'sujungProc') {
 			frm.writer.value = document.querySelector('#writer_' + value2).value
 			frm.content.value = document.querySelector('#content_' + value2).value
 			document.querySelector('#btnSave').innerText = '수정';
-		} else if (value1 == 'sakje') {
-			if (confirm('deleteOK?')) {
-				save();
-				document.querySelector('#btnSave').innerText = '삭제';
-			}//if
+		} else if (value1 == 'sakjeProc') {
+			save();
+			document.querySelector('#btnSave').innerText = '삭제';
 		}//if
 	}//suntaek
 	
 	function resetForm() {
 		frm.writer.value = '';
 		frm.content.value = '';
-		frm.procGubun.value = 'chuga';
+		frm.procGubun.value = 'chugaProc';
 		document.querySelector('#btnSave').innerText = '등록';
 	}//formReset
 	
 	function search() {
 		if (confirm('searchOK?')) {
-			document.searchForm.action = '${path }/memo/list';
+			document.searchForm.action = '${path }/memo/search';
 			document.searchForm.method = 'post';
 			document.searchForm.submit();
 		}//if

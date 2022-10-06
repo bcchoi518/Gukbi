@@ -24,7 +24,6 @@
 	<tr>
 		<th>순번</th>
 		<th>아이디</th>
-		<th>비밀번호</th>
 		<th>이름</th>
 		<th>생년월일</th>
 		<th>전화번호</th>
@@ -51,7 +50,6 @@
 		<tr>
 			<td>${cntDisplay }</td>
 			<td><a href="#" onclick="move('view','${memberDto.no }')">${memberDto.id }</a></td>
-			<td>${memberDto.passwd }</td>
 			<td>${memberDto.name }</td>
 			<td>${memberDto.jumin1 }-${memberDto.jumin2 }******</td>
 			<td>${memberDto.phone1 }-${memberDto.phone2 }-${memberDto.phone3 }</td>

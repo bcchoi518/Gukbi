@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="book">
+	<select id="getSelectAll" resultType="com.cbc.springSihum.book.model.dto.BookDTO">
+		SELECT * 
+		  FROM book 
+	  ORDER BY code DESC
+	</select>
+	
+	<select id="getSelectOne" resultType="com.cbc.springSihum.book.model.dto.BookDTO">
+		SELECT * 
+		  FROM book 
+	  	 WHERE code = #{code}
+	</select>
+	
+	<insert id="setInsert">
+		INSERT INTO book
+			 VALUES (seq_book.NEXTVAL, #{title}, #{category}, #{author}, #{publisher}, #{publicationDate}, SYSDATE)
+	</insert>
+	
+	<update id="setUpdate">
+		UPDATE book
+		   SET title = #{title}, category = #{category}, author = #{author}, publisher = #{publisher}, publicationDate = #{publicationDate}
+		 WHERE code = #{code}
+	</update>
+	
+	<delete id="setDelete">
+		DELETE FROM book
+		 	  WHERE code = #{code}
+	</delete>
+</mapper>

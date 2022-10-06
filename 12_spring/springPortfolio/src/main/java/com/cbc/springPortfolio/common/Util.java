@@ -2,6 +2,7 @@ package com.cbc.springPortfolio.common;
 
 import java.io.UnsupportedEncodingException;
 import java.net.Inet4Address;
+import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.net.UnknownHostException;
 import java.util.Calendar;
@@ -206,4 +207,16 @@ public class Util {
 		
 		return "searchGubun="+ searchGubun +"&searchData="+ searchData;
 	}//getSearchQuery
+	
+	public String getDecodedUrl(String url) {
+		try {
+			url = URLDecoder.decode(url, "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}//try-catch
+		
+		return url;
+	}//getDecodedUrl
+	
+	
 }//Util
