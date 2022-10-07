@@ -1,0 +1,36 @@
+CREATE TABLE member (
+    no NUMBER NOT NULL,
+    id VARCHAR2(10) NOT NULL,
+    passwd VARCHAR2(250) NOT NULL,
+    name VARCHAR2(15) NOT NULL,
+    phone1 VARCHAR2(3) NOT NULL CHECK (phone1  in ('010', '011', '016')),
+    phone2 VARCHAR2(4) NOT NULL,
+    phone3 VARCHAR2(4) NOT NULL,
+    email1 VARCHAR2(50) NOT NULL,
+    email2 VARCHAR2(50) NOT NULL,
+    
+    postcode VARCHAR2(50) NOT NULL,
+    address VARCHAR2(100) NOT NULL,
+    detailAddress VARCHAR2(100) NOT NULL,
+    extraAddress VARCHAR2(100) NOT NULL,
+    
+    changeDate DATE NOT NULL,
+    regiDate DATE DEFAULT SYSDATE,
+    PRIMARY KEY (id),
+    UNIQUE (no)
+);
+CREATE SEQUENCE seq_member START WITH 1 INCREMENT BY 1 NOMAXVALUE NOCACHE;
+SELECT * FROM member;
+
+
+CREATE TABLE diary (
+    no NUMBER NOT NULL,
+    title VARCHAR2(100) NOT NULL,
+    content CLOB NOT NULL,
+    regiDate DATE NOT NULL,
+    memberNo NUMBER NOT NULL,
+    tbl VARCHAR2(100) NOT NULL,
+    PRIMARY KEY (no)
+);
+
+CREATE SEQUENCE seq_diary START WITH 1 INCREMENT BY 1 NOMAXVALUE NOCACHE;

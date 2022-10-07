@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="member">
+
+	<select id="getSelectOne" resultType="com.cbc.myProject.member.model.dto.MemberDTO">
+		SELECT *
+		  FROM member
+	  	 WHERE no = #{no}
+	</select>
+	
+	<select id="getIdCheck" resultType="int">
+		SELECT COUNT(*)
+		  FROM member
+		 WHERE id = #{id}
+	</select>
+	
+	<select id="getPwCheck" resultType="int">
+		SELECT ROUND(MONTHS_BETWEEN(sysdate, changeDate)) 
+		  FROM member 
+		 WHERE id = #{id}
+	</select>
+	
+	<select id="getSignIn" resultType="int">
+		SELECT no 
+		  FROM member 
+		 WHERE id = #{id} AND passwd = #{passwd}
+	</select>
+	
+	<insert id="setInsert"> <!-- parameterType="" 생략가능 -->
+		INSERT INTO member
+			 VALUES (seq_member.NEXTVAL, #{id}, #{passwd}, #{name}, #{phone1}, #{phone2}, #{phone3}, #{email1}, #{email2}, #{postcode}, #{address}, #{detailAddress}, #{extraAddress}, SYSDATE, SYSDATE)
+	</insert>
+	
+	<update id="setUpdate">
+		UPDATE member
+		   SET phone1 = #{phone1}, phone2 = #{phone2}, phone3 = #{phone3}, email1 = #{email1}, email2 = #{email2}, postcode = #{postcode}, address = #{address}, detailAddress = #{detailAddress}, extraAddress = #{extraAddress}
+		 WHERE no = #{no} AND passwd = #{passwd}
+	</update>
+	
+	<update id="setUpdatePasswd">
+		UPDATE member
+		   SET passwd = #{newPasswd}, changeDate = SYSDATE
+		 WHERE no = #{no}
+	</update>
+	
+	<delete id="setDelete">
+		DELETE FROM member
+		 	  WHERE no = #{no} AND passwd = #{passwd}
+	</delete>
+	
+</mapper>
